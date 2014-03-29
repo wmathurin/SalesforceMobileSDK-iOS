@@ -665,6 +665,7 @@ static NSString * const kUserPrefix = @"005";
                 return account;
             }
         } else {
+            account.communityId = comm;
             return account;
         }
     }
