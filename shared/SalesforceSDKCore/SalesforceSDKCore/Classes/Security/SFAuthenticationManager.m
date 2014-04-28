@@ -847,8 +847,6 @@ static NSString * SplashBackgroundImagePath(UIInterfaceOrientation orientation) 
 
 - (UIView *)createDefaultSnapshotView
 {
-    UIView *opaqueView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
     CGFloat width = CGRectGetWidth([UIScreen mainScreen].bounds);
     CGFloat height = CGRectGetHeight([UIScreen mainScreen].bounds);
     CGFloat x = (width - kSplashLogoWidth) / 2;
@@ -868,15 +866,16 @@ static NSString * SplashBackgroundImagePath(UIInterfaceOrientation orientation) 
     }
     UIColor *backgroundColor = [branding objectForKey:@"splashBackground"];
     
+    UIView *opaqueView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    opaqueView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    opaqueView.backgroundColor = backgroundColor;
+    
     UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:backgroundFrame];
     logoImageView.contentMode = UIViewContentModeScaleAspectFit;
     logoImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     logoImageView.image = snapshotImage;
     [opaqueView addSubview:logoImageView];
     
-    
-    opaqueView.backgroundColor = backgroundColor;
-    opaqueView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     return opaqueView;
 }
 
