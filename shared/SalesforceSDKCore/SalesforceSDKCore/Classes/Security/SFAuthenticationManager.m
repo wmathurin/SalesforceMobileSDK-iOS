@@ -817,15 +817,6 @@ static Class InstanceClass = nil;
 
 - (UIView *)createDefaultSnapshotView
 {
-    __block UIView *customSnapshotView = nil;
-    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
-        if ([delegate respondsToSelector:@selector(authManagerGetCustomSnaphotView:)]) {
-            customSnapshotView = [delegate authManagerGetCustomSnaphotView:self];
-        }
-    }];
-    
-    if (customSnapshotView) return customSnapshotView;
-
     UIView *opaqueView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     opaqueView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     opaqueView.backgroundColor = [UIColor whiteColor];

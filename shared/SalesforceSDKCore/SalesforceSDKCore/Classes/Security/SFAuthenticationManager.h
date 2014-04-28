@@ -122,12 +122,6 @@ typedef void (^SFOAuthFlowFailureCallbackBlock)(SFOAuthInfo *, NSError *);
  */
 - (void)authManagerDidLogout:(SFAuthenticationManager *)manager;
 
-/**
- Called to get the custom snapshot view which is used to create a snpashot view when the app goes into background
- @param manager The instance of SFAuthenticationManager making the call.
- */
-- (UIView *)authManagerGetCustomSnaphotView:(SFAuthenticationManager *)manager;
-
 @end
 
 /**
