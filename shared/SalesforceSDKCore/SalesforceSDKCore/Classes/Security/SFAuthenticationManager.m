@@ -68,8 +68,6 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 static NSInteger  const kOAuthGenericAlertViewTag    = 444;
 static NSInteger  const kIdentityAlertViewTag = 555;
 static NSInteger  const kConnectedAppVersionMismatchViewTag = 666;
-static CGFloat kSplashLogoWidth = 230.0;
-static CGFloat kSplashLogoHeight = 280.0;
 
 // Key for whether or not the user has chosen the app setting to logout of the
 // app when it is re-opened.
@@ -817,65 +815,20 @@ static Class InstanceClass = nil;
     }
 }
 
-static NSString * SplashBackgroundImagePath(UIInterfaceOrientation orientation) {
-    BOOL isPhone5 = ([UIScreen mainScreen].scale == 2.0f && CGRectGetHeight([UIScreen mainScreen].bounds) == 568.0f);
-    NSString *path = nil;
-    
-    if (UIInterfaceOrientationIsPortrait(orientation)) {
-        if (isPhone5) {
-            path = @"Default-568h";
-        } else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-            path = @"Default-Portrait";
-        } else {
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-                path = @"Default-Portrait";
-            } else {
-                // iphone portrait default image for non-iphone 5
-                path = @"Default";
-            }
-        }
-    } else {
-        if (isPhone5) {
-            path = @"Default-Landscape-568h";
-        } else {
-            path = @"Default-Landscape";
-        }
-    }
-    
-    return path;
-}
-
 - (UIView *)createDefaultSnapshotView
 {
-    CGFloat width = CGRectGetWidth([UIScreen mainScreen].bounds);
-    CGFloat height = CGRectGetHeight([UIScreen mainScreen].bounds);
-    CGFloat x = (width - kSplashLogoWidth) / 2;
-    CGFloat y = (height - kSplashLogoHeight) / 2;
-    CGRect backgroundFrame = CGRectIntegral(CGRectMake(x, y, kSplashLogoWidth, kSplashLogoHeight));
-    
-    __block NSDictionary *branding;
+    __block UIView *customSnapshotView = nil;
     [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
-        if ([delegate respondsToSelector:@selector(authManagerBrandedSnapshotImage:)]) {
-            branding = [delegate authManagerGetbrandingInfo:self];
+        if ([delegate respondsToSelector:@selector(authManagerGetCustomSnaphotView:)]) {
+            customSnapshotView = [delegate authManagerGetCustomSnaphotView:self];
         }
     }];
     
-    UIImage *snapshotImage = [branding objectForKey:@"splashLogo"];
-    if (!snapshotImage) {
-        snapshotImage = [UIImage imageNamed:SplashBackgroundImagePath([[UIDevice currentDevice] orientation])];
-    }
-    UIColor *backgroundColor = [branding objectForKey:@"splashBackground"];
-    
+    if (customSnapshotView) return customSnapshotView;
+
     UIView *opaqueView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     opaqueView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    opaqueView.backgroundColor = backgroundColor;
-    
-    UIImageView *logoImageView = [[UIImageView alloc] initWithFrame:backgroundFrame];
-    logoImageView.contentMode = UIViewContentModeScaleAspectFit;
-    logoImageView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
-    logoImageView.image = snapshotImage;
-    [opaqueView addSubview:logoImageView];
-    
+    opaqueView.backgroundColor = [UIColor whiteColor];
     return opaqueView;
 }
 
