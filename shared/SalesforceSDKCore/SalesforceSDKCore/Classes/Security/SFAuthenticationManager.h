@@ -122,6 +122,8 @@ typedef void (^SFOAuthFlowFailureCallbackBlock)(SFOAuthInfo *, NSError *);
  */
 - (void)authManagerDidLogout:(SFAuthenticationManager *)manager;
 
+- (NSDictionary *)authManagerBrandedSnapshotImage:(SFAuthenticationManager *)manager;
+
 @end
 
 /**
