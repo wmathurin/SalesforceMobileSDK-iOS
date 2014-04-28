@@ -858,7 +858,7 @@ static NSString * SplashBackgroundImagePath(UIInterfaceOrientation orientation) 
     __block NSDictionary *branding;
     [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
         if ([delegate respondsToSelector:@selector(authManagerBrandedSnapshotImage:)]) {
-            branding = [delegate authManagerBrandedSnapshotImage:self];
+            branding = [delegate authManagerGetbrandingInfo:self];
         }
     }];
     

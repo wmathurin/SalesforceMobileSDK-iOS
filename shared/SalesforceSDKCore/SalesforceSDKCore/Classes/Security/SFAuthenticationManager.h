@@ -122,7 +122,11 @@ typedef void (^SFOAuthFlowFailureCallbackBlock)(SFOAuthInfo *, NSError *);
  */
 - (void)authManagerDidLogout:(SFAuthenticationManager *)manager;
 
-- (NSDictionary *)authManagerBrandedSnapshotImage:(SFAuthenticationManager *)manager;
+/**
+ Called to get the branding information for the app. This is used to create a snpashot view when the app goes into background
+ @param manager The instance of SFAuthenticationManager making the call.
+ */
+- (NSDictionary *)authManagerGetbrandingInfo(SFAuthenticationManager *)manager;
 
 @end
 
