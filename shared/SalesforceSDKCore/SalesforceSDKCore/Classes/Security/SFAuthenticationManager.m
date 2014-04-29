@@ -817,7 +817,7 @@ static Class InstanceClass = nil;
 
 - (UIView *)createDefaultSnapshotView
 {
-    UIView *opaqueView = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    UIView *opaqueView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     opaqueView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     opaqueView.backgroundColor = [UIColor whiteColor];
     return opaqueView;
