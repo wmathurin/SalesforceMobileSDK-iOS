@@ -23,7 +23,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "SFEncryptionKey.h"
+
+@class SFEncryptionKey;
 
 /**
  Singleton class to manage operations on the key store.
