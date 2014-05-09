@@ -258,6 +258,9 @@ extern NSString * const kSFAuthenticationManagerFinishedNotification;
  */
 @property (nonatomic, strong) SFIdentityCoordinator *idCoordinator;
 
+
+@property (nonatomic) BOOL userSwitch;
+
 /**
  * Whether or not there is a mobile pin code policy configured for this app.
  * @return YES if so, NO if not.

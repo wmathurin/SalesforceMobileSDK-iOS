@@ -156,6 +156,8 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
     BOOL _isAppLaunch;
     
     NSMutableOrderedSet *_delegates;
+    
+    BOOL _isUserSwitch;
 }
 
 /**
@@ -322,6 +324,7 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
 @synthesize connectedAppVersionAuthErrorHandler = _connectedAppVersionAuthErrorHandler;
 @synthesize networkFailureAuthErrorHandler = _networkFailureAuthErrorHandler;
 @synthesize genericAuthErrorHandler = _genericAuthErrorHandler;
+@synthesize userSwitch = _userSwitch;
 
 #pragma mark - Singleton initialization / management
 
@@ -599,6 +602,8 @@ static Class InstanceClass = nil;
 {
     _isAppLaunch = NO;
     
+    _userSwitch = NO;
+    
     [self removeSnapshotView];
     
     BOOL shouldLogout = [self logoutSettingEnabled];
@@ -844,7 +849,7 @@ static Class InstanceClass = nil;
         
         // If the is app startup, we always lock "the first time".  Otherwise, pin code screen
         // display depends on inactivity.
-        if (_isAppLaunch) {
+        if (_isAppLaunch || _userSwitch) {
             [SFSecurityLockout lock];
         } else {
             [SFSecurityLockout validateTimer];
