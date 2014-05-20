@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2013, salesforce.com, inc. All rights reserved.
+ Copyright (c) 2014, salesforce.com, inc. All rights reserved.
  
  Redistribution and use of this software in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
@@ -23,48 +23,26 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIApplication.h>
 
-
-@interface SFPushNotificationManager : NSObject
-
-@property (nonatomic, strong) NSString* deviceToken;
-@property (nonatomic, strong) NSString* deviceSalesforceId;
-
-+ (SFPushNotificationManager *) sharedInstance;
-
+@interface SFSmartStoreUpgrade : NSObject
 
 /**
- * Register with APNS
+ Updates the encryption scheme of each SmartStore database to the currently supported scheme.
  */
-- (void)registerForRemoteNotifications;
++ (void)updateEncryption;
 
 /**
- * Call this method from your app delegate's didRegisterForRemoteNotificationsWithDeviceToken
- * @param deviceTokenData The device token returned by APNS
+ Whether or not a given store is encrypted based on the key store key.
+ @param storeName The store to query.
+ @return YES if the store is encrypted with the key store, NO otherwise.
  */
-- (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceTokenData;
++ (BOOL)usesKeyStoreEncryption:(NSString *)storeName;
 
 /**
- * Register for notifications with Salesforce
- * Call this method after authenticating with Salesforce and registering with APNS
- * @return YES for successful registration call made.
+ Sets a flag denoting whether or not the store uses encryption based the key store key.
+ @param usesKeyStoreEncryption YES if it does, NO if it doesn't.
+ @param storeName The store to which the flag applies.
  */
-- (BOOL)registerForSalesforceNotifications;
-
-/**
- * Unregister from notifications with Salesforce
- * Is called at log out
- * @return YES for successful unregistration call being made.
- */
-- (BOOL)unregisterSalesforceNotifications;
-
-/**
- * Unregister from notifications with Salesforce
- * Is called at log out
- * @param user User account.
- * @return YES for successful unregistration call being made.
- */
-- (BOOL)unregisterSalesforceNotifications:(SFUserAccount*)user;
++ (void)setUsesKeyStoreEncryption:(BOOL)usesKeyStoreEncryption forStore:(NSString *)storeName;
 
 @end

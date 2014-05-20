@@ -30,16 +30,15 @@
 #import "SFJsonUtils.h"
 #import "SFSmartStore.h"
 #import "SFSmartStore+Internal.h"
+#import "SFSmartStoreUpgrade.h"
 #import "SFSmartSqlHelper.h"
 #import "SFStoreCursor.h"
 #import "SFSoupIndex.h"
 #import "SFQuerySpec.h"
 #import <SalesforceSecurity/SFPasscodeManager.h>
+#import <SalesforceSecurity/SFKeyStoreManager.h>
+#import <SalesforceSecurity/SFEncryptionKey.h>
 #import "SFSmartStoreDatabaseManager.h"
-#import <SalesforceCommonUtils/UIDevice+SFHardware.h>
-#import <SalesforceCommonUtils/NSString+SFAdditions.h>
-#import <SalesforceCommonUtils/NSData+SFAdditions.h>
-#import <SalesforceCommonUtils/SFCrypto.h>
 
 static NSMutableDictionary *_allSharedStores;
 
@@ -58,9 +57,8 @@ static NSInteger  const kSFSmartStoreExternalIdNilCode          = 3;
 static NSString * const kSFSmartStoreExternalIdNilDescription   = @"For upsert with external ID path '%@', value cannot be empty for any entries.";
 static NSString * const kSFSmartStoreExtIdLookupError           = @"There was an error retrieving the soup entry ID for path '%@' and value '%@': %@";
 
-static const char *const_key = "H347ergher/32hhj5%hff?Dn@21o";
-static NSString * const kDefaultPasscodeStoresKey = @"com.salesforce.smartstore.defaultPasscodeStores";
-static NSString * const kDefaultEncryptionTypeKey = @"com.salesforce.smartstore.defaultEncryptionType";
+// Encryption constants
+static NSString * const kSFSmartStoreEncryptionKeyLabel = @"com.salesforce.smartstore.encryption.keyLabel";
 
 // Table to keep track of soup names
 static NSString *const SOUP_NAMES_TABLE = @"soup_names";
@@ -94,17 +92,7 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
 {
     // We do this as the very first thing, because there are so many class methods that access
     // the data stores without initializing an SFSmartStore instance.
-    [self updateDefaultEncryption];
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:SFPasscodeResetNotification
-                                                      object:[SFPasscodeManager sharedManager]
-                                                       queue:nil
-                                                  usingBlock:^(NSNotification *note) {
-                                                      NSDictionary *passcodeChangeData = [note userInfo];
-                                                      NSString *oldEncryptionKey = [passcodeChangeData objectForKey:SFPasscodeResetOldPasscodeKey];
-                                                      NSString *newEncryptionKey = [passcodeChangeData objectForKey:SFPasscodeResetNewPasscodeKey];
-                                                      [self changeKeyForStores:oldEncryptionKey newKey:newEncryptionKey];
-                                                  }];
+    [SFSmartStoreUpgrade updateEncryption];    
 }
 
 - (id) initWithName:(NSString*)name {
@@ -146,7 +134,7 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
                 self = nil;
             }
         } else {
-            if (![self openStoreDatabase:NO]) {
+            if (![self openStoreDatabase]) {
                 self = nil;
             }
         }
@@ -182,95 +170,38 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
     // Ensure that the store directory exists.
     [[SFSmartStoreDatabaseManager sharedManager] createStoreDir:self.storeName error:&createErr];
     if (nil == createErr) {
-        //need to create the db file itself before we can encrypt it
-        if ([self openStoreDatabase:YES]) {
+        // Need to create the db file itself before we can encrypt it.
+        if ([self openStoreDatabase]) {
             if ([self createMetaTables]) {
                 [self.storeQueue close];  self.storeQueue = nil; // Need to close before setting encryption.
                 [[SFSmartStoreDatabaseManager sharedManager] protectStoreDir:self.storeName error:&protectErr];
                 if (protectErr != nil) {
-                    [self log:SFLogLevelDebug format:@"Couldn't protect store: %@", protectErr];
+                    [self log:SFLogLevelError format:@"Couldn't protect store: %@", protectErr];
                 } else {
                     //reopen the storeDb now that it's protected
-                    result = [self openStoreDatabase:NO];
+                    result = [self openStoreDatabase];
                 }
             }
         }
     }
     
     if (!result) {
-        [self log:SFLogLevelDebug format:@"Deleting store dir since we can't set it up properly: %@", self.storeName];
+        [self log:SFLogLevelError format:@"Deleting store dir since we can't set it up properly: %@", self.storeName];
         [[SFSmartStoreDatabaseManager sharedManager] removeStoreDir:self.storeName];
-        [[self class] setUsesDefaultKey:NO forStore:self.storeName];
     }
+    
+    [SFSmartStoreUpgrade setUsesKeyStoreEncryption:result forStore:self.storeName];
     return result;
 }
 
-- (BOOL)openStoreDatabase:(BOOL)forCreation {
-    NSString * const kOpenExistingDatabaseError = @"Error opening existing store '%@': %@";
-    NSString * const kCreateDatabaseError       = @"Error creating store '%@': %@";
-    NSString * const kEncryptDatabaseError      = @"Error encrypting unencrypted store '%@': %@";
-    FMDatabase *db = nil;
-    BOOL result = NO;
-    NSError *openDbError = nil;
-    
-    // If there's a bona fide user-defined passcode key, we assume that any existing databases have already
-    // been updated (if necessary) as the result of the passcode addition/change.  Otherwise, we have to do
-    // some special casing around default passcodes.
-    NSString *key = [[self class] encKey];
-    if (key != nil && [key length] > 0) {
-        // User-defined key.  Create or open the database with that.
-        db = [[SFSmartStoreDatabaseManager sharedManager] openStoreDatabaseWithName:self.storeName key:key error:&openDbError];
-        if (db) {
-            result = YES;
-        } else {
-            [self log:SFLogLevelError format:kOpenExistingDatabaseError, self.storeName, [openDbError localizedDescription]];
-        }
-    } else if (forCreation) {
-        // For creation, we can just set the default key from the start.
-        key = [[self class] defaultKey];
-        db = [[SFSmartStoreDatabaseManager sharedManager] openStoreDatabaseWithName:self.storeName key:key error:&openDbError];
-        if (db) {
-            [[self class] setUsesDefaultKey:YES forStore:self.storeName];
-            result = YES;
-        } else {
-            [self log:SFLogLevelError format:kCreateDatabaseError, self.storeName, [openDbError localizedDescription]];
-        }
-    } else {
-        // For existing databases, we may need to update to the default encryption, if not updated already.
-        key = [[self class] defaultKey];
-        if (![[self class] usesDefaultKey:self.storeName]) {
-            // This DB is unencrypted.  Encrypt it before proceeding.
-            db = [[SFSmartStoreDatabaseManager sharedManager] openStoreDatabaseWithName:self.storeName key:@"" error:&openDbError];
-            if (!db) {
-                [self log:SFLogLevelError format:kOpenExistingDatabaseError, self.storeName, [openDbError localizedDescription]];
-            } else {
-                NSError *encryptDbError = nil;
-                db = [[SFSmartStoreDatabaseManager sharedManager] encryptDb:db name:self.storeName key:key error:&encryptDbError];
-                if (encryptDbError) {
-                    [self log:SFLogLevelError format:kEncryptDatabaseError, self.storeName, [encryptDbError localizedDescription]];
-                } else {
-                    [[self class] setUsesDefaultKey:YES forStore:self.storeName];
-                    result = YES;
-                }
-            }
-        } else {
-            // Already uses the default encryption key.
-            db = [[SFSmartStoreDatabaseManager sharedManager] openStoreDatabaseWithName:self.storeName key:key error:&openDbError];
-            if (db) {
-                result = YES;
-            } else {
-                [self log:SFLogLevelError format:kOpenExistingDatabaseError, self.storeName, [openDbError localizedDescription]];
-            }
-        }
+- (BOOL)openStoreDatabase {
+   NSError *openDbError = nil;
+    self.storeQueue = [[SFSmartStoreDatabaseManager sharedManager] openStoreQueueWithName:self.storeName key:[[self class] encKey] error:&openDbError];
+    if (self.storeQueue == nil) {
+        [self log:SFLogLevelError format:@"Error opening store '%@': %@", self.storeName, [openDbError localizedDescription]];
     }
     
-    if (db) {
-        self.storeQueue = [[SFSmartStoreDatabaseManager sharedManager] openStoreQueueWithName:self.storeName key:key error:nil];
-        [db close];
-    }
-        
-    
-    return result;
+    return (self.storeQueue != nil);
 }
 
 #pragma mark - Store methods
@@ -304,7 +235,7 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
         [existingStore.storeQueue close];
         [_allSharedStores removeObjectForKey:storeName];
     }
-    [[self class] setUsesDefaultKey:NO forStore:storeName];
+    [SFSmartStoreUpgrade setUsesKeyStoreEncryption:NO forStore:storeName];
     [[SFSmartStoreDatabaseManager sharedManager] removeStoreDir:storeName];
 }
 
@@ -318,109 +249,6 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
 + (void)clearSharedStoreMemoryState
 {
     [_allSharedStores removeAllObjects];
-}
-
-+ (void)changeKeyForStores:(NSString *)oldKey newKey:(NSString *)newKey
-{
-    if (oldKey == nil) oldKey = @"";
-    if (newKey == nil) newKey = @"";
-    
-    // If the keys are the same, no work to be done.
-    if ([oldKey isEqualToString:newKey])
-        return;
-    
-    
-    NSArray *allStoreNames = [[SFSmartStoreDatabaseManager sharedManager] allStoreNames];
-    for (NSString *storeName in allStoreNames) {
-        SFSmartStore *currentStore = [_allSharedStores objectForKey:storeName];
-        if (currentStore != nil) {
-            [self log:SFLogLevelDebug format:@"Updating key for opened store '%@'", storeName];
-            [currentStore.storeQueue close];
-            [SFSmartStore changeKeyforStoreName:storeName withOldKey:oldKey withNewKey:newKey];
-            // Never going un-encrypted // XXX duplicate logic in changeKeyForDb
-            NSString* actualNewKey = ([newKey length] == 0 ? [self defaultKey] : newKey);
-            currentStore.storeQueue = [[SFSmartStoreDatabaseManager sharedManager] openStoreQueueWithName:storeName key:actualNewKey error:nil];
-        }
-        else {
-            [self log:SFLogLevelDebug format:@"Updating key for store '%@' on filesystem", storeName];
-            [SFSmartStore changeKeyforStoreName:storeName withOldKey:oldKey withNewKey:newKey];
-        }
-    }
-}
-
-+ (void)changeKeyforStoreName:(NSString*)storeName withOldKey:(NSString*)oldKey withNewKey:(NSString*)newKey
-{
-    NSString *keyUsedToOpen;
-    if ([oldKey length] == 0) {
-        // No old key.  Are we using the default key?
-        if ([self usesDefaultKey:storeName]) {
-            keyUsedToOpen = [self defaultKey];
-        } else {
-            keyUsedToOpen = @"";
-        }
-    } else {
-        // There's a previously-defined key.  Use that.
-        keyUsedToOpen = oldKey;
-    }
-    NSError *openError = nil;
-    FMDatabase *db = [[SFSmartStoreDatabaseManager sharedManager] openStoreDatabaseWithName:storeName
-                                                                                                key:keyUsedToOpen
-                                                                                              error:&openError];
-    if (db == nil || openError != nil) {
-        [self log:SFLogLevelError format:@"Error opening store '%@' to update encryption: %@", storeName, [openError localizedDescription]];
-    } else {
-        db = [self changeKeyForDb:db name:storeName oldKey:oldKey newKey:newKey];
-    }
-    [db close];
-}
-
-+ (FMDatabase *)changeKeyForDb:(FMDatabase *)db name:(NSString *)storeName oldKey:(NSString *)oldKey newKey:(NSString *)newKey
-{
-    NSString * const kEncryptionChangeErrorMessage = @"Error changing the encryption key for store '%@': %@";
-    NSString * const kNewEncryptionErrorMessage = @"Error encrypting the unencrypted store '%@': %@";
-    
-    // NB: Assumes keys have already been checked for equality, and that they're not equal.  Ergo if
-    // oldKey is empty, newKey is not.
-    if (oldKey == nil || [oldKey length] == 0) {
-        // No old key originally.  See if we're using the default key.
-        if ([self usesDefaultKey:storeName]) {
-            BOOL rekeyResult = [db rekey:newKey];
-            if (!rekeyResult) {
-                [self log:SFLogLevelError format:kEncryptionChangeErrorMessage, storeName, [db lastErrorMessage]];
-            } else {
-                [self setUsesDefaultKey:NO forStore:storeName];
-            }
-            return db;
-        } else {
-            // No default key either, which means there's no encryption for this store.  Need to encrypt it.
-            NSError *encryptDbError = nil;
-            db = [[SFSmartStoreDatabaseManager sharedManager] encryptDb:db name:storeName key:newKey error:&encryptDbError];
-            if (encryptDbError != nil) {
-                [self log:SFLogLevelError format:kNewEncryptionErrorMessage, storeName, [encryptDbError localizedDescription]];
-            }
-            return db;
-        }
-    } else {
-        // DB is already encrypted with a user-defined key.
-        if (newKey != nil && [newKey length] > 0) {
-            // User-defined new key.
-            BOOL rekeyResult = [db rekey:newKey];
-            if (!rekeyResult) {
-                [self log:SFLogLevelError format:kEncryptionChangeErrorMessage, storeName, [db lastErrorMessage]];
-            }
-            return db;
-        } else {
-            // New key is empty.  Revert to default encryption.
-            NSString *defaultKey = [self defaultKey];
-            BOOL rekeyResult = [db rekey:defaultKey];
-            if (!rekeyResult) {
-                [self log:SFLogLevelError format:kEncryptionChangeErrorMessage, storeName, [db lastErrorMessage]];
-            } else {
-                [self setUsesDefaultKey:YES forStore:storeName];
-            }
-            return db;
-        }
-    }
 }
 
 - (BOOL)createMetaTables {
@@ -498,180 +326,11 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
 
 #pragma mark - Utility methods
 
-+ (BOOL)usesDefaultKey:(NSString *)storeName {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *defaultPasscodeDict = [userDefaults objectForKey:kDefaultPasscodeStoresKey];
-    
-    if (defaultPasscodeDict == nil)
-        return NO;
-    
-    NSNumber *usesDefaultKeyNum = [defaultPasscodeDict objectForKey:storeName];
-    if (usesDefaultKeyNum == nil)
-        return NO;
-    else
-        return [usesDefaultKeyNum boolValue];
-}
-
-+ (void)setUsesDefaultKey:(BOOL)usesDefault forStore:(NSString *)storeName {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *defaultPasscodeDict = [userDefaults objectForKey:kDefaultPasscodeStoresKey];
-    NSMutableDictionary *newDict;
-    if (defaultPasscodeDict == nil)
-        newDict = [NSMutableDictionary dictionary];
-    else
-        newDict = [NSMutableDictionary dictionaryWithDictionary:defaultPasscodeDict];
-    
-    NSNumber *usesDefaultNum = [NSNumber numberWithBool:usesDefault];
-    [newDict setObject:usesDefaultNum forKey:storeName];
-    [userDefaults setObject:newDict forKey:kDefaultPasscodeStoresKey];
-    [userDefaults synchronize];
-    
-    // Update the default encryption type too.
-    if (usesDefault)
-        [self setDefaultEncryptionType:SFSmartStoreDefaultEncryptionTypeBaseAppId forStore:storeName];
-    else
-        [self setDefaultEncryptionType:SFSmartStoreDefaultEncryptionTypeNone forStore:storeName];
-}
-
-+ (SFSmartStoreDefaultEncryptionType)defaultEncryptionTypeForStore:(NSString *)storeName
-{
-    NSDictionary *encTypeDict = [[NSUserDefaults standardUserDefaults] objectForKey:kDefaultEncryptionTypeKey];
-    if (encTypeDict == nil) return SFSmartStoreDefaultEncryptionTypeMac;
-    NSNumber *encTypeNum = [encTypeDict objectForKey:storeName];
-    if (encTypeNum == nil) return SFSmartStoreDefaultEncryptionTypeMac;
-    return [encTypeNum intValue];
-}
-
-+ (void)setDefaultEncryptionType:(SFSmartStoreDefaultEncryptionType)encType forStore:(NSString *)storeName
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *defaultEncTypeDict = [userDefaults objectForKey:kDefaultEncryptionTypeKey];
-    NSMutableDictionary *newDict;
-    if (defaultEncTypeDict == nil)
-        newDict = [NSMutableDictionary dictionary];
-    else
-        newDict = [NSMutableDictionary dictionaryWithDictionary:defaultEncTypeDict];
-    
-    NSNumber *encTypeNum = [NSNumber numberWithInt:encType];
-    [newDict setObject:encTypeNum forKey:storeName];
-    [userDefaults setObject:newDict forKey:kDefaultEncryptionTypeKey];
-    [userDefaults synchronize];
-}
-
-+ (void)updateDefaultEncryption
-{
-    [SFLogger log:[self class] level:SFLogLevelInfo msg:@"Updating default encryption for all stores, where necessary."];
-    NSArray *allStoreNames = [[SFSmartStoreDatabaseManager sharedManager] allStoreNames];
-    [SFLogger log:[self class] level:SFLogLevelInfo format:@"Number of stores to update: %d", [allStoreNames count]];
-    for (NSString *storeName in allStoreNames) {
-        if (![self updateDefaultEncryptionForStore:storeName]) {
-            [SFLogger log:[self class] level:SFLogLevelError format:@"Could not update default encryption for '%@', which means the data is no longer accessible.  Removing store.", storeName];
-            [self removeSharedStoreWithName:storeName];
-        }
-    }
-}
-
-+ (BOOL)updateDefaultEncryptionForStore:(NSString *)storeName
-{
-    if (![self persistentStoreExists:storeName]) {
-        [SFLogger log:[self class] level:SFLogLevelInfo format:@"Store '%@' does not exist on the filesystem.  Skipping.", storeName];
-        return YES;
-    }
-    if (![self usesDefaultKey:storeName]) {
-        [SFLogger log:[self class] level:SFLogLevelInfo format:@"Store '%@' does not use default encryption.  Skipping.", storeName];
-        return YES;
-    }
-    
-    SFSmartStoreDefaultEncryptionType encType = [self defaultEncryptionTypeForStore:storeName];
-    if (encType == SFSmartStoreDefaultEncryptionTypeBaseAppId) {
-        [SFLogger log:[self class] level:SFLogLevelInfo format:@"Store '%@' already uses the preferred default encryption.  Skipping.", storeName];
-        return YES;  // This is our prefered default encryption.
-    }
-    
-    // Otherwise, update the default encryption.
-    
-    NSString *origKey;
-    switch (encType) {
-        case SFSmartStoreDefaultEncryptionTypeNone:
-        case SFSmartStoreDefaultEncryptionTypeMac:
-            [SFLogger log:[self class] level:SFLogLevelInfo format:@"Store '%@' uses MAC encryption.", storeName];
-            origKey = [self defaultKeyMac];
-            break;
-        case SFSmartStoreDefaultEncryptionTypeIdForVendor:
-            [SFLogger log:[self class] level:SFLogLevelInfo format:@"Store '%@' uses vendor identifier encryption.", storeName];
-            origKey = [self defaultKeyIdForVendor];
-            break;
-        default:
-            [SFLogger log:[self class] level:SFLogLevelError format:@"Unknown encryption type '%d'.  Cannot convert store '%@'.", encType, storeName];
-            return NO;
-    }
-    
-    NSError *openDbError = nil;
-    FMDatabase *db = [[SFSmartStoreDatabaseManager sharedManager] openStoreDatabaseWithName:storeName key:origKey error:&openDbError];
-    if (!db) {
-        [SFLogger log:[self class] level:SFLogLevelError format:@"Error opening store '%@': %@", storeName, [openDbError localizedDescription]];
-        return NO;
-    }
-    
-    // Can the database be read with the original default key?
-    NSString *dbPath = [[SFSmartStoreDatabaseManager sharedManager] fullDbFilePathForStoreName:storeName];
-    NSError *verifyDbError = nil;
-    BOOL dbAccessible = [[SFSmartStoreDatabaseManager sharedManager] verifyDatabaseAccess:dbPath key:origKey error:&verifyDbError];
-    if (!dbAccessible) {
-        [SFLogger log:[self class] level:SFLogLevelError format:@"Error verifying the database contents for store '%@': %@", storeName, [verifyDbError localizedDescription]];
-        [db close];
-        return NO;
-    }
-    
-    [SFLogger log:[self class] level:SFLogLevelInfo format:@"Updating default encryption for store '%@'.", storeName];
-    NSString *newDefaultKey = [self defaultKeyBaseAppId];
-    BOOL rekeyResult = [db rekey:newDefaultKey];
-    if (!rekeyResult) {
-        [SFLogger log:[self class] level:SFLogLevelError format:@"Error updating the default encryption for store '%@'.", storeName];
-    } else {
-        [self setDefaultEncryptionType:SFSmartStoreDefaultEncryptionTypeBaseAppId forStore:storeName];
-    }
-    
-    [db close];
-    return rekeyResult;
-}
-
 + (NSString *)encKey
 {
-    NSString *key = [SFPasscodeManager sharedManager].encryptionKey;
-    return (key == nil ? @"" : key);
+    SFEncryptionKey *key = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kSFSmartStoreEncryptionKeyLabel autoCreate:YES];
+    return [key keyAsString];
 }
-
-+ (NSString *)defaultKey
-{
-    return [self defaultKeyBaseAppId];
-}
-
-+ (NSString *)defaultKeyIdForVendor
-{
-    NSString *idForVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    return [self defaultKeyWithSeed:idForVendor];
-}
-
-+ (NSString *)defaultKeyMac
-{
-    NSString *macAddress = [[UIDevice currentDevice] macaddress];
-    return [self defaultKeyWithSeed:macAddress];
-}
-
-+ (NSString *)defaultKeyBaseAppId
-{
-    NSString *baseAppId = [SFCrypto baseAppIdentifier];
-    return [self defaultKeyWithSeed:baseAppId];
-}
-
-+ (NSString *)defaultKeyWithSeed:(NSString *)seed
-{
-    NSString *constKey = [[NSString alloc] initWithBytes:const_key length:strlen(const_key) encoding:NSUTF8StringEncoding];
-    NSString *strSecret = [seed stringByAppendingString:constKey];
-    return [[strSecret sha256] base64Encode];
-}
-
 
 - (NSNumber *)currentTimeInMilliseconds {
     NSTimeInterval rawTime = 1000 * [[NSDate date] timeIntervalSince1970];
