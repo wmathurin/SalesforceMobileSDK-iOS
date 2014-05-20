@@ -156,8 +156,6 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
     BOOL _isAppLaunch;
     
     NSMutableOrderedSet *_delegates;
-    
-    BOOL _isUserSwitch;
 }
 
 /**
