@@ -447,6 +447,10 @@
 		820AB74818E230EC00E25E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7s,
+					armv7,
+				);
 				DSTROOT = /tmp/SalesforceSecurity.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SalesforceSecurity/SalesforceSecurity-Prefix.pch";
@@ -460,6 +464,10 @@
 		820AB74918E230EC00E25E1D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7s,
+					armv7,
+				);
 				DSTROOT = /tmp/SalesforceSecurity.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SalesforceSecurity/SalesforceSecurity-Prefix.pch";
@@ -563,6 +571,10 @@
 		A5D3964518F854EF0048114F /* Internal */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7s,
+					armv7,
+				);
 				DSTROOT = /tmp/SalesforceSecurity.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SalesforceSecurity/SalesforceSecurity-Prefix.pch";
