@@ -258,9 +258,6 @@ extern NSString * const kSFAuthenticationManagerFinishedNotification;
  */
 @property (nonatomic, strong) SFIdentityCoordinator *idCoordinator;
 
-
-@property (nonatomic) BOOL userSwitch;
-
 /**
  Adds a delegate to the list of authentication manager delegates.
  @param delegate The delegate to add to the list.

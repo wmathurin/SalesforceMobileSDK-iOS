@@ -320,7 +320,6 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
 @synthesize connectedAppVersionAuthErrorHandler = _connectedAppVersionAuthErrorHandler;
 @synthesize networkFailureAuthErrorHandler = _networkFailureAuthErrorHandler;
 @synthesize genericAuthErrorHandler = _genericAuthErrorHandler;
-@synthesize userSwitch = _userSwitch;
 
 #pragma mark - Singleton initialization / management
 
@@ -588,8 +587,6 @@ static Class InstanceClass = nil;
 - (void)appWillEnterForeground:(NSNotification *)notification
 {
     _isAppLaunch = NO;
-    
-    _userSwitch = NO;
     
     [self removeSnapshotView];
     
