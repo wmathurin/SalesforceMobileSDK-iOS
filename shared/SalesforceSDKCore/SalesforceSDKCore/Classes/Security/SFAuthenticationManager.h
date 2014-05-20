@@ -262,12 +262,6 @@ extern NSString * const kSFAuthenticationManagerFinishedNotification;
 @property (nonatomic) BOOL userSwitch;
 
 /**
- * Whether or not there is a mobile pin code policy configured for this app.
- * @return YES if so, NO if not.
- */
-@property (nonatomic, readonly) BOOL mobilePinPolicyConfigured;
-
-/**
  Adds a delegate to the list of authentication manager delegates.
  @param delegate The delegate to add to the list.
  */

@@ -22,51 +22,27 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFKeyStoreKey.h"
+#import <Foundation/Foundation.h>
 
-// NSCoding constants
-static NSString * const kKeyStoreKeyDataArchiveKey = @"com.salesforce.keystore.keyStoreKeyDataArchive";
-static NSString * const kKeyStoreKeyTypeDataArchiveKey = @"com.salesforce.keystore.keyStoreKeyTypeDataArchive";
+@interface SFSmartStoreUpgrade : NSObject
 
-@implementation SFKeyStoreKey
+/**
+ Updates the encryption scheme of each SmartStore database to the currently supported scheme.
+ */
++ (void)updateEncryption;
 
-@synthesize encryptionKey = _encryptionKey;
-@synthesize keyType = _keyType;
+/**
+ Whether or not a given store is encrypted based on the key store key.
+ @param storeName The store to query.
+ @return YES if the store is encrypted with the key store, NO otherwise.
+ */
++ (BOOL)usesKeyStoreEncryption:(NSString *)storeName;
 
-- (id)initWithKey:(SFEncryptionKey *)key type:(SFKeyStoreKeyType)keyType
-{
-    self = [super init];
-    if (self) {
-        self.encryptionKey = key;
-        self.keyType = keyType;
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    self = [super init];
-    if (self) {
-        self.encryptionKey = [aDecoder decodeObjectForKey:kKeyStoreKeyDataArchiveKey];
-        NSNumber *keyTypeNum = [aDecoder decodeObjectForKey:kKeyStoreKeyTypeDataArchiveKey];
-        self.keyType = [keyTypeNum unsignedIntegerValue];
-    }
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-    [aCoder encodeObject:self.encryptionKey forKey:kKeyStoreKeyDataArchiveKey];
-    NSNumber *keyTypeNum = [NSNumber numberWithUnsignedInteger:self.keyType];
-    [aCoder encodeObject:keyTypeNum forKey:kKeyStoreKeyTypeDataArchiveKey];
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    SFKeyStoreKey *keyCopy = [[[self class] allocWithZone:zone] init];
-    keyCopy.encryptionKey = [self.encryptionKey copy];
-    keyCopy.keyType = self.keyType;
-    return keyCopy;
-}
+/**
+ Sets a flag denoting whether or not the store uses encryption based the key store key.
+ @param usesKeyStoreEncryption YES if it does, NO if it doesn't.
+ @param storeName The store to which the flag applies.
+ */
++ (void)setUsesKeyStoreEncryption:(BOOL)usesKeyStoreEncryption forStore:(NSString *)storeName;
 
 @end
