@@ -28,6 +28,7 @@
 #import "SFOAuth_UIDevice+Hardware.h"
 #import "SFOAuth_NSString+Additions.h"
 #import <SalesforceCommonUtils/SFCrypto.h>
+#import <SalesforceCommonUtils/NSString+SFAdditions.h>
 #import <SalesforceSecurity/SFSDKCryptoUtils.h>
 #import <SalesforceSecurity/SFKeyStoreManager.h>
 
@@ -116,7 +117,6 @@ static NSException * kSFOAuthExceptionNilIdentifier;
     [coder encodeObject:self.communityUrl       forKey:@"SFOAuthCommunityUrl"];
     [coder encodeObject:self.issuedAt           forKey:@"SFOAuthIssuedAt"];
     [coder encodeObject:self.protocol           forKey:@"SFOAuthProtocol"];
-
     [coder encodeObject:kSFOAuthArchiveVersion  forKey:@"SFOAuthArchiveVersion"];
     [coder encodeObject:[NSNumber numberWithBool:self.isEncrypted]          forKey:@"SFOAuthEncrypted"];
 }
@@ -155,6 +155,13 @@ static NSException * kSFOAuthExceptionNilIdentifier;
     @synchronized(self) {
         return [_clientId copy];
     }
+}
+
+- (NSURL *)apiUrl {
+    if (nil != self.communityUrl) {
+        return self.communityUrl;
+    }
+    return self.instanceUrl;
 }
 
 - (void)setClientId:(NSString *)theClientId {
@@ -245,6 +252,11 @@ static NSException * kSFOAuthExceptionNilIdentifier;
     if (![truncUserId isEqualToString:_userId]) {
         _userId = [truncUserId copy];
     }
+}
+
+- (NSString *)communityId {
+    // TODO: This can be removed once the community ID is being returned from the service as an 18-char ID.
+    return [_communityId entityId18];
 }
 
 - (NSString *)description {
