@@ -22,35 +22,39 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
-#import "SFUserAccount.h"
+#import "SFUserAccountManager.h"
 
-@interface SFSmartStoreUpgrade : NSObject
+@interface SFUserAccountManager ()
+{
+    NSMutableOrderedSet *_delegates;
+}
+
+/** A map of user accounts by user ID
+ */
+@property (nonatomic, strong) NSMutableDictionary *userAccountMap;
+
+@property (nonatomic, strong) NSString *lastChangedOrgId;
+@property (nonatomic, strong) NSString *lastChangedUserId;
+@property (nonatomic, strong) NSString *lastChangedCommunityId;
 
 /**
- Updates any existing stores from their legacy location to their new user-specific location.
+ Executes the given block for each configured delegate.
+ @param block The block to execute for each delegate.
  */
-+ (void)updateStoreLocations;
+- (void)enumerateDelegates:(void (^)(id<SFUserAccountManagerDelegate>))block;
 
 /**
- Updates the encryption scheme of each SmartStore database to the currently supported scheme.
+ Updates the login host in app settings, for apps that utilize login host switching from
+ the Settings app.
+ @param newLoginHost The login host to update.
  */
-+ (void)updateEncryption;
+- (void)updateAppSettingsLoginHost:(NSString *)newLoginHost;
 
 /**
- Whether or not a given store for the given user is encrypted based on the key store key.
- @param user The user associated with the store.
- @param storeName The store to query.
- @return YES if the store is encrypted with the key store, NO otherwise.
+ Creates a user account staged with the given auth credentials.
+ @param credentials The OAuth credentials to apply to the user account.
+ @return The new user account with the given credentials.
  */
-+ (BOOL)usesKeyStoreEncryptionForUser:(SFUserAccount *)user store:(NSString *)storeName;
-
-/**
- Sets a flag denoting whether or not the store for the given user uses encryption based the key store key.
- @param usesKeyStoreEncryption YES if it does, NO if it doesn't.
- @param user The user associated with the store.
- @param storeName The store to which the flag applies.
- */
-+ (void)setUsesKeyStoreEncryption:(BOOL)usesKeyStoreEncryption forUser:(SFUserAccount *)user store:(NSString *)storeName;
+- (SFUserAccount *)createUserAccountWithCredentials:(SFOAuthCredentials *)credentials;
 
 @end

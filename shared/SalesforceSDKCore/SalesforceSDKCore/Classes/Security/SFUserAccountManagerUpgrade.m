@@ -22,35 +22,36 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
-#import "SFUserAccount.h"
+#import "SFUserAccountManagerUpgrade.h"
+#import "SFUserAccountManager+Internal.h"
+#import <SalesforceOAuth/SFOAuthCredentials.h>
 
-@interface SFSmartStoreUpgrade : NSObject
+static NSString * const kOAuthCredentialsDataKeyPrefix  = @"oauth_credentials_data";
+static NSString * const kLegacyDefaultAccountIdentifier = @"Default";
 
-/**
- Updates any existing stores from their legacy location to their new user-specific location.
- */
-+ (void)updateStoreLocations;
+@implementation SFUserAccountManagerUpgrade
 
-/**
- Updates the encryption scheme of each SmartStore database to the currently supported scheme.
- */
-+ (void)updateEncryption;
++ (SFUserAccount *)createUserFromLegacyAccountData
+{
+    NSString *legacyCredentialsDataKey = [SFUserAccountManagerUpgrade legacyCredentialsDataKey];
+    NSData *encodedCredentialsData = [[NSUserDefaults standardUserDefaults] objectForKey:legacyCredentialsDataKey];
+    if (encodedCredentialsData == nil) {
+        // No legacy data.
+        return nil;
+    }
+    
+    [SFLogger log:[SFUserAccountManagerUpgrade class] level:SFLogLevelInfo msg:@"Found legacy account data.  Creating SFUserAccount based on that data."];
+    SFOAuthCredentials *legacyCredentials = [NSKeyedUnarchiver unarchiveObjectWithData:encodedCredentialsData];
+    SFUserAccount *accountFromLegacy = [[SFUserAccountManager sharedInstance] createUserAccountWithCredentials:legacyCredentials];
+    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:legacyCredentialsDataKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    return accountFromLegacy;
+}
 
-/**
- Whether or not a given store for the given user is encrypted based on the key store key.
- @param user The user associated with the store.
- @param storeName The store to query.
- @return YES if the store is encrypted with the key store, NO otherwise.
- */
-+ (BOOL)usesKeyStoreEncryptionForUser:(SFUserAccount *)user store:(NSString *)storeName;
-
-/**
- Sets a flag denoting whether or not the store for the given user uses encryption based the key store key.
- @param usesKeyStoreEncryption YES if it does, NO if it doesn't.
- @param user The user associated with the store.
- @param storeName The store to which the flag applies.
- */
-+ (void)setUsesKeyStoreEncryption:(BOOL)usesKeyStoreEncryption forUser:(SFUserAccount *)user store:(NSString *)storeName;
++ (NSString *)legacyCredentialsDataKey
+{
+    return [NSString stringWithFormat:@"%@-%@-%@", kOAuthCredentialsDataKeyPrefix, [SFUserAccountManager sharedInstance].loginHost, kLegacyDefaultAccountIdentifier];
+}
 
 @end
