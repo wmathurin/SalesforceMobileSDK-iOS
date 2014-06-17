@@ -24,9 +24,11 @@
 
 #import "AppDelegate.h"
 #import <SalesforceSDKCore/SFAuthenticationManager.h>
+#import <SalesforceSDKCore/SFUserAccountManager.h>
 #import <SalesforceSDKCore/SFPushNotificationManager.h>
+#import <SalesforceSDKCore/SFDefaultUserManagementViewController.h>
 
-@interface AppDelegate () <SFAuthenticationManagerDelegate>
+@interface AppDelegate () <SFAuthenticationManagerDelegate, SFUserAccountManagerDelegate>
 
 - (void)initializeAppViewState;
 
@@ -49,6 +51,7 @@
         
         // Auth manager delegate, for receiving logout and login host change events.
         [[SFAuthenticationManager sharedManager] addDelegate:self];
+        [[SFUserAccountManager sharedInstance] addDelegate:self];
     }
     
     return self;
@@ -57,6 +60,7 @@
 - (void)dealloc
 {
     [[SFAuthenticationManager sharedManager] removeDelegate:self];
+    [[SFUserAccountManager sharedInstance] removeDelegate:self];
 }
 
 #pragma mark - App event lifecycle
@@ -114,12 +118,37 @@
 {
     [self log:SFLogLevelDebug msg:@"Logout notification received.  Resetting app."];
     self.viewController.appHomeUrl = nil;
-    [self initializeAppViewState];
+    
+    // Multi-user pattern:
+    // - If there are two or more existing accounts after logout, let the user choose the account
+    //   to switch to.
+    // - If there is one existing account, automatically switch to that account.
+    // - If there are no further authenticated accounts, present the login screen.
+    //
+    // Alternatively, you could just go straight to re-initializing your app state, if you know
+    // your app does not support multiple accounts.  The logic below will work either way.
+    NSArray *allAccounts = [SFUserAccountManager sharedInstance].allUserAccounts;
+    if ([allAccounts count] > 1) {
+        SFDefaultUserManagementViewController *userSwitchVc = [[SFDefaultUserManagementViewController alloc] initWithCompletionBlock:^(SFUserManagementAction action) {
+            [self.viewController dismissViewControllerAnimated:YES completion:NULL];
+        }];
+        [self.viewController presentViewController:userSwitchVc animated:YES completion:NULL];
+    } else if ([[SFUserAccountManager sharedInstance].allUserAccounts count] == 1) {
+        [SFUserAccountManager sharedInstance].currentUser = [[SFUserAccountManager sharedInstance].allUserAccounts objectAtIndex:0];
+        [self initializeAppViewState];
+    } else {
+        [self initializeAppViewState];
+    }
 }
 
-- (void)authManager:(SFAuthenticationManager *)manager didChangeLoginHost:(SFLoginHostUpdateResult *)updateResult
+#pragma mark - SFUserAccountManagerDelegate
+
+- (void)userAccountManager:(SFUserAccountManager *)userAccountManager
+         didSwitchFromUser:(SFUserAccount *)fromUser
+                    toUser:(SFUserAccount *)toUser
 {
-    [self log:SFLogLevelDebug msg:@"Login host changed notification received.  Resetting app."];
+    [self log:SFLogLevelDebug format:@"SFUserAccountManager changed from user %@ to %@.  Resetting app.",
+     fromUser.userName, toUser.userName];
     [self initializeAppViewState];
 }
 

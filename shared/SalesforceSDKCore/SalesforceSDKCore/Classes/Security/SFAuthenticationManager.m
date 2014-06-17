@@ -27,6 +27,7 @@
 #import "SFAuthenticationManager+Internal.h"
 #import "SFUserAccount.h"
 #import "SFUserAccountManager.h"
+#import "SFUserAccountManagerUpgrade.h"
 #import "SFAuthenticationViewHandler.h"
 #import "SFAuthErrorHandler.h"
 #import "SFAuthErrorHandlerList.h"
@@ -380,8 +381,8 @@ static Class InstanceClass = nil;
         if (logoutAppSettingEnabled) {
             [self clearAccountState:YES];
         } else if (result.loginHostChanged) {
-            [self cancelAuthentication];
-            [self clearAccountState:NO];
+            // Authentication hasn't started yet.  Just reset the current user.
+            [SFUserAccountManager sharedInstance].currentUser = nil;
         }
     }
     
@@ -419,8 +420,12 @@ static Class InstanceClass = nil;
     if (account == nil) {
         account = [SFUserAccountManager sharedInstance].currentUser;
         if (account == nil) {
-            [self log:SFLogLevelInfo format:@"No current user account, so creating a new one."];
-            account = [[SFUserAccountManager sharedInstance] createUserAccount];
+            // Create the current user out of legacy account data, if it exists.
+            account = [SFUserAccountManagerUpgrade createUserFromLegacyAccountData];
+            if (account == nil) {
+                [self log:SFLogLevelInfo format:@"No current user account, so creating a new one."];
+                account = [[SFUserAccountManager sharedInstance] createUserAccount];
+            }
             [[SFUserAccountManager sharedInstance] saveAccounts:nil];
         }
     }
@@ -476,9 +481,10 @@ static Class InstanceClass = nil;
     // If it's not the current user, this is really just about clearing the account data and
     // user-specific state for the given account.
     if (![user isEqual:userAccountManager.currentUser]) {
+        // NB: SmartStores need to be cleared before user account info is removed.
+        [SFSmartStore removeAllStoresForUser:user];
         [userAccountManager deleteAccountForUserId:user.credentials.userId error:nil];
         [user.credentials revoke];
-#warning TODO: SmartStore clear stores per user, once available.
         [[SFPushNotificationManager sharedInstance] unregisterSalesforceNotifications:user];
         return;
     }
@@ -589,13 +595,7 @@ static Class InstanceClass = nil;
     } else if (result.loginHostChanged) {
         [self log:SFLogLevelInfo format:@"Login host changed ('%@' to '%@').  Switching to new login host.", result.originalLoginHost, result.updatedLoginHost];
         [self cancelAuthentication];
-        [self clearAccountState:NO];
-        [SFUserAccountManager sharedInstance].currentUser = nil;
-        [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
-            if ([delegate respondsToSelector:@selector(authManager:didChangeLoginHost:)]) {
-                [delegate authManager:self didChangeLoginHost:result];
-            }
-        }];
+        [[SFUserAccountManager sharedInstance] switchToNewUser];
     } else {
         // Check to display pin code screen.
         [SFSecurityLockout setLockScreenFailureCallbackBlock:^{
@@ -685,43 +685,6 @@ static Class InstanceClass = nil;
     
     NSHTTPCookie *sidCookie0 = [NSHTTPCookie cookieWithProperties:newSidCookieProperties];
     [cookieStorage setCookie:sidCookie0];
-}
-
-+ (NSURL *)frontDoorUrlWithReturnUrl:(NSString *)returnUrl returnUrlIsEncoded:(BOOL)isEncoded
-{
-    SFOAuthCredentials *creds = [SFAuthenticationManager sharedManager].coordinator.credentials;
-    NSString *instUrl = creds.apiUrl.absoluteString;
-    NSMutableString *mutableReturnUrl = [NSMutableString stringWithString:instUrl];
-    [mutableReturnUrl appendString:returnUrl];
-    NSString *encodedUrl = (isEncoded ? mutableReturnUrl : [mutableReturnUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
-    NSMutableString *frontDoorUrl = [NSMutableString stringWithString:instUrl];
-    if (![frontDoorUrl hasSuffix:@"/"])
-        [frontDoorUrl appendString:@"/"];
-    NSString *encodedSidValue = [creds.accessToken stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [frontDoorUrl appendFormat:@"secur/frontdoor.jsp?sid=%@&retURL=%@&display=touch", encodedSidValue, encodedUrl];
-    return [NSURL URLWithString:frontDoorUrl];
-}
-
-+ (BOOL)isLoginRedirectUrl:(NSURL *)url
-{
-    if (url == nil || [url absoluteString] == nil || [[url absoluteString] length] == 0)
-        return NO;
-    
-    BOOL urlMatchesLoginRedirectPattern = NO;
-    if ([[[url scheme] lowercaseString] hasPrefix:@"http"]
-        && [[url path] isEqualToString:@"/"]
-        && [url query] != nil) {
-        
-        NSString *startUrlValue = [url valueForParameterName:@"startURL"];
-        NSString *ecValue = [url valueForParameterName:@"ec"];
-        BOOL foundStartURL = (startUrlValue != nil);
-        BOOL foundValidEcValue = ([ecValue isEqualToString:@"301"] || [ecValue isEqualToString:@"302"]);
-        
-        urlMatchesLoginRedirectPattern = (foundStartURL && foundValidEcValue);
-    }
-    
-    return urlMatchesLoginRedirectPattern;
-    
 }
 
 + (BOOL)errorIsInvalidAuthCredentials:(NSError *)error
