@@ -782,9 +782,7 @@ static NSString * const kUserPrefix = @"005";
 }
 
 - (void)setObjectForCurrentUserCustomData:(NSObject<NSCoding> *)object forKey:(NSString *)key {
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:self.currentUser.customData];
-    [dictionary setObject:object forKey:key];
-    self.currentUser.customData = dictionary;
+    [self.currentUser setCustomDataObject:object forKey:key];
 }
 
 - (void)switchToNewUser {
