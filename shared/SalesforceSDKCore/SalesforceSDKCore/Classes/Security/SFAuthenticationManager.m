@@ -435,7 +435,7 @@ static Class InstanceClass = nil;
     SFAuthBlockPair *blockPair = [[SFAuthBlockPair alloc] initWithSuccessBlock:completionBlock
                                                                   failureBlock:failureBlock];
     @synchronized (self.authBlockList) {
-        if (!self.authenticating) {
+        if (!self.authenticating || !self.coordinator.isAuthenticating) {
             // Kick off (async) authentication.
             [self log:SFLogLevelDebug msg:@"No authentication in progress.  Initiating new authentication request."];
             [self.authBlockList addObject:blockPair];
