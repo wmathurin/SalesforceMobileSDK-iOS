@@ -41,7 +41,8 @@
 #import "SFUserAccountManager.h"
 
 static NSMutableDictionary *_allSharedStores;
-
+static SFSmartStoreEncryptionKeyBlock _encryptionKeyBlock = NULL;
+static BOOL _storeUpgradeHasRun = NO;
 
 // The name of the store name used by the SFSmartStorePlugin for hybrid apps
 NSString * const kDefaultSmartStoreName   = @"defaultStore";
@@ -58,7 +59,7 @@ static NSString * const kSFSmartStoreExternalIdNilDescription   = @"For upsert w
 static NSString * const kSFSmartStoreExtIdLookupError           = @"There was an error retrieving the soup entry ID for path '%@' and value '%@': %@";
 
 // Encryption constants
-static NSString * const kSFSmartStoreEncryptionKeyLabel = @"com.salesforce.smartstore.encryption.keyLabel";
+NSString * const kSFSmartStoreEncryptionKeyLabel = @"com.salesforce.smartstore.encryption.keyLabel";
 
 // Table to keep track of soup names
 static NSString *const SOUP_NAMES_TABLE = @"soup_names";
@@ -92,10 +93,12 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
 
 + (void)initialize
 {
-    // We do store upgrades as the very first thing, because there are so many class methods that access
-    // the data stores without initializing an SFSmartStore instance.
-    [SFSmartStoreUpgrade updateStoreLocations];
-    [SFSmartStoreUpgrade updateEncryption];
+    if (!_encryptionKeyBlock) {
+        _encryptionKeyBlock = ^NSString *{
+            SFEncryptionKey *key = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kSFSmartStoreEncryptionKeyLabel autoCreate:YES];
+            return [key keyAsString];
+        };
+    }
 }
 
 - (id) initWithName:(NSString*)name user:(SFUserAccount *)user {
@@ -103,6 +106,14 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
     
     if (nil != self)  {
         [self log:SFLogLevelDebug format:@"SFSmartStore initWithName: %@, user: %@", name, [SFSmartStoreUtils userKeyForUser:user]];
+        
+        @synchronized ([SFSmartStore class]) {
+            if (!_storeUpgradeHasRun) {
+                _storeUpgradeHasRun = YES;
+                [SFSmartStoreUpgrade updateStoreLocations];
+                [SFSmartStoreUpgrade updateEncryption];
+            }
+        }
         
         _storeName = name;
         if ([user isEqual:[SFUserAccountManager sharedInstance].temporaryUser]) {
@@ -350,8 +361,17 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
 
 + (NSString *)encKey
 {
-    SFEncryptionKey *key = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kSFSmartStoreEncryptionKeyLabel keyType:SFKeyStoreKeyTypeGenerated autoCreate:YES];
-    return [key keyAsString];
+    return (_encryptionKeyBlock ? _encryptionKeyBlock() : nil);
+}
+
++ (SFSmartStoreEncryptionKeyBlock)encryptionKeyBlock {
+    return _encryptionKeyBlock;
+}
+
++ (void)setEncryptionKeyBlock:(SFSmartStoreEncryptionKeyBlock)newEncryptionKeyBlock {
+    if (newEncryptionKeyBlock != _encryptionKeyBlock) {
+        _encryptionKeyBlock = newEncryptionKeyBlock;
+    }
 }
 
 - (NSNumber *)currentTimeInMilliseconds {
