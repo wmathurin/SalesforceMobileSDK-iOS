@@ -496,7 +496,7 @@ static NSString * const kUserPrefix = @"005";
     // ~/Library/<appBundleId>/<orgId>/<userId>/UserAccount.plist
     NSArray *rootContents = [fm contentsOfDirectoryAtPath:rootDirectory error:error];
     if (nil == rootContents) {
-        [self log:SFLogLevelDebug format:@"Unable to enumerate the content at %@: %@", rootDirectory, error];
+        [self log:SFLogLevelDebug format:@"Unable to enumerate the content at %@: %@", rootDirectory, *error];
         return NO;
     } else {
         for (NSString *rootContent in rootContents) {
@@ -508,7 +508,7 @@ static NSString * const kUserPrefix = @"005";
             // Fetch the content of the org directory
             NSArray *orgContents = [fm contentsOfDirectoryAtPath:rootPath error:error];
             if (nil == orgContents) {
-                [self log:SFLogLevelDebug format:@"Unable to enumerate the content at %@: %@", rootPath, error];
+                [self log:SFLogLevelDebug format:@"Unable to enumerate the content at %@: %@", rootPath, *error];
                 continue;
             }
             
@@ -584,7 +584,7 @@ static NSString * const kUserPrefix = @"005";
         NSFileManager *fm = [NSFileManager defaultManager];
         if ([fm fileExistsAtPath:userAccountPath]) {
             if (![fm removeItemAtPath:userAccountPath error:error]) {
-                [self log:SFLogLevelDebug format:@"failed to remove old user account %@: %@", userAccountPath, error];
+                [self log:SFLogLevelDebug format:@"failed to remove old user account %@: %@", userAccountPath, *error];
                 return NO;
             }
         }
