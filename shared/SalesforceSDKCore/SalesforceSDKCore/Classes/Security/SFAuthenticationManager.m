@@ -562,6 +562,16 @@ static Class InstanceClass = nil;
     }
 }
 
+- (void)cancelRepeatAuthentication {
+    // reset the SFAuthenticationManager authenitcating flag.
+    // this condition normally happens when oauth session refresh is in
+    // progress & meanwhile some other object makes a refreshLogin
+    // call
+    [self execCompletionBlocks];
+    [self cancelAuthentication];
+}
+
+
 - (BOOL)authenticating
 {
     return ([self.authBlockList count] > 0);
