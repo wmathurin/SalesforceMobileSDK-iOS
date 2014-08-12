@@ -458,7 +458,7 @@ static Class InstanceClass = nil;
 - (void)loggedIn:(BOOL)fromOffline
 {
     if (!fromOffline) {
-    [self.idCoordinator initiateIdentityDataRetrieval];
+        [self.idCoordinator initiateIdentityDataRetrieval];
     } else {
         [self retrievedIdentityData];
     }
@@ -1063,6 +1063,14 @@ static Class InstanceClass = nil;
         [SFSecurityLockout lock];
     } else {
         [SFSecurityLockout validateTimer];
+    }
+    
+    // reset the SFAuthenticationManager authenitcating flag.
+    // this condition normally happens when oauth session refresh is in
+    // progress & in the meanwhile some other object makes a refreshLogin
+    // call
+    if ([self authenticating]) {
+        [self cancelRepeatAuthentication];
     }
 }
 

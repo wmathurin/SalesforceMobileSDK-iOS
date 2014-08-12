@@ -311,11 +311,6 @@ extern NSString * const kSFAuthenticationManagerFinishedNotification;
 - (void)cancelAuthentication;
 
 /**
- Cancels all queued repeat authentication requests.
- */
-- (void)cancelRepeatAuthentication;
-
-/**
  Notification handler for when the app finishes launching.
  @param notification The notification data associated with the event.
  */
