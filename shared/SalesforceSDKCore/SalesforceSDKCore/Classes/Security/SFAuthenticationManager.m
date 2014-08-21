@@ -1064,14 +1064,6 @@ static Class InstanceClass = nil;
     } else {
         [SFSecurityLockout validateTimer];
     }
-    
-    // reset the SFAuthenticationManager authenitcating flag.
-    // this condition normally happens when oauth session refresh is in
-    // progress & in the meanwhile some other object makes a refreshLogin
-    // call
-    if ([self authenticating]) {
-        [self cancelRepeatAuthentication];
-    }
 }
 
 - (void)showRetryAlertForAuthError:(NSError *)error alertTag:(NSInteger)tag
@@ -1285,6 +1277,14 @@ static Class InstanceClass = nil;
     } else {
         self.authViewHandler.authViewDisplayBlock(self, view);
     }
+}
+
+- (void)oauthCoordinatorWillBeginSessionRefresh:(SFOAuthCoordinator *)coordinator {
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerWillBeginSessionRefresh:)]) {
+            [delegate authManagerWillBeginSessionRefresh:self];
+        }
+    }];
 }
 
 - (void)oauthCoordinatorDidAuthenticate:(SFOAuthCoordinator *)coordinator authInfo:(SFOAuthInfo *)info
