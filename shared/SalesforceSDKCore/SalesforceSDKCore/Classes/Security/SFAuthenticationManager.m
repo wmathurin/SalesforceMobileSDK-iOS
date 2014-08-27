@@ -458,7 +458,7 @@ static Class InstanceClass = nil;
 - (void)loggedIn:(BOOL)fromOffline
 {
     if (!fromOffline) {
-    [self.idCoordinator initiateIdentityDataRetrieval];
+        [self.idCoordinator initiateIdentityDataRetrieval];
     } else {
         [self retrievedIdentityData];
     }
@@ -1267,6 +1267,14 @@ static Class InstanceClass = nil;
     } else {
         self.authViewHandler.authViewDisplayBlock(self, view);
     }
+}
+
+- (void)oauthCoordinatorWillBeginAuthentication:(SFOAuthCoordinator *)coordinator authInfo:(SFOAuthInfo *)info {
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerWillBeginAuthentication:authInfo:)]) {
+            [delegate authManagerWillBeginAuthentication:self authInfo:info];
+        }
+    }];
 }
 
 - (void)oauthCoordinatorDidAuthenticate:(SFOAuthCoordinator *)coordinator authInfo:(SFOAuthInfo *)info
