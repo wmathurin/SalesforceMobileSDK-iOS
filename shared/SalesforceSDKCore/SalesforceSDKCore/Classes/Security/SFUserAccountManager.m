@@ -767,8 +767,6 @@ static NSString * const kUserPrefix = @"005";
         communityData.entityId = credentials.communityId;
         communityData.siteUrl = credentials.communityUrl;
         self.currentUser.communities = @[ communityData ];
-    } else {
-        self.currentUser.communities = nil;
     }
     
     //if our default user id is currently the temporary user id,
