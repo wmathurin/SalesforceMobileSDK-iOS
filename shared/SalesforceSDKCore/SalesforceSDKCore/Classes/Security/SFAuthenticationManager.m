@@ -348,6 +348,8 @@ static Class InstanceClass = nil;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidFinishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
         self.useSnapshotView = YES;
         
@@ -627,6 +629,20 @@ static Class InstanceClass = nil;
         [SFSecurityLockout setLockScreenSuccessCallbackBlock:NULL];
         [SFSecurityLockout validateTimer];
     }
+}
+
+- (void)appWillResignActive:(NSNotification *)notification
+{
+    [self log:SFLogLevelDebug msg:@"App is resigning active status."];
+    
+    // Set up snapshot security view, if it's configured.
+    [self setupSnapshotView];
+}
+
+- (void)appDidBecomeActive:(NSNotification *)notification
+{
+    [self log:SFLogLevelDebug msg:@"App is in active status."];
+    [self removeSnapshotView];
 }
 
 - (void)appDidEnterBackground:(NSNotification *)notification
