@@ -27,6 +27,7 @@
 #import "SFAuthenticationManager+Internal.h"
 #import "SFUserAccount.h"
 #import "SFUserAccountManager.h"
+#import "SFUserAccountIdentity.h"
 #import "SFUserAccountManagerUpgrade.h"
 #import "SFAuthenticationViewHandler.h"
 #import "SFAuthErrorHandler.h"
@@ -460,7 +461,7 @@ static Class InstanceClass = nil;
 - (void)loggedIn:(BOOL)fromOffline
 {
     if (!fromOffline) {
-    [self.idCoordinator initiateIdentityDataRetrieval];
+        [self.idCoordinator initiateIdentityDataRetrieval];
     } else {
         [self retrievedIdentityData];
     }
@@ -508,7 +509,7 @@ static Class InstanceClass = nil;
     if (![user isEqual:userAccountManager.currentUser]) {
         // NB: SmartStores need to be cleared before user account info is removed.
         [SFSmartStore removeAllStoresForUser:user];
-        [userAccountManager deleteAccountForUserId:user.credentials.userId error:nil];
+        [userAccountManager deleteAccountForUser:user error:nil];
         [user.credentials revoke];
         [[SFPushNotificationManager sharedInstance] unregisterSalesforceNotifications:user];
         return;
@@ -518,9 +519,6 @@ static Class InstanceClass = nil;
     // "Will Logout" notification before the credentials are revoked.  This will ensure
     // that databases and other resources keyed off of the userID can be destroyed/cleaned up.
     SFUserAccount *userAccount = user;
-
-    // Also keep the userId around until the end of the process so we can safely refer to it
-    NSString *userId = userAccount.credentials.userId;
 
 	NSDictionary *userInfo = nil;
     if (userAccount) {
@@ -538,7 +536,7 @@ static Class InstanceClass = nil;
     [self clearAccountState:YES];
     
     [self willChangeValueForKey:@"haveValidSession"];
-    [userAccountManager deleteAccountForUserId:userId error:nil];
+    [userAccountManager deleteAccountForUser:userAccount error:nil];
     [userAccountManager saveAccounts:nil];
     [userAccount.credentials revoke];
     userAccountManager.currentUser = nil;
@@ -571,8 +569,8 @@ static Class InstanceClass = nil;
 
 - (BOOL)haveValidSession {
     // Check that we have a valid current user
-    NSString *userId = [[SFUserAccountManager sharedInstance] currentUserId];
-    if (nil == userId || [userId isEqualToString:SFUserAccountManagerTemporaryUserAccountId]) {
+    SFUserAccountIdentity *userIdentity = [SFUserAccountManager sharedInstance].currentUserIdentity;
+    if (nil == userIdentity || [userIdentity isEqual:[SFUserAccountManager sharedInstance].temporaryUserIdentity]) {
         return NO;
     }
     
@@ -1283,6 +1281,14 @@ static Class InstanceClass = nil;
     } else {
         self.authViewHandler.authViewDisplayBlock(self, view);
     }
+}
+
+- (void)oauthCoordinatorWillBeginAuthentication:(SFOAuthCoordinator *)coordinator authInfo:(SFOAuthInfo *)info {
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerWillBeginAuthentication:authInfo:)]) {
+            [delegate authManagerWillBeginAuthentication:self authInfo:info];
+        }
+    }];
 }
 
 - (void)oauthCoordinatorDidAuthenticate:(SFOAuthCoordinator *)coordinator authInfo:(SFOAuthInfo *)info
