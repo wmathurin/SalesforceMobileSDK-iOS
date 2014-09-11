@@ -609,7 +609,6 @@
 				INSTALL_PATH = /;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"";
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "Headers/$(TARGET_NAME)Private";
 				PUBLIC_HEADERS_FOLDER_PATH = "Headers/$(TARGET_NAME)";
@@ -749,7 +748,6 @@
 				INSTALL_PATH = /;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"";
-				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "Headers/$(TARGET_NAME)Private";
 				PUBLIC_HEADERS_FOLDER_PATH = "Headers/$(TARGET_NAME)";

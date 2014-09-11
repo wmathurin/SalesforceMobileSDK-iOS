@@ -423,6 +423,13 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6FA80BB419B1135800615986 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = Documentation;
+			};
+			name = Internal;
+		};
 		820AB74518E230EC00E25E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -461,7 +468,6 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"";
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -585,6 +591,20 @@
 			};
 			name = Release;
 		};
+		821DA3F4193EAF1A0041FE0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		821DA3F5193EAF1A0041FE0E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		A5D3964418F854EF0048114F /* Internal */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -622,7 +642,6 @@
 					"$(PROJECT_DIR)/../../external/ThirdPartyDependencies/SalesforceCommonUtils/Headers",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Internal;
@@ -674,20 +693,6 @@
 			};
 			name = Internal;
 		};
-		821DA3F4193EAF1A0041FE0E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		821DA3F5193EAF1A0041FE0E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -726,8 +731,10 @@
 			buildConfigurations = (
 				821DA3F4193EAF1A0041FE0E /* Debug */,
 				821DA3F5193EAF1A0041FE0E /* Release */,
+				6FA80BB419B1135800615986 /* Internal */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
