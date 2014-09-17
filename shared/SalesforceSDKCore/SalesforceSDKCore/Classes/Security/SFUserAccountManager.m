@@ -578,9 +578,9 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
         return nil;
     }
     
-    @try {
+    SFEncryptionKey *encryptionKey = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kUserAccountEncryptionKeyLabel keyType:SFKeyStoreKeyTypeGenerated autoCreate:NO];
+    if (!encryptionKey) {
         SFUserAccount *plainTextUserAccount = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-        
         // Upgrade step.  If we got this far, the file is in the old plaintext format, and we'll
         // convert it to the encrypted format before returning the object.
         BOOL encryptUserAccountSuccess = [self saveUserAccount:plainTextUserAccount toFile:filePath];
@@ -589,8 +589,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
             return nil;
         }
-    }
-    @finally {
+    } else {
         NSData *encryptedUserAccountData = [[NSFileManager defaultManager] contentsAtPath:filePath];
         if (!encryptedUserAccountData) {
             [self log:SFLogLevelDebug format:@"Could not retrieve user account data from '%@'", filePath];
@@ -614,6 +613,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
             return nil;
         }
+
     }
 }
 
