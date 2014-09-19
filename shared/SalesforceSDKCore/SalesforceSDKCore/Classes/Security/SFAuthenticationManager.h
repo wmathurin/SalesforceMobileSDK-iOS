@@ -318,6 +318,13 @@ extern NSString * const kSFAuthenticationManagerFinishedNotification;
 - (void)cancelAuthentication;
 
 /**
+ Enforces the passcode security if it is needed. Note that this method
+ does nothing if an authentication is already in progress
+ because at the end of an authentication flow, the passcode will be enforced.
+ */
+- (void)enforceSecurityLock;
+
+/**
  Notification handler for when the app finishes launching.
  @param notification The notification data associated with the event.
  */

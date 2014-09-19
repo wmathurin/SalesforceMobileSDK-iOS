@@ -25,6 +25,7 @@
 
 #import "SFApplication.h"
 #import "SFAuthenticationManager+Internal.h"
+#import "SFSecurityLockout+Internal.h"
 #import "SFUserAccount.h"
 #import "SFUserAccountManager.h"
 #import "SFUserAccountIdentity.h"
@@ -411,6 +412,23 @@ static Class InstanceClass = nil;
 }
 
 #pragma mark - Public methods
+
+- (void)enforceSecurityLock
+{
+    // Lock only if:
+    // (1) The passcode is needed
+    // (2) There isn't a passcode view already on the screen
+    // (3) This class is not in the process of authenticating - because at the end of the authentication,
+    //     the passcode will be enforced anyway.
+    if ([SFSecurityLockout isPasscodeNeeded] && ![SFSecurityLockout passcodeScreenIsPresent] && !self.authenticating) {
+        [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
+            // Clear this flag only if the passcode has been successfully entered
+            [SFSecurityLockout setValidatePasscodeAtStartup:NO];
+        }];
+        
+        [SFSecurityLockout lock];
+    }
+}
 
 - (BOOL)loginWithCompletion:(SFOAuthFlowSuccessCallbackBlock)completionBlock
                     failure:(SFOAuthFlowFailureCallbackBlock)failureBlock
