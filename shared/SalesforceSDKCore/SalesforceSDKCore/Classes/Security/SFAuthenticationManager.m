@@ -626,8 +626,6 @@ static Class InstanceClass = nil;
 
 - (void)appWillEnterForeground:(NSNotification *)notification
 {
-    [self removeSnapshotView];
-    
     BOOL shouldLogout = [self logoutSettingEnabled];
     SFLoginHostUpdateResult *result = [[SFUserAccountManager sharedInstance] updateLoginHost];
     if (shouldLogout) {
@@ -645,11 +643,23 @@ static Class InstanceClass = nil;
         [SFSecurityLockout setLockScreenSuccessCallbackBlock:NULL];
         [SFSecurityLockout validateTimer];
     }
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerWillEnterForeground:)]) {
+            [delegate authManagerWillEnterForeground:self];
+        }
+    }];
 }
 
 - (void)appWillResignActive:(NSNotification *)notification
 {
     [self log:SFLogLevelDebug msg:@"App is resigning active status."];
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerWillResignActive:)]) {
+            [delegate authManagerWillResignActive:self];
+        }
+    }];
     
     // Set up snapshot security view, if it's configured.
     [self setupSnapshotView];
@@ -658,6 +668,13 @@ static Class InstanceClass = nil;
 - (void)appDidBecomeActive:(NSNotification *)notification
 {
     [self log:SFLogLevelDebug msg:@"App is in active status."];
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidBecomeActive:)]) {
+            [delegate authManagerDidBecomeActive:self];
+        }
+    }];
+    
     [self removeSnapshotView];
 }
 
@@ -665,10 +682,13 @@ static Class InstanceClass = nil;
 {
     [self log:SFLogLevelDebug msg:@"App is entering the background."];
     
-    [self savePasscodeActivityInfo];
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidEnterBackground:)]) {
+            [delegate authManagerDidEnterBackground:self];
+        }
+    }];
     
-    // Set up snapshot security view, if it's configured.
-    [self setupSnapshotView];
+    [self savePasscodeActivityInfo];
 }
 
 - (void)appWillTerminate:(NSNotification *)notification
