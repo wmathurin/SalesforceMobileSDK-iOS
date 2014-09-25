@@ -424,6 +424,7 @@ static Class InstanceClass = nil;
         [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
             // Clear this flag only if the passcode has been successfully entered
             [SFSecurityLockout setValidatePasscodeAtStartup:NO];
+            [SFSecurityLockout startActivityMonitoring];
         }];
         
         [SFSecurityLockout lock];
