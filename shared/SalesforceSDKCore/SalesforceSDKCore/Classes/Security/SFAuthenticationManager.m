@@ -823,8 +823,19 @@ static Class InstanceClass = nil;
         if (self.snapshotViewController == nil) {
             self.snapshotViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
         }
-        [self.snapshotView removeFromSuperview];
+        [[self.snapshotViewController.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
         [self.snapshotViewController.view addSubview:self.snapshotView];
+        
+        // Contrain the default view to its parent views size
+        [self.snapshotView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_snapshotView]-0-|"
+                                                                                                 options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                                                 metrics:nil
+                                                                                                   views:NSDictionaryOfVariableBindings(_snapshotView)]];
+        [self.snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_snapshotView]-0-|"
+                                                                                                 options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                                                 metrics:nil
+                                                                                                   views:NSDictionaryOfVariableBindings(_snapshotView)]];
         [self removeSnapshotView];
         [[SFRootViewManager sharedManager] pushViewController:self.snapshotViewController];
     }
