@@ -25,6 +25,7 @@
 
 #import "SFApplication.h"
 #import "SFAuthenticationManager+Internal.h"
+#import "SFSecurityLockout+Internal.h"
 #import "SFUserAccount.h"
 #import "SFUserAccountManager.h"
 #import "SFUserAccountIdentity.h"
@@ -349,6 +350,8 @@ static Class InstanceClass = nil;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidFinishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillTerminate:) name:UIApplicationWillTerminateNotification object:nil];
         self.useSnapshotView = YES;
         
@@ -409,6 +412,24 @@ static Class InstanceClass = nil;
 }
 
 #pragma mark - Public methods
+
+- (void)enforceSecurityLock
+{
+    // Lock only if:
+    // (1) The passcode is needed
+    // (2) There isn't a passcode view already on the screen
+    // (3) This class is not in the process of authenticating - because at the end of the authentication,
+    //     the passcode will be enforced anyway.
+    if ([SFSecurityLockout isPasscodeNeeded] && ![SFSecurityLockout passcodeScreenIsPresent] && !self.authenticating) {
+        [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
+            // Clear this flag only if the passcode has been successfully entered
+            [SFSecurityLockout setValidatePasscodeAtStartup:NO];
+            [SFSecurityLockout startActivityMonitoring];
+        }];
+        
+        [SFSecurityLockout lock];
+    }
+}
 
 - (BOOL)loginWithCompletion:(SFOAuthFlowSuccessCallbackBlock)completionBlock
                     failure:(SFOAuthFlowFailureCallbackBlock)failureBlock
@@ -606,8 +627,6 @@ static Class InstanceClass = nil;
 
 - (void)appWillEnterForeground:(NSNotification *)notification
 {
-    [self removeSnapshotView];
-    
     BOOL shouldLogout = [self logoutSettingEnabled];
     SFLoginHostUpdateResult *result = [[SFUserAccountManager sharedInstance] updateLoginHost];
     if (shouldLogout) {
@@ -625,16 +644,52 @@ static Class InstanceClass = nil;
         [SFSecurityLockout setLockScreenSuccessCallbackBlock:NULL];
         [SFSecurityLockout validateTimer];
     }
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerWillEnterForeground:)]) {
+            [delegate authManagerWillEnterForeground:self];
+        }
+    }];
+}
+
+- (void)appWillResignActive:(NSNotification *)notification
+{
+    [self log:SFLogLevelDebug msg:@"App is resigning active status."];
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerWillResignActive:)]) {
+            [delegate authManagerWillResignActive:self];
+        }
+    }];
+    
+    // Set up snapshot security view, if it's configured.
+    [self setupSnapshotView];
+}
+
+- (void)appDidBecomeActive:(NSNotification *)notification
+{
+    [self log:SFLogLevelDebug msg:@"App is in active status."];
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidBecomeActive:)]) {
+            [delegate authManagerDidBecomeActive:self];
+        }
+    }];
+    
+    [self removeSnapshotView];
 }
 
 - (void)appDidEnterBackground:(NSNotification *)notification
 {
     [self log:SFLogLevelDebug msg:@"App is entering the background."];
     
-    [self savePasscodeActivityInfo];
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidEnterBackground:)]) {
+            [delegate authManagerDidEnterBackground:self];
+        }
+    }];
     
-    // Set up snapshot security view, if it's configured.
-    [self setupSnapshotView];
+    [self savePasscodeActivityInfo];
 }
 
 - (void)appWillTerminate:(NSNotification *)notification
@@ -767,8 +822,20 @@ static Class InstanceClass = nil;
         
         if (self.snapshotViewController == nil) {
             self.snapshotViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
-            [self.snapshotViewController.view addSubview:self.snapshotView];
         }
+        [[self.snapshotViewController.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [self.snapshotViewController.view addSubview:self.snapshotView];
+        
+        // Contrain the default view to its parent views size
+        [self.snapshotView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_snapshotView]-0-|"
+                                                                                                 options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                                                 metrics:nil
+                                                                                                   views:NSDictionaryOfVariableBindings(_snapshotView)]];
+        [self.snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_snapshotView]-0-|"
+                                                                                                 options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                                                 metrics:nil
+                                                                                                   views:NSDictionaryOfVariableBindings(_snapshotView)]];
         [self removeSnapshotView];
         [[SFRootViewManager sharedManager] pushViewController:self.snapshotViewController];
     }
@@ -1058,8 +1125,9 @@ static Class InstanceClass = nil;
 {
     if (nil == _statusAlert) {
         // show alert and allow retry
+        [self log:SFLogLevelError format:@"Error during authentication: %@", error];
         _statusAlert = [[UIAlertView alloc] initWithTitle:[SFSDKResourceUtils localizedString:kAlertErrorTitleKey]
-                                                  message:[NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertConnectionErrorFormatStringKey], error]
+                                                  message:[NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertConnectionErrorFormatStringKey], [error localizedDescription]]
                                                  delegate:self
                                         cancelButtonTitle:[SFSDKResourceUtils localizedString:kAlertRetryButtonKey]
                                         otherButtonTitles: nil];

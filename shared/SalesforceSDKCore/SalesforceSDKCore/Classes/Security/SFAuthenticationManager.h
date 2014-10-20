@@ -121,6 +121,30 @@ typedef void (^SFOAuthFlowFailureCallbackBlock)(SFOAuthInfo *, NSError *);
  */
 - (void)authManagerDidLogout:(SFAuthenticationManager *)manager;
 
+/**
+ Called after UIApplicationWillResignActiveNotification is received
+ @param manager The instance of SFAuthenticationManager making the call.
+ */
+- (void)authManagerWillResignActive:(SFAuthenticationManager *)manager;
+
+/**
+ Called after UIApplicationDidBecomeActiveNotification is received.
+ @param manager The instance of SFAuthenticationManager making the call.
+ */
+- (void)authManagerDidBecomeActive:(SFAuthenticationManager *)manager;
+
+/**
+ Called after UIApplicationWillEnterForegroundNotification is received.
+ @param manager The instance of SFAuthenticationManager making the call.
+ */
+- (void)authManagerWillEnterForeground:(SFAuthenticationManager *)manager;
+
+/**
+ Called after UIApplicationDidEnterBackgroundNotification is received
+ @param manager The instance of SFAuthenticationManager making the call.
+ */
+- (void)authManagerDidEnterBackground:(SFAuthenticationManager *)manager;
+
 @end
 
 /**
@@ -316,6 +340,13 @@ extern NSString * const kSFAuthenticationManagerFinishedNotification;
  Cancels an in-progress authentication.  In-progress authentication state will be cleared.
  */
 - (void)cancelAuthentication;
+
+/**
+ Enforces the passcode security if it is needed. Note that this method
+ does nothing if an authentication is already in progress
+ because at the end of an authentication flow, the passcode will be enforced.
+ */
+- (void)enforceSecurityLock;
 
 /**
  Notification handler for when the app finishes launching.
