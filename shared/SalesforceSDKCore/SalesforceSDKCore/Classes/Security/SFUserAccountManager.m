@@ -651,7 +651,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
                 return NO;
             }
         }
-    };
+    }
     
     return YES;
 }
