@@ -623,33 +623,33 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
 }
 
 - (BOOL)saveAccounts:(NSError**)error {
-    @synchronized(self.userAccountMap){
-        for (SFUserAccountIdentity *userIdentity in self.userAccountMap) {
-            // Don't save the temporary user id
-            if ([userIdentity isEqual:self.temporaryUserIdentity]) {
-                continue;
-            }
-            
-            // Grab the user account...
-            SFUserAccount *user = self.userAccountMap[userIdentity];
-            
-            // And it's persistent file path
-            NSString *userAccountPath = [[self class] userAccountPlistFileForUser:user];
-            
-            // Make sure to remove any existing file
-            NSFileManager *fm = [NSFileManager defaultManager];
-            if ([fm fileExistsAtPath:userAccountPath]) {
-                if (![fm removeItemAtPath:userAccountPath error:error]) {
-                    [self log:SFLogLevelDebug format:@"failed to remove old user account %@: %@", userAccountPath, *error];
-                    return NO;
-                }
-            }
-            
-            // And now save its content
-            if (![self saveUserAccount:user toFile:userAccountPath]) {
-                [self log:SFLogLevelDebug format:@"failed to archive user account: %@", userAccountPath];
+    NSDictionary *userAccountMap = [self.userAccountMap copy];
+    
+    for (SFUserAccountIdentity *userIdentity in userAccountMap) {
+        // Don't save the temporary user id
+        if ([userIdentity isEqual:self.temporaryUserIdentity]) {
+            continue;
+        }
+        
+        // Grab the user account...
+        SFUserAccount *user = userAccountMap[userIdentity];
+        
+        // And it's persistent file path
+        NSString *userAccountPath = [[self class] userAccountPlistFileForUser:user];
+        
+        // Make sure to remove any existing file
+        NSFileManager *fm = [NSFileManager defaultManager];
+        if ([fm fileExistsAtPath:userAccountPath]) {
+            if (![fm removeItemAtPath:userAccountPath error:error]) {
+                [self log:SFLogLevelDebug format:@"failed to remove old user account %@: %@", userAccountPath, *error];
                 return NO;
             }
+        }
+        
+        // And now save its content
+        if (![self saveUserAccount:user toFile:userAccountPath]) {
+            [self log:SFLogLevelDebug format:@"failed to archive user account: %@", userAccountPath];
+            return NO;
         }
     }
     
