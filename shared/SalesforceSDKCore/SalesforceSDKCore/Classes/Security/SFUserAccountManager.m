@@ -763,7 +763,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
         } else {
             [self log:SFLogLevelDebug format:@"User folder for user '%@' does not exist on the filesystem.  Continuing.", user.userName];
         }
-        @synchronized {
+        @synchronized(self.userAccountMap) {
             [self.userAccountMap removeObjectForKey:user.accountIdentity];
         }
     }
