@@ -31,7 +31,7 @@
 
 /** A map of user accounts by user ID
  */
-@property (nonatomic, strong) NSMutableDictionary *userAccountMap;
+@property (atomic, strong) NSMutableDictionary *userAccountMap;
 
 @property (nonatomic, strong) NSString *lastChangedOrgId;
 @property (nonatomic, strong) NSString *lastChangedUserId;
