@@ -763,17 +763,13 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
         } else {
             [self log:SFLogLevelDebug format:@"User folder for user '%@' does not exist on the filesystem.  Continuing.", user.userName];
         }
-        @synchronized {
-            [self.userAccountMap removeObjectForKey:user.accountIdentity];
-        }
+        [self.userAccountMap removeObjectForKey:user.accountIdentity];
     }
     return YES;
 }
 
 - (void)clearAllAccountState {
-    @synchronized(self.userAccountMap) {
-        [self.userAccountMap removeAllObjects];
-    }
+    [self.userAccountMap removeAllObjects];
 }
 
 - (void)addAccount:(SFUserAccount*)acct {
@@ -839,9 +835,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
 }
 
 - (void)replaceOldUser:(SFUserAccountIdentity *)oldUserIdentity withUser:(SFUserAccount *)newUser {
-    @synchronized(self.userAccountMap) {
-        [self.userAccountMap removeObjectForKey:oldUserIdentity];
-    }
+    [self.userAccountMap removeObjectForKey:oldUserIdentity];
     SFUserAccountIdentity *newIdentity = newUser.accountIdentity;
     (self.userAccountMap)[newIdentity] = newUser;
     
