@@ -676,7 +676,9 @@ static Class InstanceClass = nil;
         }
     }];
     
-    [self removeSnapshotView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self removeSnapshotView];
+    });
 }
 
 - (void)appDidEnterBackground:(NSNotification *)notification
