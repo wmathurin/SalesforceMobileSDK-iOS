@@ -25,6 +25,7 @@
 #import "SFSecurityLockout.h"
 #import "SFSecurityLockout+Internal.h"
 #import <SalesforceCommonUtils/SFInactivityTimerCenter.h>
+#import <SalesforceCommonUtils/SFCrypto.h>
 #import <SalesforceOAuth/SFOAuthCredentials.h>
 #import <SalesforceCommonUtils/SFKeychainItemWrapper.h>
 #import "SFUserAccountManager.h"
@@ -71,7 +72,15 @@ static BOOL _showPasscode = YES;
 + (void)initialize
 {
     [SFSecurityLockout upgradeSettings];  // Ensures a lockout time value in the keychain.
-    securityLockoutTime = [[SFSecurityLockout readLockoutTimeFromKeychain] unsignedIntegerValue];
+    
+    // If this is the first time the passcode functionality has been run in the lifetime of the app install,
+    // reset passcode data, since keychain data can persist between app installs.
+    if (![SFCrypto baseAppIdentifierIsConfigured] || [SFCrypto baseAppIdentifierConfiguredThisLaunch]) {
+        [SFSecurityLockout setSecurityLockoutTime:0];
+        [SFSecurityLockout setPasscodeLength:kDefaultPasscodeLength];
+    } else {
+        securityLockoutTime = [[SFSecurityLockout readLockoutTimeFromKeychain] unsignedIntegerValue];
+    }
     
     sDelegates = [NSMutableOrderedSet orderedSet];
     
