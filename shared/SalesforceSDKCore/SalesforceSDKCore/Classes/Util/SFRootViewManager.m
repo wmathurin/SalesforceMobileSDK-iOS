@@ -101,7 +101,7 @@
 {
     if (![NSThread isMainThread]) {
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [self pushViewController:viewController];
+            [self popViewController:viewController];
         });
         return;
     }
