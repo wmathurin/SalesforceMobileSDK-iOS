@@ -839,9 +839,9 @@ static Class InstanceClass = nil;
                                                                                                        views:NSDictionaryOfVariableBindings(_snapshotView)]];
         } else {
             [[SFRootViewManager sharedManager] popViewController:self.snapshotViewController];
+            [self.snapshotViewController.view addSubview:self.snapshotView];
         }
-        
-        [self.snapshotViewController.view addSubview:self.snapshotView];
+    
         [[SFRootViewManager sharedManager] pushViewController:self.snapshotViewController];
 
     }
