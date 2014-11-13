@@ -25,6 +25,7 @@
 #import "SFSecurityLockout.h"
 #import "SFSecurityLockout+Internal.h"
 #import <SalesforceCommonUtils/SFInactivityTimerCenter.h>
+#import <SalesforceCommonUtils/SFCrypto.h>
 #import <SalesforceOAuth/SFOAuthCredentials.h>
 #import <SalesforceCommonUtils/SFKeychainItemWrapper.h>
 #import "SFUserAccountManager.h"
@@ -71,7 +72,15 @@ static BOOL _showPasscode = YES;
 + (void)initialize
 {
     [SFSecurityLockout upgradeSettings];  // Ensures a lockout time value in the keychain.
-    securityLockoutTime = [[SFSecurityLockout readLockoutTimeFromKeychain] unsignedIntegerValue];
+    
+    // If this is the first time the passcode functionality has been run in the lifetime of the app install,
+    // reset passcode data, since keychain data can persist between app installs.
+    if (![SFCrypto baseAppIdentifierIsConfigured] || [SFCrypto baseAppIdentifierConfiguredThisLaunch]) {
+        [SFSecurityLockout setSecurityLockoutTime:0];
+        [SFSecurityLockout setPasscodeLength:kDefaultPasscodeLength];
+    } else {
+        securityLockoutTime = [[SFSecurityLockout readLockoutTimeFromKeychain] unsignedIntegerValue];
+    }
     
     sDelegates = [NSMutableOrderedSet orderedSet];
     
@@ -629,7 +638,7 @@ static NSString *const kSecurityLockoutSessionId = @"securityLockoutSession";
 + (NSNumber *)readLockoutTimeFromKeychain
 {
     NSNumber *time = nil;
-    SFKeychainItemWrapper *keychainWrapper = [[SFKeychainItemWrapper alloc] initWithIdentifier:kKeychainIdentifierLockoutTime account:nil];
+    SFKeychainItemWrapper *keychainWrapper = [SFKeychainItemWrapper itemWithIdentifier:kKeychainIdentifierLockoutTime account:nil];
     NSData *valueData = [keychainWrapper valueData];
     if (valueData) {
         NSUInteger i = 0;
@@ -641,7 +650,7 @@ static NSString *const kSecurityLockoutSessionId = @"securityLockoutSession";
 
 + (void)writeLockoutTimeToKeychain:(NSNumber *)time
 {
-    SFKeychainItemWrapper *keychainWrapper = [[SFKeychainItemWrapper alloc] initWithIdentifier:kKeychainIdentifierLockoutTime account:nil];
+    SFKeychainItemWrapper *keychainWrapper = [SFKeychainItemWrapper itemWithIdentifier:kKeychainIdentifierLockoutTime account:nil];
     NSData *data = nil;
     if (time != nil) {
         NSUInteger i = [time unsignedIntegerValue];
@@ -656,7 +665,7 @@ static NSString *const kSecurityLockoutSessionId = @"securityLockoutSession";
 + (NSNumber *)readIsLockedFromKeychain
 {
     NSNumber *locked = nil;
-    SFKeychainItemWrapper *keychainWrapper = [[SFKeychainItemWrapper alloc] initWithIdentifier:kKeychainIdentifierIsLocked account:nil];
+    SFKeychainItemWrapper *keychainWrapper = [SFKeychainItemWrapper itemWithIdentifier:kKeychainIdentifierIsLocked account:nil];
     NSData *valueData = [keychainWrapper valueData];
     if (valueData) {
         BOOL b = NO;
@@ -668,7 +677,7 @@ static NSString *const kSecurityLockoutSessionId = @"securityLockoutSession";
 
 + (void)writeIsLockedToKeychain:(NSNumber *)locked
 {
-    SFKeychainItemWrapper *keychainWrapper = [[SFKeychainItemWrapper alloc] initWithIdentifier:kKeychainIdentifierIsLocked account:nil];
+    SFKeychainItemWrapper *keychainWrapper = [SFKeychainItemWrapper itemWithIdentifier:kKeychainIdentifierIsLocked account:nil];
     NSData *data = nil;
     if (locked != nil) {
         BOOL b = [locked boolValue];

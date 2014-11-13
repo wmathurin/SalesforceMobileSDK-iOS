@@ -76,7 +76,7 @@
 - (void)pushViewController:(UIViewController *)viewController
 {
     if (![NSThread isMainThread]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
             [self pushViewController:viewController];
         });
         return;
@@ -99,6 +99,13 @@
 
 - (void)popViewController:(UIViewController *)viewController
 {
+    if (![NSThread isMainThread]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [self popViewController:viewController];
+        });
+        return;
+    }
+    
     UIViewController *currentViewController = self.mainWindow.rootViewController;
     if (currentViewController == viewController) {
         self.mainWindow.rootViewController = nil;
