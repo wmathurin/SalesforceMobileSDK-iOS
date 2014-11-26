@@ -663,7 +663,12 @@ static Class InstanceClass = nil;
     }];
     
     // Set up snapshot security view, if it's configured.
-    [self setupSnapshotView];
+    @try {
+        [self setupSnapshotView];
+    }
+    @catch (NSException *exception) {
+        [self log:SFLogLevelWarning format:@"Exception thrown while setting up security snapshot view: '%@'. Continuing resign active.", [exception reason]];
+    }
 }
 
 - (void)appDidBecomeActive:(NSNotification *)notification
