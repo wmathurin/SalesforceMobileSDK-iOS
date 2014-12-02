@@ -584,6 +584,8 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
     }
     
     @try {
+        // TODO: Refactor so this "read plaintext account" case is a fallback.  This upgrade
+        // case generates (caught) exceptions every time through the account load.
         SFUserAccount *plainTextUserAccount = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
         
         // Upgrade step.  If we got this far, the file is in the old plaintext format, and we'll
@@ -598,14 +600,14 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
     @finally {
         NSData *encryptedUserAccountData = [[NSFileManager defaultManager] contentsAtPath:filePath];
         if (!encryptedUserAccountData) {
-            [self log:SFLogLevelDebug format:@"Could not retrieve user account data from '%@'", filePath];
+            [self log:SFLogLevelWarning format:@"Could not retrieve user account data from file '%@'", filePath];
             return nil;
         }
         
         SFEncryptionKey *encKey = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kUserAccountEncryptionKeyLabel keyType:SFKeyStoreKeyTypeGenerated autoCreate:YES];
         NSData *decryptedArchiveData = [SFSDKCryptoUtils aes256DecryptData:encryptedUserAccountData withKey:encKey.key iv:encKey.initializationVector];
         if (!decryptedArchiveData) {
-            [self log:SFLogLevelDebug msg:@"User account data could not be decrypted.  Can't load account."];
+            [self log:SFLogLevelWarning msg:@"User account data could not be decrypted.  Can't load account."];
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
             return nil;
         }
@@ -615,7 +617,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
             return decryptedAccount;
         }
         @catch (NSException *exception) {
-            [self log:SFLogLevelDebug format:@"Error deserializing the user account data: %@", [exception reason]];
+            [self log:SFLogLevelWarning format:@"Error deserializing the user account data: %@", [exception reason]];
             [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
             return nil;
         }
