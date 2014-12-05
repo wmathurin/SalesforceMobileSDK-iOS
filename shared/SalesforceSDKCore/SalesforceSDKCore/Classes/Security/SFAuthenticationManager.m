@@ -663,7 +663,12 @@ static Class InstanceClass = nil;
     }];
     
     // Set up snapshot security view, if it's configured.
-    [self setupSnapshotView];
+    @try {
+        [self setupSnapshotView];
+    }
+    @catch (NSException *exception) {
+        [self log:SFLogLevelWarning format:@"Exception thrown while setting up security snapshot view: '%@'. Continuing resign active.", [exception reason]];
+    }
 }
 
 - (void)appDidBecomeActive:(NSNotification *)notification
@@ -676,7 +681,9 @@ static Class InstanceClass = nil;
         }
     }];
     
-    [self removeSnapshotView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self removeSnapshotView];
+    });
 }
 
 - (void)appDidEnterBackground:(NSNotification *)notification
@@ -822,22 +829,26 @@ static Class InstanceClass = nil;
         
         if (self.snapshotViewController == nil) {
             self.snapshotViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+            
+            // Contrain the default view to its parent views size
+            [self.snapshotView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [self.snapshotViewController.view addSubview:self.snapshotView];
+            
+            [self.snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_snapshotView]-0-|"
+                                                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                                                     metrics:nil
+                                                                                                       views:NSDictionaryOfVariableBindings(_snapshotView)]];
+            [self.snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_snapshotView]-0-|"
+                                                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                                                     metrics:nil
+                                                                                                       views:NSDictionaryOfVariableBindings(_snapshotView)]];
+        } else {
+            [[SFRootViewManager sharedManager] popViewController:self.snapshotViewController];
+            [self.snapshotViewController.view addSubview:self.snapshotView];
         }
-        [[self.snapshotViewController.view subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [self.snapshotViewController.view addSubview:self.snapshotView];
-        
-        // Contrain the default view to its parent views size
-        [self.snapshotView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_snapshotView]-0-|"
-                                                                                                 options:NSLayoutFormatDirectionLeadingToTrailing
-                                                                                                 metrics:nil
-                                                                                                   views:NSDictionaryOfVariableBindings(_snapshotView)]];
-        [self.snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_snapshotView]-0-|"
-                                                                                                 options:NSLayoutFormatDirectionLeadingToTrailing
-                                                                                                 metrics:nil
-                                                                                                   views:NSDictionaryOfVariableBindings(_snapshotView)]];
-        [self removeSnapshotView];
+    
         [[SFRootViewManager sharedManager] pushViewController:self.snapshotViewController];
+
     }
 }
 

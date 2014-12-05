@@ -229,59 +229,73 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
 #pragma mark - Store methods
 
 + (id)sharedStoreWithName:(NSString *)storeName {
-    return [self sharedStoreWithName:storeName user:[SFUserAccountManager sharedInstance].currentUser];
+    @synchronized (self) {
+        return [self sharedStoreWithName:storeName user:[SFUserAccountManager sharedInstance].currentUser];
+    }
 }
 
 + (id)sharedStoreWithName:(NSString*)storeName user:(SFUserAccount *)user {
-    if (nil == _allSharedStores) {
-        _allSharedStores = [NSMutableDictionary dictionary];
+    @synchronized (self) {
+        if (nil == _allSharedStores) {
+            _allSharedStores = [NSMutableDictionary dictionary];
+        }
+        NSString *userKey = [SFSmartStoreUtils userKeyForUser:user];
+        if ([_allSharedStores objectForKey:userKey] == nil) {
+            [_allSharedStores setObject:[NSMutableDictionary dictionary] forKey:userKey];
+        }
+        
+        SFSmartStore *store = [[_allSharedStores objectForKey:userKey] objectForKey:storeName];
+        if (nil == store) {
+            store = [[self alloc] initWithName:storeName user:user];
+            if (store)
+                [[_allSharedStores objectForKey:userKey] setObject:store forKey:storeName];
+        }
+        
+        return store;
     }
-    NSString *userKey = [SFSmartStoreUtils userKeyForUser:user];
-    if ([_allSharedStores objectForKey:userKey] == nil) {
-        [_allSharedStores setObject:[NSMutableDictionary dictionary] forKey:userKey];
-    }
-    
-    SFSmartStore *store = [[_allSharedStores objectForKey:userKey] objectForKey:storeName];
-    if (nil == store) {
-        store = [[self alloc] initWithName:storeName user:user];
-        if (store)
-            [[_allSharedStores objectForKey:userKey] setObject:store forKey:storeName];
-    }
-    
-    return store;
 }
 
 + (void)removeSharedStoreWithName:(NSString *)storeName {
-    [self removeSharedStoreWithName:storeName forUser:[SFUserAccountManager sharedInstance].currentUser];
+    @synchronized (self) {
+        [self removeSharedStoreWithName:storeName forUser:[SFUserAccountManager sharedInstance].currentUser];
+    }
 }
 
 + (void)removeSharedStoreWithName:(NSString*)storeName forUser:(SFUserAccount *)user {
-    [self log:SFLogLevelDebug format:@"removeSharedStoreWithName: %@, user: %@", storeName, user];
-    NSString *userKey = [SFSmartStoreUtils userKeyForUser:user];
-    SFSmartStore *existingStore = [[_allSharedStores objectForKey:userKey] objectForKey:storeName];
-    if (nil != existingStore) {
-        [existingStore.storeQueue close];
-        [[_allSharedStores objectForKey:userKey] removeObjectForKey:storeName];
+    @synchronized (self) {
+        [self log:SFLogLevelDebug format:@"removeSharedStoreWithName: %@, user: %@", storeName, user];
+        NSString *userKey = [SFSmartStoreUtils userKeyForUser:user];
+        SFSmartStore *existingStore = [[_allSharedStores objectForKey:userKey] objectForKey:storeName];
+        if (nil != existingStore) {
+            [existingStore.storeQueue close];
+            [[_allSharedStores objectForKey:userKey] removeObjectForKey:storeName];
+        }
+        [SFSmartStoreUpgrade setUsesKeyStoreEncryption:NO forUser:user store:storeName];
+        [[SFSmartStoreDatabaseManager sharedManagerForUser:user] removeStoreDir:storeName];
     }
-    [SFSmartStoreUpgrade setUsesKeyStoreEncryption:NO forUser:user store:storeName];
-    [[SFSmartStoreDatabaseManager sharedManagerForUser:user] removeStoreDir:storeName];
 }
 
 + (void)removeAllStores {
-    [self removeAllStoresForUser:[SFUserAccountManager sharedInstance].currentUser];
+    @synchronized (self) {
+        [self removeAllStoresForUser:[SFUserAccountManager sharedInstance].currentUser];
+    }
 }
 
 + (void)removeAllStoresForUser:(SFUserAccount *)user {
-    NSArray *allStoreNames = [[SFSmartStoreDatabaseManager sharedManagerForUser:user] allStoreNames];
-    for (NSString *storeName in allStoreNames) {
-        [self removeSharedStoreWithName:storeName forUser:user];
+    @synchronized (self) {
+        NSArray *allStoreNames = [[SFSmartStoreDatabaseManager sharedManagerForUser:user] allStoreNames];
+        for (NSString *storeName in allStoreNames) {
+            [self removeSharedStoreWithName:storeName forUser:user];
+        }
+        [SFSmartStoreDatabaseManager removeSharedManagerForUser:user];
     }
-    [SFSmartStoreDatabaseManager removeSharedManagerForUser:user];
 }
 
 + (void)clearSharedStoreMemoryState
 {
-    [_allSharedStores removeAllObjects];
+    @synchronized (self) {
+        [_allSharedStores removeAllObjects];
+    }
 }
 
 - (BOOL)createMetaTables {
