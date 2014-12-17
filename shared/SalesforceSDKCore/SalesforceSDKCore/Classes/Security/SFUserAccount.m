@@ -257,16 +257,8 @@ static NSString * const kGlobalScopingKey = @"-global-";
 }
 
 - (NSString*)description {
-    NSString *theUserName = @"*****";
-    NSString *theFullName = @"*****";
-    
-#ifdef DEBUG
-    theUserName = self.userName;
-    theFullName = self.fullName;
-#endif
-    
     NSString * s = [NSString stringWithFormat:@"<SFUserAccount username=%@ fullName=%@ accessScopes=%@ credentials=%@, community=%@>",
-                    theUserName, theFullName, self.accessScopes, self.credentials, self.communityId];
+                    self.userName, self.fullName, self.accessScopes, self.credentials, self.communityId];
     return s;
 }
 
