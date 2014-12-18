@@ -84,20 +84,17 @@ NSString * const kSFRedactedQuerystringValue = @"[redacted]";
 }
 
 + (NSString*)stringUrlWithScheme:(NSString*)scheme host:(NSString*)host port:(NSNumber*)port pathComponents:(NSArray*)pathComponents {
+    if (!host || !scheme) {
+        return nil;
+    }
     NSMutableString *absoluteUrl = [[NSMutableString alloc] init];
-    if (scheme) {
-        [absoluteUrl appendFormat:@"%@://", scheme];
-    }
-    if (host) {
-        [absoluteUrl appendString:host];
-    }
+    [absoluteUrl appendFormat:@"%@://", scheme];
+    [absoluteUrl appendString:host];
     if (port) {
         [absoluteUrl appendFormat:@":%@", port];
     }
     
-    if (pathComponents.count) {
-        [self appendPathComponents:pathComponents toMutableUrlString:absoluteUrl];
-    }
+    [self appendPathComponents:pathComponents toMutableUrlString:absoluteUrl];
 
     return absoluteUrl;
 }
