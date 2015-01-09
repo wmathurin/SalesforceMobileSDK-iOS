@@ -517,7 +517,7 @@ static Class InstanceClass = nil;
         return;
     }
     
-    [self log:SFLogLevelInfo format:@"Logging out user '%@'.", user.userName];
+    [self log:SFLogLevelInfo format:@"Logging out user '%@'.", user];
     
     SFUserAccountManager *userAccountManager = [SFUserAccountManager sharedInstance];
     
@@ -974,7 +974,7 @@ static Class InstanceClass = nil;
 - (void)revokeRefreshToken:(SFUserAccount *)user
 {
     if (user.credentials.refreshToken != nil) {
-        [self log:SFLogLevelInfo format:@"Revoking credentials on the server for '%@'.", user.userName];
+        [self log:SFLogLevelInfo format:@"Revoking credentials on the server for '%@'.", user];
         NSMutableString *host = [NSMutableString stringWithFormat:@"%@://", user.credentials.protocol];
         [host appendString:user.credentials.domain];
         [host appendString:@"/services/oauth2/revoke?token="];
