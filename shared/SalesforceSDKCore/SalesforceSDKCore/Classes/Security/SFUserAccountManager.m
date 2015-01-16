@@ -566,7 +566,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
     self.previousCommunityId = self.activeCommunityId;
     
     SFUserAccount *account = [self userAccountForUserIdentity:curUserIdentity];
-    account.communityId = nil;
+    account.communityId = self.previousCommunityId;
     self.currentUser = account;
     
     // update the client ID in case it's changed (via settings, etc)
@@ -898,6 +898,8 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
                 self.currentUser.communities = @[communityData];
             }
         }
+        
+        [self setActiveCommunityId:self.currentUser.communityId];
     }
     
     // If our default user identity is currently the temporary user identity,
@@ -945,19 +947,19 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
 }
 
 - (void)userChanged:(SFUserAccountChange)change {
-    if (![self.lastChangedOrgId isEqualToString:self.currentUser.credentials.organizationId]) {
+    if (![self.lastChangedOrgId isEqualToString:self.currentUser.credentials.organizationId] || (self.lastChangedOrgId == nil && self.currentUser.credentials.organizationId != nil)) {
         self.lastChangedOrgId = self.currentUser.credentials.organizationId;
         change |= SFUserAccountChangeOrgId;
         change &= ~SFUserAccountChangeUnknown; // clear the unknown bit
     }
 
-    if (![self.lastChangedUserId isEqualToString:self.currentUser.credentials.userId]) {
+    if (![self.lastChangedUserId isEqualToString:self.currentUser.credentials.userId] || (self.lastChangedUserId == nil && self.currentUser.credentials.userId != nil)) {
         self.lastChangedUserId = self.currentUser.credentials.userId;
         change |= SFUserAccountChangeUserId;
         change &= ~SFUserAccountChangeUnknown; // clear the unknown bit
     }
 
-    if (![self.lastChangedCommunityId isEqualToString:self.currentUser.communityId]) {
+    if (![self.lastChangedCommunityId isEqualToString:self.currentUser.communityId] || (self.lastChangedCommunityId == nil && self.currentUser.communityId != nil)) {
         self.lastChangedCommunityId = self.currentUser.communityId;
         change |= SFUserAccountChangeCommunityId;
         change &= ~SFUserAccountChangeUnknown; // clear the unknown bit
