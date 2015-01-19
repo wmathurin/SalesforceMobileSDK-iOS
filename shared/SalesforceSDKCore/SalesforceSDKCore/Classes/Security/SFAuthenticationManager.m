@@ -50,6 +50,27 @@
 #import <SalesforceCommonUtils/SFInactivityTimerCenter.h>
 #import <SalesforceCommonUtils/SFTestContext.h>
 
+@interface SnapshotViewController : UIViewController
+
+@end
+
+@implementation SnapshotViewController
+
+- (BOOL)shouldAutorotate {
+    return !(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        return UIInterfaceOrientationMaskPortrait;
+    } else {
+        return UIInterfaceOrientationMaskAll;
+    }
+}
+
+@end
+
 static SFAuthenticationManager *sharedInstance = nil;
 
 // Public notification name constants
@@ -176,7 +197,7 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
 /**
  View controller that will display the security snapshot view.
  */
-@property (nonatomic, strong) UIViewController *snapshotViewController;
+@property (nonatomic, strong) SnapshotViewController *snapshotViewController;
 
 /**
  Dismisses the authentication retry alert box, if present.
@@ -828,7 +849,7 @@ static Class InstanceClass = nil;
         }
         
         if (self.snapshotViewController == nil) {
-            self.snapshotViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+            self.snapshotViewController = [[SnapshotViewController alloc] initWithNibName:nil bundle:nil];
             
             // Contrain the default view to its parent views size
             [self.snapshotView setTranslatesAutoresizingMaskIntoConstraints:NO];
