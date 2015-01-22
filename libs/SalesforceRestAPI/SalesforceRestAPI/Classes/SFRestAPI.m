@@ -30,6 +30,7 @@
 #import <SalesforceSDKCore/SFAuthenticationManager.h>
 #import <SalesforceSDKCore/SFSDKWebUtils.h>
 #import <SalesforceSDKCore/SalesforceSDKManager.h>
+#import <SalesforceNetworkSDK/SalesforceNetworkSDK.h>
 
 NSString* const kSFRestDefaultAPIVersion = @"v31.0";
 NSString* const kSFRestErrorDomain = @"com.salesforce.RestAPI.ErrorDomain";
@@ -166,7 +167,11 @@ static BOOL kIsTestRun;
 
 - (void) setupNetworkCoordinator {
     if (_authMgr.coordinator != nil) {
-        _networkEngine.coordinator = [self createNetworkCoordinator:_authMgr.coordinator];
+
+        // TODO - SF1 Hybrid Network engine does not use the coordinator but the user. Need to converge SF1 NetworkSDK with MobileSDK's version of
+        // network sdk.
+        // _networkEngine.coordinator = [self createNetworkCoordinator:_authMgr.coordinator];
+        _networkEngine.currentUser = [SFUserAccountManager sharedInstance].currentUser;
     }
     self.networkCoordinatorNeedsRefresh = NO;
 }

@@ -1079,7 +1079,7 @@
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 			};
@@ -1127,7 +1127,7 @@
 				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "Headers/${PRODUCT_NAME}";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 			};
 			name = Debug;
 		};
@@ -1142,7 +1142,7 @@
 				OTHER_CFLAGS = "-DSQLITE_HAS_CODEC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "Headers/${PRODUCT_NAME}";
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 			};
 			name = Release;
 		};

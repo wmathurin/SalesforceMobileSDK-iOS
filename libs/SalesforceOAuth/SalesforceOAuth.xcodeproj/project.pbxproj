@@ -410,7 +410,7 @@
 			name = SalesforceOAuthUnitTests;
 			productName = SalesforceOAuthUnitTests;
 			productReference = CFD31A3213D5956700A9074A /* SalesforceOAuthUnitTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -625,7 +625,7 @@
 				INSTALL_PATH = /;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"";
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "Headers/$(TARGET_NAME)Private";
 				PUBLIC_HEADERS_FOLDER_PATH = "Headers/$(TARGET_NAME)";
