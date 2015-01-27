@@ -983,7 +983,7 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
         // Exact/like/range queries
         else {
             NSString *rawJson = [frs stringForColumn:SOUP_COL];
-            NSDictionary *entry = [SFJsonUtils objectFromJSONString:rawJson];
+            id entry = [SFJsonUtils objectFromJSONString:rawJson];
             if (entry) {
                 [result addObject:entry];
             }
@@ -1001,8 +1001,8 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
     for(int i=0; i<frs.columnCount; i++) {
         NSString* columnName = [frs columnNameForIndex:i];
         id value = [valuesMap objectForKey:columnName];
-        if ([columnName hasSuffix:SOUP_COL]) {
-            NSDictionary *entry = [SFJsonUtils objectFromJSONString:(NSString*)value];
+        if ([columnName hasSuffix:SOUP_COL] && [value isKindOfClass:[NSString class]]) {
+            id entry = [SFJsonUtils objectFromJSONString:(NSString*)value];
             if (entry) {
                 [result addObject:entry];
             }
