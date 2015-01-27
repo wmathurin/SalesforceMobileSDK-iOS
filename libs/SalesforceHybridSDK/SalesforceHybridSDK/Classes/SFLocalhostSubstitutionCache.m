@@ -26,6 +26,7 @@
 #import "SFLocalhostSubstitutionCache.h"
 
 #define WWW_DIR @"www"
+#define LOCALHOST_PATH @"/localhost"
 
 @implementation SFLocalhostSubstitutionCache
 
@@ -57,13 +58,15 @@
 {
     NSURL* url = [request URL];
     
+    NSString *path = url.path;
+    
     // Not a localhost request
-    if (![[url host] isEqualToString:@"localhost"]) {
+    if (![path hasPrefix:LOCALHOST_PATH]) {
         return [super cachedResponseForRequest:request];
     }
     
     // Localhost request
-    NSString* urlPath = [url path];
+    NSString* urlPath = [[url path] stringByReplacingOccurrencesOfString:LOCALHOST_PATH withString:@""];
     NSString* filePath = [self pathForResource:urlPath];
     NSString* wwwDirPath = [self pathForResource:@""];
     
