@@ -51,7 +51,7 @@ static NSError *sLastError = nil;
 
 + (id)objectFromJSONString:(NSString *)jsonString {
     id result = nil;
-    if ([jsonString isKindOfClass:[NSString class]] && jsonString) {
+    if ([jsonString isKindOfClass:[NSString class]]) {
         NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
         result = [self objectFromJSONData:jsonData];
     }
