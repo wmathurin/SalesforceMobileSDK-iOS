@@ -1002,7 +1002,7 @@ static NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
         NSString* columnName = [frs columnNameForIndex:i];
         id value = [valuesMap objectForKey:columnName];
         if ([columnName hasSuffix:SOUP_COL] && [value isKindOfClass:[NSString class]]) {
-            id entry = [SFJsonUtils objectFromJSONString:(NSString*)value];
+            id entry = [SFJsonUtils objectFromJSONString:value];
             if (entry) {
                 [result addObject:entry];
             }
