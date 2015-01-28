@@ -1229,7 +1229,7 @@ static Class InstanceClass = nil;
                                                              [weakSelf log:SFLogLevelError msg:@"Network failure for OAuth User Agent flow is a fatal error."];
                                                              return NO;  // Default error handler will show the error.
                                                          } else if ([SFUserAccountManager sharedInstance].currentUser.credentials.accessToken == nil) {
-                                                             [weakSelf log:SFLogLevelWarning msg:@"Network failure for OAuth Refresh flow (existing credentials)  Access token has been revoked."];
+                                                             [weakSelf log:SFLogLevelWarning msg:@"Network unreachable for access token refresh, and no access token is configured.  Cannot continue."];
                                                              return NO;
                                                          } else {
                                                              [weakSelf log:SFLogLevelInfo msg:@"Network failure for OAuth Refresh flow (existing credentials)  Try to continue."];
