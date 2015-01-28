@@ -44,11 +44,11 @@ static NSString * const kSFOAuthDefaultDomain          = @"login.salesforce.com"
 
 NSString * const kSFOAuthEncryptionTypeKey = @"com.salesforce.oauth.creds.encryption.type";
 
-@interface SFOAuthCredentials () 
+@interface SFOAuthCredentials ()
 
 //This property is intentionally readonly in the public header files.
 @property (nonatomic, readwrite, strong) NSString *protocol;
-    
+
 @end
 static NSException * kSFOAuthExceptionNilIdentifier;
 
@@ -74,7 +74,7 @@ static NSException * kSFOAuthExceptionNilIdentifier;
 
 + (void)initialize {
     if (self == [SFOAuthCredentials class]) {
-        kSFOAuthExceptionNilIdentifier = [[NSException alloc] initWithName:NSInternalInconsistencyException 
+        kSFOAuthExceptionNilIdentifier = [[NSException alloc] initWithName:NSInternalInconsistencyException
                                                                     reason:@"identifier cannot be nil or empty"
                                                                   userInfo:nil];
     }
@@ -98,7 +98,7 @@ static NSException * kSFOAuthExceptionNilIdentifier;
             self.protocol = protocolVal;
         else
             self.protocol = kSFOAuthProtocolHttps;
-
+        
         _encrypted          = [[coder decodeObjectForKey:@"SFOAuthEncrypted"] boolValue];
         _legacyIdentityInformation = [coder decodeObjectForKey:@"SFOAuthIdentityInformation"];
         [self updateTokenEncryption];
@@ -192,8 +192,8 @@ static NSException * kSFOAuthExceptionNilIdentifier;
     if (![identityUrl isEqual:_identityUrl]) {
         _identityUrl = [identityUrl copy];
         
-                 _userId = nil;
-         _organizationId = nil;
+        _userId = nil;
+        _organizationId = nil;
         
         if (_identityUrl.path) {
             NSArray *pathComps = [_identityUrl.path componentsSeparatedByString:@"/"];
@@ -226,7 +226,7 @@ static NSException * kSFOAuthExceptionNilIdentifier;
     }
     return [[NSString alloc] initWithData:activationCodeData encoding:NSUTF8StringEncoding];
 }
-    
+
 // This setter is exposed publicly for unit tests. Other external client code should use the revoke methods.
 - (void)setActivationCode:(NSString *)token {
     if (!([self.identifier length] > 0)) @throw kSFOAuthExceptionNilIdentifier;
@@ -242,7 +242,7 @@ static NSException * kSFOAuthExceptionNilIdentifier;
 - (void)setUserId:(NSString *)userId {
     //ensure we only use the first 15 chars of any user ID,
     //since some sources might set 15 char, some might set 18 char
-    NSString *truncUserId = [userId substringToIndex:MIN([userId length], 15)]; 
+    NSString *truncUserId = [userId substringToIndex:MIN([userId length], 15)];
     if (![truncUserId isEqualToString:_userId]) {
         _userId = [truncUserId copy];
     }
@@ -252,7 +252,7 @@ static NSException * kSFOAuthExceptionNilIdentifier;
     NSString *format = @"<%@ identifier=\"%@\" clientId=\"%@\" domain=\"%@\" identityUrl=\"%@\" instanceUrl=\"%@\" "
                        @"communityId=\"%@\" communityUrl=\"%@\" "
                        @"issuedAt=\"%@\" organizationId=\"%@\" protocol=\"%@\" redirectUri=\"%@\">";
-    return [NSString stringWithFormat:format, [self class], 
+    return [NSString stringWithFormat:format, [self class],
             self.identifier, self.clientId, self.domain, self.identityUrl, self.instanceUrl,
             self.communityId, self.communityUrl,
             self.issuedAt, self.organizationId, self.protocol, self.redirectUri];

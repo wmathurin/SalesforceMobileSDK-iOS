@@ -144,6 +144,22 @@ static BOOL _showPasscode = YES;
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLegacyPasscodeLengthKey];
         [self setPasscodeLength:[previousLength intValue]];
     }
+    
+    NSNumber *currentPasscodeLength = [[SFPreferences globalPreferences] objectForKey:kPasscodeLengthKey];
+    
+    if (currentPasscodeLength) {
+        NSNumber *previousLength = [[NSUserDefaults standardUserDefaults] objectForKey:kLegacyPasscodeLengthKey];
+        if (previousLength) {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLegacyPasscodeLengthKey];
+        }
+        return;
+    }
+    
+    NSNumber *previousLength = [[NSUserDefaults standardUserDefaults] objectForKey:kLegacyPasscodeLengthKey];
+    if (previousLength) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kLegacyPasscodeLengthKey];
+        [self setPasscodeLength:[previousLength intValue]];
+    }
 }
 
 + (void)addDelegate:(id<SFSecurityLockoutDelegate>)delegate

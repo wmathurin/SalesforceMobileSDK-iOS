@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2012, salesforce.com, inc. All rights reserved.
+ Copyright (c) 2014, salesforce.com, inc. All rights reserved.
  
  Redistribution and use of this software in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
@@ -22,47 +22,36 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 /**
- * Protocol defining an SDK-based app delegate.
+ Represents the unique identity of a given user account.
  */
-@protocol SFSDKAppDelegate <UIApplicationDelegate>
+@interface SFUserAccountIdentity : NSObject <NSCoding, NSCopying>
 
 /**
- The User-Agent string presented by this application
+ The user ID associated with the account.
  */
-@property (nonatomic, readonly) NSString *userAgentString;
+@property (nonatomic, copy) NSString *userId;
 
 /**
- * Forces a logout from the current account.
- * This throws out the OAuth refresh token.
+ The organization ID associated with the account.
  */
-- (void)logout;
+@property (nonatomic, copy) NSString *orgId;
 
 /**
- * Creates a snapshot view.
+ Creates a new account identity object with the given user ID and org ID.
+ @param userId The user ID associated with the identity.
+ @param orgId The org ID associated with the identity.
  */
-- (UIView*)createSnapshotView;
-
-@end
-
-/**
- * Mobile SDK extension of the UIApplication object.  Currently just gathers
- * date/time information about user events.
- */
-@interface SFApplication : UIApplication
+- (id)initWithUserId:(NSString *)userId orgId:(NSString *)orgId;
 
 /**
- * The date of the last user event in the application.
+ Compares this identity with another.  Useful for [NSArray sortedArrayUsingSelector:].
+ @param otherIdentity The other identity to compare to this one.
+ @return NSOrderedAscending if other is greater, NSOrderedDescending if other is less,
+ NSOrderedSame if they're equal.
  */
-@property (atomic, readonly) NSDate *lastEventDate;
-
-/**
- * Boolean which defaults to NO, and is only set to YES in the viewDidAppear of ChatterPasscodeViewController and is set to NO in the dealloc of the VC.
- * The boolean is used to ignore the keypressed & touch gestures in the UIApplication's sendEvents & keyPressed methods.  Otherwise, the lastEventDate
- * variable was being updated and if the timing was right on the Notification/Control Center displaying the PIN Code View could be circumvented.
- */
-@property (nonatomic) BOOL ignoreEvents;
+- (NSComparisonResult)compare:(SFUserAccountIdentity *)otherIdentity;
 
 @end
