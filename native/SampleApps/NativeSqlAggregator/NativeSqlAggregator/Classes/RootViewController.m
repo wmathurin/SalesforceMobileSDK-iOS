@@ -24,8 +24,8 @@
 
 #import "RootViewController.h"
 
-#import <SalesforceNativeSDK/SFRestAPI.h>
-#import <SalesforceNativeSDK/SFRestRequest.h>
+#import <SalesforceRestAPI/SFRestAPI.h>
+#import <SalesforceRestAPI/SFRestRequest.h>
 #import "SmartStoreInterface.h"
 #import "ResultViewController.h"
 
@@ -60,9 +60,9 @@
 
 - (void)request:(SFRestRequest *)request didLoadResponse:(id)dataResponse
 {
-    NSArray *records = [dataResponse objectForKey:@"records"];
+    NSArray *records = dataResponse[@"records"];
     if (nil != records) {
-        NSDictionary *firstRecord = [records objectAtIndex:0];
+        NSDictionary *firstRecord = records[0];
         if (nil != firstRecord) {
             NSDictionary *attributes = [firstRecord valueForKey:@"attributes"];
             if (nil != attributes) {
