@@ -3,7 +3,7 @@
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-Shared.git
 [submodule "external/cordova-ios/cordova-ios"]
 	path = external/cordova-ios/cordova-ios
-	url = https://github.com/apache/cordova-ios.git
+	url = https://git.soma.salesforce.com/iOS/cordova-ios.git
 [submodule "external/ThirdPartyDependencies"]
 	path = external/ThirdPartyDependencies
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Dependencies.git
