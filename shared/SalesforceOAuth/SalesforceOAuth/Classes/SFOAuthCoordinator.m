@@ -38,6 +38,7 @@ static NSString * const kSFOAuthEndPointAuthorize               = @"/services/oa
 static NSString * const kSFOAuthEndPointToken                   = @"/services/oauth2/token";        // token refresh flow
 
 static NSString * const kSFOAuthAccessToken                     = @"access_token";
+static NSString * const kSFOAuthCSRFToken                       = @"csrf_token";
 static NSString * const kSFOAuthClientId                        = @"client_id";
 static NSString * const kSFOAuthDisplay                         = @"display";
 static NSString * const kSFOAuthDisplayTouch                    = @"touch";
@@ -341,8 +342,8 @@ static NSString * const kHttpPostContentType                    = @"application/
         // Discard the approval code.
         self.approvalCode = nil;
     } else {
-        [params appendFormat:@"&%@=%@&%@=%@", kSFOAuthGrantType, kSFOAuthGrantTypeRefreshToken, kSFOAuthRefreshToken, self.credentials.refreshToken];
-        [logString appendFormat:@"&%@=%@&%@=REDACTED", kSFOAuthGrantType, kSFOAuthGrantTypeRefreshToken, kSFOAuthRefreshToken];
+        [params appendFormat:@"&%@=%@&%@=%@&%@=TRUE", kSFOAuthGrantType, kSFOAuthGrantTypeRefreshToken, kSFOAuthRefreshToken, self.credentials.refreshToken, kSFOAuthCSRFToken];
+        [logString appendFormat:@"&%@=%@&%@=REDACTED&%@=TRUE", kSFOAuthGrantType, kSFOAuthGrantTypeRefreshToken, kSFOAuthRefreshToken, kSFOAuthCSRFToken];
     }
 	
     if (self.credentials.logLevel < kSFOAuthLogLevelInfo) {
@@ -456,6 +457,7 @@ static NSString * const kHttpPostContentType                    = @"application/
 - (void)updateCredentials:(NSDictionary*)params forTokenRefresh:(BOOL)tokenRefresh
 {
     self.credentials.accessToken    = [params objectForKey:kSFOAuthAccessToken];
+    self.credentials.csrfToken      = [params objectForKey:kSFOAuthCSRFToken];
     self.credentials.issuedAt       = [[self class] timestampStringToDate:[params objectForKey:kSFOAuthIssuedAt]];
     
     if (!tokenRefresh) {
