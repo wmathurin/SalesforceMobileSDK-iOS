@@ -289,7 +289,7 @@ NSString * const kReIndexDataArg      = @"reIndexData";
             databaseSize = INT_MAX;
         }
         
-        return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:databaseSize];
+        return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)databaseSize];
     } command:command];
 }
 
