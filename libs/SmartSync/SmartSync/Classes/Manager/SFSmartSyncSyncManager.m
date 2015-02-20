@@ -78,12 +78,12 @@ typedef void (^SyncFailBlock) (NSString* message, NSError* error);
 
 
 // action type
-typedef enum {
+typedef NS_ENUM(NSUInteger, SFSyncManagerAction) {
     kSyncManagerActionNone,
     kSyncManagerActionCreate,
     kSyncManagerActionUpdate,
     kSyncManagerActionDelete
-} SFSyncManagerAction;
+};
 
 @interface SFSmartSyncSyncManager () <SFAuthenticationManagerDelegate>
 

@@ -50,11 +50,11 @@
 #import <netinet/in.h>
 
 
-typedef enum : NSInteger {
+typedef NS_ENUM(NSInteger, SFSDKReachabilityNetworkStatus) {
 	SFSDKReachabilityNotReachable = 0,
 	SFSDKReachabilityReachableViaWiFi,
 	SFSDKReachabilityReachableViaWWAN
-} SFSDKReachabilityNetworkStatus;
+};
 
 
 extern NSString *kSFSDKReachabilityChangedNotification;
