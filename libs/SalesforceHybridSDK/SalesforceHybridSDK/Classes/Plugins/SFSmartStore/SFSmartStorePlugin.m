@@ -309,7 +309,7 @@ NSString * const kReIndexDataArg      = @"reIndexData";
             // TODO: Change this once https://issues.apache.org/jira/browse/CB-8365 has been completed.
             databaseSize = INT_MAX;
         }
-        
+        // FIXME: can we use [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDouble:databaseSize]??
         return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:(int)databaseSize];
     } command:command];
 }
