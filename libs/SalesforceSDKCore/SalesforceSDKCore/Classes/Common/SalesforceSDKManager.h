@@ -35,7 +35,7 @@ enum {
 };
 
 // Launch actions taken
-typedef NS_ENUM(NSUInteger, SFSDKLaunchAction) {
+typedef NS_OPTIONS(NSUInteger, SFSDKLaunchAction) {
     SFSDKLaunchActionNone                 = 0,
     SFSDKLaunchActionAuthenticated        = 1 << 0,
     SFSDKLaunchActionAlreadyAuthenticated = 1 << 1,
