@@ -50,7 +50,7 @@
 #import <netinet/in.h>
 
 
-typedef NS_ENUM(NSInteger, SFSDKReachabilityNetworkStatus) {
+typedef NS_ENUM(NSUInteger, SFSDKReachabilityNetworkStatus) {
 	SFSDKReachabilityNotReachable = 0,
 	SFSDKReachabilityReachableViaWiFi,
 	SFSDKReachabilityReachableViaWWAN
