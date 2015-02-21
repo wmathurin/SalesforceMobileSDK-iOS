@@ -955,7 +955,7 @@
 		82EFF2C816E7C57100A63CDF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = salesforce.com;
 				TargetAttributes = {
 					8222729C19C39F4500FC537E = {
@@ -1210,13 +1210,13 @@
 					"$(PROJECT_DIR)/../../external/cordova-ios/cordova-ios/CordovaLib/Classes/**",
 					"$(PROJECT_DIR)/../../external/ThirdPartyDependencies/SalesforceCommonUtils/Headers",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1244,7 +1244,7 @@
 					"$(PROJECT_DIR)/../../external/cordova-ios/cordova-ios/CordovaLib/Classes/**",
 					"$(PROJECT_DIR)/../../external/ThirdPartyDependencies/SalesforceCommonUtils/Headers",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",
@@ -1343,7 +1343,7 @@
 					"$(PROJECT_DIR)/../../external/cordova-ios/cordova-ios/CordovaLib/Classes/**",
 					"$(PROJECT_DIR)/../../external/ThirdPartyDependencies/SalesforceCommonUtils/Headers",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",

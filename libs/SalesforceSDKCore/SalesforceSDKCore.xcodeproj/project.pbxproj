@@ -836,7 +836,7 @@
 		8220B74316D804CA00EC3921 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = salesforce.com;
 				TargetAttributes = {
 					82D4644219C7C8180006BDFE = {
@@ -1079,13 +1079,13 @@
 					"$(TARGET_BUILD_DIR)/Headers",
 					"$(PROJECT_DIR)/../../external/ThirdPartyDependencies/SalesforceCommonUtils/Headers",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl\"",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 			};
@@ -1110,7 +1110,7 @@
 					"$(TARGET_BUILD_DIR)/Headers",
 					"$(PROJECT_DIR)/../../external/ThirdPartyDependencies/SalesforceCommonUtils/Headers",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",
@@ -1339,7 +1339,7 @@
 					"$(TARGET_BUILD_DIR)/Headers",
 					"$(PROJECT_DIR)/../../external/ThirdPartyDependencies/SalesforceCommonUtils/Headers",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",

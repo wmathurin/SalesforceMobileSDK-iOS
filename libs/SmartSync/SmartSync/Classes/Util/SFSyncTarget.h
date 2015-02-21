@@ -24,11 +24,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, SFSyncTargetQueryType) {
   SFSyncTargetQueryTypeMru,
   SFSyncTargetQueryTypeSosl,
   SFSyncTargetQueryTypeSoql
-} SFSyncTargetQueryType;
+};
 
 extern NSString * const kSFSyncTargetQueryType;
 extern NSString * const kSFSyncTargetQuery;

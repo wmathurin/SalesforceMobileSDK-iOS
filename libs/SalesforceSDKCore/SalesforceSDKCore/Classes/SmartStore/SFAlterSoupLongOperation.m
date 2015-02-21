@@ -80,11 +80,11 @@
 
 - (NSString*) description
 {
-    return [NSString stringWithFormat:@"AlterSoupOperation = {rowId=%lld soupName=%@ soupTableName=%@ afterStep=%d reIndexData=%@ oldIndexSpecs=%@ newIndexSpecs=%@}\n",
-            self.rowId,
+    return [NSString stringWithFormat:@"AlterSoupOperation = {rowId=%lld soupName=%@ soupTableName=%@ afterStep=%lu reIndexData=%@ oldIndexSpecs=%@ newIndexSpecs=%@}\n",
+            (long long)self.rowId,
             self.soupName,
             self.soupTableName,
-            self.afterStep,
+            (unsigned long)self.afterStep,
             self.reIndexData ? @"YES" : @"NO",
             [SFJsonUtils JSONRepresentation:[SFSoupIndex asArrayOfDictionaries:self.oldIndexSpecs withColumnName:YES]],
             [SFJsonUtils JSONRepresentation:[SFSoupIndex asArrayOfDictionaries:self.indexSpecs  withColumnName:YES]]

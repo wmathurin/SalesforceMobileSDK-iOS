@@ -95,7 +95,7 @@ NSString * const kSyncDetail = @"detail";
                               @"}))" ]
                             componentsJoinedByString:@""
                             ];
-            [self writeJavascript:js];
+            [self.commandDelegate evalJs:js];
         }
     });
 }
