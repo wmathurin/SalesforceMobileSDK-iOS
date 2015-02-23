@@ -121,6 +121,16 @@ typedef enum {
  */
 @property (nonatomic, copy) NSString *accessToken;
 
+/** The Aura CSRF token for the user's session.
+ 
+ This property is set by the `SFOAuthCoordinator` after token refresh has successfully completed.
+ 
+ @warning The setter for this property is exposed publicly only for unit tests. Client code should use the revoke methods instead.
+ @exception NSInternalInconsistencyException If accessed while the identifier property is `nil`.
+ */
+@property (nonatomic, copy) NSString *csrfToken;
+
+
 /** A readonly convenience property returning the Salesforce Organization ID provided in the path component of the identityUrl.
  
  This property is available after authentication has successfully completed.
