@@ -69,7 +69,6 @@
 		CEB808B8199AFD1900EF2F9D /* SFSmartSyncMetadataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB808B7199AFD1900EF2F9D /* SFSmartSyncMetadataManager.m */; };
 		CECDF84119A5468E007A29E5 /* SFSmartSyncObjectUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CECDF84019A5468E007A29E5 /* SFSmartSyncObjectUtils.m */; };
 		CECDF84419ABE009007A29E5 /* SmartSyncTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CECDF84319ABE009007A29E5 /* SmartSyncTests.m */; };
-		CECDF84A19ABF9B3007A29E5 /* libMKNetworkKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CECDF84519ABF9B3007A29E5 /* libMKNetworkKit-iOS.a */; };
 		CECDF84B19ABF9B3007A29E5 /* libSalesforceNetworkSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CECDF84619ABF9B3007A29E5 /* libSalesforceNetworkSDK.a */; };
 		CECDF84C19ABF9B3007A29E5 /* libSalesforceOAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CECDF84719ABF9B3007A29E5 /* libSalesforceOAuth.a */; };
 		CECDF84D19ABF9B3007A29E5 /* libSalesforceSDKCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CECDF84819ABF9B3007A29E5 /* libSalesforceSDKCore.a */; };
@@ -180,7 +179,6 @@
 				CE1F0B1619ACFA1A0007F22F /* libcrypto.a in Frameworks */,
 				CECDF84D19ABF9B3007A29E5 /* libSalesforceSDKCore.a in Frameworks */,
 				CECDF84C19ABF9B3007A29E5 /* libSalesforceOAuth.a in Frameworks */,
-				CECDF84A19ABF9B3007A29E5 /* libMKNetworkKit-iOS.a in Frameworks */,
 				CECDF84B19ABF9B3007A29E5 /* libSalesforceNetworkSDK.a in Frameworks */,
 				4F3A72EF19DB89CF00E6F468 /* libSalesforceRestAPI.a in Frameworks */,
 				CEAAAE58195911E600CBBFE9 /* Foundation.framework in Frameworks */,
@@ -650,6 +648,7 @@
 		CEAAAE6C195911E600CBBFE9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -688,6 +687,7 @@
 		CEAAAE6D195911E600CBBFE9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -791,6 +791,7 @@
 		F870A4D31A819BD5003150D3 /* Internal */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

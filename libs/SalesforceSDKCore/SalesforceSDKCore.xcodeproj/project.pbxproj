@@ -1240,6 +1240,7 @@
 		82D4645419C7C8180006BDFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SalesforceSDKCoreUnitTestApp.app/SalesforceSDKCoreUnitTestApp";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1283,6 +1284,7 @@
 		82D4645519C7C8180006BDFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SalesforceSDKCoreUnitTestApp.app/SalesforceSDKCoreUnitTestApp";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -1410,6 +1412,7 @@
 		F870A4ED1A819CC0003150D3 /* Internal */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SalesforceSDKCoreUnitTestApp.app/SalesforceSDKCoreUnitTestApp";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
