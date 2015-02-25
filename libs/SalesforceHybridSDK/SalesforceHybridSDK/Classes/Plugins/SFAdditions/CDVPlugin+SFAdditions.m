@@ -33,19 +33,12 @@ NSString * const kPluginSDKVersion = @"pluginSDKVersion";
 
 - (void)writeSuccessResultToJsRealm:(CDVPluginResult*)result callbackId:(NSString*)callbackId
 {
-    NSString *jsString = [result toSuccessCallbackString:callbackId];
-    
-	if (jsString){
-		[self writeJavascript:jsString];
-    }
+    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
 }
 
 - (void)writeErrorResultToJsRealm:(CDVPluginResult*)result callbackId:(NSString*)callbackId
 {
-    NSString *jsString = [result toErrorCallbackString:callbackId];
-	if (jsString){
-		[self writeJavascript:jsString];
-    }
+    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
 }
 
 - (void)writeCommandOKResultToJsRealm:(NSString*)callbackId
