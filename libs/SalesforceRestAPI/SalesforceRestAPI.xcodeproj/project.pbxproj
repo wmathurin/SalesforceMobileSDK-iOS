@@ -53,7 +53,6 @@
 		8212C1C817F0EB61002C59E2 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8280EBA516E1315800768DE8 /* libssl.a */; };
 		8212C1C917F0EB6B002C59E2 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8280EBA916E1318200768DE8 /* libxml2.dylib */; };
 		8212C1CA17F0EB70002C59E2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8280EBA116E1312200768DE8 /* libz.dylib */; };
-		8212C1CB17F0EC3B002C59E2 /* libMKNetworkKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF500B817E2712100051FA4 /* libMKNetworkKit-iOS.a */; };
 		8212C1CC17F0ECB7002C59E2 /* libSalesforceNetworkSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF500B917E2712100051FA4 /* libSalesforceNetworkSDK.a */; };
 		8212C1CD17F0ED46002C59E2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C0C7A916E086B40006B3C0 /* CFNetwork.framework */; };
 		8212C1CE17F0ED5A002C59E2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C0C7AB16E087030006B3C0 /* CoreData.framework */; };
@@ -174,7 +173,6 @@
 			files = (
 				82AA405E18E3AECF00BD34D8 /* libSalesforceSecurity.a in Frameworks */,
 				8212C1C017F0EA7B002C59E2 /* libcrypto.a in Frameworks */,
-				8212C1CB17F0EC3B002C59E2 /* libMKNetworkKit-iOS.a in Frameworks */,
 				8212C1C317F0EAE5002C59E2 /* libSalesforceCommonUtils.a in Frameworks */,
 				8212C1C517F0EB2B002C59E2 /* libSalesforceRestAPI.a in Frameworks */,
 				8212C1CC17F0ECB7002C59E2 /* libSalesforceNetworkSDK.a in Frameworks */,
@@ -588,6 +586,7 @@
 		829A088D1A323DDF00DC17A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -620,6 +619,7 @@
 		829A088E1A323DDF00DC17A5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -754,6 +754,7 @@
 		82C0C77E16E07DEB0006B3C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -778,6 +779,7 @@
 		82C0C77F16E07DEB0006B3C0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -852,6 +854,7 @@
 		F870A4E51A819CA0003150D3 /* Internal */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -884,6 +887,7 @@
 		F870A4E71A819CA0003150D3 /* Internal */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;

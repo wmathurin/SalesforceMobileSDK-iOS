@@ -48,6 +48,7 @@ static NSString * const kSFOAuthCodeChallengeParamName          = @"code_challen
 static NSString * const kSFOAuthResponseTypeCode                = @"code";
 
 static NSString * const kSFOAuthAccessToken                     = @"access_token";
+static NSString * const kSFOAuthCSRFToken                       = @"csrf_token";
 static NSString * const kSFOAuthClientId                        = @"client_id";
 static NSString * const kSFOAuthCustomPermissions               = @"custom_permissions";
 static NSString * const kSFOAuthDisplay                         = @"display";
@@ -574,8 +575,8 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
     } else {
         // Assume Refresh token flow.
         [self log:SFLogLevelInfo format:@"%@: Initiating refresh token flow.", NSStringFromSelector(_cmd)];
-        [params appendFormat:@"&%@=%@&%@=%@", kSFOAuthGrantType, kSFOAuthGrantTypeRefreshToken, kSFOAuthRefreshToken, self.credentials.refreshToken];
-        [logString appendFormat:@"&%@=%@&%@=REDACTED", kSFOAuthGrantType, kSFOAuthGrantTypeRefreshToken, kSFOAuthRefreshToken];
+        [params appendFormat:@"&%@=%@&%@=%@&%@=TRUE", kSFOAuthGrantType, kSFOAuthGrantTypeRefreshToken, kSFOAuthRefreshToken, self.credentials.refreshToken, kSFOAuthCSRFToken];
+        [logString appendFormat:@"&%@=%@&%@=REDACTED&%@=TRUE", kSFOAuthGrantType, kSFOAuthGrantTypeRefreshToken, kSFOAuthRefreshToken, kSFOAuthCSRFToken];
     }
     
     if (self.credentials.logLevel < kSFOAuthLogLevelInfo) {
@@ -719,6 +720,7 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
 - (void)updateCredentials:(NSDictionary*)params forTokenRefresh:(BOOL)tokenRefresh
 {
     self.credentials.accessToken    = [params objectForKey:kSFOAuthAccessToken];
+    self.credentials.csrfToken      = [params objectForKey:kSFOAuthCSRFToken];
     self.credentials.issuedAt       = [[self class] timestampStringToDate:[params objectForKey:kSFOAuthIssuedAt]];
     
     if (!tokenRefresh) {
