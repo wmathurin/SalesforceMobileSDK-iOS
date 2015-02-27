@@ -125,7 +125,7 @@ NSString * const kSyncDetail = @"detail";
         SFSyncState* sync = [self.syncManager syncDownWithTarget:target options:options soupName:soupName updateBlock:^(SFSyncState* sync) {
             [weakSelf handleSyncUpdate:sync];
         }];
-        [self log:SFLogLevelDebug format:@"syncDown # %d from soup: %@", sync.syncId, soupName];
+        [self log:SFLogLevelDebug format:@"syncDown # %ld from soup: %@", (long)sync.syncId, soupName];
         
         return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[sync asDict]];
     } command:command];
@@ -142,7 +142,7 @@ NSString * const kSyncDetail = @"detail";
             [weakSelf handleSyncUpdate:sync];
         }];
         
-        [self log:SFLogLevelDebug format:@"syncUp # %d from soup: %@", sync.syncId, soupName];
+        [self log:SFLogLevelDebug format:@"syncUp # %ld from soup: %@", (long)sync.syncId, soupName];
         
         return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[sync asDict]];
     } command:command];
