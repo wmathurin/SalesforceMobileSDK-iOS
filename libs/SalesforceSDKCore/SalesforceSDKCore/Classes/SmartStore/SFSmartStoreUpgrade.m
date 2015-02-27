@@ -49,7 +49,7 @@ static NSString * const kKeyStoreEncryptedStoresKey = @"com.salesforce.smartstor
         [SFLogger log:[SFSmartStoreUpgrade class] level:SFLogLevelInfo msg:@"No legacy stores to migrate."];
         return;
     }
-    [SFLogger log:[SFSmartStoreUpgrade class] level:SFLogLevelInfo format:@"Number of stores to migrate: %d", [allStoreNames count]];
+    [SFLogger log:[SFSmartStoreUpgrade class] level:SFLogLevelInfo format:@"Number of stores to migrate: %lu", (unsigned long)[allStoreNames count]];
     
     for (NSString *storeName in allStoreNames) {
         BOOL migratedStore = [SFSmartStoreUpgrade updateStoreLocationForStore:storeName];
@@ -99,7 +99,7 @@ static NSString * const kKeyStoreEncryptedStoresKey = @"com.salesforce.smartstor
 {
     [SFLogger log:[SFSmartStoreUpgrade class] level:SFLogLevelInfo msg:@"Updating encryption method for all stores, where necessary."];
     NSArray *allStoreNames = [[SFSmartStoreDatabaseManager sharedManager] allStoreNames];
-    [SFLogger log:[SFSmartStoreUpgrade class] level:SFLogLevelInfo format:@"Number of stores to update: %d", [allStoreNames count]];
+    [SFLogger log:[SFSmartStoreUpgrade class] level:SFLogLevelInfo format:@"Number of stores to update: %lu", (unsigned long)[allStoreNames count]];
     
     // Encryption updates will only apply to the current user.  Multi-user comes concurrently with these encryption updates.
     SFUserAccount *currentUser = [SFUserAccountManager sharedInstance].currentUser;
@@ -150,7 +150,7 @@ static NSString * const kKeyStoreEncryptedStoresKey = @"com.salesforce.smartstor
                 origKey = [SFSmartStoreUpgrade legacyDefaultKeyBaseAppId];
                 break;
             default:
-                [SFLogger log:[SFSmartStoreUpgrade class] level:SFLogLevelError format:@"Unknown encryption type '%d'.  Cannot upgrade encryption for store '%@'.", encType, storeName];
+                [SFLogger log:[SFSmartStoreUpgrade class] level:SFLogLevelError format:@"Unknown encryption type '%lu'.  Cannot upgrade encryption for store '%@'.", (unsigned long)encType, storeName];
                 return NO;
         }
     } else {

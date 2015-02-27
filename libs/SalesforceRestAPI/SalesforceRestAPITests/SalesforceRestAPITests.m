@@ -989,12 +989,12 @@ XCTAssertNil( e, @"%@ errored but should not have. Error: %@",testName,e); \
     while (_blocksUncompletedCount > 0) {
         NSTimeInterval elapsed = [[NSDate date] timeIntervalSinceDate:startTime];
         if (elapsed > 30.0) {
-            [self log:SFLogLevelDebug format:@"request took too long (%f) to complete: %d",elapsed,_blocksUncompletedCount];
+            [self log:SFLogLevelDebug format:@"request took too long (%f) to complete: %ld",elapsed,(long)_blocksUncompletedCount];
             completionTimedOut = YES;
             break;
         }
         
-        [self log:SFLogLevelDebug format:@"## sleeping...%d",_blocksUncompletedCount];
+        [self log:SFLogLevelDebug format:@"## sleeping...%ld", (long)_blocksUncompletedCount];
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
     }
     
