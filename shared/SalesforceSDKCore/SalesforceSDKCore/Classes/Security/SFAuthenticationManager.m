@@ -925,11 +925,11 @@ static Class InstanceClass = nil;
         userInfo = @{ @"account" : user };
     }
     
+    [self execCompletionBlocks];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kSFAuthenticationManagerFinishedNotification
                                                         object:self
                                                       userInfo:userInfo];
-
-    [self execCompletionBlocks];
 }
 
 - (void)execCompletionBlocks
