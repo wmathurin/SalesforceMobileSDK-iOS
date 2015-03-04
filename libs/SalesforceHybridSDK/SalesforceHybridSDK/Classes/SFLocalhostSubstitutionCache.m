@@ -82,7 +82,7 @@
         [self log:SFLogLevelInfo format:@"Loading local file: %@", urlPath];
     }
     
-    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:@{@"Cache-Control":@"no-cache"}];
+    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:@{@"Cache-Control":@"max-age=60"}];
     
     return [[NSCachedURLResponse alloc] initWithResponse:httpResponse data:data];
 }
