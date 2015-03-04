@@ -71,7 +71,6 @@
     NSString* wwwDirPath = [self pathForResource:@""];
     
     NSData* data = nil;
-    NSString* mimeType = @"text/plain";
     if (![filePath hasPrefix:wwwDirPath]) {
         [self log:SFLogLevelError format:@"Trying to access files outside www: %@", url];
     }
@@ -80,17 +79,12 @@
     }
     else {
         data = [NSData dataWithContentsOfFile:filePath];
-        mimeType = [self mimeTypeForPath:filePath];
         [self log:SFLogLevelInfo format:@"Loading local file: %@", urlPath];
     }
     
-    NSURLResponse *response = [[NSURLResponse alloc]
-                               initWithURL:[request URL]
-                               MIMEType:mimeType
-                               expectedContentLength:[data length]
-                               textEncodingName:@"utf-8"];
+    NSHTTPURLResponse *httpResponse = [[NSHTTPURLResponse alloc] initWithURL:request.URL statusCode:200 HTTPVersion:@"HTTP/1.1" headerFields:@{@"Cache-Control":@"max-age=60"}];
     
-    return [[NSCachedURLResponse alloc] initWithResponse:response data:data];
+    return [[NSCachedURLResponse alloc] initWithResponse:httpResponse data:data];
 }
 
 @end
