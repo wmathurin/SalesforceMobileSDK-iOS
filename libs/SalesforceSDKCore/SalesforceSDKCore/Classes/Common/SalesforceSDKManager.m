@@ -515,7 +515,7 @@ static NSString * const kAppSettingsAccountLogout = @"account_logout_pref";
             _snapshotViewController = [[SnapshotViewController alloc] initWithNibName:nil bundle:nil];
             // Contrain the default view to its parent views size
             [self.snapshotView setTranslatesAutoresizingMaskIntoConstraints:NO];
-            
+            [_snapshotViewController.view addSubview:self.snapshotView];
             [_snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_snapshotView]-0-|"
                                                                                                      options:NSLayoutFormatDirectionLeadingToTrailing
                                                                                                      metrics:nil
@@ -524,10 +524,10 @@ static NSString * const kAppSettingsAccountLogout = @"account_logout_pref";
                                                                                                      options:NSLayoutFormatDirectionLeadingToTrailing
                                                                                                      metrics:nil
                                                                                                        views:NSDictionaryOfVariableBindings(_snapshotView)]];
+        } else {
+            [self removeSnapshotView];
+            [_snapshotViewController.view addSubview:self.snapshotView];
         }
-        
-        [self.snapshotView removeFromSuperview];
-        [_snapshotViewController.view addSubview:self.snapshotView];
         
         [[SFRootViewManager sharedManager] pushViewController:_snapshotViewController];
     }
