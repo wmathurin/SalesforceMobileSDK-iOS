@@ -45,6 +45,23 @@ static NSString * const kSFMobileSDKHybridDesignator = @"Hybrid";
 // app when it is re-opened.
 static NSString * const kAppSettingsAccountLogout = @"account_logout_pref";
 
+@implementation SnapshotViewController
+
+- (BOOL)shouldAutorotate {
+    return !(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        return UIInterfaceOrientationMaskPortrait;
+    } else {
+        return UIInterfaceOrientationMaskAll;
+    }
+}
+
+@end
+
 @implementation SalesforceSDKManager
 
 + (instancetype)sharedManager
@@ -495,11 +512,22 @@ static NSString * const kAppSettingsAccountLogout = @"account_logout_pref";
         }
         
         if (_snapshotViewController == nil) {
-            _snapshotViewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
+            _snapshotViewController = [[SnapshotViewController alloc] initWithNibName:nil bundle:nil];
+            // Contrain the default view to its parent views size
+            [self.snapshotView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [_snapshotViewController.view addSubview:self.snapshotView];
+            [_snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_snapshotView]-0-|"
+                                                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                                                     metrics:nil
+                                                                                                       views:NSDictionaryOfVariableBindings(_snapshotView)]];
+            [_snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[_snapshotView]-0-|"
+                                                                                                     options:NSLayoutFormatDirectionLeadingToTrailing
+                                                                                                     metrics:nil
+                                                                                                       views:NSDictionaryOfVariableBindings(_snapshotView)]];
+        } else {
+            [self removeSnapshotView];
+            [_snapshotViewController.view addSubview:self.snapshotView];
         }
-        
-        [self.snapshotView removeFromSuperview];
-        [_snapshotViewController.view addSubview:self.snapshotView];
         
         [[SFRootViewManager sharedManager] pushViewController:_snapshotViewController];
     }
