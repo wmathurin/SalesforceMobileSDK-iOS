@@ -172,9 +172,10 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
 
 #pragma mark - SFAuthenticationManager
 
-@interface SFAuthenticationManager ()
+@interface SFAuthenticationManager ()<SFSecurityLockoutDelegate>
 {
     NSMutableOrderedSet *_delegates;
+    BOOL _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess;
 }
 
 /**
@@ -411,6 +412,8 @@ static Class InstanceClass = nil;
             // Authentication hasn't started yet.  Just reset the current user.
             [SFUserAccountManager sharedInstance].currentUser = nil;
         }
+        
+        [SFSecurityLockout addDelegate:self];
     }
     
     return self;
@@ -418,6 +421,7 @@ static Class InstanceClass = nil;
 
 - (void)dealloc
 {
+    [SFSecurityLockout removeDelegate:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidFinishLaunchingNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -1127,6 +1131,11 @@ static Class InstanceClass = nil;
     // already exists.
     NSAssert(self.idCoordinator.idData != nil, @"Identity data should not be nil/empty at this point.");
     
+    /// If the passcode screen is present, setting the success/failure callback blocks won't work.
+    if ([SFSecurityLockout passcodeScreenIsPresent]) {
+        _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess = YES;
+    }
+    
     // Post-passcode verification callbacks, where we'll check for passcode creation/update.  Passcode verification section is below.
     [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
         [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
@@ -1426,6 +1435,21 @@ static Class InstanceClass = nil;
 - (void)identityCoordinator:(SFIdentityCoordinator *)coordinator didFailWithError:(NSError *)error
 {
     [self showRetryAlertForAuthError:error alertTag:kIdentityAlertViewTag];
+}
+
+#pragma mark - SFSecurityLockoutDelegate
+
+- (void)passcodeFlowDidComplete:(BOOL)success
+{
+    if (_useSecLockoutDelegateToFinishRetrievedIdentityDataProcess) {
+        _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess = NO;
+        if (success) {
+            [self finalizeAuthCompletion];
+        }
+        else {
+            [self execFailureBlocks];
+        }
+    }
 }
 
 #pragma mark - UIAlertViewDelegate
