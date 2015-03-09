@@ -153,12 +153,7 @@
 
 - (void)saveCurrentKeyWindow
 {
-    for (UIWindow* w in [UIApplication sharedApplication].windows) {
-        if ([w isKeyWindow]) {
-            self.previousKeyWindow = w;
-            break;
-        }
-    }
+    self.previousKeyWindow = [[[UIApplication sharedApplication] delegate] window];
 }
 
 - (void)restorePreviousKeyWindow

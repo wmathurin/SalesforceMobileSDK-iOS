@@ -18,10 +18,14 @@
 
 @end
 
+@interface SnapshotViewController : UIViewController
+
+@end
+
 @interface SalesforceSDKManager () <SalesforceSDKManagerFlow, SFUserAccountManagerDelegate, SFAuthenticationManagerDelegate>
 {
     BOOL _isLaunching;
-    UIViewController *_snapshotViewController;
+    SnapshotViewController *_snapshotViewController;
     NSMutableOrderedSet *_delegates;
 }
 
