@@ -626,21 +626,21 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
 
 - (BOOL)saveAccounts:(NSError**)error {
     @synchronized (self.userAccountMap) {
-        NSDictionary *userAccountMap = [self.userAccountMap copy];
-        for (SFUserAccountIdentity *userIdentity in userAccountMap) {
+        NSDictionary *userAccountMapCopy = [self.userAccountMap copy];
+        for (SFUserAccountIdentity *userIdentity in userAccountMapCopy) {
             // Don't save the temporary user id
             if ([userIdentity isEqual:self.temporaryUserIdentity]) {
                 continue;
             }
             
             // Grab the user account...
-            SFUserAccount *user = userAccountMap[userIdentity];
+            SFUserAccount *user = userAccountMapCopy[userIdentity];
             
             // And it's persistent file path
             NSString *userAccountPath = [[self class] userAccountPlistFileForUser:user];
             
             // Make sure to remove any existing file
-            NSFileManager *fm = [NSFileManager defaultManager];
+            NSFileManager *fm = [[NSFileManager alloc] init];
             if ([fm fileExistsAtPath:userAccountPath]) {
                 if (![fm removeItemAtPath:userAccountPath error:error]) {
                     [self log:SFLogLevelDebug format:@"failed to remove old user account %@: %@", userAccountPath, *error];
@@ -669,9 +669,10 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
     }
     
     // Remove any existing file.
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    if ([fm fileExistsAtPath:filePath]) {
         NSError *removeAccountFileError = nil;
-        if (![[NSFileManager defaultManager] removeItemAtPath:filePath error:&removeAccountFileError]) {
+        if (![fm removeItemAtPath:filePath error:&removeAccountFileError]) {
             [self log:SFLogLevelDebug format:@"Failed to remove old user account data at path '%@': %@", filePath, [removeAccountFileError localizedDescription]];
             return NO;
         }
