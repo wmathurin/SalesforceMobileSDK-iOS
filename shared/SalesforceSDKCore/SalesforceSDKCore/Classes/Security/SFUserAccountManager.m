@@ -488,7 +488,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
     
     // Get the root directory, usually ~/Library/<appBundleId>/
     NSString *rootDirectory = [[SFDirectoryManager sharedManager] directoryForUser:nil type:NSLibraryDirectory components:nil];
-    NSFileManager *fm = [NSFileManager defaultManager];
+    NSFileManager *fm = [[NSFileManager alloc] init];
     if (![fm fileExistsAtPath:rootDirectory]) {
         // There is no root directory, that's fine, probably a fresh app install,
         // new user will be created later on.
@@ -535,7 +535,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
                         [self addAccount:userAccount];
                     } else {
                         // Error logging will already have occurred.  Make sure account file data is removed.
-                        [[NSFileManager defaultManager] removeItemAtPath:userAccountPath error:nil];
+                        [fm removeItemAtPath:userAccountPath error:nil];
                     }
                 } else {
                     [self log:SFLogLevelDebug format:@"There is no user account file in this user directory: %@", orgPath];
@@ -578,7 +578,8 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
 }
 
 - (SFUserAccount *)loadUserAccountFromFile:(NSString *)filePath {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    if (![fm fileExistsAtPath:filePath]) {
         [self log:SFLogLevelDebug format:@"No account data exists at '%@'", filePath];
         return nil;
     }
@@ -593,12 +594,12 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
         BOOL encryptUserAccountSuccess = [self saveUserAccount:plainTextUserAccount toFile:filePath];
         if (!encryptUserAccountSuccess) {
             // Specific error messages will already be logged.  Make sure old user account file is removed.
-            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+            [fm removeItemAtPath:filePath error:nil];
             return nil;
         }
     }
     @finally {
-        NSData *encryptedUserAccountData = [[NSFileManager defaultManager] contentsAtPath:filePath];
+        NSData *encryptedUserAccountData = [fm contentsAtPath:filePath];
         if (!encryptedUserAccountData) {
             [self log:SFLogLevelWarning format:@"Could not retrieve user account data from file '%@'", filePath];
             return nil;
@@ -608,7 +609,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
         NSData *decryptedArchiveData = [SFSDKCryptoUtils aes256DecryptData:encryptedUserAccountData withKey:encKey.key iv:encKey.initializationVector];
         if (!decryptedArchiveData) {
             [self log:SFLogLevelWarning msg:@"User account data could not be decrypted.  Can't load account."];
-            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+            [fm removeItemAtPath:filePath error:nil];
             return nil;
         }
         
@@ -618,7 +619,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
         }
         @catch (NSException *exception) {
             [self log:SFLogLevelWarning format:@"Error deserializing the user account data: %@", [exception reason]];
-            [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+            [fm removeItemAtPath:filePath error:nil];
             return nil;
         }
     }
@@ -694,7 +695,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
     }
     
     // Save it.
-    BOOL saveFileSuccess = [[NSFileManager defaultManager] createFileAtPath:filePath contents:encryptedArchiveData attributes:@{ NSFileProtectionKey : NSFileProtectionComplete }];
+    BOOL saveFileSuccess = [fm createFileAtPath:filePath contents:encryptedArchiveData attributes:@{ NSFileProtectionKey : NSFileProtectionComplete }];
     if (!saveFileSuccess) {
         [self log:SFLogLevelDebug format:@"Could not create user account data file at path '%@'", filePath];
         return NO;
@@ -752,9 +753,10 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
                                                                                  scope:SFUserAccountScopeUser
                                                                                   type:NSLibraryDirectory
                                                                             components:nil];
-        if ([[NSFileManager defaultManager] fileExistsAtPath:userDirectory]) {
+        NSFileManager *fm = [[NSFileManager alloc] init];
+        if ([fm fileExistsAtPath:userDirectory]) {
             NSError *folderRemovalError = nil;
-            BOOL removeUserFolderSucceeded = [[NSFileManager defaultManager] removeItemAtPath:userDirectory error:&folderRemovalError];
+            BOOL removeUserFolderSucceeded = [fm removeItemAtPath:userDirectory error:&folderRemovalError];
             if (!removeUserFolderSucceeded) {
                 [self log:SFLogLevelDebug
                    format:@"Error removing the user folder for '%@': %@", user.userName, [folderRemovalError localizedDescription]];
