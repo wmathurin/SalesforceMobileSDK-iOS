@@ -660,47 +660,48 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
 }
 
 - (BOOL)saveUserAccount:(SFUserAccount *)userAccount toFile:(NSString *)filePath {
-    if (!userAccount) {
-        [self log:SFLogLevelDebug msg:@"Cannot save empty user account."];
-        return NO;
-    }
-    if ([filePath length] == 0) {
-        [self log:SFLogLevelDebug msg:@"File path cannot be empty.  Can't save account."];
-        return NO;
-    }
-    
-    // Remove any existing file.
-    NSFileManager *fm = [[NSFileManager alloc] init];
-    if ([fm fileExistsAtPath:filePath]) {
-        NSError *removeAccountFileError = nil;
-        if (![fm removeItemAtPath:filePath error:&removeAccountFileError]) {
-            [self log:SFLogLevelDebug format:@"Failed to remove old user account data at path '%@': %@", filePath, [removeAccountFileError localizedDescription]];
+    @synchronized (userAccount) {
+        if (!userAccount) {
+            [self log:SFLogLevelDebug msg:@"Cannot save empty user account."];
+            return NO;
+        }
+        if ([filePath length] == 0) {
+            [self log:SFLogLevelDebug msg:@"File path cannot be empty.  Can't save account."];
+            return NO;
+        }
+        
+        // Remove any existing file.
+        NSFileManager *fm = [[NSFileManager alloc] init];
+        if ([fm fileExistsAtPath:filePath]) {
+            NSError *removeAccountFileError = nil;
+            if (![fm removeItemAtPath:filePath error:&removeAccountFileError]) {
+                [self log:SFLogLevelDebug format:@"Failed to remove old user account data at path '%@': %@", filePath, [removeAccountFileError localizedDescription]];
+                return NO;
+            }
+        }
+        
+        // Serialize the user account data.
+        NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:userAccount];
+        if (!archiveData) {
+            [self log:SFLogLevelDebug msg:@"Could not archive user account data to save it."];
+            return NO;
+        }
+        
+        // Encrypt it.
+        SFEncryptionKey *encKey = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kUserAccountEncryptionKeyLabel keyType:SFKeyStoreKeyTypeGenerated autoCreate:YES];
+        NSData *encryptedArchiveData = [SFSDKCryptoUtils aes256EncryptData:archiveData withKey:encKey.key iv:encKey.initializationVector];
+        if (!encryptedArchiveData) {
+            [self log:SFLogLevelDebug msg:@"User account data could not be encrypted.  Can't save account."];
+            return NO;
+        }
+        
+        // Save it.
+        BOOL saveFileSuccess = [fm createFileAtPath:filePath contents:encryptedArchiveData attributes:@{ NSFileProtectionKey : NSFileProtectionComplete }];
+        if (!saveFileSuccess) {
+            [self log:SFLogLevelDebug format:@"Could not create user account data file at path '%@'", filePath];
             return NO;
         }
     }
-    
-    // Serialize the user account data.
-    NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:userAccount];
-    if (!archiveData) {
-        [self log:SFLogLevelDebug msg:@"Could not archive user account data to save it."];
-        return NO;
-    }
-    
-    // Encrypt it.
-    SFEncryptionKey *encKey = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kUserAccountEncryptionKeyLabel keyType:SFKeyStoreKeyTypeGenerated autoCreate:YES];
-    NSData *encryptedArchiveData = [SFSDKCryptoUtils aes256EncryptData:archiveData withKey:encKey.key iv:encKey.initializationVector];
-    if (!encryptedArchiveData) {
-        [self log:SFLogLevelDebug msg:@"User account data could not be encrypted.  Can't save account."];
-        return NO;
-    }
-    
-    // Save it.
-    BOOL saveFileSuccess = [fm createFileAtPath:filePath contents:encryptedArchiveData attributes:@{ NSFileProtectionKey : NSFileProtectionComplete }];
-    if (!saveFileSuccess) {
-        [self log:SFLogLevelDebug format:@"Could not create user account data file at path '%@'", filePath];
-        return NO;
-    }
-    
     return YES;
 }
 
