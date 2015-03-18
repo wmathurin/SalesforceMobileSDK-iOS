@@ -146,9 +146,10 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
 
 #pragma mark - SFAuthenticationManager
 
-@interface SFAuthenticationManager ()
+@interface SFAuthenticationManager ()<SFSecurityLockoutDelegate>
 {
     NSMutableOrderedSet *_delegates;
+    BOOL _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess;
 }
 
 /**
@@ -1161,6 +1162,21 @@ static Class InstanceClass = nil;
         [self execFailureBlocks];
     } else {
         [self showRetryAlertForAuthError:error alertTag:kIdentityAlertViewTag];
+    }
+}
+
+#pragma mark - SFSecurityLockoutDelegate
+
+- (void)passcodeFlowDidComplete:(BOOL)success
+{
+    if (_useSecLockoutDelegateToFinishRetrievedIdentityDataProcess) {
+        _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess = NO;
+        if (success) {
+            [self finalizeAuthCompletion];
+        }
+        else {
+            [self execFailureBlocks];
+        }
     }
 }
 
