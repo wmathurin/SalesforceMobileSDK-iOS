@@ -549,8 +549,4 @@ static NSException * kSFOAuthExceptionNilIdentifier;
     }
 }
 
-- (BOOL)matchesUserWithCredentials:(SFOAuthCredentials *)credentials {
-    return ([[self.userId entityId18] isEqualToString:[credentials.userId entityId18]] && [[self.organizationId entityId18] isEqualToString:[credentials.organizationId entityId18]]);
-}
-
 @end
