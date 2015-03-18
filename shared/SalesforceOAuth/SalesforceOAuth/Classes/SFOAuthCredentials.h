@@ -254,4 +254,11 @@ typedef enum {
  */
 - (void)revokeActivationCode;
 
+/** Checks to see if a set of credential's userID and orgID match that of another so you can be sure they apply to the same user
+ 
+ @param credentials The other set of credentials to compare
+ @return Whether the user in both credentials match
+ */
+- (BOOL)matchesUserWithCredentials:(SFOAuthCredentials *)credentials;
+
 @end

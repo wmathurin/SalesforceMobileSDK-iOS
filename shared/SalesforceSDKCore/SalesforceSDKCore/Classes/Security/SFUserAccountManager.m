@@ -885,7 +885,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
         self.currentUser = [self createUserAccountWithCredentials:credentials];
         change |= SFUserAccountChangeNewUser;
     } else {
-        if ([[self.currentUser.credentials.userId entityId18] isEqualToString:[credentials.userId entityId18]] && [[self.currentUser.credentials.organizationId entityId18] isEqualToString:[credentials.organizationId entityId18]]) {
+        if ([self.currentUser.credentials matchesUserWithCredentials:credentials]) {
             self.currentUser.credentials = credentials;
         } else {
             [self log:SFLogLevelWarning format:@"Attempted to apply credentials to incorrect user"];
