@@ -24,6 +24,7 @@
 
 #import "SFUserAccountIdentity.h"
 #import "SFUserAccount.h"
+#import <SalesforceCommonUtils/NSString+SFAdditions.h>
 
 static NSString * const kUserAccountIdentityUserIdKey = @"userIdKey";
 static NSString * const kUserAccountIdentityOrgIdKey = @"orgIdKey";
@@ -92,6 +93,10 @@ static NSString * const kUserAccountIdentityOrgIdKey = @"orgIdKey";
     BOOL userIdsEqual = ((objectToCompare.userId == nil && self.userId == nil) || [objectToCompare.userId isEqualToString:self.userId]);
     BOOL orgIdsEqual = ((objectToCompare.orgId == nil && self.orgId == nil) || [objectToCompare.orgId isEqualToString:self.orgId]);
     return userIdsEqual && orgIdsEqual;
+}
+
+- (BOOL)matchesCredentials:(SFOAuthCredentials *)credentials {
+    return ([[self.userId entityId18] isEqualToString:[credentials.userId entityId18]] && [[self.orgId entityId18] isEqualToString:[credentials.organizationId entityId18]]);
 }
 
 - (NSUInteger)hash
