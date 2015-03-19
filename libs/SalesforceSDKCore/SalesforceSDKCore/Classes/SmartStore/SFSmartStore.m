@@ -1146,7 +1146,7 @@ NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
     NSDictionary* valuesMap = [frs resultDictionary];
     for(int i=0; i<frs.columnCount; i++) {
         NSString* columnName = [frs columnNameForIndex:i];
-        id value = [valuesMap objectForKey:columnName];
+        id value = valuesMap[columnName];
         if ([columnName hasSuffix:SOUP_COL] && [value isKindOfClass:[NSString class]]) {
             id entry = [SFJsonUtils objectFromJSONString:value];
             if (entry) {

@@ -330,6 +330,8 @@ static Class InstanceClass = nil;
         if (user) {
             [self setupWithUser:user];
         }
+        
+        [SFSecurityLockout addDelegate:self];
     }
     
     return self;
@@ -337,6 +339,7 @@ static Class InstanceClass = nil;
 
 - (void)dealloc
 {
+    [SFSecurityLockout removeDelegate:self];
     [self cleanupStatusAlert];
     SFRelease(_statusAlert);
     SFRelease(_authViewController);
@@ -868,6 +871,11 @@ static Class InstanceClass = nil;
     // NB: This method is assumed to run after identity data has been refreshed from the service, or otherwise
     // already exists.
     NSAssert(self.idCoordinator.idData != nil, @"Identity data should not be nil/empty at this point.");
+    
+    /// If the passcode screen is present, setting the success/failure callback blocks won't work.
+    if ([SFSecurityLockout passcodeScreenIsPresent]) {
+        _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess = YES;
+    }
     
     [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
         [self finalizeAuthCompletion];
