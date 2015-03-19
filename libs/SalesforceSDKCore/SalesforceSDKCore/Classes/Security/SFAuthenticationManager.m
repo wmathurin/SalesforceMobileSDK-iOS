@@ -42,7 +42,7 @@
 #import <SalesforceSecurity/SFPasscodeManager.h>
 #import <SalesforceSecurity/SFPasscodeProviderManager.h>
 #import "SFPushNotificationManager.h"
-
+#import "SFSecurityLockout+Internal.h"
 #import <SalesforceOAuth/SFOAuthCredentials.h>
 #import <SalesforceOAuth/SFOAuthInfo.h>
 #import <SalesforceCommonUtils/NSURL+SFAdditions.h>
@@ -146,9 +146,10 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
 
 #pragma mark - SFAuthenticationManager
 
-@interface SFAuthenticationManager ()
+@interface SFAuthenticationManager ()<SFSecurityLockoutDelegate>
 {
     NSMutableOrderedSet *_delegates;
+    BOOL _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess;
 }
 
 /**
@@ -329,6 +330,8 @@ static Class InstanceClass = nil;
         if (user) {
             [self setupWithUser:user];
         }
+        
+        [SFSecurityLockout addDelegate:self];
     }
     
     return self;
@@ -336,6 +339,7 @@ static Class InstanceClass = nil;
 
 - (void)dealloc
 {
+    [SFSecurityLockout removeDelegate:self];
     [self cleanupStatusAlert];
     SFRelease(_statusAlert);
     SFRelease(_authViewController);
@@ -868,6 +872,11 @@ static Class InstanceClass = nil;
     // already exists.
     NSAssert(self.idCoordinator.idData != nil, @"Identity data should not be nil/empty at this point.");
     
+    /// If the passcode screen is present, setting the success/failure callback blocks won't work.
+    if ([SFSecurityLockout passcodeScreenIsPresent]) {
+        _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess = YES;
+    }
+    
     [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
         [self finalizeAuthCompletion];
     }];
@@ -1161,6 +1170,21 @@ static Class InstanceClass = nil;
         [self execFailureBlocks];
     } else {
         [self showRetryAlertForAuthError:error alertTag:kIdentityAlertViewTag];
+    }
+}
+
+#pragma mark - SFSecurityLockoutDelegate
+
+- (void)passcodeFlowDidComplete:(BOOL)success
+{
+    if (_useSecLockoutDelegateToFinishRetrievedIdentityDataProcess) {
+        _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess = NO;
+        if (success) {
+            [self finalizeAuthCompletion];
+        }
+        else {
+            [self execFailureBlocks];
+        }
     }
 }
 
