@@ -871,12 +871,6 @@ static Class InstanceClass = nil;
     // NB: This method is assumed to run after identity data has been refreshed from the service, or otherwise
     // already exists.
     NSAssert(self.idCoordinator.idData != nil, @"Identity data should not be nil/empty at this point.");
-    
-    /// If the passcode screen is present, setting the success/failure callback blocks won't work.
-    if ([SFSecurityLockout passcodeScreenIsPresent]) {
-        _useSecLockoutDelegateToFinishRetrievedIdentityDataProcess = YES;
-    }
-    
     [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
         [self finalizeAuthCompletion];
     }];
