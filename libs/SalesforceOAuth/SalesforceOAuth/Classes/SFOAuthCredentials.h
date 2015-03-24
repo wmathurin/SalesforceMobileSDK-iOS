@@ -28,6 +28,7 @@
  @enum Logging levels to control the verbosity of log output based on the severity of the event being logged.
  */
 typedef NS_ENUM(NSUInteger, SFOAuthLogLevel) {
+    kSFOAuthLogLevelVerbose,
     kSFOAuthLogLevelDebug,
     kSFOAuthLogLevelInfo,
     kSFOAuthLogLevelWarning,
