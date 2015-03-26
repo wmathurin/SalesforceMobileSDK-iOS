@@ -515,6 +515,7 @@ static NSString * const kAppSettingsAccountLogout = @"account_logout_pref";
             _snapshotViewController = [[SnapshotViewController alloc] initWithNibName:nil bundle:nil];
             // Contrain the default view to its parent views size
             [self.snapshotView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            _snapshotViewController.view.backgroundColor = [UIColor clearColor];
             [_snapshotViewController.view addSubview:self.snapshotView];
             [_snapshotViewController.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[_snapshotView]-0-|"
                                                                                                      options:NSLayoutFormatDirectionLeadingToTrailing
