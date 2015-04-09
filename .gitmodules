@@ -1,18 +1,15 @@
 [submodule "external/shared"]
 	path = external/shared
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-Shared.git
-[submodule "external/appledoc/appledoc"]
-	path = external/appledoc/appledoc
-	url = https://github.com/tomaz/appledoc.git
 [submodule "external/cordova-ios/cordova-ios"]
 	path = external/cordova-ios/cordova-ios
-	url = https://github.com/forcedotcom/cordova-ios.git
+	url = https://git.soma.salesforce.com/iOS/cordova-ios.git
 [submodule "external/ThirdPartyDependencies"]
 	path = external/ThirdPartyDependencies
 	url = https://github.com/forcedotcom/SalesforceMobileSDK-iOS-Dependencies.git
-[submodule "shared/SalesforceNetworkSDK"]
-	path = shared/SalesforceNetworkSDK
-	url = https://github.com/forcedotcom/SalesforceNetworkSDK.git
 [submodule "external/MKNetworkKit"]
 	path = external/MKNetworkKit
 	url = https://github.com/forcedotcom/MKNetworkKit.git
+[submodule "libs/SalesforceNetworkSDK"]
+	path = libs/SalesforceNetworkSDK
+	url = https://github.com/forcedotcom/SalesforceNetworkSDK.git
