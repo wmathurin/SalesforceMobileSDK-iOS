@@ -130,6 +130,23 @@ typedef enum {
  */
 @property (nonatomic, copy) NSString *csrfToken;
 
+/** The domain name for Lightning component
+ 
+ This property is only set if and only if the org has Lightning Component enabled
+
+ @warning The setter for this property is exposed publicly only for unit tests. Client code should use the revoke methods instead.
+ @exception NSInternalInconsistencyException If accessed while the identifier property is `nil`.
+ */
+@property (nonatomic, copy) NSString *lightningDomain;
+
+/** The Session ID for Lightning component domain
+ 
+ This property is only set if and only if the org has Lightning Component enabled
+ 
+ @warning The setter for this property is exposed publicly only for unit tests. Client code should use the revoke methods instead.
+ @exception NSInternalInconsistencyException If accessed while the identifier property is `nil`.
+ */
+@property (nonatomic, copy) NSString *lightningSID;
 
 /** A readonly convenience property returning the Salesforce Organization ID provided in the path component of the identityUrl.
  
