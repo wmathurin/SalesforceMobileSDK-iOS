@@ -70,6 +70,8 @@ static NSString * const kSFOAuthResponseType                    = @"response_typ
 static NSString * const kSFOAuthResponseTypeToken               = @"token";
 static NSString * const kSFOAuthScope                           = @"scope";
 static NSString * const kSFOAuthSignature                       = @"signature";
+static NSString * const kSFOauthLightningDomain                 = @"lightning_domain";
+static NSString * const kSFOauthLightningSID                    = @"lightning_sid";
 
 // Used for the IP bypass flow, Advanced auth flow
 static NSString * const kSFOAuthApprovalCode                    = @"code";
@@ -719,10 +721,11 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
 
 - (void)updateCredentials:(NSDictionary*)params forTokenRefresh:(BOOL)tokenRefresh
 {
-    self.credentials.accessToken    = [params objectForKey:kSFOAuthAccessToken];
-    self.credentials.csrfToken      = [params objectForKey:kSFOAuthCSRFToken];
-    self.credentials.issuedAt       = [[self class] timestampStringToDate:[params objectForKey:kSFOAuthIssuedAt]];
-    
+    self.credentials.accessToken        = [params objectForKey:kSFOAuthAccessToken];
+    self.credentials.csrfToken          = [params objectForKey:kSFOAuthCSRFToken];
+    self.credentials.issuedAt           = [[self class] timestampStringToDate:[params objectForKey:kSFOAuthIssuedAt]];
+    self.credentials.lightningDomain    = [params objectForKey:kSFOauthLightningDomain];
+    self.credentials.lightningSID       = [params objectForKey:kSFOauthLightningSID];
     if (!tokenRefresh) {
         self.credentials.instanceUrl    = [NSURL URLWithString:[params objectForKey:kSFOAuthInstanceUrl]];
         self.credentials.identityUrl    = [NSURL URLWithString:[params objectForKey:kSFOAuthId]];

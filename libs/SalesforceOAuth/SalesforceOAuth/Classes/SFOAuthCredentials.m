@@ -83,17 +83,18 @@ static NSException * kSFOAuthExceptionNilIdentifier;
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super init];
     if (self) {
-        self.identifier     = [coder decodeObjectForKey:@"SFOAuthIdentifier"];
-        self.domain         = [coder decodeObjectForKey:@"SFOAuthDomain"];
-        self.clientId       = [coder decodeObjectForKey:@"SFOAuthClientId"];
-        self.redirectUri    = [coder decodeObjectForKey:@"SFOAuthRedirectUri"];
-        self.organizationId = [coder decodeObjectForKey:@"SFOAuthOrganizationId"];
-        self.identityUrl    = [coder decodeObjectForKey:@"SFOAuthIdentityUrl"];
-        self.instanceUrl    = [coder decodeObjectForKey:@"SFOAuthInstanceUrl"];
-        self.communityId    = [coder decodeObjectForKey:@"SFOAuthCommunityId"];
-        self.communityUrl   = [coder decodeObjectForKey:@"SFOAuthCommunityUrl"];
-        self.issuedAt       = [coder decodeObjectForKey:@"SFOAuthIssuedAt"];
-        NSString *protocolVal = [coder decodeObjectForKey:@"SFOAuthProtocol"];
+        self.identifier         = [coder decodeObjectForKey:@"SFOAuthIdentifier"];
+        self.domain             = [coder decodeObjectForKey:@"SFOAuthDomain"];
+        self.clientId           = [coder decodeObjectForKey:@"SFOAuthClientId"];
+        self.redirectUri        = [coder decodeObjectForKey:@"SFOAuthRedirectUri"];
+        self.organizationId     = [coder decodeObjectForKey:@"SFOAuthOrganizationId"];
+        self.identityUrl        = [coder decodeObjectForKey:@"SFOAuthIdentityUrl"];
+        self.instanceUrl        = [coder decodeObjectForKey:@"SFOAuthInstanceUrl"];
+        self.lightningDomain    = [coder decodeObjectForKey:@"SFOAuthLightningDomain"];
+        self.communityId        = [coder decodeObjectForKey:@"SFOAuthCommunityId"];
+        self.communityUrl       = [coder decodeObjectForKey:@"SFOAuthCommunityUrl"];
+        self.issuedAt           = [coder decodeObjectForKey:@"SFOAuthIssuedAt"];
+        NSString *protocolVal   = [coder decodeObjectForKey:@"SFOAuthProtocol"];
         if (nil != protocolVal)
             self.protocol = protocolVal;
         else
@@ -114,6 +115,7 @@ static NSException * kSFOAuthExceptionNilIdentifier;
     [coder encodeObject:self.organizationId     forKey:@"SFOAuthOrganizationId"];
     [coder encodeObject:self.identityUrl        forKey:@"SFOAuthIdentityUrl"];
     [coder encodeObject:self.instanceUrl        forKey:@"SFOAuthInstanceUrl"];
+    [coder encodeObject:self.lightningDomain    forKey:@"SFOAuthLightningDomain"];
     [coder encodeObject:self.communityId        forKey:@"SFOAuthCommunityId"];
     [coder encodeObject:self.communityUrl       forKey:@"SFOAuthCommunityUrl"];
     [coder encodeObject:self.issuedAt           forKey:@"SFOAuthIssuedAt"];
