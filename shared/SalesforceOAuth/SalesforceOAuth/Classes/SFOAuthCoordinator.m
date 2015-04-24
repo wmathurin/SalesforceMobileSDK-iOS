@@ -314,9 +314,10 @@ static NSString * const kHttpPostContentType                    = @"application/
 - (void)beginTokenRefreshFlow {
     
     self.responseData = [NSMutableData dataWithLength:512];
-    NSString *url = [[NSString alloc] initWithFormat:@"%@://%@%@", 
-                                                     self.credentials.protocol, 
-                                                     self.credentials.domain, 
+    NSString *refreshDomain = self.credentials.communityId ? self.credentials.communityUrl.host : self.credentials.domain;
+    NSString *url = [[NSString alloc] initWithFormat:@"%@://%@%@",
+                                                     self.credentials.protocol,
+                                                     refreshDomain,
                                                      kSFOAuthEndPointToken];
 	
 	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url] 
