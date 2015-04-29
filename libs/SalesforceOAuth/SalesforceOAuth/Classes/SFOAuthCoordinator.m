@@ -529,14 +529,14 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
 }
 
 - (void)beginTokenEndpointFlow:(SFOAuthTokenEndpointFlow)flowType {
-    
     self.responseData = [NSMutableData dataWithLength:512];
+    NSString *refreshDomain = self.credentials.communityId ? self.credentials.communityUrl.host : self.credentials.domain;
     NSString *url = [[NSString alloc] initWithFormat:@"%@://%@%@",
-                     self.credentials.protocol,
-                     self.credentials.domain,
-                     kSFOAuthEndPointToken];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]
+                                                     self.credentials.protocol,
+                                                     refreshDomain,
+                                                     kSFOAuthEndPointToken];
+	
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url] 
                                                                 cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                             timeoutInterval:self.timeout];
     [request setHTTPMethod:kHttpMethodPost];
