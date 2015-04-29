@@ -107,7 +107,8 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
 
 - (BOOL)persistentStoreExists:(NSString*)storeName {
     NSString *fullDbFilePath = [self fullDbFilePathForStoreName:storeName];
-    BOOL result = [[NSFileManager defaultManager] fileExistsAtPath:fullDbFilePath];
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    BOOL result = [manager fileExistsAtPath:fullDbFilePath];
     return result;
 }
 
@@ -171,7 +172,8 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
      storeName,
      (encrypting ? @"unencrypted" : @"encrypted"),
      (encrypting ? @"Encrypting" : @"Unencrypting")];
-    
+    NSFileManager *manager = [[NSFileManager alloc] init];
+
     // Use sqlcipher_export() to move the data from the input DB over to the new one.
     NSString *attachDbString = [NSString stringWithFormat:@"ATTACH DATABASE '%@' AS encrypted KEY '%@'", encDbPath, escapedKey];
     BOOL updateResult = [db executeUpdate:attachDbString];
@@ -183,7 +185,7 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
             *error = [NSError errorWithDomain:kSFSmartStoreDbErrorDomain
                                          code:kSFSmartStoreAttachNewDbErrorCode
                                      userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
-        [[NSFileManager defaultManager] removeItemAtPath:encDbPath error:nil];
+        [manager removeItemAtPath:encDbPath error:nil];
         return db;
     }
     FMResultSet *rs = [db executeQuery:@"SELECT sqlcipher_export('encrypted')"];
@@ -195,7 +197,7 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
                                          code:kSFSmartStoreDbExportErrorCode
                                      userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
         }
-        [[NSFileManager defaultManager] removeItemAtPath:encDbPath error:nil];
+        [manager removeItemAtPath:encDbPath error:nil];
         return db;
     }
     [rs close];
@@ -207,7 +209,7 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
                                          code:kSFSmartStoreDetachDbErrorCode
                                      userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
         }
-        [[NSFileManager defaultManager] removeItemAtPath:encDbPath error:nil];
+        [manager removeItemAtPath:encDbPath error:nil];
         return db;
     }
     
@@ -221,11 +223,11 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
                                          code:kSFSmartStoreVerifyDbErrorCode
                                      userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
         }
-        [[NSFileManager defaultManager] removeItemAtPath:encDbPath error:nil];
+        [manager removeItemAtPath:encDbPath error:nil];
         return db;
     } else if (![self verifyDatabaseAccess:newlyEncryptedDb error:error]) {
         [newlyEncryptedDb close];
-        [[NSFileManager defaultManager] removeItemAtPath:encDbPath error:nil];
+        [manager removeItemAtPath:encDbPath error:nil];
         return db;
     }
     [newlyEncryptedDb close];
@@ -233,7 +235,7 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
     // New database created and verified.  Move it into place of the old one.
     [db close];
     NSString *backupPath = [origDbPath stringByAppendingString:@".bak"];
-    BOOL fileOpSuccess = [[NSFileManager defaultManager] moveItemAtPath:origDbPath toPath:backupPath error:error];
+    BOOL fileOpSuccess = [manager moveItemAtPath:origDbPath toPath:backupPath error:error];
     if (!fileOpSuccess) {
         if (error != nil) {
             NSString *errorDesc = [NSString stringWithFormat:kSFSmartStoreDbBackupErrorDesc, storeName, *error];
@@ -241,12 +243,12 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
                                          code:kSFSmartStoreDbBackupErrorCode
                                      userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
         }
-        [[NSFileManager defaultManager] removeItemAtPath:encDbPath error:nil];
+        [manager removeItemAtPath:encDbPath error:nil];
         [db open];
         [db setKey:oldKey];
         return db;
     }
-    fileOpSuccess = [[NSFileManager defaultManager] moveItemAtPath:encDbPath toPath:origDbPath error:error];
+    fileOpSuccess = [manager moveItemAtPath:encDbPath toPath:origDbPath error:error];
     if (!fileOpSuccess) {
         if (error != nil) {
             NSString *errorDesc = [NSString stringWithFormat:kSFSmartStoreReplaceDbErrorDesc, *error];
@@ -254,8 +256,8 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
                                          code:kSFSmartStoreReplaceDbErrorCode
                                      userInfo:@{NSLocalizedDescriptionKey: errorDesc}];
         }
-        [[NSFileManager defaultManager] removeItemAtPath:encDbPath error:nil];
-        [[NSFileManager defaultManager] moveItemAtPath:backupPath toPath:origDbPath error:nil];
+        [manager removeItemAtPath:encDbPath error:nil];
+        [manager moveItemAtPath:backupPath toPath:origDbPath error:nil];
         [db open];
         [db setKey:oldKey];
         return db;
@@ -263,11 +265,11 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
     
     FMDatabase *encDb = [self openDatabaseWithPath:origDbPath key:newKey error:nil];
     if (encDb) {
-        [[NSFileManager defaultManager] removeItemAtPath:backupPath error:nil];
+        [manager removeItemAtPath:backupPath error:nil];
         return encDb;
     } else {
-        [[NSFileManager defaultManager] removeItemAtPath:origDbPath error:nil];
-        [[NSFileManager defaultManager] moveItemAtPath:backupPath toPath:origDbPath error:nil];
+        [manager removeItemAtPath:origDbPath error:nil];
+        [manager moveItemAtPath:backupPath toPath:origDbPath error:nil];
         [db open];
         [db setKey:oldKey];
         return db;
@@ -299,9 +301,10 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
 - (BOOL)createStoreDir:(NSString *)storeName error:(NSError **)error
 {
     NSString *storeDir = [self storeDirectoryForStoreName:storeName];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:storeDir]) {
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    if (![manager fileExistsAtPath:storeDir]) {
         // This store has not yet been created; create it.
-        return [[NSFileManager defaultManager] createDirectoryAtPath:storeDir withIntermediateDirectories:YES attributes:nil error:error];
+        return [manager createDirectoryAtPath:storeDir withIntermediateDirectories:YES attributes:nil error:error];
     } else {
         return YES;
     }
@@ -312,14 +315,16 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
     // Setup the database file with filesystem encryption.
     NSString *dbFilePath = [self fullDbFilePathForStoreName:storeName];
     NSDictionary *attr = @{NSFileProtectionKey: NSFileProtectionComplete};
-    return [[NSFileManager defaultManager] setAttributes:attr ofItemAtPath:dbFilePath error:error];
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    return [manager setAttributes:attr ofItemAtPath:dbFilePath error:error];
 }
 
 - (void)removeStoreDir:(NSString *)storeName
 {
+    NSFileManager *manager = [[NSFileManager alloc] init];
     NSString *storeDir = [self storeDirectoryForStoreName:storeName];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:storeDir]) {
-        [[NSFileManager defaultManager] removeItemAtPath:storeDir error:nil];
+    if ([manager fileExistsAtPath:storeDir]) {
+        [manager removeItemAtPath:storeDir error:nil];
     }
 }
 
@@ -350,7 +355,8 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
 - (NSArray *)allStoreNames {
     NSString *rootDir = [self rootStoreDirectory];
     NSError *getStoresError = nil;
-    NSArray *storesDirNames = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:rootDir error:&getStoresError];
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    NSArray *storesDirNames = [manager contentsOfDirectoryAtPath:rootDir error:&getStoresError];
     if (getStoresError) {
         [self log:SFLogLevelDebug format:@"Warning: Problem retrieving all store names from the root stores folder: %@.", [getStoresError localizedDescription]];
         return nil;
