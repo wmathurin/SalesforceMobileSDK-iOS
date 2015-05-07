@@ -47,6 +47,11 @@ extern NSString * const kSFSmartStoreDbErrorDomain;
 + (SFSmartStoreDatabaseManager *)sharedManagerForUser:(SFUserAccount *)user;
 
 /**
+ Gets the shared instance of the database manager of global stores.
+ */
++ (SFSmartStoreDatabaseManager *)sharedGlobalManager;
+
+/**
  Removes the shared database manager associated with the given user.
  @param user The user configured for the shared database manager.
  */
@@ -137,6 +142,6 @@ extern NSString * const kSFSmartStoreDbErrorDomain;
  @param error The output NSError parameter that will be populated in the event of an error.
  @return YES if the database can be read, NO otherwise.
  */
-- (BOOL)verifyDatabaseAccess:(FMDatabase *)dbPath error:(NSError **)error;
++ (BOOL)verifyDatabaseAccess:(FMDatabase *)dbPath error:(NSError **)error;
 
 @end
