@@ -25,6 +25,7 @@
 #import "SFUserAccountIdentity.h"
 #import "SFUserAccount.h"
 #import <SalesforceCommonUtils/NSString+SFAdditions.h>
+#import <SalesforceOAuth/SalesforceOAuth.h>
 
 static NSString * const kUserAccountIdentityUserIdKey = @"userIdKey";
 static NSString * const kUserAccountIdentityOrgIdKey = @"orgIdKey";

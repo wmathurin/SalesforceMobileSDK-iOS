@@ -47,7 +47,7 @@ extern NSString * const kQuerySpecParamEndKey;
 extern NSString * const kQuerySpecParamLikeKey;
 
 
-typedef NS_ENUM(NSUInteger, SFSoupQueryType) {
+typedef NS_ENUM(NSInteger, SFSoupQueryType) {
     kSFSoupQueryTypeExact = 2,
     kSFSoupQueryTypeRange = 4,
     kSFSoupQueryTypeLike = 8,
