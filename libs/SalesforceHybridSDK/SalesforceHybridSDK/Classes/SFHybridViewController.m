@@ -199,7 +199,6 @@ static NSString * const kVFPingPageUrl = @"/apexpages/utils/ping.apexp";
     }
     
     // Remote app.  Device is online.
-    [SFAuthenticationManager resetSessionCookie];
     [self configureRemoteStartPage];
     [super viewDidLoad];
 }
