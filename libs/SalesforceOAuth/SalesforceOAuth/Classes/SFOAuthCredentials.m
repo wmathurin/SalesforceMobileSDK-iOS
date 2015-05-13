@@ -156,8 +156,9 @@ static NSException * kSFOAuthExceptionNilIdentifier;
 
 #if TARGET_IPHONE_SIMULATOR
 - (void) setDomain:(NSString *)domain {
+    // extract the scheme part from the given domain if existed
     NSRange found = [domain rangeOfString:@"://"];
-    if (found.length > 0) {
+    if (found.location != NSNotFound) {
         _domain = [domain substringFromIndex:found.location + 3];
         self.protocol = [domain substringToIndex:found.location];
     } else {
