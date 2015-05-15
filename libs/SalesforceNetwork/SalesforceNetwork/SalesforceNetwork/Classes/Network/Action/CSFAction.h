@@ -204,4 +204,8 @@
  */
 - (BOOL)overrideRequest:(NSURLRequest*)request withResponseData:(NSData**)data andHTTPResponse:(NSHTTPURLResponse**)response;
 
+- (void)sessionDataTask:(NSURLSessionDataTask*)task didReceiveData:(NSData*)data;
+- (void)sessionDownloadTask:(NSURLSessionDownloadTask*)task didFinishDownloadingToURL:(NSURL *)location;
+- (void)sessionTask:(NSURLSessionTask*)task didCompleteWithError:(NSError*)error;
+
 @end
