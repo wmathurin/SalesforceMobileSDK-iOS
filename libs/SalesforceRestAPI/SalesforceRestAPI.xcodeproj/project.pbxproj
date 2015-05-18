@@ -21,8 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		018426821B072387002DD14F /* libSFAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 018426811B072387002DD14F /* libSFAnalytics.a */; };
-		018426841B072404002DD14F /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018426831B072404002DD14F /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		01322FD81B09CD0E00379748 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018426831B072404002DD14F /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		01322FDA1B09CD2C00379748 /* libSFAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01322FD91B09CD2C00379748 /* libSFAnalytics.a */; };
 		44C222721AE70CAD000DF4E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C0C73116E076DE0006B3C0 /* Foundation.framework */; };
 		44C222731AE70CBD000DF4E5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44693DA21AE70C5900F86B1B /* CoreTelephony.framework */; };
 		4F3A72E919DB81B400E6F468 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA6D5E19DB7C22005AF96F /* ViewController.m */; };
@@ -93,6 +93,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01322FD91B09CD2C00379748 /* libSFAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSFAnalytics.a; path = "../../../Analytics/src/build/Debug-iphoneos/libSFAnalytics.a"; sourceTree = "<group>"; };
 		018426811B072387002DD14F /* libSFAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSFAnalytics.a; path = "../../../Analytics/src/build/Debug-iphoneos/libSFAnalytics.a"; sourceTree = "<group>"; };
 		018426831B072404002DD14F /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		44693DA21AE70C5900F86B1B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -177,8 +178,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				018426841B072404002DD14F /* iAd.framework in Frameworks */,
-				018426821B072387002DD14F /* libSFAnalytics.a in Frameworks */,
+				01322FDA1B09CD2C00379748 /* libSFAnalytics.a in Frameworks */,
+				01322FD81B09CD0E00379748 /* iAd.framework in Frameworks */,
 				44C222731AE70CBD000DF4E5 /* CoreTelephony.framework in Frameworks */,
 				82AA405E18E3AECF00BD34D8 /* libSalesforceSecurity.a in Frameworks */,
 				8212C1C017F0EA7B002C59E2 /* libcrypto.a in Frameworks */,
@@ -261,6 +262,7 @@
 		82C0C73016E076DE0006B3C0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				01322FD91B09CD2C00379748 /* libSFAnalytics.a */,
 				018426831B072404002DD14F /* iAd.framework */,
 				018426811B072387002DD14F /* libSFAnalytics.a */,
 				44693DA21AE70C5900F86B1B /* CoreTelephony.framework */,
@@ -780,7 +782,6 @@
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",
-					"/Users/j.neves/Desktop/Projects/ChatterDevelopment/Analytics/src/build/Debug-iphoneos",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = SalesforceRestAPIUnitTestApp;
@@ -806,7 +807,6 @@
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",
-					"/Users/j.neves/Desktop/Projects/ChatterDevelopment/Analytics/src/build/Debug-iphoneos",
 				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
@@ -882,7 +882,6 @@
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils\"",
 					"\"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher\"",
-					"/Users/j.neves/Desktop/Projects/ChatterDevelopment/Analytics/src/build/Debug-iphoneos",
 				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
