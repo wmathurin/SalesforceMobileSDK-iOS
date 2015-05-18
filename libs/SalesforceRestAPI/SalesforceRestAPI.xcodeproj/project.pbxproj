@@ -94,7 +94,6 @@
 
 /* Begin PBXFileReference section */
 		01322FD91B09CD2C00379748 /* libSFAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSFAnalytics.a; path = "../../../Analytics/src/build/Debug-iphoneos/libSFAnalytics.a"; sourceTree = "<group>"; };
-		018426811B072387002DD14F /* libSFAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSFAnalytics.a; path = "../../../Analytics/src/build/Debug-iphoneos/libSFAnalytics.a"; sourceTree = "<group>"; };
 		018426831B072404002DD14F /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		44693DA21AE70C5900F86B1B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		4FDA6D3019DB78A7005AF96F /* SFRestAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFRestAPI.h; path = SalesforceRestAPI/Classes/SFRestAPI.h; sourceTree = SOURCE_ROOT; };
