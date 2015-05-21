@@ -32,7 +32,7 @@
     if (user == nil || [user isEqual:[SFUserAccountManager sharedInstance].temporaryUser]) {
         return SFKeyForUserAndScope(nil, SFUserAccountScopeGlobal);
     } else {
-        return SFKeyForUserAndScope(user, SFUserAccountScopeCommunity);
+        return SFKeyForUserAndScope(user, SFUserAccountScopeCommunity) ?: SFKeyForUserAndScope(nil, SFUserAccountScopeGlobal);
     }
 }
 
