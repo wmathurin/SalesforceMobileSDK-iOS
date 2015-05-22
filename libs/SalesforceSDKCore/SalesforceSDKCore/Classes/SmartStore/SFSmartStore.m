@@ -269,6 +269,10 @@ NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
             _allSharedStores = [NSMutableDictionary dictionary];
         }
         NSString *userKey = [SFSmartStoreUtils userKeyForUser:user];
+        if (userKey == nil) {
+            return nil;
+        }
+        
         if (_allSharedStores[userKey] == nil) {
             _allSharedStores[userKey] = [NSMutableDictionary dictionary];
         }
