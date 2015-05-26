@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "109CB85D156C589D00937625"
+               BuildableName = "libSalesforceCommonUtils.a"
+               BlueprintName = "SalesforceCommonUtils"
+               ReferencedContainer = "container:../../../SalesforceCommonUtils/SalesforceCommonUtils.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "82D53D301A3618CD00E46F8F"
                BuildableName = "libSalesforceSDKCommon.a"
                BlueprintName = "SalesforceSDKCommon"
@@ -70,10 +84,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "ABB5C25B148B3AE00056D3E9"
-               BuildableName = "libMKNetworkKit-iOS.a"
-               BlueprintName = "MKNetworkKit-iOS"
-               ReferencedContainer = "container:../../external/MKNetworkKit/MKNetworkKit-iOS/MKNetworkKit-iOS.xcodeproj">
+               BlueprintIdentifier = "7C0C417D169B5D1300C115B4"
+               BuildableName = "libSFAnalytics.a"
+               BlueprintName = "SFAnalytics"
+               ReferencedContainer = "container:../../../Analytics/src/SFAnalytics.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -87,7 +101,7 @@
                BlueprintIdentifier = "1090C534161275BF0054B040"
                BuildableName = "libSalesforceNetworkSDK.a"
                BlueprintName = "SalesforceNetworkSDK"
-               ReferencedContainer = "container:../SalesforceNetworkSDK/SalesforceNetworkSDK.xcodeproj">
+               ReferencedContainer = "container:../../../SalesforceNetworkSDK/SalesforceNetworkSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
