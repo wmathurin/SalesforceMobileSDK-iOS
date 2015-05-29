@@ -404,14 +404,15 @@ static NSString *const kSecurityLockoutSessionId = @"securityLockoutSession";
 
 + (void)timerExpired:(NSTimer*)theTimer
 {
-    [self log:SFLogLevelInfo msg:@"Checking NSTimer expired!"];
+    [SFSecurityLockout setLockScreenFailureCallbackBlock:^{
+        [[SFAuthenticationManager sharedManager] logout];
+    }];
+
+    [self log:SFLogLevelInfo msg:@"NSTimer expired, but checking lastUserEvent before locking!"];
     NSDate *lastEventAsOfNow = [(SFApplication *)[UIApplication sharedApplication] lastEventDate];
     NSInteger elapsedTime = [[NSDate date] timeIntervalSinceDate:lastEventAsOfNow];
     if (elapsedTime >= securityLockoutTime) {
         [self log:SFLogLevelInfo msg:@"Inactivity NSTimer expired."];
-        [SFSecurityLockout setLockScreenFailureCallbackBlock:^{
-            [[SFAuthenticationManager sharedManager] logout];
-        }];
         [SFSecurityLockout lock];
     } else {
         [SFInactivityTimerCenter removeTimer:kTimerSecurity];
