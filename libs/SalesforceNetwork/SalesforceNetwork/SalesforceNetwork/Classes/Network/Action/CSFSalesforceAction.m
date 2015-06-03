@@ -73,6 +73,37 @@ static void * kObservingKey = &kObservingKey;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+// Note: this is a temporary fix to address the KVO crash in Dealloc
+// remove this change when merging from mobileSDK.
+
+- (void)setEnqueuedNetwork:(CSFNetwork *)enqueuedNetwork {
+    CSFNetwork *oldNetwork = _enqueuedNetwork;
+    
+    if (oldNetwork != enqueuedNetwork && oldNetwork) {
+        [oldNetwork removeObserver:self forKeyPath:@"account.credentials.accessToken" context:kObservingKey];
+        [oldNetwork removeObserver:self forKeyPath:@"account.credentials.instanceUrl" context:kObservingKey];
+        [oldNetwork removeObserver:self forKeyPath:@"account.communityId" context:kObservingKey];
+    }
+    
+    [super setEnqueuedNetwork:enqueuedNetwork];
+    
+    if (enqueuedNetwork) {
+        [enqueuedNetwork addObserver:self forKeyPath:@"account.credentials.accessToken"
+                             options:(NSKeyValueObservingOptionInitial |
+                              NSKeyValueObservingOptionNew)
+                             context:kObservingKey];
+        [enqueuedNetwork addObserver:self forKeyPath:@"account.credentials.instanceUrl"
+                             options:(NSKeyValueObservingOptionInitial |
+                              NSKeyValueObservingOptionNew)
+                             context:kObservingKey];
+        [enqueuedNetwork addObserver:self forKeyPath:@"account.communityId"
+                             options:(NSKeyValueObservingOptionInitial |
+                              NSKeyValueObservingOptionNew)
+                             context:kObservingKey];
+
+    }
+}
+
 - (NSDictionary *)headersForAction {
     NSMutableDictionary *httpHeaders = (NSMutableDictionary*)[super headersForAction];
     if (![httpHeaders isKindOfClass:[NSMutableDictionary class]]) {
