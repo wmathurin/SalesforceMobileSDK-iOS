@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		01322FD81B09CD0E00379748 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 018426831B072404002DD14F /* iAd.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		01322FDA1B09CD2C00379748 /* libSFAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01322FD91B09CD2C00379748 /* libSFAnalytics.a */; };
 		44C222721AE70CAD000DF4E5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82C0C73116E076DE0006B3C0 /* Foundation.framework */; };
 		44C222731AE70CBD000DF4E5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44693DA21AE70C5900F86B1B /* CoreTelephony.framework */; };
 		4F3A72E919DB81B400E6F468 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDA6D5E19DB7C22005AF96F /* ViewController.m */; };
@@ -92,6 +94,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01322FD91B09CD2C00379748 /* libSFAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSFAnalytics.a; path = "../../../Analytics/src/build/Debug-iphoneos/libSFAnalytics.a"; sourceTree = "<group>"; };
+		018426831B072404002DD14F /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		44693DA21AE70C5900F86B1B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		4FDA6D3019DB78A7005AF96F /* SFRestAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFRestAPI.h; path = SalesforceRestAPI/Classes/SFRestAPI.h; sourceTree = SOURCE_ROOT; };
 		4FDA6D3119DB78A7005AF96F /* SFRestAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFRestAPI.m; path = SalesforceRestAPI/Classes/SFRestAPI.m; sourceTree = SOURCE_ROOT; };
@@ -179,6 +183,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				82A0C3E61A9A30B100243931 /* libSalesforceNetwork.a in Frameworks */,
+				01322FDA1B09CD2C00379748 /* libSFAnalytics.a in Frameworks */,
+				01322FD81B09CD0E00379748 /* iAd.framework in Frameworks */,
+				44C222731AE70CBD000DF4E5 /* CoreTelephony.framework in Frameworks */,
 				82AA405E18E3AECF00BD34D8 /* libSalesforceSecurity.a in Frameworks */,
 				8212C1C017F0EA7B002C59E2 /* libcrypto.a in Frameworks */,
 				8212C1C317F0EAE5002C59E2 /* libSalesforceCommonUtils.a in Frameworks */,
@@ -261,6 +268,9 @@
 			isa = PBXGroup;
 			children = (
 				82A0C3E51A9A30B100243931 /* libSalesforceNetwork.a */,
+				01322FD91B09CD2C00379748 /* libSFAnalytics.a */,
+				018426831B072404002DD14F /* iAd.framework */,
+				44693DA21AE70C5900F86B1B /* CoreTelephony.framework */,
 				8280EBA316E1315200768DE8 /* libcrypto.a */,
 				8212C1C117F0EAB2002C59E2 /* libSalesforceCommonUtils.a */,
 				82C0C7B616E089AB0006B3C0 /* libSalesforceOAuth.a */,
