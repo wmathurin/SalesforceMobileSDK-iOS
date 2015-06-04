@@ -75,33 +75,34 @@ static void * kObservingKey = &kObservingKey;
 
 // Note: this is a temporary fix to address the KVO crash in Dealloc
 // remove this change when merging from mobileSDK.
+// 00, 01, 10, 11
 
 - (void)setEnqueuedNetwork:(CSFNetwork *)enqueuedNetwork {
-    CSFNetwork *oldNetwork = _enqueuedNetwork;
-    
-    if (oldNetwork != enqueuedNetwork && oldNetwork) {
-        [oldNetwork removeObserver:self forKeyPath:@"account.credentials.accessToken" context:kObservingKey];
-        [oldNetwork removeObserver:self forKeyPath:@"account.credentials.instanceUrl" context:kObservingKey];
-        [oldNetwork removeObserver:self forKeyPath:@"account.communityId" context:kObservingKey];
+    if (_enqueuedNetwork != enqueuedNetwork) {
+        // remove observer from old network.
+        if (_enqueuedNetwork) {
+            [_enqueuedNetwork removeObserver:self forKeyPath:@"account.credentials.accessToken" context:kObservingKey];
+            [_enqueuedNetwork removeObserver:self forKeyPath:@"account.credentials.instanceUrl" context:kObservingKey];
+            [_enqueuedNetwork removeObserver:self forKeyPath:@"account.communityId" context:kObservingKey];
+        }
+        // add observers to the new network.
+        if (enqueuedNetwork) {
+            [enqueuedNetwork addObserver:self forKeyPath:@"account.credentials.accessToken"
+                                 options:(NSKeyValueObservingOptionInitial |
+                                          NSKeyValueObservingOptionNew)
+                                 context:kObservingKey];
+            [enqueuedNetwork addObserver:self forKeyPath:@"account.credentials.instanceUrl"
+                                 options:(NSKeyValueObservingOptionInitial |
+                                          NSKeyValueObservingOptionNew)
+                                 context:kObservingKey];
+            [enqueuedNetwork addObserver:self forKeyPath:@"account.communityId"
+                                 options:(NSKeyValueObservingOptionInitial |
+                                          NSKeyValueObservingOptionNew)
+                                 context:kObservingKey];
+        }
     }
-    
+    // set new network.
     [super setEnqueuedNetwork:enqueuedNetwork];
-    
-    if (enqueuedNetwork) {
-        [enqueuedNetwork addObserver:self forKeyPath:@"account.credentials.accessToken"
-                             options:(NSKeyValueObservingOptionInitial |
-                              NSKeyValueObservingOptionNew)
-                             context:kObservingKey];
-        [enqueuedNetwork addObserver:self forKeyPath:@"account.credentials.instanceUrl"
-                             options:(NSKeyValueObservingOptionInitial |
-                              NSKeyValueObservingOptionNew)
-                             context:kObservingKey];
-        [enqueuedNetwork addObserver:self forKeyPath:@"account.communityId"
-                             options:(NSKeyValueObservingOptionInitial |
-                              NSKeyValueObservingOptionNew)
-                             context:kObservingKey];
-
-    }
 }
 
 - (NSDictionary *)headersForAction {
