@@ -73,6 +73,38 @@ static void * kObservingKey = &kObservingKey;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+// Note: this is a temporary fix to address the KVO crash in Dealloc
+// remove this change when merging from mobileSDK.
+// 00, 01, 10, 11
+
+- (void)setEnqueuedNetwork:(CSFNetwork *)enqueuedNetwork {
+    if (_enqueuedNetwork != enqueuedNetwork) {
+        // remove observer from old network.
+        if (_enqueuedNetwork) {
+            [_enqueuedNetwork removeObserver:self forKeyPath:@"account.credentials.accessToken" context:kObservingKey];
+            [_enqueuedNetwork removeObserver:self forKeyPath:@"account.credentials.instanceUrl" context:kObservingKey];
+            [_enqueuedNetwork removeObserver:self forKeyPath:@"account.communityId" context:kObservingKey];
+        }
+        // add observers to the new network.
+        if (enqueuedNetwork) {
+            [enqueuedNetwork addObserver:self forKeyPath:@"account.credentials.accessToken"
+                                 options:(NSKeyValueObservingOptionInitial |
+                                          NSKeyValueObservingOptionNew)
+                                 context:kObservingKey];
+            [enqueuedNetwork addObserver:self forKeyPath:@"account.credentials.instanceUrl"
+                                 options:(NSKeyValueObservingOptionInitial |
+                                          NSKeyValueObservingOptionNew)
+                                 context:kObservingKey];
+            [enqueuedNetwork addObserver:self forKeyPath:@"account.communityId"
+                                 options:(NSKeyValueObservingOptionInitial |
+                                          NSKeyValueObservingOptionNew)
+                                 context:kObservingKey];
+        }
+    }
+    // set new network.
+    [super setEnqueuedNetwork:enqueuedNetwork];
+}
+
 - (NSDictionary *)headersForAction {
     NSMutableDictionary *httpHeaders = (NSMutableDictionary*)[super headersForAction];
     if (![httpHeaders isKindOfClass:[NSMutableDictionary class]]) {
