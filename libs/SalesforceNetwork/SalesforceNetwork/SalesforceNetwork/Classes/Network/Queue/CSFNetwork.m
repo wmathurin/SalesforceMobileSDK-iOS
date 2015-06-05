@@ -42,6 +42,7 @@ NSString * const CSFActionsCompletedNotification = @"CSFActionsCompletedNotifica
 NSString * const CSFActionsRequiredByUICompletedNotification = @"CSFActionsRequiredByUICompletedNotification";
 
 NSString * const CSFNetworkErrorDomain = @"CSFNetworkErrorDomain";
+NSUInteger const CSFNetworkMaximumConcurrentOperation = 6;
 
 static void * kObservingKey = &kObservingKey;
 
@@ -110,6 +111,7 @@ static NSMutableDictionary *SharedInstances = nil;
         self.queue = [NSOperationQueue new];
         [self.queue addObserver:self forKeyPath:@"operationCount" options:NSKeyValueObservingOptionNew context:kObservingKey];
         _online = YES;
+        [self.queue setMaxConcurrentOperationCount:CSFNetworkMaximumConcurrentOperation];
 
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         self.ephemeralSession = [NSURLSession sessionWithConfiguration:configuration

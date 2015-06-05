@@ -62,6 +62,7 @@ CSF_EXTERN NSString * CSFNotNullString(id value);
 
 CSF_EXTERN NSURL * CSFCachePath(SFUserAccount *account, NSString *suffix);
 CSF_EXTERN NSString *CSFNetworkInstanceKey(SFUserAccount *user);
+CSF_EXTERN NSUInteger const CSFNetworkMaximumConcurrentOperation;
 CSF_EXTERN BOOL CSFNetworkShouldUseQueryStringForHTTPMethod(NSString *method);
 
 CSF_EXTERN NSUInteger const CSFParameterMaximumQueryStringDataLength;
