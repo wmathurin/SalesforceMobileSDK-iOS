@@ -21,8 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		012A6EE51B151DD300F7FDD8 /* libSFAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 012A6EE41B151DD300F7FDD8 /* libSFAnalytics.a */; };
-		012A6EE71B151DD800F7FDD8 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 012A6EE61B151DD800F7FDD8 /* iAd.framework */; };
 		44C222771AE711B5000DF4E5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44C222761AE711B5000DF4E5 /* CoreTelephony.framework */; };
 		4F12836C1A004A1B007F87EC /* SFSyncState.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F12836A1A004A1B007F87EC /* SFSyncState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F12836D1A004A1B007F87EC /* SFSyncState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F12836B1A004A1B007F87EC /* SFSyncState.m */; };
@@ -111,8 +109,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		012A6EE41B151DD300F7FDD8 /* libSFAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSFAnalytics.a; path = "../../../Analytics/src/build/Debug-iphoneos/libSFAnalytics.a"; sourceTree = "<group>"; };
-		012A6EE61B151DD800F7FDD8 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		44C222761AE711B5000DF4E5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		4F12836A1A004A1B007F87EC /* SFSyncState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSyncState.h; sourceTree = "<group>"; };
 		4F12836B1A004A1B007F87EC /* SFSyncState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSyncState.m; sourceTree = "<group>"; };
@@ -215,8 +211,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				012A6EE71B151DD800F7FDD8 /* iAd.framework in Frameworks */,
-				012A6EE51B151DD300F7FDD8 /* libSFAnalytics.a in Frameworks */,
 				44C222771AE711B5000DF4E5 /* CoreTelephony.framework in Frameworks */,
 				CE1F0B1119ACF9910007F22F /* libz.dylib in Frameworks */,
 				CE1F0AF819AC1D6E0007F22F /* libSalesforceCommonUtils.a in Frameworks */,
@@ -292,8 +286,6 @@
 			isa = PBXGroup;
 			children = (
 				825880401AA3FC74000C551E /* libSalesforceNetwork.a */,
-				012A6EE61B151DD800F7FDD8 /* iAd.framework */,
-				012A6EE41B151DD300F7FDD8 /* libSFAnalytics.a */,
 				44C222761AE711B5000DF4E5 /* CoreTelephony.framework */,
 				4F3A72EE19DB89CF00E6F468 /* libSalesforceRestAPI.a */,
 				CE1F0AFA19ACF95B0007F22F /* ImageIO.framework */,

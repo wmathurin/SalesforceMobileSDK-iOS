@@ -21,8 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		012E882C1B1E5830000B48A5 /* libSFAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 012E882B1B1E5830000B48A5 /* libSFAnalytics.a */; };
-		012E882E1B1E584A000B48A5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 012E882D1B1E584A000B48A5 /* iAd.framework */; };
 		44C222751AE70EB7000DF4E5 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44C222741AE70EB7000DF4E5 /* CoreTelephony.framework */; };
 		4F0C192C18AAFDF3000FD4E9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F0C192B18AAFDF3000FD4E9 /* AssetsLibrary.framework */; };
 		4F0C192F18AAFE54000FD4E9 /* cordova.js in Copy files to www/ */ = {isa = PBXBuildFile; fileRef = 4F0C192D18AAFE41000FD4E9 /* cordova.js */; };
@@ -270,8 +268,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		012E882B1B1E5830000B48A5 /* libSFAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSFAnalytics.a; path = "../../../Analytics/src/build/Debug-iphoneos/libSFAnalytics.a"; sourceTree = "<group>"; };
-		012E882D1B1E584A000B48A5 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		44C222741AE70EB7000DF4E5 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		4F0C192B18AAFDF3000FD4E9 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		4F0C192D18AAFE41000FD4E9 /* cordova.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = cordova.js; path = "../../../external/cordova-ios/cordova-ios/CordovaLib/cordova.js"; sourceTree = "<group>"; };
@@ -429,8 +425,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				012E882E1B1E584A000B48A5 /* iAd.framework in Frameworks */,
-				012E882C1B1E5830000B48A5 /* libSFAnalytics.a in Frameworks */,
 				44C222751AE70EB7000DF4E5 /* CoreTelephony.framework in Frameworks */,
 				4F22159B19DF60A200FF2D26 /* ImageIO.framework in Frameworks */,
 				4F0C192C18AAFDF3000FD4E9 /* AssetsLibrary.framework in Frameworks */,
@@ -690,8 +684,6 @@
 			isa = PBXGroup;
 			children = (
 				82A0C3E31A9A2D1000243931 /* libSalesforceNetwork.a */,
-				012E882D1B1E584A000B48A5 /* iAd.framework */,
-				012E882B1B1E5830000B48A5 /* libSFAnalytics.a */,
 				44C222741AE70EB7000DF4E5 /* CoreTelephony.framework */,
 				4F22159419DF60A200FF2D26 /* libSalesforceRestAPI.a */,
 				8276EE051A7863360083F7EA /* libSalesforceSDKCommon.a */,
