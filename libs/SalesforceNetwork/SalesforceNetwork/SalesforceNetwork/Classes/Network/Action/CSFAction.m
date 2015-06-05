@@ -385,10 +385,7 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
 }
 
 - (void)cancel {
-    [self willChangeValueForKey:@"isCancelled"];
     [super cancel];
-    [self didChangeValueForKey:@"isCancelled"];
-    
     [self.sessionTask cancel];
     
     [self completeOperationWithError:[NSError errorWithDomain:CSFNetworkErrorDomain
