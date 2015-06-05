@@ -77,26 +77,31 @@ NSString * const kSyncDetail = @"detail";
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         NSError *error = nil;
-        NSData *syncData = [NSJSONSerialization dataWithJSONObject:[sync asDict]
-                                                       options:0 // non-pretty printing
-                                                         error:&error];
-        if(error) {
-            [self log:SFLogLevelError format:@"JSON Parsing Error: %@", error];
+        if ([NSJSONSerialization isValidJSONObject:[sync asDict]]) {
+            NSData *syncData = [NSJSONSerialization dataWithJSONObject:[sync asDict]
+                                                               options:0 // non-pretty printing
+                                                                 error:&error];
+            if(error) {
+                [self log:SFLogLevelError format:@"JSON Parsing Error: %@", error];
+            } else {
+                NSString* syncAsString = [[NSString alloc] initWithData:syncData encoding:NSUTF8StringEncoding];
+                NSString* js = [
+                                @[@"document.dispatchEvent(new CustomEvent(\"",
+                                  kSyncEventType,
+                                  @"\", { \"",
+                                  kSyncDetail,
+                                  @"\": ",
+                                  syncAsString,
+                                  @"}))" ]
+                                componentsJoinedByString:@""
+                                ];
+                [self.commandDelegate evalJs:js];
+            }
+            
+        } else {
+            [self log:SFLogLevelDebug format:@"invalid object passed to JSONDataRepresentation???"];
         }
-        else {
-            NSString* syncAsString = [[NSString alloc] initWithData:syncData encoding:NSUTF8StringEncoding];
-            NSString* js = [
-                            @[@"document.dispatchEvent(new CustomEvent(\"",
-                              kSyncEventType,
-                              @"\", { \"",
-                              kSyncDetail,
-                              @"\": ",
-                              syncAsString,
-                              @"}))" ]
-                            componentsJoinedByString:@""
-                            ];
-            [self.commandDelegate evalJs:js];
-        }
+ 
     });
 }
 
