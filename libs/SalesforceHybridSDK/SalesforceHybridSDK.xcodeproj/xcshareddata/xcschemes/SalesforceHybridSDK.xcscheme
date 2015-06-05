@@ -70,20 +70,6 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7C0C417D169B5D1300C115B4"
-               BuildableName = "libSFAnalytics.a"
-               BlueprintName = "SFAnalytics"
-               ReferencedContainer = "container:../../../Analytics/src/SFAnalytics.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "827DD3D91A7BF55F00519F03"
                BuildableName = "libSalesforceNetwork.a"
                BlueprintName = "SalesforceNetworkiOS"
