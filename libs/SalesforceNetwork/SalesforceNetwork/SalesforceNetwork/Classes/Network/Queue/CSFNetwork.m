@@ -183,7 +183,7 @@ static NSMutableDictionary *SharedInstances = nil;
         if (![operation isKindOfClass:[CSFAction class]])
             continue;
         
-        if ([operation isEqualToAction:action] && !operation.isFinished && !operation.isCancelled) {
+        if ([operation isEqualToAction:action] && !operation.isFinished && !operation.isCancelled && operation.isExecuting) {
             result = operation;
             break;
         }
