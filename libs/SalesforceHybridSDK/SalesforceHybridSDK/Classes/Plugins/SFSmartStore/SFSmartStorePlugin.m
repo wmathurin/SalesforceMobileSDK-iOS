@@ -184,7 +184,7 @@ NSString * const kReIndexDataArg      = @"reIndexData";
         
         NSError* error;
         SFStoreCursor* cursor = [self runQuery:querySpec error:&error];
-        if (cursor) {
+        if (cursor.cursorId && self.cursorCache) {
             (self.cursorCache)[cursor.cursorId] = cursor;
             return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[cursor asDictionary]];
         }
