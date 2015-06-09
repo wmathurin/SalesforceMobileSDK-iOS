@@ -684,6 +684,7 @@
 			isa = PBXGroup;
 			children = (
 				82A0C3E31A9A2D1000243931 /* libSalesforceNetwork.a */,
+				44C222741AE70EB7000DF4E5 /* CoreTelephony.framework */,
 				4F22159419DF60A200FF2D26 /* libSalesforceRestAPI.a */,
 				8276EE051A7863360083F7EA /* libSalesforceSDKCommon.a */,
 				4F22159519DF60A200FF2D26 /* libSmartSync.a */,

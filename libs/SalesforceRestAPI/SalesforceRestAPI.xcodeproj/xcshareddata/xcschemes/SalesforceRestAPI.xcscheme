@@ -14,6 +14,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "109CB85D156C589D00937625"
+               BuildableName = "libSalesforceCommonUtils.a"
+               BlueprintName = "SalesforceCommonUtils"
+               ReferencedContainer = "container:../../../SalesforceCommonUtils/SalesforceCommonUtils.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "82D53D301A3618CD00E46F8F"
                BuildableName = "libSalesforceSDKCommon.a"
                BlueprintName = "SalesforceSDKCommon"

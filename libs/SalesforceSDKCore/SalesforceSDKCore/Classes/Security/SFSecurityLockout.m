@@ -34,6 +34,7 @@
 #import "SFRootViewManager.h"
 #import "SFPreferences.h"
 #import "SFUserActivityMonitor.h"
+#import "SFApplication.h"
 
 // Private constants
 
@@ -403,11 +404,20 @@ static NSString *const kSecurityLockoutSessionId = @"securityLockoutSession";
 
 + (void)timerExpired:(NSTimer*)theTimer
 {
-    [self log:SFLogLevelInfo msg:@"Inactivity NSTimer expired."];
     [SFSecurityLockout setLockScreenFailureCallbackBlock:^{
         [[SFAuthenticationManager sharedManager] logout];
     }];
-	[SFSecurityLockout lock];
+
+    [self log:SFLogLevelInfo msg:@"NSTimer expired, but checking lastUserEvent before locking!"];
+    NSDate *lastEventAsOfNow = [(SFApplication *)[UIApplication sharedApplication] lastEventDate];
+    NSInteger elapsedTime = [[NSDate date] timeIntervalSinceDate:lastEventAsOfNow];
+    if (elapsedTime >= securityLockoutTime) {
+        [self log:SFLogLevelInfo msg:@"Inactivity NSTimer expired."];
+        [SFSecurityLockout lock];
+    } else {
+        [SFInactivityTimerCenter removeTimer:kTimerSecurity];
+        [SFSecurityLockout setupTimer];
+    }
 }
 
 + (void)setForcePasscodeDisplay:(BOOL)forceDisplay

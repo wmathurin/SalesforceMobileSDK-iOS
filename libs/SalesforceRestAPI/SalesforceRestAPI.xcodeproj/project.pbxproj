@@ -179,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82A0C3E61A9A30B100243931 /* libSalesforceNetwork.a in Frameworks */,
+				44C222731AE70CBD000DF4E5 /* CoreTelephony.framework in Frameworks */,
 				82AA405E18E3AECF00BD34D8 /* libSalesforceSecurity.a in Frameworks */,
 				8212C1C017F0EA7B002C59E2 /* libcrypto.a in Frameworks */,
 				8212C1C317F0EAE5002C59E2 /* libSalesforceCommonUtils.a in Frameworks */,
@@ -261,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				82A0C3E51A9A30B100243931 /* libSalesforceNetwork.a */,
+				44693DA21AE70C5900F86B1B /* CoreTelephony.framework */,
 				8280EBA316E1315200768DE8 /* libcrypto.a */,
 				8212C1C117F0EAB2002C59E2 /* libSalesforceCommonUtils.a */,
 				82C0C7B616E089AB0006B3C0 /* libSalesforceOAuth.a */,
