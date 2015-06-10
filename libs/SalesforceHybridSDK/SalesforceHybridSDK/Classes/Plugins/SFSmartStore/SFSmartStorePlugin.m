@@ -182,7 +182,7 @@ NSString * const kReIndexDataArg      = @"reIndexData";
         SFQuerySpec* querySpec = [[SFQuerySpec alloc] initWithDictionary:querySpecDict withSoupName:soupName];
         [self log:SFLogLevelDebug format:@"pgQuerySoup with name: %@, querySpec: %@", soupName, querySpecDict];
         
-        NSError* error;
+        NSError* error = nil;
         SFStoreCursor* cursor = [self runQuery:querySpec error:&error];
         if (cursor.cursorId && self.cursorCache) {
             (self.cursorCache)[cursor.cursorId] = cursor;
