@@ -487,12 +487,15 @@ static NSException *authException = nil;
     XCTAssertEqualObjects(listener.returnStatus, kTestRequestStatusDidLoad, @"request failed");
     XCTAssertEqualObjects(listener.dataResponse, fileAttrs[@"data"], @"wrong content");
 
-    // download rendition (expect 403)
+    // download rendition (expect 202 with error of FILE_PROCESSING_INCOMPLETE)
     request = [[SFRestAPI sharedInstance] requestForFileRendition:fileAttrs[@"id"] version:nil renditionType:@"PDF" page:0];
+    request.parseResponse = YES;
     listener = [self sendSyncRequest:request];
-    XCTAssertEqualObjects(listener.returnStatus, kTestRequestStatusDidFail, @"request was supposed to fail");
-    XCTAssertEqual(listener.lastError.code, 403, @"invalid code");
-    
+    XCTAssertEqualObjects(listener.returnStatus, kTestRequestStatusDidLoad, @"request failed"); // returns a 202
+    NSDictionary *responseDictionary = ((NSArray*)listener.dataResponse)[0];
+    XCTAssertEqualObjects(@"FILE_PROCESSING_INCOMPLETE", responseDictionary[@"errorCode"], @"rendition should not be ready"); // but this is a race condition technically
+
+
     // delete
     request = [[SFRestAPI sharedInstance] requestForDeleteWithObjectType:@"ContentDocument" objectId:fileAttrs[@"id"]];
     listener = [self sendSyncRequest:request];
@@ -642,10 +645,10 @@ static NSException *authException = nil;
     listener = [self sendSyncRequest:request];
     XCTAssertEqualObjects(listener.returnStatus, kTestRequestStatusDidLoad, @"request failed");
     XCTAssertEqual((int)[listener.dataResponse[@"shares"] count], 2, @"expected two shares");
-    XCTAssertEqualObjects([listener.dataResponse[@"shares"][0][@"entity"][@"id"] substringToIndex:15], _currentUser.credentials.userId, @"expected share with current user");
-    XCTAssertEqualObjects(listener.dataResponse[@"shares"][0][@"sharingType"], @"I", @"wrong sharing type");
-    XCTAssertEqualObjects(listener.dataResponse[@"shares"][1][@"entity"][@"id"], otherUserId, @"expected share with other user");
-    XCTAssertEqualObjects(listener.dataResponse[@"shares"][1][@"sharingType"], @"V", @"wrong sharing type");
+    XCTAssertEqualObjects([listener.dataResponse[@"shares"][1][@"entity"][@"id"] substringToIndex:15], _currentUser.credentials.userId, @"expected share with current user");
+    XCTAssertEqualObjects(listener.dataResponse[@"shares"][1][@"sharingType"], @"I", @"wrong sharing type");
+    XCTAssertEqualObjects(listener.dataResponse[@"shares"][0][@"entity"][@"id"], otherUserId, @"expected share with other user");
+    XCTAssertEqualObjects(listener.dataResponse[@"shares"][0][@"sharingType"], @"V", @"wrong sharing type");
 
     // get count files shared with other user
     request = [[SFRestAPI sharedInstance] requestForFilesSharedWithUser:otherUserId page:0];
@@ -682,7 +685,7 @@ static NSException *authException = nil;
 #pragma mark - files tests helpers
 // Return id of another user in org
 - (NSString *) getOtherUser {
-    NSString *soql = [NSString stringWithFormat:@"SELECT Id FROM User WHERE Id != '%@'", _currentUser.credentials.userId];
+    NSString *soql = [NSString stringWithFormat:@"SELECT Id FROM User WHERE Id != '%@' and IsActive = TRUE", _currentUser.credentials.userId];
     
     // query
     SFRestRequest *request = [[SFRestAPI sharedInstance] requestForQuery:soql];
