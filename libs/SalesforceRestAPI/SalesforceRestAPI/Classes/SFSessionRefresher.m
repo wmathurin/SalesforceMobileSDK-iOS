@@ -51,6 +51,8 @@
     [[SFAuthenticationManager sharedManager] loginWithCompletion:^(SFOAuthInfo *authInfo) {
         [[SFRestAPI sharedInstance] setCoordinator:[SFAuthenticationManager sharedManager].coordinator];
         _isRefreshing = NO;
+
+        [[SFNetworkEngine sharedInstance] finishRefreshAccessTokenFlowWithAuthInfo:authInfo];
     } failure:^(SFOAuthInfo *authInfo, NSError *error) {
         NSError *newError = [NSError errorWithDomain:kSFOAuthErrorDomain code:kSFRestErrorCode userInfo:[error userInfo]];
         [[SFNetworkEngine sharedInstance] failOperationsWaitingForAccessTokenWithError:newError];
