@@ -121,11 +121,4 @@
     XCTAssertNil([NSURL stringUrlWithScheme:nil host:nil port:nil pathComponents:nil], @"Should return nil");
 }
 
-- (void)testStringURLWithNil
-{
-    XCTAssertNil([NSURL stringUrlWithScheme:nil host:@"test.salesforce.com" port:nil pathComponents:nil], @"Should return nil");
-    XCTAssertNil([NSURL stringUrlWithScheme:@"http" host:nil port:nil pathComponents:nil], @"Should return nil");
-    XCTAssertNil([NSURL stringUrlWithScheme:nil host:nil port:nil pathComponents:nil], @"Should return nil");
-}
-
 @end

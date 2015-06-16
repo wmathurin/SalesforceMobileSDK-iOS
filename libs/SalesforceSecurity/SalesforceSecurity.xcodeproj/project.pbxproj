@@ -24,6 +24,8 @@
 		00AB96A41A1444AF0029E119 /* SFEncryptionKeyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AB96A31A1444AF0029E119 /* SFEncryptionKeyTests.m */; };
 		00AB96A61A1445C40029E119 /* SFSecurityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00AB96A51A1445C40029E119 /* SFSecurityTests.m */; };
 		00D46DCF1A12C74C000C1008 /* SFKeyStoreManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D46DCE1A12C74C000C1008 /* SFKeyStoreManagerTests.m */; };
+		3A023E841B2FBB2900FAD71A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A023E831B2FBB2900FAD71A /* CoreTelephony.framework */; };
+		3A023E861B2FBB3900FAD71A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A023E851B2FBB3900FAD71A /* SystemConfiguration.framework */; };
 		820AB72818E230EC00E25E1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820AB72718E230EC00E25E1D /* Foundation.framework */; };
 		820AB73618E230EC00E25E1D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820AB73518E230EC00E25E1D /* XCTest.framework */; };
 		820AB73718E230EC00E25E1D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 820AB72718E230EC00E25E1D /* Foundation.framework */; };
@@ -81,6 +83,8 @@
 		00AB96A31A1444AF0029E119 /* SFEncryptionKeyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFEncryptionKeyTests.m; sourceTree = "<group>"; };
 		00AB96A51A1445C40029E119 /* SFSecurityTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSecurityTests.m; sourceTree = "<group>"; };
 		00D46DCE1A12C74C000C1008 /* SFKeyStoreManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFKeyStoreManagerTests.m; sourceTree = "<group>"; };
+		3A023E831B2FBB2900FAD71A /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		3A023E851B2FBB3900FAD71A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6F644CF21A9FD4FC009BF92A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		6F644CF41A9FD506009BF92A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		6F644CF61A9FD516009BF92A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
@@ -146,6 +150,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A023E861B2FBB3900FAD71A /* SystemConfiguration.framework in Frameworks */,
+				3A023E841B2FBB2900FAD71A /* CoreTelephony.framework in Frameworks */,
 				82AA405618E3AC9000BD34D8 /* libSalesforceCommonUtils.a in Frameworks */,
 				820AB73C18E230EC00E25E1D /* libSalesforceSecurity.a in Frameworks */,
 				82AA405A18E3ADAA00BD34D8 /* libz.dylib in Frameworks */,
@@ -194,6 +200,8 @@
 		820AB72618E230EC00E25E1D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A023E851B2FBB3900FAD71A /* SystemConfiguration.framework */,
+				3A023E831B2FBB2900FAD71A /* CoreTelephony.framework */,
 				6F644CF61A9FD516009BF92A /* MessageUI.framework */,
 				6F644CF41A9FD506009BF92A /* libz.dylib */,
 				6F644CF21A9FD4FC009BF92A /* UIKit.framework */,

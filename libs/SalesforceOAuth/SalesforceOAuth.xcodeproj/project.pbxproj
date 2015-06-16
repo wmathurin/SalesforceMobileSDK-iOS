@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		3A023E781B2FB1E900FAD71A /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A023E771B2FB1E900FAD71A /* CoreTelephony.framework */; };
 		6FFCCF9213BD7C0100F4B22B /* SFOAuthCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6FFCCF9013BD7C0100F4B22B /* SFOAuthCoordinator.m */; };
 		8201F1AC1A310AED00C6696A /* SFOAuthOrgAuthConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 8201F1AA1A310AED00C6696A /* SFOAuthOrgAuthConfiguration.h */; };
 		8201F1AD1A310AED00C6696A /* SFOAuthOrgAuthConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8201F1AB1A310AED00C6696A /* SFOAuthOrgAuthConfiguration.m */; };
@@ -89,6 +90,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A023E771B2FB1E900FAD71A /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		6F644CA51A9FCEEB009BF92A /* SalesforceOAuth-Common-Static.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SalesforceOAuth-Common-Static.xcconfig"; sourceTree = "<group>"; };
 		6F644D0F1A9FD846009BF92A /* SalesforceSDKCommon.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SalesforceSDKCommon.xcodeproj; path = ../SalesforceSDKCommon/SalesforceSDKCommon.xcodeproj; sourceTree = "<group>"; };
 		6F8960781A9E9ADF00A48FF1 /* SalesforceOAuth-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "SalesforceOAuth-Common.xcconfig"; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A023E781B2FB1E900FAD71A /* CoreTelephony.framework in Frameworks */,
 				8293A8E21A43AFE700ABC43C /* libSalesforceSDKCommon.a in Frameworks */,
 				82E0D880191AC65100A8FC23 /* libSalesforceSecurity.a in Frameworks */,
 				827C82DA17DD86CE0011BBA1 /* MessageUI.framework in Frameworks */,
@@ -298,6 +301,7 @@
 		CFA9ADD613AA86DA0024260E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A023E771B2FB1E900FAD71A /* CoreTelephony.framework */,
 				6F644D0F1A9FD846009BF92A /* SalesforceSDKCommon.xcodeproj */,
 				8293A8E11A43AFE700ABC43C /* libSalesforceSDKCommon.a */,
 				82E0D87F191AC65100A8FC23 /* libSalesforceSecurity.a */,
