@@ -122,10 +122,10 @@ static NSString * const kGlobalScopingKey = @"-global-";
             [self enumerateToFindNullArrayValues:value forKey:key];
         }];
     } else if ([object isKindOfClass:[NSArray class]]) {
-        NSMutableArray *newArray = [NSMutableArray arrayWithArray:(NSArray *)object];
-        NSMutableArray *discardedObjects = [NSMutableArray array];
-        
         if ([(NSArray *)object containsObject:[NSNull null]]) {
+            NSMutableArray *newArray = [NSMutableArray arrayWithArray:(NSArray *)object];
+            NSMutableArray *discardedObjects = [NSMutableArray array];
+            
             for (id arrayObject in newArray) {
                 if (arrayObject == [NSNull null]) {
                     [discardedObjects addObject:arrayObject];
