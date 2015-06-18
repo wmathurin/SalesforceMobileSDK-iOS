@@ -108,18 +108,18 @@ static NSString * const kGlobalScopingKey = @"-global-";
     */
     @try {
         // Check for and remove null objects in arrays before trying to encode
-        [self enumerateToFindNullArrayValues:_customData forKey:nil];
+        [self enumerateCustomDataForNullArrayValues:_customData forKey:nil];
         [encoder encodeObject:_customData forKey:kUser_CUSTOM_DATA];
     } @catch (NSException *exception) {
         [self log:SFLogLevelError format:@"%@ error encoding object --- %@",[self class], exception.description];
     }
 }
 
-- (void)enumerateToFindNullArrayValues:(id)object forKey:(NSString *)key {
+- (void)enumerateCustomDataForNullArrayValues:(id)object forKey:(NSString *)key {
     if ([object isKindOfClass:[NSDictionary class]]) {
         // If it's a dictionary, enumerate it to find arrays
         [object enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-            [self enumerateToFindNullArrayValues:value forKey:key];
+            [self enumerateCustomDataForNullArrayValues:value forKey:key];
         }];
     } else if ([object isKindOfClass:[NSArray class]]) {
         if ([(NSArray *)object containsObject:[NSNull null]]) {
@@ -140,7 +140,7 @@ static NSString * const kGlobalScopingKey = @"-global-";
         }
         // Continue to recurse for other arrays
         [object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [self enumerateToFindNullArrayValues:obj forKey:nil];
+            [self enumerateCustomDataForNullArrayValues:obj forKey:nil];
         }];
     }
 }
