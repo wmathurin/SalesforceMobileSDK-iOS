@@ -32,6 +32,7 @@
 #import "CSFTokenRefresh.h"
 #import "CSFParameterStorage_Internal.h"
 #import "NSMutableURLRequest+SalesforceNetwork.h"
+#import "CSFOutput.h"
 
 NSString * const CSFActionSecurityTokenKey = @"securityToken"; // CSRF security token key
 
