@@ -100,7 +100,49 @@ static NSString * const kGlobalScopingKey = @"-global-";
     [encoder encodeObject:_idData forKey:kUser_ID_DATA];
     [encoder encodeObject:_communityId forKey:kUser_COMMUNITY_ID];
     [encoder encodeObject:_communities forKey:kUser_COMMUNITIES];
-    [encoder encodeObject:_customData forKey:kUser_CUSTOM_DATA];
+    /*
+     It appears that sometimes a stray null object can be initialized inside an array in customData
+     causing a crash that can be seen in hockeyapp
+     https://gus.my.salesforce.com/apex/adm_bugdetail?id=a07B0000001LyhX&sfdc.override=1
+     https://rink.hockeyapp.net/manage/apps/31036/app_versions/37/crash_reasons/36553900?type=overview
+    */
+    @try {
+        // Check for and remove null objects in arrays before trying to encode
+        [self enumerateToFindNullArrayValues:_customData forKey:nil];
+        [encoder encodeObject:_customData forKey:kUser_CUSTOM_DATA];
+    } @catch (NSException *exception) {
+        [self log:SFLogLevelError format:@"%@ error encoding object --- %@",[self class], exception.description];
+    }
+}
+
+- (void)enumerateToFindNullArrayValues:(id)object forKey:(NSString *)key {
+    if ([object isKindOfClass:[NSDictionary class]]) {
+        // If it's a dictionary, enumerate it to find arrays
+        [object enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+            [self enumerateToFindNullArrayValues:value forKey:key];
+        }];
+    } else if ([object isKindOfClass:[NSArray class]]) {
+        NSMutableArray *newArray = [NSMutableArray arrayWithArray:(NSArray *)object];
+        NSMutableArray *discardedObjects = [NSMutableArray array];
+        
+        if ([(NSArray *)object containsObject:[NSNull null]]) {
+            for (id arrayObject in newArray) {
+                if (arrayObject == [NSNull null]) {
+                    [discardedObjects addObject:arrayObject];
+                }
+            }
+            
+            // If we find any null objects remove them and set new cleansed array
+            if ([discardedObjects count] > 0) {
+                [newArray removeObjectsInArray:discardedObjects];
+                [_customData setObject:newArray forKey:key];
+            }
+        }
+        // Continue to recurse for other arrays
+        [object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [self enumerateToFindNullArrayValues:obj forKey:nil];
+        }];
+    }
 }
 
 - (id)initWithCoder:(NSCoder*)decoder {
