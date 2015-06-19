@@ -102,24 +102,24 @@ static NSString * const kGlobalScopingKey = @"-global-";
     [encoder encodeObject:_communities forKey:kUser_COMMUNITIES];
     /*
      It appears that sometimes a stray null object can be initialized inside an array in customData
-     causing a crash that can be seen in hockeyapp
+     causing a crash that can be seen in hockeyapp (deallocated object?)
      https://gus.my.salesforce.com/apex/adm_bugdetail?id=a07B0000001LyhX&sfdc.override=1
      https://rink.hockeyapp.net/manage/apps/31036/app_versions/37/crash_reasons/36553900?type=overview
     */
     @try {
         // Check for and remove null objects in arrays before trying to encode
-        [self enumerateCustomDataForNullArrayValues:_customData forKey:nil];
+        [self enumerateCustomDataToCleanseArrays:_customData forKey:nil];
         [encoder encodeObject:_customData forKey:kUser_CUSTOM_DATA];
     } @catch (NSException *exception) {
         [self log:SFLogLevelError format:@"%@ error encoding object --- %@",[self class], exception.description];
     }
 }
 
-- (void)enumerateCustomDataForNullArrayValues:(id)object forKey:(NSString *)key {
+- (void)enumerateCustomDataToCleanseArrays:(id)object forKey:(NSString *)key {
     if ([object isKindOfClass:[NSDictionary class]]) {
         // If it's a dictionary, enumerate it to find arrays
         [object enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-            [self enumerateCustomDataForNullArrayValues:value forKey:key];
+            [self enumerateCustomDataToCleanseArrays:value forKey:key];
         }];
     } else if ([object isKindOfClass:[NSArray class]]) {
         if ([(NSArray *)object containsObject:[NSNull null]]) {
@@ -128,19 +128,17 @@ static NSString * const kGlobalScopingKey = @"-global-";
             
             for (id arrayObject in newArray) {
                 if (arrayObject == [NSNull null]) {
+                    [self log:SFLogLevelWarning format:@"enumerateCustomDataForNullArrayValues: null object found in array for key: %@", key];
                     [discardedObjects addObject:arrayObject];
                 }
             }
             
-            // If we find any null objects remove them and set new cleansed array
-            if ([discardedObjects count] > 0) {
-                [newArray removeObjectsInArray:discardedObjects];
-                [_customData setObject:newArray forKey:key];
-            }
+            [newArray removeObjectsInArray:discardedObjects];
+            [_customData setObject:newArray forKey:key];
         }
         // Continue to recurse for other arrays
         [object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [self enumerateCustomDataForNullArrayValues:obj forKey:nil];
+            [self enumerateCustomDataToCleanseArrays:obj forKey:nil];
         }];
     }
 }
