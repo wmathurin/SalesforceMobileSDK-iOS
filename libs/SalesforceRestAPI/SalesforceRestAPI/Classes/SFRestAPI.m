@@ -311,13 +311,19 @@ static BOOL kIsTestRun;
 }
 
 - (SFRestRequest *)requestForQueryAll:(NSString *)soql {
-    NSDictionary *queryParams = @{@"q": soql};
+    NSDictionary *queryParams = nil;
+    if (soql) {
+        queryParams = @{@"q": soql};
+    }
     NSString *path = [NSString stringWithFormat:@"/%@/queryAll", self.apiVersion];
     return [SFRestRequest requestWithMethod:SFRestMethodGET path:path queryParams:queryParams];
 }
 
 - (SFRestRequest *)requestForSearch:(NSString *)sosl {
-    NSDictionary *queryParams = @{@"q": sosl};
+    NSDictionary *queryParams = nil;
+    if (sosl) {
+        queryParams = @{@"q": sosl};
+    }
     NSString *path = [NSString stringWithFormat:@"/%@/search", self.apiVersion];
     return [SFRestRequest requestWithMethod:SFRestMethodGET path:path queryParams:queryParams];
 }
