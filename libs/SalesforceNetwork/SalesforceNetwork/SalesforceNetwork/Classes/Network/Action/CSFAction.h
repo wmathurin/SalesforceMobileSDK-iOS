@@ -173,6 +173,8 @@
 
 - (NSURLSessionTask*)sessionTaskToProcessRequest:(NSURLRequest*)request session:(NSURLSession*)session;
 
+- (void)updateProgress;
+
 /**
  Returns a dictionary of the headers that will be returned for this request.
  
