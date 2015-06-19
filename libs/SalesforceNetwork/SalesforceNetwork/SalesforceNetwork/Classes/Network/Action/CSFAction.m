@@ -58,6 +58,8 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
     BOOL _enqueueIfNoNetwork;
 }
 
+@property (nonatomic, strong, readonly) NSMutableDictionary *timingValues;
+
 @end
 
 @implementation CSFAction
