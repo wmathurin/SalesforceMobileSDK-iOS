@@ -292,8 +292,13 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: %p, %@ \"%@\"%@>",
-            [self class], self, self.method, self.verb, (self.isProgrammatic ? @" (programmatic)" : @"")];
+    return [NSString stringWithFormat:@"<%@: %p, %@ \"%@\" (%.2f)%@>",
+            [self class],
+            self,
+            self.method,
+            self.verb,
+            [self intervalForTimingKey:kCSFActionTimingTotalTimeKey],
+            (self.isProgrammatic ? @" (programmatic)" : @"")];
 }
 
 - (NSString*)basePath {
