@@ -112,6 +112,8 @@ static NSMutableDictionary *SharedInstances = nil;
         [self.queue addObserver:self forKeyPath:@"operationCount" options:NSKeyValueObservingOptionNew context:kObservingKey];
         _online = YES;
         [self.queue setMaxConcurrentOperationCount:CSFNetworkMaximumConcurrentOperation];
+        
+        self.progress = [NSProgress progressWithTotalUnitCount:0];
 
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         self.ephemeralSession = [NSURLSession sessionWithConfiguration:configuration
@@ -282,6 +284,11 @@ static NSMutableDictionary *SharedInstances = nil;
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
     CSFAction *action = [self actionForSessionTask:downloadTask];
     [action sessionDownloadTask:downloadTask didFinishDownloadingToURL:location];
+}
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    CSFAction *action = [self actionForSessionTask:downloadTask];
+    [action sessionDownloadTask:downloadTask didWriteData:bytesWritten totalBytesWritten:totalBytesWritten totalBytesExpectedToWrite:totalBytesExpectedToWrite];
 }
 
 #pragma mark - Device Authorization support

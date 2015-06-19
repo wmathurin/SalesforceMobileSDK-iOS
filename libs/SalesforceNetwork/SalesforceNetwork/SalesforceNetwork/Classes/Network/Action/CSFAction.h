@@ -118,6 +118,11 @@
 @property (nonatomic) NSUInteger maxRetryCount;
 
 /**
+ Reports progress information for the current action.
+ */
+@property (nonatomic, strong, readonly) NSProgress *progress;
+
+/**
  Indicates if the action should cache the response in the local database.
  */
 @property (nonatomic, getter=shouldCacheResponse) BOOL cacheResponse;
