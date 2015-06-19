@@ -101,13 +101,13 @@ static NSString * const kGlobalScopingKey = @"-global-";
     [encoder encodeObject:_communityId forKey:kUser_COMMUNITY_ID];
     [encoder encodeObject:_communities forKey:kUser_COMMUNITIES];
     /*
-     It appears that sometimes a stray null object can be initialized inside an array in customData
+     It appears that sometimes a stray nil object can be initialized inside an array in customData
      causing a crash that can be seen in hockeyapp (deallocated object?)
      https://gus.my.salesforce.com/apex/adm_bugdetail?id=a07B0000001LyhX&sfdc.override=1
      https://rink.hockeyapp.net/manage/apps/31036/app_versions/37/crash_reasons/36553900?type=overview
     */
     @try {
-        // Check for and remove null objects in arrays before trying to encode
+        // Check for and remove nil objects in arrays before trying to encode
         [self enumerateCustomDataToCleanseArrays:_customData forKey:nil];
         [encoder encodeObject:_customData forKey:kUser_CUSTOM_DATA];
     } @catch (NSException *exception) {
@@ -122,19 +122,20 @@ static NSString * const kGlobalScopingKey = @"-global-";
             [self enumerateCustomDataToCleanseArrays:value forKey:key];
         }];
     } else if ([object isKindOfClass:[NSArray class]]) {
-        if ([(NSArray *)object containsObject:[NSNull null]]) {
-            NSMutableArray *newArray = [NSMutableArray arrayWithArray:(NSArray *)object];
-            NSMutableArray *discardedObjects = [NSMutableArray array];
+        if ([(NSArray *)object containsObject:nil]) {
+            NSMutableArray *currentArray = [NSMutableArray arrayWithArray:(NSArray *)object];
+            NSMutableArray *validObjects = [NSMutableArray array];
             
-            for (id arrayObject in newArray) {
-                if (arrayObject == [NSNull null]) {
-                    [self log:SFLogLevelWarning format:@"enumerateCustomDataForNullArrayValues: null object found in array for key: %@", key];
-                    [discardedObjects addObject:arrayObject];
+            // If there are any nil objects found create a new array with only valid objects
+            for (id arrayObject in currentArray) {
+                if (nil != arrayObject) {
+                    [validObjects addObject:arrayObject];
+                } else {
+                    [self log:SFLogLevelWarning format:@"enumerateCustomDataForNullArrayValues: nil object found in array for key: %@", key];
                 }
             }
             
-            [newArray removeObjectsInArray:discardedObjects];
-            [_customData setObject:newArray forKey:key];
+            [_customData setObject:validObjects forKey:key];
         }
         // Continue to recurse for other arrays
         [object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
