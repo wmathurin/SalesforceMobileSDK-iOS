@@ -40,6 +40,8 @@ CSF_EXTERN NSTimeInterval const CSFActionDefaultTimeOut;
 /** Internal interface to be used only by subclasses of CHAction and CHActionExecuter.
  */
 @interface CSFAction () {
+    NSProgress *_progress;
+    
     @protected
     NSString *_verb;
     NSNumber *_shouldCacheResponse;
@@ -72,5 +74,10 @@ CSF_EXTERN NSTimeInterval const CSFActionDefaultTimeOut;
 
 - (void)completeOperationWithError:(NSError*)error;
 - (void)completeOperationWithResponse:(NSHTTPURLResponse*)response;
+
+- (void)sessionDataTask:(NSURLSessionDataTask*)task didReceiveData:(NSData*)data;
+- (void)sessionDownloadTask:(NSURLSessionDownloadTask*)task didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite;
+- (void)sessionDownloadTask:(NSURLSessionDownloadTask*)task didFinishDownloadingToURL:(NSURL *)location;
+- (void)sessionTask:(NSURLSessionTask*)task didCompleteWithError:(NSError*)error;
 
 @end

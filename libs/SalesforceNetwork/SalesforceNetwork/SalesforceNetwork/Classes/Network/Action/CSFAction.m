@@ -41,16 +41,24 @@ NSString * const CSFNetworkErrorAuthenticationFailureKey = @"isAuthenticationFai
 
 NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
 
+NSString * const kCSFActionTimingTotalTimeKey = @"total";
+NSString * const kCSFActionTimingNetworkTimeKey = @"network";
+NSString * const kCSFActionTimingStartDelayKey = @"startDelay";
+NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
+
 @interface CSFAction () {
     BOOL _ready;
     BOOL _executing;
     BOOL _finished;
     
     CSFParameterStorage *_parameters;
+    NSMutableDictionary *_timingValues;
     NSMutableDictionary *_HTTPHeaders;
     NSData  *_jsonData;
     BOOL _enqueueIfNoNetwork;
 }
+
+@property (nonatomic, strong, readonly) NSMutableDictionary *timingValues;
 
 @end
 
@@ -175,6 +183,13 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
     return _parameters;
 }
 
+- (NSMutableDictionary *)timingValues {
+    if (!_timingValues) {
+        _timingValues = [NSMutableDictionary new];
+    }
+    return _timingValues;
+}
+
 - (void)setURL:(NSURL*)url {
     NSURL *localURL = CSFNotNullURL(url);
     
@@ -279,8 +294,13 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@: %p, %@ \"%@\"%@>",
-            [self class], self, self.method, self.verb, (self.isProgrammatic ? @" (programmatic)" : @"")];
+    return [NSString stringWithFormat:@"<%@: %p, %@ \"%@\" (%.2f)%@>",
+            [self class],
+            self,
+            self.method,
+            self.verb,
+            [self intervalForTimingKey:kCSFActionTimingTotalTimeKey],
+            (self.isProgrammatic ? @" (programmatic)" : @"")];
 }
 
 - (NSString*)basePath {
@@ -293,11 +313,15 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
     return [session dataTaskWithRequest:request];
 }
 
+- (void)sessionDownloadTask:(NSURLSessionDownloadTask*)task didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    [self updateProgress];
+}
+
 - (void)sessionDownloadTask:(NSURLSessionDownloadTask*)task didFinishDownloadingToURL:(NSURL *)location {
     if ([self isCancelled]) {
         return;
     }
-    
+    [self updateProgress];
     // Do something ...
 }
 
@@ -306,6 +330,8 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
         self.responseData = nil;
         return;
     }
+    
+    [self updateProgress];
     
     if (error) {
         // Error from URLSession:task:didCompleteWithError: is generally an error with the request itself
@@ -339,11 +365,29 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
         self.responseData = [NSMutableData dataWithCapacity:[data length]];
     }
     [self.responseData appendData:data];
+    [self updateProgress];
+}
+
+- (void)updateProgress {
+    NSURLSessionTask *task = self.downloadTask ?: self.sessionTask;
+    NSProgress *progress = self.progress;
+    
+    int64_t total = task.countOfBytesExpectedToSend + task.countOfBytesExpectedToReceive;
+    if (progress.totalUnitCount != total) {
+        progress.totalUnitCount = total;
+    }
+    
+    int64_t current = task.countOfBytesSent + task.countOfBytesReceived;
+    if (progress.completedUnitCount != current) {
+        progress.completedUnitCount = current;
+    }
 }
 
 #pragma mark NSOperation implementation
 
 - (void)start {
+    self.timingValues[@"startTime"] = [NSDate date];
+    
     if ([self isCancelled]) {
         [self completeOperationWithError:[NSError errorWithDomain:CSFNetworkErrorDomain
                                                              code:CSFNetworkCancelledError
@@ -381,6 +425,7 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
         NSURLSession *session = self.enqueuedNetwork.ephemeralSession;
         _sessionTask = [self sessionTaskToProcessRequest:request session:session];
         [_sessionTask resume];
+        [self updateProgress];
     }
 }
 
@@ -478,6 +523,21 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
     }
 }
 
+- (void)setEnqueuedNetwork:(CSFNetwork *)enqueuedNetwork {
+    if (_enqueuedNetwork != enqueuedNetwork) {
+        _enqueuedNetwork = enqueuedNetwork;
+        self.timingValues[@"enqueuedTime"] = [NSDate date];
+        
+        if (enqueuedNetwork) {
+            _progress = [[NSProgress alloc] initWithParent:[NSProgress currentProgress]
+                                                  userInfo:@{ NSProgressFileOperationKindKey: NSProgressFileOperationKindReceiving }];
+            _progress.totalUnitCount = -1;
+            _progress.cancellable = YES;
+            _progress.pausable = NO;
+        }
+    }
+}
+
 #pragma mark Response handling
 
 - (BOOL)overrideRequest:(NSURLRequest*)request withResponseData:(NSData**)data andHTTPResponse:(NSHTTPURLResponse**)response {
@@ -524,6 +584,7 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
     [self didChangeValueForKey:@"isFinished"];
     
     self.responseData = nil;
+    self.timingValues[@"endTime"] = [NSDate date];
     
     if (self.responseBlock) {
         self.responseBlock(self, self.error);
@@ -551,6 +612,7 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
 }
 
 - (void)completeOperationWithResponse:(NSHTTPURLResponse *)response {
+    self.timingValues[@"responseTime"] = [NSDate date];
     self.httpResponse = response;
     
     NSError *error = nil;
@@ -687,6 +749,35 @@ NSTimeInterval const CSFActionDefaultTimeOut = 3 * 60; // 3 minutes
     }
     
     return request;
+}
+
+@end
+
+@implementation CSFAction (Timing)
+
+- (NSTimeInterval)intervalForTimingKey:(NSString *)key {
+    NSTimeInterval result = 0;
+    
+    NSDate *firstDate = nil, *secondDate = nil;
+    if (!key || [key isEqualToString:kCSFActionTimingTotalTimeKey]) {
+        firstDate = self.timingValues[@"enqueuedTime"];
+        secondDate = self.timingValues[@"endTime"] ?: [NSDate date];
+    } else if ([key isEqualToString:kCSFActionTimingNetworkTimeKey]) {
+        firstDate = self.timingValues[@"startTime"];
+        secondDate = self.timingValues[@"responseTime"] ?: [NSDate date];
+    } else if ([key isEqualToString:kCSFActionTimingStartDelayKey]) {
+        firstDate = self.timingValues[@"enqueuedTime"];
+        secondDate = self.timingValues[@"startTime"] ?: [NSDate date];
+    } else if ([key isEqualToString:kCSFActionTimingPostProcessingKey]) {
+        firstDate = self.timingValues[@"responseTime"];
+        secondDate = self.timingValues[@"endTime"] ?: [NSDate date];
+    }
+    
+    if (firstDate && secondDate) {
+        result = secondDate.timeIntervalSinceReferenceDate - firstDate.timeIntervalSinceReferenceDate;
+    }
+    
+    return result;
 }
 
 @end
