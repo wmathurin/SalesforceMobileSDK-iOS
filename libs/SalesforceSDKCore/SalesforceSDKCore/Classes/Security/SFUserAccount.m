@@ -28,6 +28,7 @@
 
 #import <SalesforceOAuth/SFOAuthCredentials.h>
 #import <SalesforceCommonUtils/SFLogger.h>
+#import <SalesforceCommonUtils/NSDictionary+SFAdditions.h>
 
 static NSString * const kUser_ACCESS_SCOPES     = @"accessScopes";
 static NSString * const kUser_CREDENTIALS       = @"credentials";
@@ -100,48 +101,7 @@ static NSString * const kGlobalScopingKey = @"-global-";
     [encoder encodeObject:_idData forKey:kUser_ID_DATA];
     [encoder encodeObject:_communityId forKey:kUser_COMMUNITY_ID];
     [encoder encodeObject:_communities forKey:kUser_COMMUNITIES];
-    /*
-     It appears that sometimes a stray nil object can be initialized inside an array in customData
-     causing a crash that can be seen in hockeyapp (deallocated object?)
-     https://gus.my.salesforce.com/apex/adm_bugdetail?id=a07B0000001LyhX&sfdc.override=1
-     https://rink.hockeyapp.net/manage/apps/31036/app_versions/37/crash_reasons/36553900?type=overview
-    */
-    @try {
-        // Check for and remove nil objects in arrays before trying to encode
-        [self enumerateCustomDataToCleanseArrays:_customData forKey:nil];
-        [encoder encodeObject:_customData forKey:kUser_CUSTOM_DATA];
-    } @catch (NSException *exception) {
-        [self log:SFLogLevelError format:@"%@ error encoding object --- %@",[self class], exception.description];
-    }
-}
-
-- (void)enumerateCustomDataToCleanseArrays:(id)object forKey:(NSString *)key {
-    if ([object isKindOfClass:[NSDictionary class]]) {
-        // If it's a dictionary, enumerate it to find arrays
-        [object enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
-            [self enumerateCustomDataToCleanseArrays:value forKey:key];
-        }];
-    } else if ([object isKindOfClass:[NSArray class]]) {
-        if ([(NSArray *)object containsObject:nil]) {
-            NSMutableArray *currentArray = [NSMutableArray arrayWithArray:(NSArray *)object];
-            NSMutableArray *validObjects = [NSMutableArray array];
-            
-            // If there are any nil objects found create a new array with only valid objects
-            for (id arrayObject in currentArray) {
-                if (nil != arrayObject) {
-                    [validObjects addObject:arrayObject];
-                } else {
-                    [self log:SFLogLevelWarning format:@"enumerateCustomDataForNullArrayValues: nil object found in array for key: %@", key];
-                }
-            }
-            
-            [_customData setObject:validObjects forKey:key];
-        }
-        // Continue to recurse for other arrays
-        [object enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [self enumerateCustomDataToCleanseArrays:obj forKey:nil];
-        }];
-    }
+    [encoder encodeObject:[_customData cleansedDictionary] forKey:kUser_CUSTOM_DATA];
 }
 
 - (id)initWithCoder:(NSCoder*)decoder {
