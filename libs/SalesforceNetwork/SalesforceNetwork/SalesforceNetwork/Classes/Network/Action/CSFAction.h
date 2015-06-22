@@ -118,6 +118,11 @@
 @property (nonatomic) NSUInteger maxRetryCount;
 
 /**
+ Reports progress information for the current action.
+ */
+@property (nonatomic, strong, readonly) NSProgress *progress;
+
+/**
  Indicates if the action should cache the response in the local database.
  */
 @property (nonatomic, getter=shouldCacheResponse) BOOL cacheResponse;
@@ -168,6 +173,8 @@
 
 - (NSURLSessionTask*)sessionTaskToProcessRequest:(NSURLRequest*)request session:(NSURLSession*)session;
 
+- (void)updateProgress;
+
 /**
  Returns a dictionary of the headers that will be returned for this request.
  
@@ -207,5 +214,33 @@
 - (void)sessionDataTask:(NSURLSessionDataTask*)task didReceiveData:(NSData*)data;
 - (void)sessionDownloadTask:(NSURLSessionDownloadTask*)task didFinishDownloadingToURL:(NSURL *)location;
 - (void)sessionTask:(NSURLSessionTask*)task didCompleteWithError:(NSError*)error;
+
+@end
+
+
+CSF_EXTERN NSString * const kCSFActionTimingTotalTimeKey;
+CSF_EXTERN NSString * const kCSFActionTimingNetworkTimeKey;
+CSF_EXTERN NSString * const kCSFActionTimingStartDelayKey;
+CSF_EXTERN NSString * const kCSFActionTimingPostProcessingKey;
+
+@interface CSFAction (Timing)
+
+/**
+ Returns timing information for this request based on the supplied option.
+ 
+ @discussion
+ Different keys supplied can permit the caller to choose what time-range within the request to use.
+ * kCSFActionTimingTotalTimeKey -- Returns the total end-to-end time for the request from when it was initially enqueued, and when it returned.
+ * kCSFActionTimingNetworkTimeKey -- Returns the time the network request itself took.
+ * kCSFActionTimingStartDelayKey -- Returns the time delay until the action was able to begin communicating on the network.
+ * kCSFActionTimingPostProcessingKey -- Returns the time any post-processing actions took, including response processing and any caching operations that occurred.
+ 
+ If not enough information has been gathered, for example if the request has not yet completed, then the timing result will include the timing up until now.
+ 
+ @param key Key for the timing option to return, or `nil` to return the total action time.
+ 
+ @return The time interval for the requested key, or `0` if the key is invalid or if the request hasn't gathered enough information to supply that value yet.
+ */
+- (NSTimeInterval)intervalForTimingKey:(NSString*)key;
 
 @end
