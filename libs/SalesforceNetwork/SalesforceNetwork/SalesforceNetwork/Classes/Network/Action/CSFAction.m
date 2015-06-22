@@ -325,6 +325,10 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
     // Do something ...
 }
 
+- (void)sessionUploadTask:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
+    [self updateProgress];
+}
+
 - (void)sessionTask:(NSURLSessionTask*)task didCompleteWithError:(NSError*)error {
     if ([self isCancelled]) {
         self.responseData = nil;
