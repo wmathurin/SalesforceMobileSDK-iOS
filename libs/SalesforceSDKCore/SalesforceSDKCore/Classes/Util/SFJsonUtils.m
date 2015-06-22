@@ -39,7 +39,7 @@ static NSError *sLastError = nil;
     
     id result = nil;
     
-    if (jsonData && [NSJSONSerialization isValidJSONObject:jsonData]) {
+    if (jsonData) {
         result = [NSJSONSerialization JSONObjectWithData:jsonData
                                                     options:NSJSONReadingMutableContainers 
                                                       error:&err
