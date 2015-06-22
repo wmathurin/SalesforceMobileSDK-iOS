@@ -54,6 +54,8 @@ NSString * const kReIndexDataArg      = @"reIndexData";
 
 @interface SFSmartStorePlugin() 
 
+@property (nonatomic, strong) dispatch_queue_t cursorQueue;
+
 - (void)closeCursorWithId:(NSString *)cursorId;
 
 @end
@@ -71,7 +73,9 @@ NSString * const kReIndexDataArg      = @"reIndexData";
 
 - (void)resetSharedStore
 {
-    [[self cursorCache] removeAllObjects];
+    dispatch_sync(self.cursorQueue, ^{
+        [[self cursorCache] removeAllObjects];
+    });
 }
 
 - (SFSmartStore *)store
@@ -86,6 +90,7 @@ NSString * const kReIndexDataArg      = @"reIndexData";
     if (nil != self)  {
         [self log:SFLogLevelDebug msg:@"SFSmartStorePlugin initWithWebView"];
         _cursorCache = [[NSMutableDictionary alloc] init];
+        _cursorQueue = dispatch_queue_create("Cursor_Queue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -97,10 +102,9 @@ NSString * const kReIndexDataArg      = @"reIndexData";
 
 #pragma mark - Object bridging helpers
 
-
 - (SFStoreCursor*)cursorByCursorId:(NSString*)cursorId
 {
-    return _cursorCache[cursorId];
+    return self.cursorCache[cursorId];
 }
 
 
@@ -109,8 +113,10 @@ NSString * const kReIndexDataArg      = @"reIndexData";
     SFStoreCursor *cursor = [self cursorByCursorId:cursorId];
     if (nil != cursor) {
         [cursor close];
-        [self.cursorCache removeObjectForKey:cursorId];
-    } 
+        dispatch_sync(self.cursorQueue, ^{
+            [self.cursorCache removeObjectForKey:cursorId];
+        });
+    }
 }
 
 #pragma mark - SmartStore plugin methods
@@ -185,7 +191,9 @@ NSString * const kReIndexDataArg      = @"reIndexData";
         NSError* error = nil;
         SFStoreCursor* cursor = [self runQuery:querySpec error:&error];
         if (cursor.cursorId && self.cursorCache) {
-            (self.cursorCache)[cursor.cursorId] = cursor;
+            dispatch_sync(self.cursorQueue, ^{
+                (self.cursorCache)[cursor.cursorId] = cursor;
+            });
             return [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[cursor asDictionary]];
         }
         else {
