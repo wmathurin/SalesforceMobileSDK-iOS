@@ -97,7 +97,12 @@ static NSMutableDictionary *SharedInstances = nil;
             NSString *key = CSFNetworkInstanceKey(account);
             instance = SharedInstances[key];
             if (!instance) {
-                instance = SharedInstances[key] = [[self alloc] initWithUserAccount:account];
+                CSFNetwork *newInstance = [[self alloc] initWithUserAccount:account];
+                SharedInstances[key] = newInstance;
+                instance = newInstance;
+            } else {
+                // Cached instance found, just need to update credentials now.
+                instance.account.credentials = account.credentials;
             }
         }
     }
