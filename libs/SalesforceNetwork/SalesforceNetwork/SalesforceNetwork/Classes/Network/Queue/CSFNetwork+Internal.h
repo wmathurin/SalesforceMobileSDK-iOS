@@ -48,6 +48,7 @@
 
 @property (nonatomic, strong, readwrite) SFUserAccount *account;
 @property (atomic, readwrite, getter=isRefreshingAccessToken) BOOL refreshingAccessToken;
+@property (nonatomic, strong, readwrite) NSProgress *progress;
 
 @property (nonatomic, strong) NSOperationQueue *queue;
 @property (nonatomic, readwrite, strong) NSURLSession *ephemeralSession;
