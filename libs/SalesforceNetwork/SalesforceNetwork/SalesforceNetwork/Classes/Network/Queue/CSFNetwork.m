@@ -101,8 +101,8 @@ static NSMutableDictionary *SharedInstances = nil;
                 SharedInstances[key] = newInstance;
                 instance = newInstance;
             } else {
-                // Cached instance found, just need to update credentials now.
-                instance.account.credentials = account.credentials;
+                // Cached instance found, just need to update the account now.
+                instance.account = account;
             }
         }
     }
