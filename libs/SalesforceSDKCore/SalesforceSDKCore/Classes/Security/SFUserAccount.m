@@ -28,6 +28,7 @@
 
 #import <SalesforceOAuth/SFOAuthCredentials.h>
 #import <SalesforceCommonUtils/SFLogger.h>
+#import <SalesforceCommonUtils/NSDictionary+SFAdditions.h>
 
 static NSString * const kUser_ACCESS_SCOPES     = @"accessScopes";
 static NSString * const kUser_CREDENTIALS       = @"credentials";
@@ -100,7 +101,11 @@ static NSString * const kGlobalScopingKey = @"-global-";
     [encoder encodeObject:_idData forKey:kUser_ID_DATA];
     [encoder encodeObject:_communityId forKey:kUser_COMMUNITY_ID];
     [encoder encodeObject:_communities forKey:kUser_COMMUNITIES];
-    [encoder encodeObject:_customData forKey:kUser_CUSTOM_DATA];
+    @try {
+        [encoder encodeObject:[_customData cleansedDictionary] forKey:kUser_CUSTOM_DATA];
+    } @catch (NSException *exception) {
+        [self log:SFLogLevelWarning format:@"%@ - encodeWithCoder - error encoding curtom data: %@",[self class], exception.description];
+    }
 }
 
 - (id)initWithCoder:(NSCoder*)decoder {
