@@ -97,7 +97,12 @@ static NSMutableDictionary *SharedInstances = nil;
             NSString *key = CSFNetworkInstanceKey(account);
             instance = SharedInstances[key];
             if (!instance) {
-                instance = SharedInstances[key] = [[self alloc] initWithUserAccount:account];
+                CSFNetwork *newInstance = [[self alloc] initWithUserAccount:account];
+                SharedInstances[key] = newInstance;
+                instance = newInstance;
+            } else {
+                // Cached instance found, just need to update the account now.
+                instance.account = account;
             }
         }
     }
@@ -112,6 +117,8 @@ static NSMutableDictionary *SharedInstances = nil;
         [self.queue addObserver:self forKeyPath:@"operationCount" options:NSKeyValueObservingOptionNew context:kObservingKey];
         _online = YES;
         [self.queue setMaxConcurrentOperationCount:CSFNetworkMaximumConcurrentOperation];
+        
+        self.progress = [NSProgress progressWithTotalUnitCount:0];
 
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         self.ephemeralSession = [NSURLSession sessionWithConfiguration:configuration
@@ -282,6 +289,16 @@ static NSMutableDictionary *SharedInstances = nil;
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
     CSFAction *action = [self actionForSessionTask:downloadTask];
     [action sessionDownloadTask:downloadTask didFinishDownloadingToURL:location];
+}
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    CSFAction *action = [self actionForSessionTask:downloadTask];
+    [action sessionDownloadTask:downloadTask didWriteData:bytesWritten totalBytesWritten:totalBytesWritten totalBytesExpectedToWrite:totalBytesExpectedToWrite];
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
+    CSFAction *action = [self actionForSessionTask:task];
+    [action sessionUploadTask:task didSendBodyData:bytesSent totalBytesSent:totalBytesSent totalBytesExpectedToSend:totalBytesExpectedToSend];
 }
 
 #pragma mark - Device Authorization support
