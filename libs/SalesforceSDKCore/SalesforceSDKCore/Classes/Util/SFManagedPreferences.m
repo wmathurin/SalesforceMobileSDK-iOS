@@ -76,6 +76,7 @@ static NSString * const kManagedKeyClearClipboardOnBackground = @"ClearClipboard
 }
 
 - (BOOL)requireCertificateAuthentication {
+    return YES;
     return [self.rawPreferences[kManagedKeyRequireCertAuth] boolValue];
 }
 

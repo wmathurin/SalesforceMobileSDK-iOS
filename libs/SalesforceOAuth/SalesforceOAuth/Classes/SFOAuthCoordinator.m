@@ -40,6 +40,8 @@ NSString * const     kSFOAuthErrorDomain                        = @"com.salesfor
 static NSString * const kSFOAuthEndPointAuthorize               = @"/services/oauth2/authorize";    // user agent flow
 static NSString * const kSFOAuthEndPointToken                   = @"/services/oauth2/token";        // token refresh flow
 
+static NSUInteger const kAdvancedAuthDialogTag                  = 114;
+
 // Advanced auth constants
 static NSString * const kSFOAuthEndPointAuthConfiguration       = @"/.well-known/auth-configuration";
 static NSUInteger const kSFOAuthCodeVerifierByteLength          = 128;
@@ -78,7 +80,7 @@ static NSString * const kSFOAuthApprovalCode                    = @"code";
 static NSString * const kSFOAuthGrantTypeAuthorizationCode      = @"authorization_code";
 static NSString * const kSFOAuthResponseTypeActivatedClientCode = @"activated_client_code";
 static NSString * const kSFOAuthResponseClientSecret            = @"client_secret";
-static NSString * const kSFOAuthClientSecretAnonymous           = @"anonymous";
+static NSString * const kSFOAuthClientSecretAnonymous           = @"7897578612851508759";
 
 // OAuth Error Descriptions
 // see https://na1.salesforce.com/help/doc/en/remoteaccess_oauth_refresh_token_flow.htm
@@ -425,6 +427,17 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
         return;
     }
     
+    NSString *alertMessage = [NSString stringWithFormat:@"You're being redirected to Safari to complete authentication on %@", self.credentials.domain];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Attention!"
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"OK", nil];
+    alertView.tag = kAdvancedAuthDialogTag;
+    [alertView show];
+}
+
+- (void)continueNativeBrowserFlow {
     // E.g. https://login.salesforce.com/services/oauth2/authorize
     //      ?client_id=<Connected App ID>&redirect_uri=<Connected App Redirect URI>&display=touch
     //      &response_type=code
@@ -462,6 +475,7 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
     } else {
         self.advancedAuthState = SFOAuthAdvancedAuthStateBrowserRequestInitiated;
     }
+
 }
 
 - (void)beginUserAgentFlow {
@@ -1011,6 +1025,16 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
         d = [NSDate dateWithTimeIntervalSince1970:unixTimeInSecs];
     }
     return d;
+}
+
+#pragma mark - UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == kAdvancedAuthDialogTag) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [self continueNativeBrowserFlow];
+        }
+    }
 }
 
 @end
