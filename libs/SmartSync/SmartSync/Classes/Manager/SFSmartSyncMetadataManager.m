@@ -722,7 +722,9 @@ refreshCacheIfOlderThan:(NSTimeInterval)refreshCacheIfOlderThan
         [objectsString appendString:objectType.name];
     }
     if ([SFSmartSyncObjectUtils isEmpty:objectsString]) {
-        completionBlock(nil, NO);
+        if (completionBlock) {
+            completionBlock(nil, NO);
+        }
         return;
     }
 
