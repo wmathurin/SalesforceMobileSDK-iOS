@@ -417,6 +417,10 @@ static NSString * const kCSFInputCustomArrayAttributes = @"__CSFOutput_Array_Sto
 
 #pragma mark Public customization overrides
 
++ (BOOL)isDefaultPropertyForArray:(NSString *)propertyName {
+    return YES;
+}
+
 + (NSString*)storageKeyPathForPropertyName:(NSString*)propertyName {
     return propertyName;
 }
