@@ -320,7 +320,8 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
 {
     NSError* error = nil;
     NSString *dbFilePath = [self fullDbFilePathForStoreName:storeName];
-    NSDictionary *attr = [[NSFileManager defaultManager] attributesOfItemAtPath:dbFilePath error:&error];
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    NSDictionary *attr = [manager attributesOfItemAtPath:dbFilePath error:&error];
     NSString* result = attr[NSFileProtectionKey];
     if (error != nil) {
         [self log:SFLogLevelError format:@"Couldn't get protection for store: %@ - error:%@", storeName, error];
