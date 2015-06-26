@@ -57,6 +57,26 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
     }];
+
+}
+#pragma mark - Public
+
+- (void)refreshAccessToken
+{
+    [self log:SFLogLevelInfo msg:@"Session timed out.  Refreshing session to replay unauthorized requests."];
+    _isRefreshing = YES;
+    
+    // Let's refresh the token via SFAuthenticationManager.
+    [[SFAuthenticationManager sharedManager] loginWithCompletion:^(SFOAuthInfo *authInfo) {
+        [[SFRestAPI sharedInstance] setCoordinator:[SFAuthenticationManager sharedManager].coordinator];
+        _isRefreshing = NO;
+
+        [[SFNetworkEngine sharedInstance] finishRefreshAccessTokenFlowWithAuthInfo:authInfo];
+    } failure:^(SFOAuthInfo *authInfo, NSError *error) {
+        NSError *newError = [NSError errorWithDomain:kSFOAuthErrorDomain code:kSFRestErrorCode userInfo:[error userInfo]];
+        [[SFNetworkEngine sharedInstance] failOperationsWaitingForAccessTokenWithError:newError];
+        _isRefreshing = NO;
+    }];
 }
 
 @end
