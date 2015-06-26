@@ -195,7 +195,6 @@ NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
 // Called when first setting up the database
 - (BOOL)firstTimeStoreDatabaseSetup {
     BOOL result = NO;
-    NSError *createErr = nil, *protectErr = nil;
     
     if (![self isFileDataProtectionActive]) {
         //This is expected on simulator and when user does not have unlock passcode set
@@ -203,44 +202,50 @@ NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
     }
     
     // Ensure that the store directory exists.
-    [self.dbMgr createStoreDir:self.storeName error:&createErr];
-    if (nil == createErr) {
-        // Need to create the db file itself before we can encrypt it.
-        if ([self openStoreDatabase]) {
-            if ([self createMetaTables]) {
-                [self.storeQueue close];
-                self.storeQueue = nil; // Need to close before setting encryption.
-                [self.dbMgr protectStoreDir:self.storeName error:&protectErr];
-                if (protectErr != nil) {
-                    [self log:SFLogLevelError format:@"Couldn't protect store: %@", protectErr];
-                } else {
-                    //reopen the storeDb now that it's protected
-                    result = [self openStoreDatabase];
-                }
-            }
-        }
+    result = [self.dbMgr createStoreDir:self.storeName];
+    
+    // Need to create the db file itself before we can protect it.
+    result = result && [self openStoreDatabase] && [self createMetaTables];
+
+    // Need to close before protecting db file
+    if (result) {
+        [self.storeQueue close];
+        self.storeQueue = nil;
+        result = [self.dbMgr protectStoreDirIfNeeded:self.storeName protection:NSFileProtectionCompleteUntilFirstUserAuthentication];
     }
     
+    //Reopen the storeDb now that it's protected
+    result = result && [self openStoreDatabase];
+    
+    // Delete db file if its setup was not successful
     if (!result) {
         [self log:SFLogLevelError format:@"Deleting store dir since we can't set it up properly: %@", self.storeName];
         [self.dbMgr removeStoreDir:self.storeName];
     }
     
-    [SFSmartStoreUpgrade setUsesKeyStoreEncryption:result forUser:self.user store:self.storeName];
+    if (self.user != nil) {
+        [SFSmartStoreUpgrade setUsesKeyStoreEncryption:result forUser:self.user store:self.storeName];
+    }
+    
     return result;
 }
 
 // Called when opening a database setup previously
 - (BOOL)subsequentTimesStoreDatabaseSetup {
-
     BOOL result = NO;
-    if ([self openStoreDatabase]) {
+    
+    // Adjusting filesystem protection if needed
+    result = [self.dbMgr protectStoreDirIfNeeded:self.storeName protection:NSFileProtectionCompleteUntilFirstUserAuthentication];
+
+    // Open db file
+    result = result && [self openStoreDatabase];
+    
+    // Do any upgrade needed
+    if (result) {
         // like the onUpgrade for android - create long operations table if needed (if db was created with sdk 2.2 or before)
         [self createLongOperationsStatusTable];
         // like the onOpen for android - running interrupted long operations if any
         [self resumeLongOperations];
-        // good to go
-        result = YES;
     }
     return result;
 }
