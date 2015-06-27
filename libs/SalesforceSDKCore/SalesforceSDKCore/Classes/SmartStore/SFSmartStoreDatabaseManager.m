@@ -298,25 +298,54 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
 
 #pragma mark - Utilities
 
-- (BOOL)createStoreDir:(NSString *)storeName error:(NSError **)error
+- (BOOL)createStoreDir:(NSString *)storeName
 {
+    NSError* error = nil;
+    BOOL result = YES;
     NSString *storeDir = [self storeDirectoryForStoreName:storeName];
-    NSFileManager *manager = [[NSFileManager alloc] init];
-    if (![manager fileExistsAtPath:storeDir]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:storeDir]) {
         // This store has not yet been created; create it.
-        return [manager createDirectoryAtPath:storeDir withIntermediateDirectories:YES attributes:nil error:error];
+        result = [[NSFileManager defaultManager] createDirectoryAtPath:storeDir withIntermediateDirectories:YES attributes:nil error:&error];
+        
+        if (error != nil) {
+            [self log:SFLogLevelError format:@"Couldn't create store dir for store: %@ - error:%@", storeName, error];
+        }
     } else {
         return YES;
     }
+    return result;
 }
 
-- (BOOL)protectStoreDir:(NSString *)storeName error:(NSError **)error
+- (NSString*)getStoreDirProtection:(NSString *)storeName
 {
+    NSError* error = nil;
+    NSString *dbFilePath = [self fullDbFilePathForStoreName:storeName];
+    NSFileManager *manager = [[NSFileManager alloc] init];
+    NSDictionary *attr = [manager attributesOfItemAtPath:dbFilePath error:&error];
+    NSString* result = attr[NSFileProtectionKey];
+    if (error != nil) {
+        [self log:SFLogLevelError format:@"Couldn't get protection for store: %@ - error:%@", storeName, error];
+    }
+    return result;
+}
+
+- (BOOL)protectStoreDirIfNeeded:(NSString *)storeName protection:(NSString*)protection
+{
+    if ([self getStoreDirProtection:storeName] == protection) {
+        // already has the protection we want
+        return YES;
+    }
+
+    NSError* error= nil;
     // Setup the database file with filesystem encryption.
     NSString *dbFilePath = [self fullDbFilePathForStoreName:storeName];
-    NSDictionary *attr = @{NSFileProtectionKey: NSFileProtectionComplete};
+    NSDictionary *attr = @{NSFileProtectionKey: protection};
     NSFileManager *manager = [[NSFileManager alloc] init];
-    return [manager setAttributes:attr ofItemAtPath:dbFilePath error:error];
+    BOOL result = [manager setAttributes:attr ofItemAtPath:dbFilePath error:&error];
+    if (error != nil) {
+        [self log:SFLogLevelError format:@"Couldn't protect store: %@ - error:%@", storeName, error];
+    }
+    return result;
 }
 
 - (void)removeStoreDir:(NSString *)storeName
