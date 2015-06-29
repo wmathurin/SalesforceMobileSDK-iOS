@@ -116,7 +116,6 @@ static NSMutableDictionary *SharedInstances = nil;
         self.queue = [NSOperationQueue new];
         [self.queue addObserver:self forKeyPath:@"operationCount" options:NSKeyValueObservingOptionNew context:kObservingKey];
         _online = YES;
-        [self.queue setMaxConcurrentOperationCount:CSFNetworkMaximumConcurrentOperation];
         
         self.progress = [NSProgress progressWithTotalUnitCount:0];
 
@@ -192,7 +191,7 @@ static NSMutableDictionary *SharedInstances = nil;
         if (![operation isKindOfClass:[CSFAction class]])
             continue;
         
-        if ([operation isEqualToAction:action] && !operation.isFinished && !operation.isCancelled && operation.isExecuting) {
+        if ([operation isEqualToAction:action] && !operation.isFinished && !operation.isCancelled && !operation.isExecuting) {
             result = operation;
             break;
         }
