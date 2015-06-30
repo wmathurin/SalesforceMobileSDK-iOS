@@ -97,7 +97,12 @@ static NSMutableDictionary *SharedInstances = nil;
             NSString *key = CSFNetworkInstanceKey(account);
             instance = SharedInstances[key];
             if (!instance) {
-                instance = SharedInstances[key] = [[self alloc] initWithUserAccount:account];
+                CSFNetwork *newInstance = [[self alloc] initWithUserAccount:account];
+                SharedInstances[key] = newInstance;
+                instance = newInstance;
+            } else {
+                // Cached instance found, just need to update the account now.
+                instance.account = account;
             }
         }
     }
@@ -111,7 +116,6 @@ static NSMutableDictionary *SharedInstances = nil;
         self.queue = [NSOperationQueue new];
         [self.queue addObserver:self forKeyPath:@"operationCount" options:NSKeyValueObservingOptionNew context:kObservingKey];
         _online = YES;
-        [self.queue setMaxConcurrentOperationCount:CSFNetworkMaximumConcurrentOperation];
         
         self.progress = [NSProgress progressWithTotalUnitCount:0];
 
@@ -187,7 +191,7 @@ static NSMutableDictionary *SharedInstances = nil;
         if (![operation isKindOfClass:[CSFAction class]])
             continue;
         
-        if ([operation isEqualToAction:action] && !operation.isFinished && !operation.isCancelled && operation.isExecuting) {
+        if ([operation isEqualToAction:action] && !operation.isFinished && !operation.isCancelled && !operation.isExecuting) {
             result = operation;
             break;
         }

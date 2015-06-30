@@ -36,16 +36,20 @@ static NSError *sLastError = nil;
 + (id)objectFromJSONData:(NSData *)jsonData
 {
     NSError *err = nil;
-    id result = [NSJSONSerialization JSONObjectWithData:jsonData 
-                                                options:NSJSONReadingMutableContainers 
-                                                  error:&err
-                 ];
     
-    if (nil != err) {
-        [self log:SFLogLevelDebug format:@"WARNING error parsing json: %@", err];
-        sLastError = err;
+    id result = nil;
+    
+    if (jsonData) {
+        result = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                    options:NSJSONReadingMutableContainers 
+                                                      error:&err
+                     ];
+        
+        if (nil != err) {
+            [self log:SFLogLevelDebug format:@"WARNING error parsing json: %@", err];
+            sLastError = err;
+        }
     }
-    
     return result;
 }
 
@@ -73,7 +77,7 @@ static NSError *sLastError = nil;
     NSError *err = nil;
     NSData *jsonData = nil;
     
-    if (nil != obj) {
+    if ([NSJSONSerialization isValidJSONObject:obj]) {
         NSJSONWritingOptions options = 0;
 #ifdef DEBUG
         options = NSJSONWritingPrettyPrinted;
@@ -93,7 +97,7 @@ static NSError *sLastError = nil;
         }
         
     } else {
-        [self log:SFLogLevelDebug format:@"nil object passed to JSONDataRepresentation???"];
+        [self log:SFLogLevelDebug format:@"invalid object passed to JSONDataRepresentation???"];
     }
     return  jsonData;
 }
