@@ -220,6 +220,9 @@ static NSString * const SFDCLoginHostListCellIdentifier = @"SFDCLoginHostListCel
     // Apply the selected login host
     [self applyLoginHostAtIndex:indexPath.row];
     
+    // Reload the table to show the correct row witih the checkmark.
+    [tableView reloadData];
+    
     // Notify the delegate.
     [self delegateDidSelectLoginHost];
 }
