@@ -114,7 +114,9 @@ NSString * const kReIndexDataArg      = @"reIndexData";
     if (nil != cursor) {
         [cursor close];
         dispatch_sync(self.cursorQueue, ^{
-            [self.cursorCache removeObjectForKey:cursorId];
+            if ([self.cursorCache objectForKey:cursorId]) {
+                [self.cursorCache removeObjectForKey:cursorId];
+            }
         });
     }
 }

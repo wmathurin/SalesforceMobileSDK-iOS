@@ -331,7 +331,7 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
 
 - (BOOL)protectStoreDirIfNeeded:(NSString *)storeName protection:(NSString*)protection
 {
-    if ([self getStoreDirProtection:storeName] == protection) {
+    if ([[self getStoreDirProtection:storeName] isEqualToString:protection]) {
         // already has the protection we want
         return YES;
     }
