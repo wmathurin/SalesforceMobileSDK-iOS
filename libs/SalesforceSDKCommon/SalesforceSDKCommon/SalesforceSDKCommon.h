@@ -2,7 +2,7 @@
  SalesforceSDKCommon.h
  SalesforceSDKCommon
 
- Created by Kevin Hawkins on Mon Mar  2 12:38:03 PST 2015.
+ Created by Behzad Richey on Tue Jun 30 13:40:51 PDT 2015.
 
  Copyright (c) 2015, salesforce.com, inc. All rights reserved.
  
@@ -29,4 +29,7 @@
 
 #import <SalesforceSDKCommon/NSData+SFSDKUtils.h>
 #import <SalesforceSDKCommon/SFSDKAsyncProcessListener.h>
+#import <SalesforceSDKCommon/SFSDKLoginHost.h>
+#import <SalesforceSDKCommon/SFSDKLoginHostListViewController.h>
+#import <SalesforceSDKCommon/SFSDKLoginHostStorage.h>
 #import <SalesforceSDKCommon/SFSDKReachability.h>

@@ -491,7 +491,7 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
     
     if (nil == self.view) {
         // lazily create web view if needed
-        self.view = [[UIWebView  alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        self.view = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     }
     self.view.delegate = self;
 
@@ -1033,6 +1033,10 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
     if (alertView.tag == kAdvancedAuthDialogTag) {
         if (buttonIndex != alertView.cancelButtonIndex) {
             [self continueNativeBrowserFlow];
+        } else {
+            if ([self.delegate respondsToSelector:@selector(oauthCoordinatorDidCancelBrowserFlow:)]) {
+                [self.delegate oauthCoordinatorDidCancelBrowserFlow:self];
+            }
         }
     }
 }

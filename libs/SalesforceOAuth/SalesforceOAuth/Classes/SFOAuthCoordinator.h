@@ -212,6 +212,15 @@ typedef NS_ENUM(NSUInteger, SFOAuthAdvancedAuthState) {
  */
 - (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view;
 
+/**
+ Sent to notify the delegate that a browser authentication flow has been cancelled by the user.
+ 
+ @param coordinator The SFOAuthCoordinator instance processing this message.
+ 
+ @see SFOAuthCoordinator
+ */
+- (void)oauthCoordinatorDidCancelBrowserFlow:(SFOAuthCoordinator *)coordinator;
+
 @end
 
 /** The `SFOAuthCoordinator` class is the central class of the OAuth2 authentication process.

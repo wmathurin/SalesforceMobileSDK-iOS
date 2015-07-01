@@ -39,6 +39,7 @@
 #import "SFSDKResourceUtils.h"
 #import "SFRootViewManager.h"
 #import "SFUserActivityMonitor.h"
+#import "SFSDKLoginHostListViewController.h"
 #import <SalesforceSecurity/SFPasscodeManager.h>
 #import <SalesforceSecurity/SFPasscodeProviderManager.h>
 #import "SFPushNotificationManager.h"
@@ -1147,6 +1148,23 @@ static Class InstanceClass = nil;
     }];
     
     return result;
+}
+
+- (void)oauthCoordinatorDidCancelBrowserFlow:(SFOAuthCoordinator *)coordinator {
+    __block BOOL handledByDelegate = NO;
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidCancelBrowserFlow:)]) {
+            [delegate authManagerDidCancelBrowserFlow:self];
+            handledByDelegate = YES;
+        }
+    }];
+    
+    // TODO: Determine if this is the correct approach. If so, then SFAuthenticationManager probably needs to conform to SFSDKLoginHostDelegate.
+    if (!handledByDelegate) {
+        SFSDKLoginHostListViewController *hostListViewController = [[SFSDKLoginHostListViewController alloc] initWithStyle:UITableViewStylePlain];
+        [[SFRootViewManager sharedManager] pushViewController:hostListViewController];
+    }
 }
 
 #pragma mark - SFIdentityCoordinatorDelegate

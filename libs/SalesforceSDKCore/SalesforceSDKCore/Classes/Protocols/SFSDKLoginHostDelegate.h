@@ -13,7 +13,7 @@
  */
 @protocol SFSDKLoginHostDelegate <NSObject>
 
-@required
+@optional
 
 /**
  * Notifies the delegate that a login host has been selected by the user.
@@ -21,8 +21,6 @@
  * @param hostListViewController The instance sending this message.
  */
 - (void)hostListViewControllerDidSelectLoginHost:(SFSDKLoginHostListViewController *)hostListViewController;
-
-@optional
 
 /**
  * Notifies the delegate that a login host has been added to the list of hosts.
