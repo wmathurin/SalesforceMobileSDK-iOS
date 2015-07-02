@@ -29,7 +29,4 @@
 
 #import <SalesforceSDKCommon/NSData+SFSDKUtils.h>
 #import <SalesforceSDKCommon/SFSDKAsyncProcessListener.h>
-#import <SalesforceSDKCommon/SFSDKLoginHost.h>
-#import <SalesforceSDKCommon/SFSDKLoginHostListViewController.h>
-#import <SalesforceSDKCommon/SFSDKLoginHostStorage.h>
 #import <SalesforceSDKCommon/SFSDKReachability.h>
