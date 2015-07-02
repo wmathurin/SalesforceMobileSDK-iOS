@@ -40,8 +40,6 @@ NSString * const     kSFOAuthErrorDomain                        = @"com.salesfor
 static NSString * const kSFOAuthEndPointAuthorize               = @"/services/oauth2/authorize";    // user agent flow
 static NSString * const kSFOAuthEndPointToken                   = @"/services/oauth2/token";        // token refresh flow
 
-static NSUInteger const kAdvancedAuthDialogTag                  = 114;
-
 // Advanced auth constants
 static NSString * const kSFOAuthEndPointAuthConfiguration       = @"/.well-known/auth-configuration";
 static NSUInteger const kSFOAuthCodeVerifierByteLength          = 128;
@@ -425,24 +423,27 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
 }
 
 - (void)beginNativeBrowserFlow {
+    if ([self.delegate respondsToSelector:@selector(oauthCoordinator:willBeginBrowserAuthentication:)]) {
+        __weak SFOAuthCoordinator *weakSelf = self;
+        [self.delegate oauthCoordinator:self willBeginBrowserAuthentication:^(BOOL proceed) {
+            if (proceed) {
+                [weakSelf continueNativeBrowserFlow];
+            }
+        }];
+    } else {
+        // If delegate does not implement the method, simply continue with the browser flow.
+        [self continueNativeBrowserFlow];
+    }
+}
+
+- (void)continueNativeBrowserFlow {
     if (![NSThread isMainThread]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self beginNativeBrowserFlow];
+            [self continueNativeBrowserFlow];
         });
         return;
     }
     
-    NSString *alertMessage = [NSString stringWithFormat:@"You're being redirected to Safari to complete authentication on %@", self.credentials.domain];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Attention!"
-                                                        message:alertMessage
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"OK", nil];
-    alertView.tag = kAdvancedAuthDialogTag;
-    [alertView show];
-}
-
-- (void)continueNativeBrowserFlow {
     // E.g. https://login.salesforce.com/services/oauth2/authorize
     //      ?client_id=<Connected App ID>&redirect_uri=<Connected App Redirect URI>&display=touch
     //      &response_type=code
@@ -1030,20 +1031,6 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
         d = [NSDate dateWithTimeIntervalSince1970:unixTimeInSecs];
     }
     return d;
-}
-
-#pragma mark - UIAlertViewDelegate Methods
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == kAdvancedAuthDialogTag) {
-        if (buttonIndex != alertView.cancelButtonIndex) {
-            [self continueNativeBrowserFlow];
-        } else {
-            if ([self.delegate respondsToSelector:@selector(oauthCoordinatorDidCancelBrowserFlow:)]) {
-                [self.delegate oauthCoordinatorDidCancelBrowserFlow:self];
-            }
-        }
-    }
 }
 
 @end

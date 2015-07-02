@@ -105,6 +105,12 @@ typedef NS_ENUM(NSUInteger, SFOAuthAdvancedAuthState) {
     SFOAuthAdvancedAuthStateTokenRequestInitiated
 };
 
+/**
+ Callback block used for the browser flow authentication.
+ @see oauthCoordinator:willBeginBrowserAuthentication:
+ */
+typedef void (^SFOAuthBrowserFlowCallbackBlock)(BOOL);
+
 /** Protocol for objects intending to be a delegate for an OAuth coordinator.
  
  Implement this protocol to receive updates from an `SFOAuthCoordinator` instance.
@@ -213,13 +219,16 @@ typedef NS_ENUM(NSUInteger, SFOAuthAdvancedAuthState) {
 - (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view;
 
 /**
- Sent to notify the delegate that a browser authentication flow has been cancelled by the user.
+ Sent to notify the delegate that a browser authentication flow is about to begin.
  
- @param coordinator The SFOAuthCoordinator instance processing this message.
+ If the delegate implements this method, it is responsible for using the callbackBlock to let the coordinator know
+ whether it should proceed with the browser flow or not.
  
- @see SFOAuthCoordinator
+ @param coordinator   The SFOAuthCoordinator instance processing this message.
+ @param callbackBlock A callback block used to notify the coordinator if it should continue with the authentication flow.
+                      Pass in YES to proceed, NO to cancel the authentication flow.
  */
-- (void)oauthCoordinatorDidCancelBrowserFlow:(SFOAuthCoordinator *)coordinator;
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator willBeginBrowserAuthentication:(SFOAuthBrowserFlowCallbackBlock)callbackBlock;
 
 @end
 
