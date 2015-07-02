@@ -55,10 +55,10 @@ static NSString * const SFSDKLoginHostNameKey = @"SFSDKLoginHostNameKey";
         }
         
         // Add the Production and Sandbox login hosts are defined. These two items cannot be deleted.
-        [self.loginHostList addObject:[SFSDKLoginHost hostWithName:[SFSDKResourceUtils localizedString:@"LoginServerProduction"])
+        [self.loginHostList addObject:[SFSDKLoginHost hostWithName:[SFSDKResourceUtils localizedString:@"LoginServerProduction"]
                                                                 host:@"login.salesforce.com"
                                                            deletable:NO]];
-        [self.loginHostList addObject:[SFSDKLoginHost hostWithName:[SFSDKResourceUtils localizedString:@"loginServerSandbox"])
+        [self.loginHostList addObject:[SFSDKLoginHost hostWithName:[SFSDKResourceUtils localizedString:@"loginServerSandbox"]
                                                                 host:@"test.salesforce.com"
                                                            deletable:NO]];
         
