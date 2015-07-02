@@ -35,7 +35,7 @@ static NSString * const SFSDKNewLoginHostCellIdentifier = @"SFSDKNewLoginHostCel
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                             target:self action:@selector(addNewServer:)];
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    self.title = [SFSDKResourceUtils localizedString:@"LOGIN_ADD_SERVER"];
+    self.title = [SFSDKResourceUtils localizedString:@"loginAddServer"];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:SFSDKNewLoginHostCellIdentifier];
 }
@@ -91,14 +91,14 @@ static NSString * const SFSDKNewLoginHostCellIdentifier = @"SFSDKNewLoginHostCel
     textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     textField.delegate = self;
     if (0 == indexPath.row) {
-        textField.placeholder = [SFSDKResourceUtils localizedString:@"LOGIN_SERVER_URL"];
+        textField.placeholder = [SFSDKResourceUtils localizedString:@"loginServerUrl"];
         textField.keyboardType = UIKeyboardTypeURL;
         textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         [textField becomeFirstResponder];
         self.server = textField;
     } else {
-        textField.placeholder = [SFSDKResourceUtils localizedString:@"LOGIN_SERVER_NAME"];
+        textField.placeholder = [SFSDKResourceUtils localizedString:@"loginServerName"];
         textField.keyboardType = UIKeyboardTypeDefault;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         self.name = textField;
