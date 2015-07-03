@@ -26,6 +26,7 @@
 #import <SalesforceCommonUtils/UIDevice+SFHardware.h>
 #import <SalesforceCommonUtils/NSData+SFAdditions.h>
 #import <SalesforceCommonUtils/NSString+SFAdditions.h>
+#import <SalesforceCommonUtils/SFFileProtectionHelper.h>
 #import "SFSmartStoreUtils.h"
 #import "SFUserAccountManager.h"
 #import "SFUserAccount.h"
@@ -345,9 +346,8 @@ static NSString * const kSFSmartStoreVerifyReadDbErrorDesc = @"Could not read fr
 
 - (BOOL)protectStoreDir:(NSString *)storeName error:(NSError **)error
 {
-    // Setup the database file with filesystem encryption.
     NSString *dbFilePath = [self fullDbFilePathForStoreName:storeName];
-    NSDictionary *attr = @{NSFileProtectionKey: NSFileProtectionComplete};
+    NSDictionary *attr = @{NSFileProtectionKey: [SFFileProtectionHelper fileProtectionForPath:dbFilePath]};
     NSFileManager *manager = [[NSFileManager alloc] init];
     return [manager setAttributes:attr ofItemAtPath:dbFilePath error:error];
 }
