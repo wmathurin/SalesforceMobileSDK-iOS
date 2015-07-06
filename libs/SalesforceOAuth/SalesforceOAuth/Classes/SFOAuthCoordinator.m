@@ -212,11 +212,14 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
     } else {
         __weak SFOAuthCoordinator *weakSelf = self;
         switch (self.advancedAuthConfiguration) {
-            case SFOAuthAdvancedAuthConfigurationNone: {
+            // TODO: For now treat both "None" and "Allow" the same so we always try to retrieve org config.
+            //       Bug filed on MobileSDK to fix this issue: W-2667443
+            /*case SFOAuthAdvancedAuthConfigurationNone: {
                 [self notifyDelegateOfBeginAuthentication];
                 [self.oauthCoordinatorFlow beginUserAgentFlow];
                 break;
-            }
+            }*/
+            case SFOAuthAdvancedAuthConfigurationNone:
             case SFOAuthAdvancedAuthConfigurationAllow: {
                 // If advanced auth mode is allowed, we have to get auth configuration settings from the org, where
                 // available, and initiate advanced auth flows, if configured.
