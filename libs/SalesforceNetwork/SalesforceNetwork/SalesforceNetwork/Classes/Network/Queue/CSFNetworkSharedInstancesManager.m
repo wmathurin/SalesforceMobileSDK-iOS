@@ -24,7 +24,7 @@ static inline NSString* CSFNetworkInstanceKey(SFUserAccount* user) {
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _sharedInstances = [NSMutableDictionary new];
+        _sharedInstances = [[NSMutableDictionary alloc] initWithCapacity:1];
         [[SFAuthenticationManager sharedManager] addDelegate:self];
     }
     return self;
