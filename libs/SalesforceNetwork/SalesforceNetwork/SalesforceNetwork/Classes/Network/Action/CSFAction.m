@@ -89,6 +89,11 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
     }
     
     NSString *scheme = @"https";
+    
+#if defined(ENABLE_PLAIN_HTTP) || TARGET_IPHONE_SIMULATOR
+    scheme = [action.enqueuedNetwork.account.credentials.instanceUrl scheme];
+#endif
+    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@", scheme, host, path]];
     return url;
 }
