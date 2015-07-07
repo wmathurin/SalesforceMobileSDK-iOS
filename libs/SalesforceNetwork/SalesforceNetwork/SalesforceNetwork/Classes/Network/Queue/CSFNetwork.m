@@ -62,14 +62,14 @@ static void * kObservingKey = &kObservingKey;
 
 @implementation CSFNetwork
 
-static CSFNetworkSharedInstancesManager* SharedInstanceManager = nil;
+static CSFNetworkSharedInstancesManager* SharedInstancesManager = nil;
 
 #pragma mark -
 #pragma mark object lifecycle
 
 + (void)initialize {
     if (self == [CSFNetwork class]) {
-        SharedInstanceManager = [CSFNetworkSharedInstancesManager new];
+        SharedInstancesManager = [CSFNetworkSharedInstancesManager new];
         [NSValueTransformer setValueTransformer:[[CSFURLValueTransformer alloc] init] forName:CSFURLValueTransformerName];
         [NSValueTransformer setValueTransformer:[[CSFDateValueTransformer alloc] init] forName:CSFDateValueTransformerName];
         [NSValueTransformer setValueTransformer:[[CSFPNGImageValueTransformer alloc] init] forName:CSFPNGImageValueTransformerName];
@@ -85,7 +85,7 @@ static CSFNetworkSharedInstancesManager* SharedInstanceManager = nil;
 }
 
 + (instancetype)networkForUserAccount:(SFUserAccount*)account {
-    return [SharedInstanceManager sharedInstanceForUserAccount:account];
+    return [SharedInstancesManager sharedInstanceForUserAccount:account];
 }
 
 - (id)init {

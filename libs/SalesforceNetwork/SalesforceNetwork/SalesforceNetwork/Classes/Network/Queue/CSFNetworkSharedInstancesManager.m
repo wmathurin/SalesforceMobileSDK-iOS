@@ -9,7 +9,7 @@
 #import "CSFNetworkSharedInstancesManager.h"
 #import "CSFNetwork+Internal.h"
 
-static inline NSString *CSFNetworkInstanceKey(SFUserAccount *user) {
+static inline NSString* CSFNetworkInstanceKey(SFUserAccount* user) {
     return [NSString stringWithFormat:@"%@-%@-%@", user.credentials.organizationId, user.credentials.userId, user.communityId];
 }
 
@@ -64,7 +64,7 @@ static inline NSString *CSFNetworkInstanceKey(SFUserAccount *user) {
 
 #pragma mark - SFAuthenticationManagerDelegate
 
-- (void)authManager:(SFAuthenticationManager *)manager willLogoutUser:(SFUserAccount *)user {
+- (void)authManager:(SFAuthenticationManager*)manager willLogoutUser:(SFUserAccount*)user {
     [self removeSharedInstanceForUserAccount:user];
 }
 
