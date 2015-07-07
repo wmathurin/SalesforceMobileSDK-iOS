@@ -26,6 +26,7 @@
 
 #import "CSFNetwork+Internal.h"
 #import "CSFAction+Internal.h"
+#import "CSFNetworkSharedInstancesManager.h"
 #import <SalesforceSDKCore/SalesforceSDKCore.h>
 
 #import "CSFInternalDefines.h"
@@ -46,10 +47,6 @@ NSUInteger const CSFNetworkMaximumConcurrentOperation = 6;
 
 static void * kObservingKey = &kObservingKey;
 
-NSString *CSFNetworkInstanceKey(SFUserAccount *user) {
-    return [NSString stringWithFormat:@"%@-%@-%@", user.credentials.organizationId, user.credentials.userId, user.communityId];
-}
-
 @interface CSFNetwork() {
     //Flag to ensure that we file CSFActionsRequiredByUICompletedNotification only once through out the application's life cycle
     NSString *_defaultConnectCommunityId;
@@ -65,15 +62,14 @@ NSString *CSFNetworkInstanceKey(SFUserAccount *user) {
 
 @implementation CSFNetwork
 
+static CSFNetworkSharedInstancesManager* SharedInstanceManager = nil;
+
 #pragma mark -
 #pragma mark object lifecycle
 
-static NSMutableDictionary *SharedInstances = nil;
-
 + (void)initialize {
     if (self == [CSFNetwork class]) {
-        SharedInstances = [[NSMutableDictionary alloc] initWithCapacity:1];
-        
+        SharedInstanceManager = [CSFNetworkSharedInstancesManager new];
         [NSValueTransformer setValueTransformer:[[CSFURLValueTransformer alloc] init] forName:CSFURLValueTransformerName];
         [NSValueTransformer setValueTransformer:[[CSFDateValueTransformer alloc] init] forName:CSFDateValueTransformerName];
         [NSValueTransformer setValueTransformer:[[CSFPNGImageValueTransformer alloc] init] forName:CSFPNGImageValueTransformerName];
@@ -85,29 +81,11 @@ static NSMutableDictionary *SharedInstances = nil;
 + (instancetype)currentNetwork {
     SFUserAccount *currentUser = [SFUserAccountManager sharedInstance].currentUser;
     CSFNetwork *instance = [self networkForUserAccount:currentUser];
-    
     return instance;
 }
 
 + (instancetype)networkForUserAccount:(SFUserAccount*)account {
-    CSFNetwork *instance = nil;
-    
-    if (![account.accountIdentity isEqual:[SFUserAccountManager sharedInstance].temporaryUserIdentity]) {
-        @synchronized (SharedInstances) {
-            NSString *key = CSFNetworkInstanceKey(account);
-            instance = SharedInstances[key];
-            if (!instance) {
-                CSFNetwork *newInstance = [[self alloc] initWithUserAccount:account];
-                SharedInstances[key] = newInstance;
-                instance = newInstance;
-            } else {
-                // Cached instance found, just need to update the account now.
-                instance.account = account;
-            }
-        }
-    }
-    
-    return instance;
+    return [SharedInstanceManager sharedInstanceForUserAccount:account];
 }
 
 - (id)init {

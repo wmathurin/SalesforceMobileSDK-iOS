@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SalesforceSDKCore/SFAuthenticationManager.h>
+@class CSFNetwork;
 
-@interface CSFNetworkSharedInstancesManager : NSObject
+@interface CSFNetworkSharedInstancesManager : NSObject <SFAuthenticationManagerDelegate>
+
+- (CSFNetwork*)sharedInstanceForUserAccount:(SFUserAccount*)user;
 
 @end
