@@ -69,37 +69,31 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
     if (!action) {
         return nil;
     }
-    
-    NSString *host = [action.enqueuedNetwork.account.credentials.instanceUrl host];
-    NSString *path = [NSMutableString stringWithFormat:@"%@%@", action.basePath, action.verb];
-    
+    NSMutableString *baseUrlString = [NSMutableString stringWithString:[action.enqueuedNetwork.account.credentials.apiUrl absoluteString]];
+    NSMutableString *path = [NSMutableString stringWithFormat:@"%@%@", action.basePath, action.verb];
+
     // Make sure path is not empty
-    if (!host || host.length == 0) {
+    if (baseUrlString.length == 0) {
         *error = [NSError errorWithDomain:CSFNetworkErrorDomain
                                      code:CSFNetworkURLCredentialsError
-                                 userInfo:@{ NSLocalizedDescriptionKey: @"Network action must have an instance host",
+                                 userInfo:@{ NSLocalizedDescriptionKey: @"Network action must have an API URL",
                                              CSFNetworkErrorActionKey: action }];
         return nil;
-    } else if (!path || path.length == 0) {
+    } else if (path.length == 0) {
         *error = [NSError errorWithDomain:CSFNetworkErrorDomain
                                      code:CSFNetworkURLCredentialsError
                                  userInfo:@{ NSLocalizedDescriptionKey: @"Network action must have a valid path",
                                              CSFNetworkErrorActionKey: action }];
         return nil;
     }
-    
-    NSString *scheme = @"https";
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@", scheme, host, path]];
-    
-#if defined(ENABLE_PLAIN_HTTP) || TARGET_IPHONE_SIMULATOR
-    scheme = [action.enqueuedNetwork.account.credentials.instanceUrl scheme];
-    NSNumber *port = [action.enqueuedNetwork.account.credentials.instanceUrl port];
-    if (port) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@%@", scheme, host, [port stringValue], path]];
-    } else {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@", scheme, host, path]];
+    if (![baseUrlString hasSuffix:@"/"]) {
+        [baseUrlString appendString:@"/"];
     }
-#endif
+    if ([path hasPrefix:@"/"]) {
+        [path deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
+    NSString *urlString = [baseUrlString stringByAppendingString:path];
+    NSURL *url = [NSURL URLWithString:urlString];
     return url;
 }
 
