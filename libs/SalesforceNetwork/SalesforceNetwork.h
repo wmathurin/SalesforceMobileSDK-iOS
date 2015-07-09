@@ -2,7 +2,7 @@
  SalesforceNetwork.h
  SalesforceNetwork
 
- Created by Bharath Hariharan on Wed Apr  1 20:13:33 PDT 2015.
+ Created by Bharath Hariharan on Wed Jul  8 22:28:52 PDT 2015.
 
  Copyright (c) 2015, salesforce.com, inc. All rights reserved.
  
@@ -35,6 +35,7 @@
 #import <SalesforceNetwork/CSFAvailability.h>
 #import <SalesforceNetwork/CSFDefines.h>
 #import <SalesforceNetwork/CSFForceDefines.h>
+#import <SalesforceNetwork/CSFGuestAction.h>
 #import <SalesforceNetwork/CSFIndexedEntity.h>
 #import <SalesforceNetwork/CSFInput.h>
 #import <SalesforceNetwork/CSFNetwork.h>
