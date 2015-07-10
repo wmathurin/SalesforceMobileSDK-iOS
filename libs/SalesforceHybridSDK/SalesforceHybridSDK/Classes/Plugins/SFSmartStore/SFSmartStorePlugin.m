@@ -54,6 +54,7 @@ NSString * const kIsGlobalStoreArg    = @"isGlobalStore";
 
 @interface SFSmartStorePlugin() 
 
+@property (nonatomic, strong) dispatch_queue_t cursorQueue;
 @property (nonatomic, strong) SFSmartStoreInspectorViewController *inspector;
 @property (nonatomic, strong) SFSmartStoreInspectorViewController *globalInspector;
 @property (nonatomic, strong) SFSmartStore *store;
@@ -89,6 +90,7 @@ NSString * const kIsGlobalStoreArg    = @"isGlobalStore";
         self.globalCursorCache = [[NSMutableDictionary alloc] init];
         self.inspector = [[SFSmartStoreInspectorViewController alloc] initWithStore:self.store];
         self.globalInspector = [[SFSmartStoreInspectorViewController alloc] initWithStore:self.globalStore];
+	    _cursorQueue = dispatch_queue_create("Cursor_Queue", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -105,12 +107,14 @@ NSString * const kIsGlobalStoreArg    = @"isGlobalStore";
     SFStoreCursor *cursor = [self cursorByCursorId:cursorId isGlobal:isGlobal];
     if (nil != cursor) {
         [cursor close];
-        if (isGlobal) {
-            [self.globalCursorCache removeObjectForKey:cursorId];
-        } else {
-            [self.userCursorCache removeObjectForKey:cursorId];
-        }
-    } 
+		dispatch_sync(self.cursorQueue, ^{
+			if (isGlobal) {
+            	[self.globalCursorCache removeObjectForKey:cursorId];
+	        } else {
+    	        [self.userCursorCache removeObjectForKey:cursorId];
+        	}
+		});
+    }
 }
 
 #pragma mark - SmartStore plugin methods
