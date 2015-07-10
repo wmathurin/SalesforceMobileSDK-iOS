@@ -78,12 +78,7 @@ static NSString * const kSFOAuthApprovalCode                    = @"code";
 static NSString * const kSFOAuthGrantTypeAuthorizationCode      = @"authorization_code";
 static NSString * const kSFOAuthResponseTypeActivatedClientCode = @"activated_client_code";
 static NSString * const kSFOAuthResponseClientSecret            = @"client_secret";
-
-// ==============================================================================================
-// TODO: Remove client secret before shipping. This is only there for testing for the time being.
-#warning REMOVE CLIENT SECRET BEFORE SHIPPING
-static NSString * const kSFOAuthClientSecretAnonymous           = @"7897578612851508759";
-// ==============================================================================================
+static NSString * const kSFOAuthClientSecretAnonymous           = @"anonymous";
 
 // OAuth Error Descriptions
 // see https://na1.salesforce.com/help/doc/en/remoteaccess_oauth_refresh_token_flow.htm
