@@ -26,6 +26,8 @@
 #import "SFUserAccountManager.h"
 #import "SFUserAccount.h"
 
+#import <SalesforceCommonUtils/SFFileProtectionHelper.h>
+
 static NSString * const kDefaultOrgName = @"org";
 static NSString * const kDefaultCommunityName = @"internal";
 
@@ -45,7 +47,7 @@ static NSString * const kDefaultCommunityName = @"internal";
     if (![manager fileExistsAtPath:directory]) {
         return [manager createDirectoryAtPath:directory
                   withIntermediateDirectories:YES
-                                   attributes:@{NSFileProtectionKey: NSFileProtectionCompleteUntilFirstUserAuthentication}
+                                   attributes:@{NSFileProtectionKey: [SFFileProtectionHelper fileProtectionForPath:directory]}
                                         error:error];
     } else {
         return YES;
@@ -82,6 +84,10 @@ static NSString * const kDefaultCommunityName = @"internal";
 }
 
 - (NSString*)directoryForUser:(SFUserAccount *)user scope:(SFUserAccountScope)scope type:(NSSearchPathDirectory)type components:(NSArray *)components {
+    if (nil == user.credentials.organizationId && scope != SFUserAccountScopeGlobal) {
+        // do nothing
+        return nil;
+    }
     switch (scope) {
         case SFUserAccountScopeGlobal:
             return [self directoryForOrg:nil user:nil community:nil type:type components:components];

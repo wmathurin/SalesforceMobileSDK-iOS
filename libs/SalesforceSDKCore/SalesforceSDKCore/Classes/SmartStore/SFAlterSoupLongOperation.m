@@ -81,7 +81,7 @@
 - (NSString*) description
 {
     return [NSString stringWithFormat:@"AlterSoupOperation = {rowId=%lld soupName=%@ soupTableName=%@ afterStep=%lu reIndexData=%@ oldIndexSpecs=%@ newIndexSpecs=%@}\n",
-            (long long)self.rowId,
+            self.rowId,
             self.soupName,
             self.soupTableName,
             (unsigned long)self.afterStep,
@@ -292,7 +292,7 @@
     else {
         NSNumber* now = [self.store currentTimeInMilliseconds];
         NSMutableDictionary* values = [NSMutableDictionary dictionary];
-        values[STATUS_COL] = [NSNumber numberWithInt:newStatus];
+        values[STATUS_COL] = [NSNumber numberWithUnsignedInteger:newStatus];
         values[LAST_MODIFIED_COL] = now;
         [self.store updateTable:LONG_OPERATIONS_STATUS_TABLE values:values entryId:@(self.rowId) withDb:db];
     }

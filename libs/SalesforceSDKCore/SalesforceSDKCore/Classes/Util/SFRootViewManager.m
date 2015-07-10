@@ -148,7 +148,6 @@
     }
 }
 
-
 #pragma mark - Private
 
 - (void)saveCurrentKeyWindow
