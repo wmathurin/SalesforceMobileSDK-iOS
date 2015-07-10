@@ -607,7 +607,7 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
     
     NSError *jsonParseError = nil;
     if ([self.responseData length] > 0) {
-        content = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
+        content = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonParseError];
     }
     
     // If it's an error here, it's a basic parsing error.
