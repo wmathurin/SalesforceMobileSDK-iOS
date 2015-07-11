@@ -30,4 +30,26 @@
     return request;
 }
 
+- (void)sessionDataTask:(NSURLSessionDataTask*)task didReceiveData:(NSData*)data {
+    if ([self isCancelled]) {
+        self.responseData = nil;
+        return;
+    }
+    if (self.responseData == nil) {
+        self.responseData = [NSMutableData dataWithCapacity:[data length]];
+    }
+    [self.responseData appendData:data];
+}
+
+- (void)completeOperationWithError:(NSError *)error {
+    if (self.responseBlock) {
+        self.responseBlock(self, self.error);
+    }
+}
+
+- (void)completeOperationWithResponse:(NSHTTPURLResponse *)response {
+    self.httpResponse = response;
+    [self completeOperationWithError:nil];
+}
+
 @end

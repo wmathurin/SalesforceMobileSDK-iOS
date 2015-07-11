@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 salesforce.com. All rights reserved.
 //
 
-#import "CSFAction.h"
+#import "CSFAction+Internal.h"
 
 @interface CSFGuestAction : CSFAction
 
