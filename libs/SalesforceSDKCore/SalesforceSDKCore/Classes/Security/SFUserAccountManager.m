@@ -727,7 +727,7 @@ static NSString * const kUserAccountEncryptionKeyLabel = @"com.salesforce.userAc
     for (SFUserAccountIdentity *key in self.userAccountMap) {
         SFUserAccount *account = (self.userAccountMap)[key];
         NSString *accountOrg = account.credentials.organizationId;
-        if ([accountOrg isEqualToString:orgId]) {
+        if ([accountOrg isEqualToEntityId:orgId]) {
             [array addObject:account];
         }
     }
