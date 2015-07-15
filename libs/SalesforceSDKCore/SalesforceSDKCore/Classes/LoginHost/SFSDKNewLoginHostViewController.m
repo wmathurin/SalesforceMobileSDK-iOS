@@ -10,12 +10,9 @@
 #import "SFSDKLoginHostListViewController.h"
 #import "SFSDKLoginHost.h"
 #import "SFSDKResourceUtils.h"
+#import "SFSDKTextFieldTableViewCell.h"
 
 @implementation SFSDKNewLoginHostViewController
-
-// Insets used to determine the proper size for the editable field presented
-// in the table view cell.
-static UIEdgeInsets const kCellInsets = { 10.0, 10.0, 10.0, 30.0 };
 
 static NSString * const SFSDKNewLoginHostCellIdentifier = @"SFSDKNewLoginHostCellIdentifier";
 
@@ -37,7 +34,7 @@ static NSString * const SFSDKNewLoginHostCellIdentifier = @"SFSDKNewLoginHostCel
     self.navigationItem.rightBarButtonItem.enabled = NO;
     self.title = [SFSDKResourceUtils localizedString:@"loginAddServer"];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:SFSDKNewLoginHostCellIdentifier];
+    [self.tableView registerClass:[SFSDKTextFieldTableViewCell class] forCellReuseIdentifier:SFSDKNewLoginHostCellIdentifier];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -78,33 +75,27 @@ static NSString * const SFSDKNewLoginHostCellIdentifier = @"SFSDKNewLoginHostCel
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SFSDKNewLoginHostCellIdentifier forIndexPath:indexPath];
+    SFSDKTextFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SFSDKNewLoginHostCellIdentifier forIndexPath:indexPath];
 
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    // Magic numbers to get the proper inset (maybe there is a better way?)
-    CGRect r = UIEdgeInsetsInsetRect(cell.contentView.frame, kCellInsets);
+    cell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+    cell.textField.delegate = self;
+    cell.textField.tag = indexPath.row;
     
-    // Create the text field for each specific row
-    UITextField *textField = [[UITextField alloc] initWithFrame:r];
-    textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    textField.delegate = self;
+    // Create the text field for each specific row.
     if (0 == indexPath.row) {
-        textField.placeholder = [SFSDKResourceUtils localizedString:@"loginServerUrl"];
-        textField.keyboardType = UIKeyboardTypeURL;
-        textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        textField.autocorrectionType = UITextAutocorrectionTypeNo;
-        [textField becomeFirstResponder];
-        self.server = textField;
+        cell.textField.placeholder = [SFSDKResourceUtils localizedString:@"loginServerUrl"];
+        cell.textField.keyboardType = UIKeyboardTypeURL;
+        cell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        [cell.textField becomeFirstResponder];
+        self.server = cell.textField;
     } else {
-        textField.placeholder = [SFSDKResourceUtils localizedString:@"loginServerName"];
-        textField.keyboardType = UIKeyboardTypeDefault;
-        textField.autocorrectionType = UITextAutocorrectionTypeNo;
-        self.name = textField;
+        cell.textField.placeholder = [SFSDKResourceUtils localizedString:@"loginServerName"];
+        cell.textField.keyboardType = UIKeyboardTypeDefault;
+        self.name = cell.textField;
     }
-    textField.tag = indexPath.row;
-    [cell.contentView addSubview:textField];
     
     return cell;
 }

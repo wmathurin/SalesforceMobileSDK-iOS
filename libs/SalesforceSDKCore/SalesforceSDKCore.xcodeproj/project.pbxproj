@@ -40,6 +40,8 @@
 		7C14A68A1B433CCA007ADC31 /* SFSDKNewLoginHostViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C14A6821B433CCA007ADC31 /* SFSDKNewLoginHostViewController.h */; };
 		7C14A68B1B433CCA007ADC31 /* SFSDKNewLoginHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C14A6831B433CCA007ADC31 /* SFSDKNewLoginHostViewController.m */; };
 		7C14A68D1B434484007ADC31 /* SFSDKLoginHostDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C14A68C1B4343F4007ADC31 /* SFSDKLoginHostDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7C1813A21B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C1813A01B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.h */; };
+		7C1813A31B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1813A11B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.m */; };
 		821C8F4A18C980D0000FAF96 /* SFDefaultUserManagementViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 821C8F4818C980D0000FAF96 /* SFDefaultUserManagementViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		821C8F4B18C980D0000FAF96 /* SFDefaultUserManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 821C8F4918C980D0000FAF96 /* SFDefaultUserManagementViewController.m */; };
 		821C8F4E18C98118000FAF96 /* SFDefaultUserManagementListViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 821C8F4C18C98118000FAF96 /* SFDefaultUserManagementListViewController.h */; };
@@ -214,6 +216,8 @@
 		7C14A6821B433CCA007ADC31 /* SFSDKNewLoginHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFSDKNewLoginHostViewController.h; path = LoginHost/SFSDKNewLoginHostViewController.h; sourceTree = "<group>"; };
 		7C14A6831B433CCA007ADC31 /* SFSDKNewLoginHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSDKNewLoginHostViewController.m; path = LoginHost/SFSDKNewLoginHostViewController.m; sourceTree = "<group>"; };
 		7C14A68C1B4343F4007ADC31 /* SFSDKLoginHostDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSDKLoginHostDelegate.h; sourceTree = "<group>"; };
+		7C1813A01B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFSDKTextFieldTableViewCell.h; path = LoginHost/SFSDKTextFieldTableViewCell.h; sourceTree = "<group>"; };
+		7C1813A11B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSDKTextFieldTableViewCell.m; path = LoginHost/SFSDKTextFieldTableViewCell.m; sourceTree = "<group>"; };
 		821C8F4818C980D0000FAF96 /* SFDefaultUserManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDefaultUserManagementViewController.h; sourceTree = "<group>"; };
 		821C8F4918C980D0000FAF96 /* SFDefaultUserManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFDefaultUserManagementViewController.m; sourceTree = "<group>"; };
 		821C8F4C18C98118000FAF96 /* SFDefaultUserManagementListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFDefaultUserManagementListViewController.h; sourceTree = "<group>"; };
@@ -458,6 +462,8 @@
 				7C14A6811B433CCA007ADC31 /* SFSDKLoginHostStorage.m */,
 				7C14A6821B433CCA007ADC31 /* SFSDKNewLoginHostViewController.h */,
 				7C14A6831B433CCA007ADC31 /* SFSDKNewLoginHostViewController.m */,
+				7C1813A01B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.h */,
+				7C1813A11B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.m */,
 			);
 			name = LoginHost;
 			sourceTree = "<group>";
@@ -813,6 +819,7 @@
 				FDC4611C1891EAA600E4456B /* SFUserAccountManager.h in Headers */,
 				82BBB57117909DA500374DD8 /* SFIdentityData.h in Headers */,
 				821C8F5218CBD2D4000FAF96 /* SFDefaultUserManagementDetailViewController.h in Headers */,
+				7C1813A21B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.h in Headers */,
 				82BBB57217909DBA00374DD8 /* SFJsonUtils.h in Headers */,
 				82B211B41921892400154BBC /* SFSmartStoreUpgrade+Internal.h in Headers */,
 				821C8F4A18C980D0000FAF96 /* SFDefaultUserManagementViewController.h in Headers */,
@@ -1071,6 +1078,7 @@
 				7C14A68B1B433CCA007ADC31 /* SFSDKNewLoginHostViewController.m in Sources */,
 				82A55A751821A48B0002E22A /* SFAuthErrorHandlerList.m in Sources */,
 				7C14A6891B433CCA007ADC31 /* SFSDKLoginHostStorage.m in Sources */,
+				7C1813A31B55F0190096F5F5 /* SFSDKTextFieldTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
