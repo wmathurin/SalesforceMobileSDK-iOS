@@ -76,8 +76,12 @@ static NSInteger const kAdvancedAuthDialogTag              = 777;
 static NSString * const kAlertErrorTitleKey = @"authAlertErrorTitle";
 static NSString * const kAlertOkButtonKey = @"authAlertOkButton";
 static NSString * const kAlertRetryButtonKey = @"authAlertRetryButton";
+static NSString * const kAlertContinueButtonKey = @"authAlertContinueButton";
+static NSString * const kAlertChangeHostButtonKey = @"authAlertChangeHostButton";
 static NSString * const kAlertConnectionErrorFormatStringKey = @"authAlertConnectionErrorFormatString";
 static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismatchError";
+static NSString * const kAlertBrowserFlowTitleKey = @"authAlertBrowserFlowTitle";
+static NSString * const kAlertBrowserFlowMessageKey = @"authAlertBrowserFlowMessage";
 
 #pragma mark - SFAuthBlockPair
 
@@ -1184,12 +1188,13 @@ static Class InstanceClass = nil;
     }
     
     self.authCoordinatorBrowserBlock = callbackBlock;
-    NSString *alertMessage = [NSString stringWithFormat:[SFSDKResourceUtils localizedString:@"authAlertBrowserFlowMessage"], coordinator.credentials.domain];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[SFSDKResourceUtils localizedString:@"authAlertBrowserFlowTitle"]
+    NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleNameKey];
+    NSString *alertMessage = [NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertBrowserFlowMessageKey], coordinator.credentials.domain, appName];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[SFSDKResourceUtils localizedString:kAlertBrowserFlowTitleKey]
                                                         message:alertMessage
                                                        delegate:self
-                                              cancelButtonTitle:[SFSDKResourceUtils localizedString:@"authAlertCancelButton"]
-                                              otherButtonTitles:[SFSDKResourceUtils localizedString:@"authAlertOkButton"], nil];
+                                              cancelButtonTitle:[SFSDKResourceUtils localizedString:kAlertChangeHostButtonKey]
+                                              otherButtonTitles:[SFSDKResourceUtils localizedString:kAlertContinueButtonKey], nil];
     alertView.tag = kAdvancedAuthDialogTag;
     [alertView show];
 }
