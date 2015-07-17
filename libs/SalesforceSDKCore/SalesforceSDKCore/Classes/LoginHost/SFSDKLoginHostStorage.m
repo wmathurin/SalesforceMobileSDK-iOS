@@ -18,13 +18,13 @@
 @end
 
 // Key under which the list of login hosts will be stored in the user defaults.
-static NSString * const SFSDKLoginHostList = @"SFSDKLoginHostListPrefs";
+static NSString * const SFSDKLoginHostList = @"ChatterLoginHostListPrefs";
 
 // Key for the host.
-static NSString * const SFSDKLoginHostKey = @"SFSDKLoginHostKey";
+static NSString * const SFSDKLoginHostKey = @"ChatterLoginHostKey";
 
 // Key for the name.
-static NSString * const SFSDKLoginHostNameKey = @"SFSDKLoginHostNameKey";
+static NSString * const SFSDKLoginHostNameKey = @"ChatterLoginHostNameKey";
 
 @implementation SFSDKLoginHostStorage
 
