@@ -103,8 +103,6 @@
 		82ABD51E1A902B080051CC9B /* CSFSalesforceOAuthRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 82ABD51C1A902B080051CC9B /* CSFSalesforceOAuthRefresh.m */; };
 		82E8022E1A8FF22900648529 /* CSFAuthRefresh.h in Headers */ = {isa = PBXBuildFile; fileRef = 82E8022C1A8FF22900648529 /* CSFAuthRefresh.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		82E8022F1A8FF22900648529 /* CSFAuthRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 82E8022D1A8FF22900648529 /* CSFAuthRefresh.m */; };
-		CE60FE3C1B4E3A6600D80A1A /* CSFGuestAction.h in Headers */ = {isa = PBXBuildFile; fileRef = CE60FE3B1B4E3A6600D80A1A /* CSFGuestAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE60FE3E1B4E3AE900D80A1A /* CSFGuestAction.m in Sources */ = {isa = PBXBuildFile; fileRef = CE60FE3D1B4E3AE900D80A1A /* CSFGuestAction.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -234,8 +232,6 @@
 		82ABD51C1A902B080051CC9B /* CSFSalesforceOAuthRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFSalesforceOAuthRefresh.m; sourceTree = "<group>"; };
 		82E8022C1A8FF22900648529 /* CSFAuthRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFAuthRefresh.h; sourceTree = "<group>"; };
 		82E8022D1A8FF22900648529 /* CSFAuthRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFAuthRefresh.m; sourceTree = "<group>"; };
-		CE60FE3B1B4E3A6600D80A1A /* CSFGuestAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSFGuestAction.h; sourceTree = "<group>"; };
-		CE60FE3D1B4E3AE900D80A1A /* CSFGuestAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSFGuestAction.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -397,8 +393,6 @@
 				827DD4001A7C006E00519F03 /* CSFSalesforceAction.h */,
 				827DD4011A7C006E00519F03 /* CSFSalesforceAction.m */,
 				827DD4021A7C006E00519F03 /* CSFSalesforceAction_Internal.h */,
-				CE60FE3B1B4E3A6600D80A1A /* CSFGuestAction.h */,
-				CE60FE3D1B4E3AE900D80A1A /* CSFGuestAction.m */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -600,7 +594,6 @@
 				827DD4C31A7C055100519F03 /* NSURL+ActionValue.h in Headers */,
 				827DD4F91A7C05AE00519F03 /* CSFNetwork+Internal.h in Headers */,
 				827DD4FB1A7C05BA00519F03 /* CSFActionModel.h in Headers */,
-				CE60FE3C1B4E3A6600D80A1A /* CSFGuestAction.h in Headers */,
 				827DD4CB1A7C057000519F03 /* CSFInput.h in Headers */,
 				827DD4C11A7C050900519F03 /* SFUserAccount+SalesforceNetwork.h in Headers */,
 				827DD4C71A7C055C00519F03 /* CSFSalesforceAction_Internal.h in Headers */,
@@ -792,7 +785,6 @@
 				82A0C3D41A99107800243931 /* CSFUTF8StringValueTransformer.m in Sources */,
 				827DD4BA1A7C006F00519F03 /* CSFDefines.m in Sources */,
 				820053FA1ACDBE7200C96578 /* NSDate+ActionValue.m in Sources */,
-				CE60FE3E1B4E3AE900D80A1A /* CSFGuestAction.m in Sources */,
 				82A0C3C41A99100A00243931 /* CSFParameterStorage.m in Sources */,
 				827DD4B91A7C006F00519F03 /* CSFNetwork.m in Sources */,
 				827DD4B81A7C006F00519F03 /* CSFTokenRefresh.m in Sources */,
