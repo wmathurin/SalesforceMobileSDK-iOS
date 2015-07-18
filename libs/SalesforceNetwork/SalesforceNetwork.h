@@ -36,7 +36,6 @@
 #import <SalesforceNetwork/CSFAvailability.h>
 #import <SalesforceNetwork/CSFDefines.h>
 #import <SalesforceNetwork/CSFForceDefines.h>
-#import <SalesforceNetwork/CSFGuestAction.h>
 #import <SalesforceNetwork/CSFIndexedEntity.h>
 #import <SalesforceNetwork/CSFInput.h>
 #import <SalesforceNetwork/CSFInternalDefines.h>
