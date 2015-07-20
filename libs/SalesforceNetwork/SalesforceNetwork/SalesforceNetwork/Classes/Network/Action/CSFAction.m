@@ -93,7 +93,21 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
         [path deleteCharactersInRange:NSMakeRange(0, 1)];
     }
     NSString *urlString = [baseUrlString stringByAppendingString:path];
-    return [NSURL URLWithString:urlString];
+    NSURL* url = [NSURL URLWithString:urlString];
+    
+#if defined(ENABLE_PLAIN_HTTP) || TARGET_IPHONE_SIMULATOR
+    NSString* scheme = [action.enqueuedNetwork.account.credentials.instanceUrl scheme];
+    NSNumber* port = [action.enqueuedNetwork.account.credentials.instanceUrl port];
+    NSURL* modifiedUrl = nil;
+    if (port) {
+        modifiedUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@%@", scheme, url.host, port.stringValue, url.path]];
+    } else {
+        modifiedUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@", scheme, url.host, url.path]];
+    }
+    url = modifiedUrl;
+#endif
+    
+    return url;
 }
 
 - (NSDictionary *)headersForAction {
