@@ -806,6 +806,57 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		3A6C346A1B59A52600AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Internal;
+		};
+		3A6C346B1B59A52600AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F644C3D1A9E70C2009BF92A /* SalesforceNetwork-Static-iOS-Debug.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = SalesforceNetwork;
+				SKIP_INSTALL = YES;
+			};
+			name = Internal;
+		};
+		3A6C346C1B59A52600AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F644C3F1A9E7277009BF92A /* SalesforceNetwork-Test.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)/Headers",
+					"$(TARGET_BUILD_DIR)/Headers",
+					"$(SRCROOT)/../../external/ocmock/Source",
+				);
+				INFOPLIST_FILE = SalesforceNetwork/SalesforceNetworkiOSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils",
+					"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher",
+					"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Internal;
+		};
 		825347FE1A8ADD050019FE0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F644C3F1A9E7277009BF92A /* SalesforceNetwork-Test.xcconfig */;
@@ -911,6 +962,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				825347FE1A8ADD050019FE0B /* Debug */,
+				3A6C346C1B59A52600AE6134 /* Internal */,
 				825347FF1A8ADD050019FE0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -920,6 +972,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				827DD3EB1A7BF55F00519F03 /* Debug */,
+				3A6C346B1B59A52600AE6134 /* Internal */,
 				827DD3EC1A7BF55F00519F03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -929,6 +982,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82DBBB061A798B290093A54C /* Debug */,
+				3A6C346A1B59A52600AE6134 /* Internal */,
 				82DBBB071A798B290093A54C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
