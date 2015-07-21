@@ -28,6 +28,7 @@
 #import "SFRootViewManager.h"
 #import "SFSDKWebUtils.h"
 #import "SFManagedPreferences.h"
+#import "SFSmartStore.h"
 #import <SalesforceOAuth/SFOAuthInfo.h>
 #import <SalesforceSecurity/SFPasscodeManager.h>
 #import <SalesforceSecurity/SFPasscodeProviderManager.h>
@@ -693,6 +694,11 @@ static NSString * const kAppSettingsAccountLogout = @"account_logout_pref";
 - (void)authManagerDidLogout:(SFAuthenticationManager *)manager
 {
     [self.sdkManagerFlow handlePostLogout];
+}
+
+- (void)authManager:(SFAuthenticationManager *)manager willLogoutUser:(SFUserAccount *)user
+{
+    [SFSmartStore removeAllStoresForUser:user];
 }
 
 #pragma mark - SFUserAccountManagerDelegate

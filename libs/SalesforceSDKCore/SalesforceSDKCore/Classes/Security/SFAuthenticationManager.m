@@ -39,6 +39,7 @@
 #import "SFSDKResourceUtils.h"
 #import "SFRootViewManager.h"
 #import "SFUserActivityMonitor.h"
+#import "SFSDKLoginHostListViewController.h"
 #import <SalesforceSecurity/SFPasscodeManager.h>
 #import <SalesforceSecurity/SFPasscodeProviderManager.h>
 #import "SFPushNotificationManager.h"
@@ -67,15 +68,20 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 
 // Private constants
 
-static NSInteger  const kOAuthGenericAlertViewTag    = 444;
-static NSInteger  const kIdentityAlertViewTag = 555;
-static NSInteger  const kConnectedAppVersionMismatchViewTag = 666;
+static NSInteger const kOAuthGenericAlertViewTag           = 444;
+static NSInteger const kIdentityAlertViewTag               = 555;
+static NSInteger const kConnectedAppVersionMismatchViewTag = 666;
+static NSInteger const kAdvancedAuthDialogTag              = 777;
 
 static NSString * const kAlertErrorTitleKey = @"authAlertErrorTitle";
 static NSString * const kAlertOkButtonKey = @"authAlertOkButton";
 static NSString * const kAlertRetryButtonKey = @"authAlertRetryButton";
+static NSString * const kAlertContinueButtonKey = @"authAlertContinueButton";
+static NSString * const kAlertChangeHostButtonKey = @"authAlertChangeHostButton";
 static NSString * const kAlertConnectionErrorFormatStringKey = @"authAlertConnectionErrorFormatString";
 static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismatchError";
+static NSString * const kAlertBrowserFlowTitleKey = @"authAlertBrowserFlowTitle";
+static NSString * const kAlertBrowserFlowMessageKey = @"authAlertBrowserFlowMessage";
 
 #pragma mark - SFAuthBlockPair
 
@@ -168,6 +174,12 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
  more than one authentication workflow to piggy back on an in-progress authentication.
  */
 @property (atomic, strong) NSMutableArray *authBlockList;
+
+/**
+ The callback block used to notify the OAuth coordinator whether it should proceed with
+ the browser authentication flow.
+ */
+@property (nonatomic, copy) SFOAuthBrowserFlowCallbackBlock authCoordinatorBrowserBlock;
 
 /**
  Dismisses the authentication retry alert box, if present.
@@ -1041,6 +1053,24 @@ static Class InstanceClass = nil;
     }
 }
 
+#pragma mark - Delegate Wrapper Methods
+
+- (void)delegateDidProceedWithBrowserFlow {
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidProceedWithBrowserFlow:)]) {
+            [delegate authManagerDidProceedWithBrowserFlow:self];
+        }
+    }];
+}
+
+- (void)delegateDidCancelBrowserFlow {
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidCancelBrowserFlow:)]) {
+            [delegate authManagerDidCancelBrowserFlow:self];
+        }
+    }];
+}
+
 #pragma mark - SFUserAccountManagerDelegate
 
 - (void)userAccountManager:(SFUserAccountManager *)userAccountManager
@@ -1149,6 +1179,43 @@ static Class InstanceClass = nil;
     return result;
 }
 
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator willBeginBrowserAuthentication:(SFOAuthBrowserFlowCallbackBlock)callbackBlock {
+    if (![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self oauthCoordinator:coordinator willBeginBrowserAuthentication:callbackBlock];
+        });
+        return;
+    }
+    
+    self.authCoordinatorBrowserBlock = callbackBlock;
+    NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleNameKey];
+    NSString *alertMessage = [NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertBrowserFlowMessageKey], coordinator.credentials.domain, appName];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[SFSDKResourceUtils localizedString:kAlertBrowserFlowTitleKey]
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:[SFSDKResourceUtils localizedString:kAlertChangeHostButtonKey]
+                                              otherButtonTitles:[SFSDKResourceUtils localizedString:kAlertContinueButtonKey], nil];
+    alertView.tag = kAdvancedAuthDialogTag;
+    [alertView show];
+}
+
+- (void)oauthCoordinatorDidCancelBrowserFlow:(SFOAuthCoordinator *)coordinator {
+    __block BOOL handledByDelegate = NO;
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidCancelBrowserFlow:)]) {
+            [delegate authManagerDidCancelBrowserFlow:self];
+            handledByDelegate = YES;
+        }
+    }];
+    
+    // TODO: Determine if this is the correct approach. If so, then SFAuthenticationManager probably needs to conform to SFSDKLoginHostDelegate.
+    if (!handledByDelegate) {
+        SFSDKLoginHostListViewController *hostListViewController = [[SFSDKLoginHostListViewController alloc] initWithStyle:UITableViewStylePlain];
+        [[SFRootViewManager sharedManager] pushViewController:hostListViewController];
+    }
+}
+
 #pragma mark - SFIdentityCoordinatorDelegate
 
 - (void)identityCoordinatorRetrievedData:(SFIdentityCoordinator *)coordinator
@@ -1199,6 +1266,19 @@ static Class InstanceClass = nil;
         } else if (alertView.tag == kConnectedAppVersionMismatchViewTag) {
             // The OAuth failure block should be followed, after acknowledging the version mismatch.
             [self execFailureBlocks];
+        }
+    } else if (alertView.tag == kAdvancedAuthDialogTag) {
+        BOOL proceed = buttonIndex != alertView.cancelButtonIndex;
+        // Notify the delegate if browser flow is taking place or if it's being cancelled.
+        if (proceed) {
+            [self delegateDidProceedWithBrowserFlow];
+        } else {
+            [self delegateDidCancelBrowserFlow];
+        }
+        
+        // Let the OAuth coordinator know whether to proceed or not.
+        if (self.authCoordinatorBrowserBlock) {
+            self.authCoordinatorBrowserBlock(proceed);
         }
     }
 }

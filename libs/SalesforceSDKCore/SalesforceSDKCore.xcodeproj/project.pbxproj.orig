@@ -1956,7 +1956,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2DE48CC618BFAD45008345C7 /* Debug */,
+<<<<<<< HEAD
+				CBBDD4F31A2521A7008FC23C /* Internal */,
+=======
 				3A6C34711B59A89B00AE6134 /* Internal */,
+>>>>>>> ea0050aa96fa3bd36ab99e39bf55ab1e4618d835
 				2DE48CC718BFAD45008345C7 /* Release */,
 				1056D4051ABCD3530066A01B /* Enterprise-Release */,
 				9EF2B3E51AB9E880004C2D3E /* Enterprise-Debug */,
@@ -1968,7 +1972,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8220B75816D804CA00EC3921 /* Debug */,
+<<<<<<< HEAD
+				CBBDD4EF1A2521A7008FC23C /* Internal */,
+=======
 				3A6C346D1B59A89B00AE6134 /* Internal */,
+>>>>>>> ea0050aa96fa3bd36ab99e39bf55ab1e4618d835
 				8220B75916D804CA00EC3921 /* Release */,
 				1056D4011ABCD3530066A01B /* Enterprise-Release */,
 				9EF2B3E11AB9E880004C2D3E /* Enterprise-Debug */,
@@ -1980,7 +1988,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8220B75B16D804CA00EC3921 /* Debug */,
+<<<<<<< HEAD
+				CBBDD4F01A2521A7008FC23C /* Internal */,
+=======
 				3A6C346E1B59A89B00AE6134 /* Internal */,
+>>>>>>> ea0050aa96fa3bd36ab99e39bf55ab1e4618d835
 				8220B75C16D804CA00EC3921 /* Release */,
 				1056D4021ABCD3530066A01B /* Enterprise-Release */,
 				9EF2B3E21AB9E880004C2D3E /* Enterprise-Debug */,
@@ -1992,7 +2004,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82D4645219C7C8180006BDFE /* Debug */,
+<<<<<<< HEAD
+				CBBDD4F11A2521A7008FC23C /* Internal */,
+=======
 				3A6C346F1B59A89B00AE6134 /* Internal */,
+>>>>>>> ea0050aa96fa3bd36ab99e39bf55ab1e4618d835
 				82D4645319C7C8180006BDFE /* Release */,
 				1056D4031ABCD3530066A01B /* Enterprise-Release */,
 				9EF2B3E31AB9E880004C2D3E /* Enterprise-Debug */,
@@ -2004,7 +2020,11 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82D4645419C7C8180006BDFE /* Debug */,
+<<<<<<< HEAD
+				CBBDD4F21A2521A7008FC23C /* Internal */,
+=======
 				3A6C34701B59A89B00AE6134 /* Internal */,
+>>>>>>> ea0050aa96fa3bd36ab99e39bf55ab1e4618d835
 				82D4645519C7C8180006BDFE /* Release */,
 				1056D4041ABCD3530066A01B /* Enterprise-Release */,
 				9EF2B3E41AB9E880004C2D3E /* Enterprise-Debug */,

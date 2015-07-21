@@ -418,9 +418,23 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
 }
 
 - (void)beginNativeBrowserFlow {
+    if ([self.delegate respondsToSelector:@selector(oauthCoordinator:willBeginBrowserAuthentication:)]) {
+        __weak SFOAuthCoordinator *weakSelf = self;
+        [self.delegate oauthCoordinator:self willBeginBrowserAuthentication:^(BOOL proceed) {
+            if (proceed) {
+                [weakSelf continueNativeBrowserFlow];
+            }
+        }];
+    } else {
+        // If delegate does not implement the method, simply continue with the browser flow.
+        [self continueNativeBrowserFlow];
+    }
+}
+
+- (void)continueNativeBrowserFlow {
     if (![NSThread isMainThread]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self beginNativeBrowserFlow];
+            [self continueNativeBrowserFlow];
         });
         return;
     }
@@ -462,6 +476,7 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
     } else {
         self.advancedAuthState = SFOAuthAdvancedAuthStateBrowserRequestInitiated;
     }
+
 }
 
 - (void)beginUserAgentFlow {
@@ -477,7 +492,7 @@ static NSString * const kOAuthUserAgentUserDefaultsKey          = @"UserAgent";
     
     if (nil == self.view) {
         // lazily create web view if needed
-        self.view = [[UIWebView  alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        self.view = [[UIWebView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     }
     self.view.delegate = self;
 

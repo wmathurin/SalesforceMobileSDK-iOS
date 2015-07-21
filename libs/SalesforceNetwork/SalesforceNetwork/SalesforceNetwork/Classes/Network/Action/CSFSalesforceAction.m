@@ -161,9 +161,7 @@ static void * kObservingKey = &kObservingKey;
                     // unauthorized (not logged in / session expired)
                     // The session ID or OAuth token used has expired or is invalid.
                     // The response body contains the message and errorCode.
-                    if ([errorCode isEqualToString:@"INVALID_SESSION_ID"]) {
-                        requestSessionRefresh = YES;
-                    }
+                    requestSessionRefresh = YES;
                     break;
                     
                 case 403:
@@ -300,6 +298,11 @@ static void * kObservingKey = &kObservingKey;
             self.enqueuedNetwork.defaultConnectCommunityId = accountManager.currentCommunityId;
         }
     }
+}
+
+- (NSURLRequest*)createURLRequest:(NSError**)error {
+    self.baseURL = self.enqueuedNetwork.account.credentials.apiUrl;
+    return [super createURLRequest:error];
 }
 
 @end
