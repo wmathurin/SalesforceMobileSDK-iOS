@@ -70,7 +70,6 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 
 static NSInteger const kOAuthGenericAlertViewTag           = 444;
 static NSInteger const kIdentityAlertViewTag               = 555;
-static NSInteger const kConnectedAppVersionMismatchViewTag = 666;
 
 static NSString * const kAlertErrorTitleKey = @"authAlertErrorTitle";
 static NSString * const kAlertOkButtonKey = @"authAlertOkButton";
