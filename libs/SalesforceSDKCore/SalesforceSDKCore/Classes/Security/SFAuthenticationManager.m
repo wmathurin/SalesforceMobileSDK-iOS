@@ -39,6 +39,7 @@
 #import "SFSDKResourceUtils.h"
 #import "SFRootViewManager.h"
 #import "SFUserActivityMonitor.h"
+#import "SFSDKLoginHostListViewController.h"
 #import <SalesforceSecurity/SFPasscodeManager.h>
 #import <SalesforceSecurity/SFPasscodeProviderManager.h>
 #import "SFPushNotificationManager.h"
@@ -67,15 +68,19 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 
 // Private constants
 
-static NSInteger  const kOAuthGenericAlertViewTag    = 444;
-static NSInteger  const kIdentityAlertViewTag = 555;
-static NSInteger  const kConnectedAppVersionMismatchViewTag = 666;
+static NSInteger const kOAuthGenericAlertViewTag           = 444;
+static NSInteger const kIdentityAlertViewTag               = 555;
+static NSInteger const kConnectedAppVersionMismatchViewTag = 666;
 
 static NSString * const kAlertErrorTitleKey = @"authAlertErrorTitle";
 static NSString * const kAlertOkButtonKey = @"authAlertOkButton";
 static NSString * const kAlertRetryButtonKey = @"authAlertRetryButton";
+static NSString * const kAlertContinueButtonKey = @"authAlertContinueButton";
+static NSString * const kAlertChangeHostButtonKey = @"authAlertChangeHostButton";
 static NSString * const kAlertConnectionErrorFormatStringKey = @"authAlertConnectionErrorFormatString";
 static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismatchError";
+static NSString * const kAlertBrowserFlowTitleKey = @"authAlertBrowserFlowTitle";
+static NSString * const kAlertBrowserFlowMessageKey = @"authAlertBrowserFlowMessage";
 
 #pragma mark - SFAuthBlockPair
 
@@ -168,6 +173,12 @@ static NSString * const kAlertVersionMismatchErrorKey = @"authAlertVersionMismat
  more than one authentication workflow to piggy back on an in-progress authentication.
  */
 @property (atomic, strong) NSMutableArray *authBlockList;
+
+/**
+ The callback block used to notify the OAuth coordinator whether it should proceed with
+ the browser authentication flow.
+ */
+@property (nonatomic, copy) SFOAuthBrowserFlowCallbackBlock authCoordinatorBrowserBlock;
 
 /**
  Dismisses the authentication retry alert box, if present.
@@ -830,8 +841,11 @@ static Class InstanceClass = nil;
 
 - (void)cleanupStatusAlert
 {
-    [_statusAlert dismissWithClickedButtonIndex:-666 animated:NO];
-    [_statusAlert setDelegate:nil];
+    if (_statusAlert) {
+        [_statusAlert dismissViewControllerAnimated:NO completion:^{
+            _statusAlert = nil;
+        }];
+    }
     SFRelease(_statusAlert);
 }
 
@@ -1062,6 +1076,24 @@ static Class InstanceClass = nil;
     }
 }
 
+#pragma mark - Delegate Wrapper Methods
+
+- (void)delegateDidProceedWithBrowserFlow {
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidProceedWithBrowserFlow:)]) {
+            [delegate authManagerDidProceedWithBrowserFlow:self];
+        }
+    }];
+}
+
+- (void)delegateDidCancelBrowserFlow {
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidCancelBrowserFlow:)]) {
+            [delegate authManagerDidCancelBrowserFlow:self];
+        }
+    }];
+}
+
 #pragma mark - SFUserAccountManagerDelegate
 
 - (void)userAccountManager:(SFUserAccountManager *)userAccountManager
@@ -1168,6 +1200,61 @@ static Class InstanceClass = nil;
     }];
     
     return result;
+}
+
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator willBeginBrowserAuthentication:(SFOAuthBrowserFlowCallbackBlock)callbackBlock {
+    if (![NSThread isMainThread]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self oauthCoordinator:coordinator willBeginBrowserAuthentication:callbackBlock];
+        });
+        return;
+    }
+    
+    self.authCoordinatorBrowserBlock = callbackBlock;
+    NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleNameKey];
+    NSString *alertMessage = [NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertBrowserFlowMessageKey], coordinator.credentials.domain, appName];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[SFSDKResourceUtils localizedString:kAlertBrowserFlowTitleKey]
+                                                                             message:alertMessage
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:kAlertContinueButtonKey]
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action) {
+                                                         [self delegateDidProceedWithBrowserFlow];
+                                                         if (self.authCoordinatorBrowserBlock) {
+                                                             self.authCoordinatorBrowserBlock(YES);
+                                                         }
+                                                     }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:kAlertChangeHostButtonKey]
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:^(UIAlertAction * action) {
+                                                             [self delegateDidCancelBrowserFlow];
+                                                             if (self.authCoordinatorBrowserBlock) {
+                                                                 self.authCoordinatorBrowserBlock(NO);
+                                                             }
+                                                         }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    
+    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)oauthCoordinatorDidCancelBrowserFlow:(SFOAuthCoordinator *)coordinator {
+    __block BOOL handledByDelegate = NO;
+    
+    [self enumerateDelegates:^(id<SFAuthenticationManagerDelegate> delegate) {
+        if ([delegate respondsToSelector:@selector(authManagerDidCancelBrowserFlow:)]) {
+            [delegate authManagerDidCancelBrowserFlow:self];
+            handledByDelegate = YES;
+        }
+    }];
+    
+    // TODO: Determine if this is the correct approach. If so, then SFAuthenticationManager probably needs to conform to SFSDKLoginHostDelegate.
+    if (!handledByDelegate) {
+        SFSDKLoginHostListViewController *hostListViewController = [[SFSDKLoginHostListViewController alloc] initWithStyle:UITableViewStylePlain];
+        [[SFRootViewManager sharedManager] pushViewController:hostListViewController];
+    }
 }
 
 #pragma mark - SFIdentityCoordinatorDelegate

@@ -48,7 +48,7 @@
 		827DD4BF1A7C006F00519F03 /* CSFURLValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 827DD4821A7C006F00519F03 /* CSFURLValueTransformer.m */; };
 		827DD4C11A7C050900519F03 /* SFUserAccount+SalesforceNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD3F91A7C006E00519F03 /* SFUserAccount+SalesforceNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		827DD4C31A7C055100519F03 /* NSURL+ActionValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD3F71A7C006E00519F03 /* NSURL+ActionValue.h */; };
-		827DD4C41A7C055C00519F03 /* CSFAction+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD3FD1A7C006E00519F03 /* CSFAction+Internal.h */; };
+		827DD4C41A7C055C00519F03 /* CSFAction+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD3FD1A7C006E00519F03 /* CSFAction+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		827DD4C51A7C055C00519F03 /* CSFAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD3FE1A7C006E00519F03 /* CSFAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		827DD4C61A7C055C00519F03 /* CSFSalesforceAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD4001A7C006E00519F03 /* CSFSalesforceAction.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		827DD4C71A7C055C00519F03 /* CSFSalesforceAction_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD4021A7C006E00519F03 /* CSFSalesforceAction_Internal.h */; };
@@ -68,7 +68,7 @@
 		827DD4FF1A7C05C100519F03 /* CSFAvailability.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD4751A7C006F00519F03 /* CSFAvailability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		827DD5001A7C05C100519F03 /* CSFDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD4761A7C006F00519F03 /* CSFDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		827DD5011A7C05C100519F03 /* CSFForceDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD4781A7C006F00519F03 /* CSFForceDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		827DD5021A7C05C100519F03 /* CSFInternalDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD47A1A7C006F00519F03 /* CSFInternalDefines.h */; };
+		827DD5021A7C05C100519F03 /* CSFInternalDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD47A1A7C006F00519F03 /* CSFInternalDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		827DD5031A7C05C100519F03 /* CSFISO8601DateFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD47C1A7C006F00519F03 /* CSFISO8601DateFormatter.h */; };
 		827DD5041A7C05C600519F03 /* CSFDateValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD47F1A7C006F00519F03 /* CSFDateValueTransformer.h */; };
 		827DD5051A7C05C600519F03 /* CSFURLValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 827DD4811A7C006F00519F03 /* CSFURLValueTransformer.h */; };
@@ -806,6 +806,57 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		3A6C346A1B59A52600AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Internal;
+		};
+		3A6C346B1B59A52600AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F644C3D1A9E70C2009BF92A /* SalesforceNetwork-Static-iOS-Debug.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = SalesforceNetwork;
+				SKIP_INSTALL = YES;
+			};
+			name = Internal;
+		};
+		3A6C346C1B59A52600AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F644C3F1A9E7277009BF92A /* SalesforceNetwork-Test.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(BUILT_PRODUCTS_DIR)/Headers",
+					"$(TARGET_BUILD_DIR)/Headers",
+					"$(SRCROOT)/../../external/ocmock/Source",
+				);
+				INFOPLIST_FILE = SalesforceNetwork/SalesforceNetworkiOSTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../../external/ThirdPartyDependencies/SalesforceCommonUtils",
+					"$(SRCROOT)/../../external/ThirdPartyDependencies/sqlcipher",
+					"$(SRCROOT)/../../external/ThirdPartyDependencies/openssl",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Internal;
+		};
 		825347FE1A8ADD050019FE0B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F644C3F1A9E7277009BF92A /* SalesforceNetwork-Test.xcconfig */;
@@ -911,6 +962,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				825347FE1A8ADD050019FE0B /* Debug */,
+				3A6C346C1B59A52600AE6134 /* Internal */,
 				825347FF1A8ADD050019FE0B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -920,6 +972,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				827DD3EB1A7BF55F00519F03 /* Debug */,
+				3A6C346B1B59A52600AE6134 /* Internal */,
 				827DD3EC1A7BF55F00519F03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -929,6 +982,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				82DBBB061A798B290093A54C /* Debug */,
+				3A6C346A1B59A52600AE6134 /* Internal */,
 				82DBBB071A798B290093A54C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

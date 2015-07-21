@@ -69,37 +69,44 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
     if (!action) {
         return nil;
     }
-    
-    NSString *host = [action.enqueuedNetwork.account.credentials.instanceUrl host];
-    NSString *path = [NSMutableString stringWithFormat:@"%@%@", action.basePath, action.verb];
-    
+    NSMutableString *baseUrlString = [NSMutableString stringWithString:[action.baseURL absoluteString]];
+    NSMutableString *path = [NSMutableString stringWithFormat:@"%@%@", action.basePath, action.verb];
+
     // Make sure path is not empty
-    if (!host || host.length == 0) {
+    if (baseUrlString.length == 0) {
         *error = [NSError errorWithDomain:CSFNetworkErrorDomain
                                      code:CSFNetworkURLCredentialsError
-                                 userInfo:@{ NSLocalizedDescriptionKey: @"Network action must have an instance host",
+                                 userInfo:@{ NSLocalizedDescriptionKey: @"Network action must have an API URL",
                                              CSFNetworkErrorActionKey: action }];
         return nil;
-    } else if (!path || path.length == 0) {
+    } else if (path.length == 0) {
         *error = [NSError errorWithDomain:CSFNetworkErrorDomain
                                      code:CSFNetworkURLCredentialsError
                                  userInfo:@{ NSLocalizedDescriptionKey: @"Network action must have a valid path",
                                              CSFNetworkErrorActionKey: action }];
         return nil;
     }
-    
-    NSString *scheme = @"https";
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@", scheme, host, path]];
+    if (![baseUrlString hasSuffix:@"/"]) {
+        [baseUrlString appendString:@"/"];
+    }
+    if ([path hasPrefix:@"/"]) {
+        [path deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
+    NSString *urlString = [baseUrlString stringByAppendingString:path];
+    NSURL* url = [NSURL URLWithString:urlString];
     
 #if defined(ENABLE_PLAIN_HTTP) || TARGET_IPHONE_SIMULATOR
-    scheme = [action.enqueuedNetwork.account.credentials.instanceUrl scheme];
-    NSNumber *port = [action.enqueuedNetwork.account.credentials.instanceUrl port];
+    NSString* scheme = [action.enqueuedNetwork.account.credentials.instanceUrl scheme];
+    NSNumber* port = [action.enqueuedNetwork.account.credentials.instanceUrl port];
+    NSURL* modifiedUrl = nil;
     if (port) {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@%@", scheme, host, [port stringValue], path]];
+        modifiedUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@%@", scheme, url.host, port.stringValue, url.path]];
     } else {
-        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@", scheme, host, path]];
+        modifiedUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@", scheme, url.host, url.path]];
     }
+    url = modifiedUrl;
 #endif
+    
     return url;
 }
 
@@ -148,16 +155,19 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
 
 + (instancetype)actionWithHTTPMethod:(NSString*)method onURL:(NSURL*)url withResponseBlock:(CSFActionResponseBlock)responseBlock {
     CSFAction *action = [[self alloc] initWithResponseBlock:responseBlock];
-    
     NSString *baseString = nil;
     if (url.port) {
         baseString = [NSString stringWithFormat:@"%@://%@:%@", url.scheme, url.host, url.port];
     } else {
         baseString = [NSString stringWithFormat:@"%@://%@", url.scheme, url.host];
     }
-    
     action.baseURL = [NSURL URLWithString:baseString];
-    action.verb = url.path;
+    NSMutableString *relativePath = [NSMutableString stringWithString:url.path];
+    if (url.query != nil) {
+        [relativePath appendString:@"?"];
+        [relativePath appendString:url.query];
+    }
+    action.verb = relativePath;
     action.method = method;
     return action;
 }
@@ -611,7 +621,7 @@ NSString * const kCSFActionTimingPostProcessingKey = @"postProcessing";
     
     NSError *jsonParseError = nil;
     if ([self.responseData length] > 0) {
-        content = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonParseError];
+        content = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonParseError];
     }
     
     // If it's an error here, it's a basic parsing error.
