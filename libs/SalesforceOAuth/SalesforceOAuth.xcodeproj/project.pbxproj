@@ -566,6 +566,101 @@
 			};
 			name = Release;
 		};
+		3A6C34761B59A98F00AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INSTALL_PATH = /;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Internal;
+		};
+		3A6C34771B59A98F00AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F89607D1A9E9ADF00A48FF1 /* SalesforceOAuth-Static-iOS-Debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEPLOYMENT_POSTPROCESSING = NO;
+				DSTROOT = /tmp/SalesforceOAuth.dst;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Internal;
+		};
+		3A6C34781B59A98F00AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F89607F1A9E9ADF00A48FF1 /* SalesforceOAuth-Test.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SalesforceOAuthTest/SalesforceOAuthTest-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INFOPLIST_FILE = "SalesforceOAuthTest/SalesforceOAuthTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Internal;
+		};
+		3A6C34791B59A98F00AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Internal;
+		};
+		3A6C347A1B59A98F00AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F89607F1A9E9ADF00A48FF1 /* SalesforceOAuth-Test.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREFIX_HEADER = "SalesforceOAuthTest/SalesforceOAuthTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = SalesforceOAuthUnitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SalesforceOAuthTest.app/SalesforceOAuthTest";
+			};
+			name = Internal;
+		};
 		829A087A1A3235DE00DC17A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F89607F1A9E9ADF00A48FF1 /* SalesforceOAuth-Test.xcconfig */;
@@ -743,6 +838,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2DE48CD018BFAF08008345C7 /* Debug */,
+				3A6C34791B59A98F00AE6134 /* Internal */,
 				2DE48CD118BFAF08008345C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -752,6 +848,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				829A087A1A3235DE00DC17A5 /* Debug */,
+				3A6C347A1B59A98F00AE6134 /* Internal */,
 				829A087B1A3235DE00DC17A5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -761,6 +858,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CF7F347D13B52B4E001AB761 /* Debug */,
+				3A6C34781B59A98F00AE6134 /* Internal */,
 				CF7F347E13B52B4E001AB761 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -770,6 +868,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CFA9ADDC13AA86DA0024260E /* Debug */,
+				3A6C34761B59A98F00AE6134 /* Internal */,
 				CFA9ADDD13AA86DA0024260E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -779,6 +878,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CFA9ADDF13AA86DA0024260E /* Debug */,
+				3A6C34771B59A98F00AE6134 /* Internal */,
 				CFA9ADE013AA86DA0024260E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

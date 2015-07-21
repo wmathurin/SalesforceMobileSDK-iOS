@@ -493,6 +493,59 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3A6C347B1B59A9B500AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			};
+			name = Internal;
+		};
+		3A6C347C1B59A9B500AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F89608F1A9E9ECD00A48FF1 /* SalesforceSecurity-Static-iOS-Debug.xcconfig */;
+			buildSettings = {
+				DSTROOT = /tmp/SalesforceSecurity.dst;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Internal;
+		};
+		3A6C347D1B59A9B500AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F8960911A9E9ECD00A48FF1 /* SalesforceSecurity-Test.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SalesforceSecurity/SalesforceSecurity-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "SalesforceSecurityTests/SalesforceSecurityTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Internal;
+		};
+		3A6C347E1B59A9B500AE6134 /* Internal */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Internal;
+		};
 		820AB74518E230EC00E25E1D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -602,6 +655,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				820AB74518E230EC00E25E1D /* Debug */,
+				3A6C347B1B59A9B500AE6134 /* Internal */,
 				820AB74618E230EC00E25E1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -611,6 +665,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				820AB74818E230EC00E25E1D /* Debug */,
+				3A6C347C1B59A9B500AE6134 /* Internal */,
 				820AB74918E230EC00E25E1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -620,6 +675,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				820AB74B18E230EC00E25E1D /* Debug */,
+				3A6C347D1B59A9B500AE6134 /* Internal */,
 				820AB74C18E230EC00E25E1D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -629,6 +685,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				821DA3F4193EAF1A0041FE0E /* Debug */,
+				3A6C347E1B59A9B500AE6134 /* Internal */,
 				821DA3F5193EAF1A0041FE0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
