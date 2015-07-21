@@ -44,7 +44,6 @@ static CGFloat      const kInstructionsLabelHeight          = 50.0f;
 static CGFloat      const kLabelPadding                     = 10.0f;
 static CGFloat      const kForgotPasscodeButtonWidth        = 150.0f;
 static CGFloat      const kForgotPasscodeButtonHeight       = 40.0f;
-static NSUInteger   const kPasscodeDialogTag                = 111;
 
 @interface SFPasscodeViewController() {
     BOOL _firstPasscodeValidated;
