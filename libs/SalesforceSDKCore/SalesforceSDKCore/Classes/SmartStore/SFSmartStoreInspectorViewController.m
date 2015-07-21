@@ -154,7 +154,16 @@ static NSUInteger   const kLabelTag              = 99;
 
 - (void) showAlert:(NSString*)message
 {
-    [[[UIAlertView alloc] initWithTitle:[SFSDKResourceUtils localizedString:@"inspectorQueryFailed"] message:message delegate:self cancelButtonTitle:[SFSDKResourceUtils localizedString:@"inspectorOK"] otherButtonTitles:nil] show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[SFSDKResourceUtils localizedString:@"inspectorQueryFailed"]
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:@"inspectorOK"]
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void) soupsButtonClicked
@@ -409,7 +418,17 @@ static NSUInteger   const kLabelTag              = 99;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString* label = [[self cellDatawithIndexPath:indexPath] description];
-    [[[UIAlertView alloc] initWithTitle:nil message:label delegate:self cancelButtonTitle:[SFSDKResourceUtils localizedString:@"inspectorOK"] otherButtonTitles:nil] show];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:label
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:@"inspectorOK"]
+                                                           style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    [alertController addAction:cancelAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 
