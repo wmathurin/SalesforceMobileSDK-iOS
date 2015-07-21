@@ -842,9 +842,7 @@ static Class InstanceClass = nil;
 - (void)cleanupStatusAlert
 {
     if (_statusAlert) {
-        [_statusAlert dismissViewControllerAnimated:NO completion:^{
-            _statusAlert = nil;
-        }];
+        [_statusAlert dismissViewControllerAnimated:NO completion:nil];
     }
     SFRelease(_statusAlert);
 }
