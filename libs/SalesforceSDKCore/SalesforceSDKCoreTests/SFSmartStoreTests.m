@@ -738,8 +738,9 @@ NSString * const kTestSoupName   = @"testSoup";
 
 - (void)createDbDir:(NSString *)dbName withManager:(SFSmartStoreDatabaseManager *)dbMgr
 {
-    BOOL result = [[SFSmartStoreDatabaseManager sharedManager] createStoreDir:dbName];
-    XCTAssertTrue(result, @"Create db dir failed");
+    NSError *createError = nil;
+    [dbMgr createStoreDir:dbName];
+    XCTAssertNil(createError, @"Error creating store dir: %@", [createError localizedDescription]);
 }
 
 - (FMDatabase *)openDatabase:(NSString *)dbName withManager:(SFSmartStoreDatabaseManager *)dbMgr key:(NSString *)key openShouldFail:(BOOL)openShouldFail
