@@ -1208,7 +1208,7 @@ static Class InstanceClass = nil;
     }
     
     self.authCoordinatorBrowserBlock = callbackBlock;
-    NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:(id)kCFBundleNameKey];
+    NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];;
     NSString *alertMessage = [NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertBrowserFlowMessageKey], coordinator.credentials.domain, appName];
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[SFSDKResourceUtils localizedString:kAlertBrowserFlowTitleKey]
