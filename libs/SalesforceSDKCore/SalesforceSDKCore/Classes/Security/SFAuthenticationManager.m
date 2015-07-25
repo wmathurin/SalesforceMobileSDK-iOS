@@ -1196,7 +1196,7 @@ static Class InstanceClass = nil;
                                               cancelButtonTitle:[SFSDKResourceUtils localizedString:kAlertChangeHostButtonKey]
                                               otherButtonTitles:[SFSDKResourceUtils localizedString:kAlertContinueButtonKey], nil];
     alertView.tag = kAdvancedAuthDialogTag;
-    //    [alertView show];
+    [alertView show];
 }
 
 - (void)oauthCoordinatorDidCancelBrowserFlow:(SFOAuthCoordinator *)coordinator {
