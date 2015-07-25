@@ -195,7 +195,7 @@ extern NSString * const kSFAuthenticationManagerFinishedNotification;
 /**
  Alert view for displaying auth-related status messages.
  */
-@property (nonatomic, strong) UIAlertController *statusAlert;
+@property (nonatomic, strong) UIAlertView *statusAlert;
 
 /**
  The view controller used to present the authentication dialog.

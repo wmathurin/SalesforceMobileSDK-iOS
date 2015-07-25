@@ -28,7 +28,7 @@
 /**
  * The view controller for managing the passcode screen.
  */
-@interface SFPasscodeViewController : SFAbstractPasscodeViewController <UITextFieldDelegate>
+@interface SFPasscodeViewController : SFAbstractPasscodeViewController <UITextFieldDelegate, UIAlertViewDelegate>
 
 /**
  * Initializes the controller for verifying an existing passcode.

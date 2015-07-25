@@ -68,7 +68,7 @@
 
 //
 // NB: There are a number of edge cases that don't play nicely with this approach, all of them having
-// to do one way or another with the presentation of modal views (UIActionSheet, popover
+// to do one way or another with the presentation of modal views (UIAlertView, UIActionSheet, popover
 // views) in the old view at the time of showing the new view.  This approach covers a lot of standard
 // ground, but implementing an approach with an alternate UIWindow may yield more comprehensive results.
 // Whatever the implementation, it promises to be complex.  As of iOS 6.1, Apple simply does not make
