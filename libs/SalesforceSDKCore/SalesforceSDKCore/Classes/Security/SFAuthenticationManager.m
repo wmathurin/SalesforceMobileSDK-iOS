@@ -70,6 +70,8 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 
 static NSInteger const kOAuthGenericAlertViewTag           = 444;
 static NSInteger const kIdentityAlertViewTag               = 555;
+static NSInteger const kConnectedAppVersionMismatchViewTag = 666;
+static NSInteger const kAdvancedAuthDialogTag              = 777;
 
 static NSString * const kAlertErrorTitleKey = @"authAlertErrorTitle";
 static NSString * const kAlertOkButtonKey = @"authAlertOkButton";
@@ -840,9 +842,8 @@ static Class InstanceClass = nil;
 
 - (void)cleanupStatusAlert
 {
-    if (_statusAlert) {
-        [_statusAlert dismissViewControllerAnimated:NO completion:nil];
-    }
+    [_statusAlert dismissWithClickedButtonIndex:-666 animated:NO];
+    [_statusAlert setDelegate:nil];
     SFRelease(_statusAlert);
 }
 
@@ -902,27 +903,13 @@ static Class InstanceClass = nil;
     if (nil == _statusAlert) {
         // show alert and allow retry
         [self log:SFLogLevelError format:@"Error during authentication: %@", error];
-        _statusAlert = [UIAlertController alertControllerWithTitle:[SFSDKResourceUtils localizedString:kAlertErrorTitleKey]
-                                                           message:[NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertConnectionErrorFormatStringKey], [error localizedDescription]]
-                                                    preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:kAlertRetryButtonKey]
-                                                               style:UIAlertActionStyleCancel
-                                                             handler:^(UIAlertAction * action) {
-                                                                 _statusAlert = nil;
-                                                                 switch (tag) {
-                                                                     case kOAuthGenericAlertViewTag:
-                                                                         [self dismissAuthViewControllerIfPresent];
-                                                                         [self login];
-                                                                         break;
-                                                                     case kIdentityAlertViewTag:
-                                                                         [self.idCoordinator initiateIdentityDataRetrieval];
-                                                                         break;
-                                                                 }
-                                                             }];
-        [_statusAlert addAction:cancelAction];
-        
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:_statusAlert animated:YES completion:nil];
+        _statusAlert = [[UIAlertView alloc] initWithTitle:[SFSDKResourceUtils localizedString:kAlertErrorTitleKey]
+                                                  message:[NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertConnectionErrorFormatStringKey], [error localizedDescription]]
+                                                 delegate:self
+                                        cancelButtonTitle:[SFSDKResourceUtils localizedString:kAlertRetryButtonKey]
+                                        otherButtonTitles: nil];
+        _statusAlert.tag = tag;
+        [_statusAlert show];
     }
 }
 
@@ -930,20 +917,13 @@ static Class InstanceClass = nil;
 {
     if (nil == _statusAlert) {
         // Show alert and execute failure block.
-        _statusAlert = [UIAlertController alertControllerWithTitle:[SFSDKResourceUtils localizedString:kAlertErrorTitleKey]
-                                                           message:[SFSDKResourceUtils localizedString:kAlertVersionMismatchErrorKey]
-                                                    preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:kAlertOkButtonKey]
-                                                               style:UIAlertActionStyleCancel
-                                                             handler:^(UIAlertAction * action) {
-                                                                 // The OAuth failure block should be followed, after acknowledging the version mismatch.
-                                                                 _statusAlert = nil;
-                                                                 [self execFailureBlocks];
-                                                             }];
-        [_statusAlert addAction:cancelAction];
-        
-        [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:_statusAlert animated:YES completion:nil];
+        _statusAlert = [[UIAlertView alloc] initWithTitle:[SFSDKResourceUtils localizedString:kAlertErrorTitleKey]
+                                                  message:[SFSDKResourceUtils localizedString:kAlertVersionMismatchErrorKey]
+                                                 delegate:self
+                                        cancelButtonTitle:[SFSDKResourceUtils localizedString:kAlertOkButtonKey]
+                                        otherButtonTitles: nil];
+        _statusAlert.tag = kConnectedAppVersionMismatchViewTag;
+        [_statusAlert show];
     }
 }
 
@@ -1210,31 +1190,13 @@ static Class InstanceClass = nil;
     self.authCoordinatorBrowserBlock = callbackBlock;
     NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];;
     NSString *alertMessage = [NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertBrowserFlowMessageKey], coordinator.credentials.domain, appName];
-    
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[SFSDKResourceUtils localizedString:kAlertBrowserFlowTitleKey]
-                                                                             message:alertMessage
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:kAlertContinueButtonKey]
-                                                       style:UIAlertActionStyleDefault
-                                                     handler:^(UIAlertAction * action) {
-                                                         [self delegateDidProceedWithBrowserFlow];
-                                                         if (self.authCoordinatorBrowserBlock) {
-                                                             self.authCoordinatorBrowserBlock(YES);
-                                                         }
-                                                     }];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:kAlertChangeHostButtonKey]
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:^(UIAlertAction * action) {
-                                                             [self delegateDidCancelBrowserFlow];
-                                                             if (self.authCoordinatorBrowserBlock) {
-                                                                 self.authCoordinatorBrowserBlock(NO);
-                                                             }
-                                                         }];
-    [alertController addAction:cancelAction];
-    [alertController addAction:okAction];
-    
-    [[UIApplication sharedApplication].keyWindow.rootViewController presentViewController:alertController animated:YES completion:nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[SFSDKResourceUtils localizedString:kAlertBrowserFlowTitleKey]
+                                                        message:alertMessage
+                                                       delegate:self
+                                              cancelButtonTitle:[SFSDKResourceUtils localizedString:kAlertChangeHostButtonKey]
+                                              otherButtonTitles:[SFSDKResourceUtils localizedString:kAlertContinueButtonKey], nil];
+    alertView.tag = kAdvancedAuthDialogTag;
+    [alertView show];
 }
 
 - (void)oauthCoordinatorDidCancelBrowserFlow:(SFOAuthCoordinator *)coordinator {
@@ -1285,6 +1247,38 @@ static Class InstanceClass = nil;
         }
         else {
             [self execFailureBlocks];
+        }
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView == _statusAlert) {
+        _statusAlert = nil;
+        [self log:SFLogLevelDebug format:@"clickedButtonAtIndex: %ld", (long)buttonIndex];
+        if (alertView.tag == kOAuthGenericAlertViewTag) {
+            [self dismissAuthViewControllerIfPresent];
+            [self login];
+        } else if (alertView.tag == kIdentityAlertViewTag) {
+            [self.idCoordinator initiateIdentityDataRetrieval];
+        } else if (alertView.tag == kConnectedAppVersionMismatchViewTag) {
+            // The OAuth failure block should be followed, after acknowledging the version mismatch.
+            [self execFailureBlocks];
+        }
+    } else if (alertView.tag == kAdvancedAuthDialogTag) {
+        BOOL proceed = buttonIndex != alertView.cancelButtonIndex;
+        // Notify the delegate if browser flow is taking place or if it's being cancelled.
+        if (proceed) {
+            [self delegateDidProceedWithBrowserFlow];
+        } else {
+            [self delegateDidCancelBrowserFlow];
+        }
+        
+        // Let the OAuth coordinator know whether to proceed or not.
+        if (self.authCoordinatorBrowserBlock) {
+            self.authCoordinatorBrowserBlock(proceed);
         }
     }
 }

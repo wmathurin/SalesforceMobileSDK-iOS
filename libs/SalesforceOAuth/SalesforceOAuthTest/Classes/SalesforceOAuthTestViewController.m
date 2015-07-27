@@ -190,16 +190,13 @@
     self.authInfo = info;
     
     [self authCompleted];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Error %ld", (long)error.code]
-                                                                             message:error.localizedDescription
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"OK"
-                                                           style:UIAlertActionStyleCancel
-                                                         handler:nil];
-    [alertController addAction:cancelAction];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"Error %d", error.code]
+                                                      message:error.localizedDescription
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
     
-    [self presentViewController:alertController animated:YES completion:nil];
+    [alert show];
 }
 
 #pragma mark - UIActionSheetDelegate
