@@ -1273,6 +1273,7 @@ static Class InstanceClass = nil;
         if (proceed) {
             [self delegateDidProceedWithBrowserFlow];
         } else {
+            [self cancelAuthentication];
             [self delegateDidCancelBrowserFlow];
         }
         
