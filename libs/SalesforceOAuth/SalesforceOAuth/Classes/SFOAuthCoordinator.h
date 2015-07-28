@@ -202,6 +202,18 @@ typedef void (^SFOAuthBrowserFlowCallbackBlock)(BOOL);
  */
 - (BOOL)oauthCoordinatorIsNetworkAvailable:(SFOAuthCoordinator*)coordinator;
 
+/**
+ Sent to notify the delegate that a browser authentication flow is about to begin.
+ 
+ If the delegate implements this method, it is responsible for using the callbackBlock to let the coordinator know
+ whether it should proceed with the browser flow or not.
+ 
+ @param coordinator   The SFOAuthCoordinator instance processing this message.
+ @param callbackBlock A callback block used to notify the coordinator if it should continue with the authentication flow.
+ Pass in YES to proceed, NO to cancel the authentication flow.
+ */
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator willBeginBrowserAuthentication:(SFOAuthBrowserFlowCallbackBlock)callbackBlock;
+
 @required
 
 /** Sent after authentication has begun and the view parameter is displaying the first page of authentication content.
@@ -217,18 +229,6 @@ typedef void (^SFOAuthBrowserFlowCallbackBlock)(BOOL);
  @see SFOAuthCoordinator
  */
 - (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view;
-
-/**
- Sent to notify the delegate that a browser authentication flow is about to begin.
- 
- If the delegate implements this method, it is responsible for using the callbackBlock to let the coordinator know
- whether it should proceed with the browser flow or not.
- 
- @param coordinator   The SFOAuthCoordinator instance processing this message.
- @param callbackBlock A callback block used to notify the coordinator if it should continue with the authentication flow.
-                      Pass in YES to proceed, NO to cancel the authentication flow.
- */
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator willBeginBrowserAuthentication:(SFOAuthBrowserFlowCallbackBlock)callbackBlock;
 
 @end
 
