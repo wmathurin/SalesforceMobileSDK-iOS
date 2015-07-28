@@ -202,6 +202,20 @@ typedef void (^SFOAuthBrowserFlowCallbackBlock)(BOOL);
  */
 - (BOOL)oauthCoordinatorIsNetworkAvailable:(SFOAuthCoordinator*)coordinator;
 
+/** Sent after authentication has begun and the view parameter is displaying the first page of authentication content.
+ 
+ The delegate will receive this message when the first page of the authentication flow is visible in the view parameter.
+ The receiver should display the view in the implementation of this method.
+ 
+ @warning the view parameter must be added to a superview upon completion of this method or an assert will fail
+ 
+ @param coordinator The SFOAuthCoordinator instance processing this message
+ @param view        The UIWebView instance that will be used to conduct the authentication workflow
+ 
+ @see SFOAuthCoordinator
+ */
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view;
+
 /**
  Sent to notify the delegate that a browser authentication flow is about to begin.
  
@@ -213,22 +227,6 @@ typedef void (^SFOAuthBrowserFlowCallbackBlock)(BOOL);
  Pass in YES to proceed, NO to cancel the authentication flow.
  */
 - (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator willBeginBrowserAuthentication:(SFOAuthBrowserFlowCallbackBlock)callbackBlock;
-
-@required
-
-/** Sent after authentication has begun and the view parameter is displaying the first page of authentication content.
- 
- The delegate will receive this message when the first page of the authentication flow is visible in the view parameter. 
- The receiver should display the view in the implementation of this method.
- 
- @warning the view parameter must be added to a superview upon completion of this method or an assert will fail
- 
- @param coordinator The SFOAuthCoordinator instance processing this message
- @param view        The UIWebView instance that will be used to conduct the authentication workflow
- 
- @see SFOAuthCoordinator
- */
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithView:(UIWebView *)view;
 
 @end
 
