@@ -61,8 +61,11 @@ static NSString * const SFDCLoginHostListCellIdentifier = @"SFDCLoginHostListCel
     return NSNotFound;
 }
 
-- (void)addLoginHost:(SFSDKLoginHost*)host {
-    [[SFSDKLoginHostStorage sharedInstance] addLoginHost:host];
+- (BOOL)addLoginHost:(SFSDKLoginHost*)host {
+    BOOL hostAdded = [[SFSDKLoginHostStorage sharedInstance] addLoginHost:host];
+    if (!hostAdded) {
+        return NO;
+    }
     
     NSUInteger hostIndex = [[SFSDKLoginHostStorage sharedInstance] indexOfLoginHost:host];
     if (hostIndex != NSNotFound) {
@@ -72,6 +75,8 @@ static NSString * const SFDCLoginHostListCellIdentifier = @"SFDCLoginHostListCel
         // Notify the delegate that a new login host has been added.
         [self delegateDidAddLoginHost];
     }
+    
+    return YES;
 }
 
 - (void)showAddLoginHost {
