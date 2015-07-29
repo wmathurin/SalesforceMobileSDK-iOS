@@ -90,9 +90,13 @@ static NSString * const SFSDKLoginHostNameKey = @"ChatterLoginHostNameKey";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)addLoginHost:(SFSDKLoginHost *)loginHost {
+- (BOOL)addLoginHost:(SFSDKLoginHost *)loginHost {
+    if ([self loginHostForHostAddress:loginHost.host]) {
+        return NO;
+    }
     [self.loginHostList addObject:loginHost];
     [self save];
+    return YES;
 }
 
 - (void)removeLoginHostAtIndex:(NSUInteger)index {

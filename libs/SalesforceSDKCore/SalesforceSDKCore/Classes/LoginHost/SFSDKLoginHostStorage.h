@@ -23,8 +23,9 @@
 
 /**
  * Adds a new login host.
+ * @return NO if a host with same address is found. Otherwise returns YES which means the host was added.
  */
-- (void)addLoginHost:(SFSDKLoginHost *)loginHost;
+- (BOOL)addLoginHost:(SFSDKLoginHost *)loginHost;
 
 /**
  * Removes the login host at the specified index.
