@@ -60,8 +60,27 @@ static NSString * const SFSDKNewLoginHostCellIdentifier = @"SFSDKNewLoginHostCel
  * Invoked when the user taps on the done button to add the login host to the list of hosts.
  */
 - (void)addNewServer:(id)sender {
-    [self.loginHostListViewController addLoginHost:[SFSDKLoginHost hostWithName:self.name.text host:self.server.text deletable:YES]];
-    [self.navigationController popViewControllerAnimated:YES];
+    NSCharacterSet *trimCharSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    NSString *nameText = [self.name.text stringByTrimmingCharactersInSet:trimCharSet];
+    NSString *hostText = [self.server.text stringByTrimmingCharactersInSet:trimCharSet];
+    
+    SFSDKLoginHost *newHost = [SFSDKLoginHost hostWithName:nameText host:hostText deletable:YES];
+    BOOL hostAdded = [self.loginHostListViewController addLoginHost:newHost];
+    if (hostAdded) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else {
+        NSString *appName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];;
+        NSString *errorMessage = [SFSDKResourceUtils localizedString:@"loginDuplicateHostErrorMessage"];
+        UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:appName
+                                                                            message:errorMessage
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:@"loginDuplicateHostErrorActionTitle"]
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:nil];
+        [errorAlert addAction:dismissAction];
+        [self presentViewController:errorAlert animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Table view data source
