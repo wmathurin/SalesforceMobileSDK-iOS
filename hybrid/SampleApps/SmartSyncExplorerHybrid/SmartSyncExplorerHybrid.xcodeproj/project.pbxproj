@@ -11,7 +11,6 @@
 		4F22154F19DF44E100FF2D26 /* libSmartSync.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F22154B19DF44E000FF2D26 /* libSmartSync.a */; };
 		4F22155F19DF549400FF2D26 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F22155E19DF549400FF2D26 /* ImageIO.framework */; };
 		4F6D839A19525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D839619525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m */; };
-		4F6D839B19525B66003EBB16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F6D839819525B66003EBB16 /* AppDelegate.m */; };
 		4FC276AD19DCBC6E008F4AA6 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4F2147AC193D20C80010F9D3 /* Settings.bundle */; };
 		4FC276AF19DCBC6E008F4AA6 /* SalesforceSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 824A9C5F1722023700C9BD79 /* SalesforceSDKResources.bundle */; };
 		4FC276B019DCBC6E008F4AA6 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 824A9DC01724CE4600C9BD79 /* config.xml */; };
@@ -30,6 +29,9 @@
 		4FC276C319DCBC93008F4AA6 /* underscore-min.js in Copy js Files */ = {isa = PBXBuildFile; fileRef = 4FC2769C19DCBB1B008F4AA6 /* underscore-min.js */; };
 		4FC276C419DCBCA5008F4AA6 /* com.salesforce.plugin.smartsync.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FC2768519DCBAA3008F4AA6 /* com.salesforce.plugin.smartsync.js */; };
 		4FC276C719DCC9CD008F4AA6 /* ratchet-theme-ios.css in Copy css Files */ = {isa = PBXBuildFile; fileRef = 4FC276C519DCC9BD008F4AA6 /* ratchet-theme-ios.css */; };
+		4FC6BEFC1BF5647100B09584 /* RPInstrumentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC6BEF91BF5647100B09584 /* RPInstrumentation.m */; };
+		4FC6BEFD1BF5647100B09584 /* RPInterceptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC6BEFB1BF5647100B09584 /* RPInterceptor.m */; };
+		4FC6BEFF1BF5650000B09584 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC6BEFE1BF5650000B09584 /* AppDelegate.m */; };
 		4FF15E26190884C600705FE0 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FF15E25190884C600705FE0 /* AssetsLibrary.framework */; };
 		4FF15E94190885CC00705FE0 /* com.salesforce.plugin.oauth.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FF15E611908852E00705FE0 /* com.salesforce.plugin.oauth.js */; };
 		4FF15E95190885CC00705FE0 /* com.salesforce.plugin.sdkinfo.js in Copy plugins Files */ = {isa = PBXBuildFile; fileRef = 4FF15E621908852E00705FE0 /* com.salesforce.plugin.sdkinfo.js */; };
@@ -164,7 +166,6 @@
 		4F22155E19DF549400FF2D26 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		4F6D839619525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+SalesforceHybridSDK.m"; path = "../../../../shared/hybrid/AppDelegate+SalesforceHybridSDK.m"; sourceTree = "<group>"; };
 		4F6D839719525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+SalesforceHybridSDK.h"; path = "../../../../shared/hybrid/AppDelegate+SalesforceHybridSDK.h"; sourceTree = "<group>"; };
-		4F6D839819525B66003EBB16 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../../../../shared/hybrid/AppDelegate.m; sourceTree = "<group>"; };
 		4F6D839919525B66003EBB16 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../../../../shared/hybrid/AppDelegate.h; sourceTree = "<group>"; };
 		4FC2768519DCBAA3008F4AA6 /* com.salesforce.plugin.smartsync.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = com.salesforce.plugin.smartsync.js; sourceTree = "<group>"; };
 		4FC2768719DCBAD5008F4AA6 /* bootconfig.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = bootconfig.json; path = ../../../../external/shared/samples/smartsyncexplorer/bootconfig.json; sourceTree = "<group>"; };
@@ -180,6 +181,11 @@
 		4FC2769B19DCBB1B008F4AA6 /* stackrouter.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = stackrouter.js; sourceTree = "<group>"; };
 		4FC2769C19DCBB1B008F4AA6 /* underscore-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "underscore-min.js"; sourceTree = "<group>"; };
 		4FC276C519DCC9BD008F4AA6 /* ratchet-theme-ios.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "ratchet-theme-ios.css"; path = "../../../dependencies/ratchet2/ratchet-theme-ios.css"; sourceTree = "<group>"; };
+		4FC6BEF81BF5647100B09584 /* RPInstrumentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPInstrumentation.h; sourceTree = "<group>"; };
+		4FC6BEF91BF5647100B09584 /* RPInstrumentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPInstrumentation.m; sourceTree = "<group>"; };
+		4FC6BEFA1BF5647100B09584 /* RPInterceptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RPInterceptor.h; sourceTree = "<group>"; };
+		4FC6BEFB1BF5647100B09584 /* RPInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RPInterceptor.m; sourceTree = "<group>"; };
+		4FC6BEFE1BF5650000B09584 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FF15E25190884C600705FE0 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		4FF15E611908852E00705FE0 /* com.salesforce.plugin.oauth.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = com.salesforce.plugin.oauth.js; sourceTree = "<group>"; };
 		4FF15E621908852E00705FE0 /* com.salesforce.plugin.sdkinfo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = com.salesforce.plugin.sdkinfo.js; sourceTree = "<group>"; };
@@ -306,6 +312,17 @@
 			);
 			name = js;
 			path = ../../../../external/shared/samples/smartsyncexplorer/js;
+			sourceTree = "<group>";
+		};
+		4FC6BEF71BF5647100B09584 /* instrumentation */ = {
+			isa = PBXGroup;
+			children = (
+				4FC6BEF81BF5647100B09584 /* RPInstrumentation.h */,
+				4FC6BEF91BF5647100B09584 /* RPInstrumentation.m */,
+				4FC6BEFA1BF5647100B09584 /* RPInterceptor.h */,
+				4FC6BEFB1BF5647100B09584 /* RPInterceptor.m */,
+			);
+			path = instrumentation;
 			sourceTree = "<group>";
 		};
 		4FF15E5F1908852E00705FE0 /* plugins */ = {
@@ -441,14 +458,15 @@
 		824A9C5E1722021D00C9BD79 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4FC6BEF71BF5647100B09584 /* instrumentation */,
 				4F6D839619525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m */,
 				4F6D839719525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.h */,
-				4F6D839819525B66003EBB16 /* AppDelegate.m */,
 				4F6D839919525B66003EBB16 /* AppDelegate.h */,
 				8272301A19D764160066A350 /* InitialViewController.h */,
 				8272301B19D764160066A350 /* InitialViewController.m */,
 				82638F0A19B8E1FD00FBB3C9 /* UIApplication+SalesforceHybridSDK.h */,
 				82638F0B19B8E1FD00FBB3C9 /* UIApplication+SalesforceHybridSDK.m */,
+				4FC6BEFE1BF5650000B09584 /* AppDelegate.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -571,9 +589,11 @@
 				8272301C19D764160066A350 /* InitialViewController.m in Sources */,
 				82AF5AE61A0DADA4006C7A4B /* CDVLogger.m in Sources */,
 				4F6D839A19525B66003EBB16 /* AppDelegate+SalesforceHybridSDK.m in Sources */,
+				4FC6BEFD1BF5647100B09584 /* RPInterceptor.m in Sources */,
+				4FC6BEFF1BF5650000B09584 /* AppDelegate.m in Sources */,
 				824A9BDE1721FCA400C9BD79 /* main.m in Sources */,
+				4FC6BEFC1BF5647100B09584 /* RPInstrumentation.m in Sources */,
 				82638F0C19B8E1FD00FBB3C9 /* UIApplication+SalesforceHybridSDK.m in Sources */,
-				4F6D839B19525B66003EBB16 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
