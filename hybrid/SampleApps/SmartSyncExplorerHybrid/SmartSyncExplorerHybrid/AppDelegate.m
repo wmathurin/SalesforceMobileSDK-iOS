@@ -32,6 +32,7 @@
 
 
 #import "RPInstrumentation.h"
+#import <objc/runtime.h>
 
 @implementation AppDelegate
 
@@ -41,22 +42,37 @@
 - (void) setupPerfLogging
 {
     // [self setupPerfLogging:objc_getClass("FMDatabaseQueue") selector:@selector(inDatabase:block:)];
-    [self setupPerfLogging:objc_getClass("SFSmartStore") selector:@selector(queryWithQuerySpec:pageIndex:error:)];
+    [self setupPerfLogging:objc_getClass("SFSmartStore") selector:@selector(queryWithQuerySpec:pageIndex:withDb:)];
+    [self listMethods:objc_getClass("SFSmartStore")];
     
+}
+
+- (void) listMethods:(Class)clazz {
+    unsigned int mc = 0;
+    Method * mlist = class_copyMethodList(clazz, &mc);
+    NSLog(@"%d methods", mc);
+    for(int i=0;i<mc;i++) {
+        NSLog(@"Method no #%d: %s", i, sel_getName(method_getName(mlist[i])));
+    }
 }
 
 - (void) setupPerfLogging:(Class)clazz selector:(SEL)selector {
     RPInstrumentation *inst = [RPInstrumentation instrumentationForClass:clazz];
     
     [inst interceptInstanceMethod:selector beforeBlock:^{
-        [inst startMeasure];
+        NSLog(@"BEFORE->%@", inst);
+//        [inst startMeasure];
     }];
     
     
-    [inst interceptInstanceMethod:selector afterBlock:^{
-        // Start the timing recording
-        [inst stopMeasure];
-        NSLog(@"PERF->%@", inst);
+    SEL forwardedSelector = NSSelectorFromString([NSString stringWithFormat:@"__method_forwarded_%@", NSStringFromSelector(selector)]);
+    
+    [inst interceptInstanceMethod:forwardedSelector afterBlock:^{
+        NSLog(@"AFTER->%@", inst);
+    
+//        // Start the timing recording
+//        [inst stopMeasure];
+//        NSLog(@"PERF->%@", inst);
     }];
 }
 
