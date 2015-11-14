@@ -53,47 +53,22 @@
     }
 }
 
-- (void)interceptInstanceMethod:(SEL)selector beforeInvocationBlock:(RPInterceptorInvocationCallback)before {
-    [self interceptInstanceMethod:selector mode:RPInterceptorModeBefore invocationBlock:before];
-}
-
-- (void)interceptInstanceMethod:(SEL)selector beforeBlock:(id)before {
-    [self interceptInstanceMethod:selector mode:RPInterceptorModeBefore block:before];
-}
-
-- (void)interceptInstanceMethod:(SEL)selector afterInvocationBlock:(RPInterceptorInvocationCallback)before {
-    [self interceptInstanceMethod:selector mode:RPInterceptorModeAfter invocationBlock:before];
-}
-
-- (void)interceptInstanceMethod:(SEL)selector afterBlock:(id)before {
-    [self interceptInstanceMethod:selector mode:RPInterceptorModeAfter block:before];
-}
-
-- (void)interceptInstanceMethod:(SEL)selector replaceWithInvocationBlock:(RPInterceptorInvocationCallback)before {
-    [self interceptInstanceMethod:selector mode:RPInterceptorModeReplace invocationBlock:before];
-}
-
-- (void)interceptInstanceMethod:(SEL)selector replaceWithBlock:(id)before {
-    [self interceptInstanceMethod:selector mode:RPInterceptorModeReplace block:before];
-}
-
-- (void)interceptInstanceMethod:(SEL)selector mode:(RPInterceptorMode)mode invocationBlock:(RPInterceptorInvocationCallback)callback {
+- (void)interceptInstanceMethod:(SEL)selector beforeBlock:(RPInterceptorInvocationCallback)before afterBlock:(RPInterceptorInvocationCallback)after {
     RPInterceptor *interceptor = [[RPInterceptor alloc] init];
-    interceptor.mode = mode;
     interceptor.classToIntercept = self.clazz;
     interceptor.selectorToIntercept = selector;
-    interceptor.targetInvocationBlock = callback;
+    interceptor.targetBeforeBlock = before;
+    interceptor.targetAfterBlock = after;
     interceptor.instanceMethod = YES;
     interceptor.enabled = YES;
     [self.interceptors addObject:interceptor];
 }
 
-- (void)interceptInstanceMethod:(SEL)selector mode:(RPInterceptorMode)mode block:(id)callback {
+- (void)interceptInstanceMethod:(SEL)selector replaceWithInvocationBlock:(RPInterceptorInvocationCallback)replace {
     RPInterceptor *interceptor = [[RPInterceptor alloc] init];
-    interceptor.mode = mode;
     interceptor.classToIntercept = self.clazz;
     interceptor.selectorToIntercept = selector;
-    interceptor.targetMethodBlock = callback;
+    interceptor.targetReplaceBlock = replace;
     interceptor.instanceMethod = YES;
     interceptor.enabled = YES;
     [self.interceptors addObject:interceptor];
@@ -115,7 +90,7 @@
             NSString *action = interceptor[@"action"];
             NSArray *keys = interceptor[@"keys"];
             
-            [self interceptInstanceMethod:selector beforeInvocationBlock:^(NSInvocation *invocation) {
+            [self interceptInstanceMethod:selector beforeBlock:^(NSInvocation *invocation) {
                 if ([self isInstanceSession:invocation.target]) {
                     [self collectKeys:keys invocation:invocation selector:selector];
                     if ([action isEqualToString:@"start"]) {
@@ -126,7 +101,7 @@
                         if (completion) completion();
                     }
                 }
-            }];
+            } afterBlock:nil];
         }
         
         self.enabled = YES;

@@ -10,28 +10,11 @@
 
 typedef void(^RPInterceptorInvocationCallback)(NSInvocation *invocation);
 
-/** The various mode of the interceptor
- */
-typedef NS_ENUM(NSUInteger, RPInterceptorMode) {
-    // Callback is invoked before method is executed
-    RPInterceptorModeBefore,
-    
-    // Callback is invoked after method is executed
-    RPInterceptorModeAfter,
-    
-    // Callback is invoked instead of the method
-    RPInterceptorModeReplace,
-};
-
 /** This class provides a simple way to intercept an
  instance method or a class method and forward message
  to the original method if needed.
  */
 @interface RPInterceptor : NSObject
-
-/** The mode of the interceptor
- */
-@property (nonatomic) RPInterceptorMode mode;
 
 /** Class to intercept
 */
@@ -46,20 +29,10 @@ typedef NS_ENUM(NSUInteger, RPInterceptorMode) {
 */
 @property (nonatomic) BOOL instanceMethod;
 
-/** An optional block that will be invoked when the
- intercepted method is executed. The block must
- match the signature of the method except that
- there is a first argument that contains the instance
- of the class being intercepted. So the block must
- always starts with ^(id instance, <arguments of method here>)
- */
-@property (nonatomic, copy) id targetMethodBlock;
-
-/** An option block that will be invoked when the intercepted
- method is executed. It contains the invocation that is used
- to execute the method on the intercepted class.
- */
-@property (nonatomic, copy) RPInterceptorInvocationCallback targetInvocationBlock;
+// The various blocks of interceptions (each of them can be nil)
+@property (nonatomic, copy) RPInterceptorInvocationCallback targetBeforeBlock;
+@property (nonatomic, copy) RPInterceptorInvocationCallback targetReplaceBlock;
+@property (nonatomic, copy) RPInterceptorInvocationCallback targetAfterBlock;
 
 /** Set this property to YES to enable the interceptor
 */

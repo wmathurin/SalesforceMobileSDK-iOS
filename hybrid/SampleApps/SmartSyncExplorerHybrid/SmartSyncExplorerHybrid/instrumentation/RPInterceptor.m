@@ -126,33 +126,23 @@ static NSString * interceptorKey(Class clazz, SEL selector) {
         anInvocation.target = self.interceptedObject;
         anInvocation.selector = self.originalMethodRenamedSelector;
         
-        switch (self.mode) {
-            case RPInterceptorModeReplace:
-                [self invokeCallbacks:anInvocation];
-                break;
-                
-            case RPInterceptorModeAfter:
-                [self invokeOriginal:anInvocation];
-                [self invokeCallbacks:anInvocation];
-                break;
-                
-            case RPInterceptorModeBefore:
-                [self invokeCallbacks:anInvocation];
-                [self invokeOriginal:anInvocation];
-                break;
-        }        
+        [self invokeCallbacks:anInvocation];        
     } else {
         [super forwardInvocation:anInvocation];
     }
 }
 
 - (void)invokeCallbacks:(NSInvocation*)anInvocation {
-    if (self.targetInvocationBlock) {
-        self.targetInvocationBlock(anInvocation);
+    if (self.targetBeforeBlock) {
+        self.targetBeforeBlock(anInvocation);
     }
-    if (self.targetMethodBlock) {
-        anInvocation.selector = self.originalMethodRenamedSelectorForBlock;
-        [anInvocation invokeWithTarget:self.interceptedObject];
+    if (self.targetReplaceBlock) {
+        self.targetReplaceBlock(anInvocation);
+    } else {
+        [self invokeOriginal:anInvocation];
+    }
+    if (self.targetAfterBlock) {
+        self.targetAfterBlock(anInvocation);
     }
 }
 
@@ -170,11 +160,6 @@ static NSString * interceptorKey(Class clazz, SEL selector) {
         const char *methodTypes = method_getTypeEncoding(originalMethod);
         
         InterceptorsForClassAndSelector[interceptorKey(self.classToIntercept, self.selectorToIntercept)] = self;
-        
-        if (self.targetMethodBlock) {
-            IMP imp = imp_implementationWithBlock(self.targetMethodBlock); // TODO release IMP
-            class_replaceMethod(self.classToIntercept, self.originalMethodRenamedSelectorForBlock, imp, methodTypes);
-        }
         
         // forward method
         IMP originalMethodIMP = method_setImplementation(originalMethod, (IMP)_objc_msgForward);
@@ -197,12 +182,7 @@ static NSString * interceptorKey(Class clazz, SEL selector) {
         const char *methodTypes = method_getTypeEncoding(originalMethod);
         
         InterceptorsForClassAndSelector[interceptorKey(self.classToIntercept, self.selectorToIntercept)] = self;
-        
-        if (self.targetMethodBlock) {
-            IMP imp = imp_implementationWithBlock(self.targetMethodBlock); // TODO release IMP
-            class_replaceMethod(originalMetaClass, self.originalMethodRenamedSelectorForBlock, imp, methodTypes);
-        }
-        
+                
         // forward method
         IMP originalMethodIMP = method_setImplementation(originalMethod, (IMP)_objc_msgForward);
         NSAssert(originalMethodIMP, @"Original method implementation must be found");

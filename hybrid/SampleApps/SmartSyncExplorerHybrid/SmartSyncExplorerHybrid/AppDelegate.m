@@ -58,21 +58,10 @@
 
 - (void) setupPerfLogging:(Class)clazz selector:(SEL)selector {
     RPInstrumentation *inst = [RPInstrumentation instrumentationForClass:clazz];
-    
-    [inst interceptInstanceMethod:selector beforeBlock:^{
+    [inst interceptInstanceMethod:selector beforeBlock:^(NSInvocation *invocation) {
         NSLog(@"BEFORE->%@", inst);
-//        [inst startMeasure];
-    }];
-    
-    
-    SEL forwardedSelector = NSSelectorFromString([NSString stringWithFormat:@"__method_forwarded_%@", NSStringFromSelector(selector)]);
-    
-    [inst interceptInstanceMethod:forwardedSelector afterBlock:^{
+    } afterBlock:^(NSInvocation *invocation) {
         NSLog(@"AFTER->%@", inst);
-    
-//        // Start the timing recording
-//        [inst stopMeasure];
-//        NSLog(@"PERF->%@", inst);
     }];
 }
 

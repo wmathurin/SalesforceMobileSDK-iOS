@@ -24,43 +24,18 @@
 + (instancetype)instrumentationForClass:(Class)clazz;
 
 /** Use this method to intercept the instance method specified by `selector`
- and provide a block that will be invoked before the method is executed.
- Note: the block contains a single argument which is the NSInvocation of the message.
+ Note: each block contains a single argument which is the NSInvocation of the message.
+ @param selector The selector to intercept
+ @param before An optional block invoked before the selector is executed
+ @param before An optional block invoked after the selector is executed
  */
-- (void)interceptInstanceMethod:(SEL)selector beforeInvocationBlock:(RPInterceptorInvocationCallback)before;
-
-/** Use this method to intercept the instance method specified by `selector`
- and provide a block that will be invoked before the method is executed.
- Note: the block must have at least one argument which is the instance
- of the class being intercepted and then the arguments of the method.
- */
-- (void)interceptInstanceMethod:(SEL)selector beforeBlock:(id)before;
-
-/** Use this method to intercept the instance method specified by `selector`
- and provide a block that will be invoked after the method is executed.
- Note: the block contains a single argument which is the NSInvocation of the message.
- */
-- (void)interceptInstanceMethod:(SEL)selector afterInvocationBlock:(RPInterceptorInvocationCallback)before;
-
-/** Use this method to intercept the instance method specified by `selector`
- and provide a block that will be invoked after the method is executed.
- Note: the block must have at least one argument which is the instance
- of the class being intercepted and then the arguments of the method.
- */
-- (void)interceptInstanceMethod:(SEL)selector afterBlock:(id)before;
+- (void)interceptInstanceMethod:(SEL)selector beforeBlock:(RPInterceptorInvocationCallback)before afterBlock:(RPInterceptorInvocationCallback)after;
 
 /** Use this method to intercept the instance method specified by `selector`
  and provide a block that will be invoked instead of the method.
  Note: the block contains a single argument which is the NSInvocation of the message.
  */
 - (void)interceptInstanceMethod:(SEL)selector replaceWithInvocationBlock:(RPInterceptorInvocationCallback)before;
-
-/** Use this method to intercept the instance method specified by `selector`
- and provide a block that will be invoked instead of the method.
- Note: the block must have at least one argument which is the instance
- of the class being intercepted and then the arguments of the method.
- */
-- (void)interceptInstanceMethod:(SEL)selector replaceWithBlock:(id)before;
 
 /** Loads the array of instructions execute them. The instructions usually
  comes from a JSON file.
