@@ -934,9 +934,8 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
 - (void)startRefreshFlowConnectionTimer
 {
     if (![NSThread isMainThread]) {
-        __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf startRefreshFlowConnectionTimer];
+            [self startRefreshFlowConnectionTimer];
         });
         return;
     }
@@ -951,9 +950,8 @@ static NSString * const kSFAppFeatureSafariBrowserForLogin   = @"BW";
 - (void)stopRefreshFlowConnectionTimer
 {
     if (![NSThread isMainThread]) {
-        __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf stopRefreshFlowConnectionTimer];
+            [self stopRefreshFlowConnectionTimer];
         });
         return;
     }
