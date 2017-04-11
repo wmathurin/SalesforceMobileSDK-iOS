@@ -91,8 +91,9 @@ static NSString * const kGlobalScopingKey = @"-global-";
     if (self) {
         _observingCredentials = NO;
         SFOAuthCredentials *creds = [[SFOAuthCredentials alloc] initWithIdentifier:identifier clientId:clientId encrypted:YES];
+        _loginState = (creds.refreshToken.length > 0 ? SFUserAccountLoginStateLoggedIn : SFUserAccountLoginStateNotLoggedIn);
         [SFUserAccountManager applyCurrentLogLevel:creds];
-        self.credentials = creds;
+        _credentials = creds;
         _syncQueue = dispatch_queue_create(kSyncQueue, NULL);
     }
     return self;
@@ -150,6 +151,7 @@ static NSString * const kGlobalScopingKey = @"-global-";
         _customData       = [[decoder decodeObjectOfClass:[NSDictionary class] forKey:kUser_CUSTOM_DATA] mutableCopy];
         _guestUser        = [decoder decodeBoolForKey:kUser_IS_GUEST_USER];
         _accessRestrictions = [decoder decodeIntegerForKey:kUser_ACCESS_RESTRICTIONS];
+        _loginState         = (_credentials.refreshToken.length > 0 ? SFUserAccountLoginStateLoggedIn : SFUserAccountLoginStateNotLoggedIn);
         _syncQueue = dispatch_queue_create(kSyncQueue, NULL);
 	}
 	return self;
@@ -298,6 +300,31 @@ static NSString * const kGlobalScopingKey = @"-global-";
     return object;
 }
 
+- (BOOL)transitionToLoginState:(SFUserAccountLoginState)newLoginState {
+    __block BOOL transitionSucceeded;
+    dispatch_sync(_syncQueue, ^{
+        switch (newLoginState) {
+            case SFUserAccountLoginStateLoggedIn:
+                transitionSucceeded = (self.loginState == SFUserAccountLoginStateNotLoggedIn || self.loginState == SFUserAccountLoginStateLoggedIn);
+                break;
+            case SFUserAccountLoginStateNotLoggedIn:
+                transitionSucceeded = (self.loginState == SFUserAccountLoginStateNotLoggedIn || self.loginState == SFUserAccountLoginStateLoggingOut);
+                break;
+            case SFUserAccountLoginStateLoggingOut:
+                transitionSucceeded = (self.loginState == SFUserAccountLoginStateLoggedIn);
+                break;
+            default:
+                transitionSucceeded = NO;
+        }
+        if (transitionSucceeded) {
+            self.loginState = newLoginState;
+        } else {
+            [self log:SFLogLevelWarning format:@"%@ Invalid login state transition from '%@' to '%@'. No action taken.", NSStringFromSelector(_cmd), [[self class] loginStateDescriptionFromLoginState:self.loginState], [[self class] loginStateDescriptionFromLoginState:newLoginState]];
+        }
+    });
+    return transitionSucceeded;
+}
+
 - (BOOL)isSessionValid {
 
     // A session is considered "valid" when the user
@@ -326,6 +353,19 @@ static NSString * const kGlobalScopingKey = @"-global-";
     NSString * s = [NSString stringWithFormat:@"<SFUserAccount username=%@ fullName=%@ accessScopes=%@ credentials=%@, community=%@>",
                     theUserName, theFullName, self.accessScopes, self.credentials, self.communityId];
     return s;
+}
+
++ (NSString *)loginStateDescriptionFromLoginState:(SFUserAccountLoginState)loginState {
+    switch (loginState) {
+        case SFUserAccountLoginStateLoggedIn:
+            return @"SFUserAccountLoginStateLoggedIn";
+        case SFUserAccountLoginStateLoggingOut:
+            return @"SFUserAccountLoginStateLoggingOut";
+        case SFUserAccountLoginStateNotLoggedIn:
+            return @"SFUserAccountLoginStateNotLoggedIn";
+        default:
+            return [NSString stringWithFormat:@"Unknown login state (code: %lu)", (unsigned long)loginState];
+    }
 }
 
 NSString *SFKeyForUserAndScope(SFUserAccount *user, SFUserAccountScope scope) {
