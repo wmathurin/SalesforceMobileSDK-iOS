@@ -449,12 +449,13 @@ static Class InstanceClass = nil;
         [self log:SFLogLevelDebug msg:@"logoutUser: user is anonymous.  No action taken."];
         return;
     }
-    
-    if (user.isUserLoggingOut) {
-        [self log:SFLogLevelInfo msg:@"logoutUser: user is already in the process of logout."];
+
+    BOOL loggingOutTransitionSucceeded = [user transitionToLoginState:SFUserAccountLoginStateLoggingOut];
+    if (!loggingOutTransitionSucceeded) {
+        // SFUserAccount already logs the transition failure.
         return;
     }
-    user.userLoggingOut = YES;
+
     [self log:SFLogLevelInfo format:@"Logging out user '%@'.", user.userName];
     NSDictionary *userInfo = @{ @"account": user };
     [[NSNotificationCenter defaultCenter] postNotificationName:kSFUserWillLogoutNotification
@@ -500,7 +501,9 @@ static Class InstanceClass = nil;
             }
         }];
     }
-    user.userLoggingOut = NO;
+    // NB: There's no real action that can be taken if this login state transition fails.  At any rate,
+    // it's an unlikely scenario.
+    [user transitionToLoginState:SFUserAccountLoginStateNotLoggedIn];
 }
 
 - (void)cancelAuthentication
@@ -672,19 +675,27 @@ static Class InstanceClass = nil;
     // Save the accounts
     [[SFUserAccountManager sharedInstance] saveAccounts:nil];
 
-    // Notify the session is ready
-    [self willChangeValueForKey:@"haveValidSession"];
-    [self didChangeValueForKey:@"haveValidSession"];
-    NSDictionary *userInfo = nil;
     SFUserAccount *user = [SFUserAccountManager sharedInstance].currentUser;
-    if (user) {
-        userInfo = @{ @"account" : user };
+
+    BOOL loginStateTransitionSucceeded = [user transitionToLoginState:SFUserAccountLoginStateLoggedIn];
+    if (!loginStateTransitionSucceeded) {
+        // We're in an unlikely, but nevertheless bad, state.  Fail this authentication.
+        [self log:SFLogLevelError format:@"%@: Unable to transition user to a logged in state.  Login failed.", NSStringFromSelector(_cmd)];
+        [self execFailureBlocks];
+    } else {
+        // Notify the session is ready
+        [self willChangeValueForKey:@"haveValidSession"];
+        [self didChangeValueForKey:@"haveValidSession"];
+        NSDictionary *userInfo = nil;
+        if (user) {
+            userInfo = @{ @"account" : user };
+        }
+        [self initAnalyticsManager];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSFAuthenticationManagerFinishedNotification
+                                                            object:self
+                                                          userInfo:userInfo];
+        [self execCompletionBlocks];
     }
-    [self initAnalyticsManager];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSFAuthenticationManagerFinishedNotification
-                                                        object:self
-                                                      userInfo:userInfo];
-    [self execCompletionBlocks];
 }
 
 - (void)initAnalyticsManager
