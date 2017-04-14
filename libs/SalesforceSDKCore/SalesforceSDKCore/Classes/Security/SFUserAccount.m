@@ -61,6 +61,7 @@ static NSString * const kGlobalScopingKey = @"-global-";
 @property (nonatomic, readwrite, getter = isGuestUser) BOOL guestUser;
 
 - (id)initWithCoder:(NSCoder*)decoder NS_DESIGNATED_INITIALIZER;
+- (void) registerObserversForCredentials:(SFOAuthCredentials*)credentials;
 
 @end
 
@@ -94,6 +95,8 @@ static NSString * const kGlobalScopingKey = @"-global-";
         _loginState = (creds.refreshToken.length > 0 ? SFUserAccountLoginStateLoggedIn : SFUserAccountLoginStateNotLoggedIn);
         [SFUserAccountManager applyCurrentLogLevel:creds];
         _credentials = creds;
+        [self registerObserversForCredentials:creds];
+
         _syncQueue = dispatch_queue_create(kSyncQueue, NULL);
     }
     return self;
@@ -248,16 +251,7 @@ static NSString * const kGlobalScopingKey = @"-global-";
 - (void)setCredentials:(SFOAuthCredentials *)credentials
 {
     if (credentials != _credentials) {
-        if (_observingCredentials) {
-            [_credentials removeObserver:self forKeyPath:kCredentialsUserIdPropName];
-            [_credentials removeObserver:self forKeyPath:kCredentialsOrgIdPropName];
-            _observingCredentials = NO;
-        }
-        if (credentials != nil) {
-            [credentials addObserver:self forKeyPath:kCredentialsUserIdPropName options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:NULL];
-            [credentials addObserver:self forKeyPath:kCredentialsOrgIdPropName options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:NULL];
-            _observingCredentials = YES;
-        }
+        [self registerObserversForCredentials:credentials];
         
         _credentials = credentials;
         self.accountIdentity.userId = _credentials.userId;
@@ -395,6 +389,19 @@ NSString *SFKeyForUserAndScope(SFUserAccount *user, SFUserAccountScope scope) {
     }
     
     return key;
+}
+
+- (void) registerObserversForCredentials:(SFOAuthCredentials*)credentials {
+    if (_observingCredentials) {
+        [_credentials removeObserver:self forKeyPath:kCredentialsUserIdPropName];
+        [_credentials removeObserver:self forKeyPath:kCredentialsOrgIdPropName];
+        _observingCredentials = NO;
+    }
+    if (credentials != nil) {
+        [credentials addObserver:self forKeyPath:kCredentialsUserIdPropName options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:NULL];
+        [credentials addObserver:self forKeyPath:kCredentialsOrgIdPropName options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:NULL];
+        _observingCredentials = YES;
+    }
 }
 
 #pragma mark - Credentials property changes
