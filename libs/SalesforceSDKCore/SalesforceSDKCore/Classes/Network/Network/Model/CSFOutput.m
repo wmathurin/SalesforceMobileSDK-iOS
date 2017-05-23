@@ -76,7 +76,7 @@ static NSString * const kCSFInputCustomArrayAttributes = @"__CSFOutput_Array_Sto
             [encoder encodeObject:value forKey:propertyName];
         } else if (encoding && ![encoding hasPrefix:@"@"]) {
             const void * ivarPtr = (__bridge void*)(self) + ivar_getOffset(ivar);
-            [encoder encodeValueOfObjCType:[ivarInfo[@"encoding"] UTF8String] at:ivarPtr];
+            [encoder encodeValueOfObjCType:[encoding UTF8String] at:ivarPtr];
         }
     }];
 }
@@ -102,7 +102,7 @@ static NSString * const kCSFInputCustomArrayAttributes = @"__CSFOutput_Array_Sto
                 object_setIvar(self, ivar, result);
             } else if (ivarInfo[@"encoding"]) {
                 const void * ivarPtr = (__bridge void*)(self) + ivar_getOffset(ivar);
-                [decoder decodeValueOfObjCType:[ivarInfo[@"encoding"] UTF8String] at:(void *)ivarPtr];
+                [decoder decodeValueOfObjCType:[encoding UTF8String] at:(void *)ivarPtr];
             }
         }];
     }
