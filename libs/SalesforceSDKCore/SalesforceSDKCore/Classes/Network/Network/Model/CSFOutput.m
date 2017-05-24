@@ -101,7 +101,7 @@ static NSString * const kCSFInputCustomArrayAttributes = @"__CSFOutput_Array_Sto
                     resultOutput.parentObject = self;
                 }
                 object_setIvar(self, ivar, result);
-            } else if (ivarInfo[@"encoding"]) {
+            } else if (ivarInfo[@"encoding"] && ![encoding hasPrefix:@"@"]) {
                 const void * ivarPtr = (__bridge void*)(self) + ivar_getOffset(ivar);
                 [decoder decodeValueOfObjCType:[encoding UTF8String] at:(void *)ivarPtr];
             }
