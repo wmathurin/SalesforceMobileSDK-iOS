@@ -147,6 +147,9 @@ NSString * const kSFDefaultRestEndpoint = @"/services/data";
                 }
             }
             components.queryItems = queryItems;
+
+            // Not using NSUrlQueryItems because of https://stackoverflow.com/questions/41273994/special-characters-not-being-encoded-properly-inside-urlqueryitems
+            [fullUrl appendString:[SFRestRequest toQueryString:self.queryParams]];
         }
         self.request = [[NSMutableURLRequest alloc] initWithURL:components.URL];
 
@@ -156,6 +159,9 @@ NSString * const kSFDefaultRestEndpoint = @"/services/data";
         // Sets OAuth Bearer token header on the request.
         NSString *bearer = [NSString stringWithFormat:@"Bearer %@", user.credentials.accessToken];
         [self.request setValue:bearer forHTTPHeaderField:@"Authorization"];
+
+        // Sets Mobile SDK user agent on all REST API requests.
+        [self.request setValue:[SFRestAPI userAgentString] forHTTPHeaderField:@"User-Agent"];
 
         // Adds custom headers to the request if any are set.
         if (self.customHeaders) {
