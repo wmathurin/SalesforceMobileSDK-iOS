@@ -1746,6 +1746,16 @@ static NSException *authException = nil;
     [self sendSyncRequest:request];
     NSString *userAgent = request.request.allHTTPHeaderFields[@"User-Agent"];
     XCTAssertEqualObjects(userAgent, [SFRestAPI userAgentString:@"SmartSync"], @"Incorrect user agent");
+
+#pragma mark - custom rest requests
+
+- (void)testCustomBaseURLRequest {
+    SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodGET baseURL:@"http://www.apple.com" path:@"/test/testing" queryParams:nil];
+    XCTAssertEqual(request.baseURL, @"http://www.apple.com", @"Base URL should match");
+    
+    NSURLRequest *finalRequest = [request prepareRequestForSend];
+    NSString *expectedURL = [NSString stringWithFormat:@"http://www.apple.com%@%@", kSFDefaultRestEndpoint, @"/test/testing"];
+    XCTAssertEqualObjects(finalRequest.URL.absoluteString, expectedURL, @"Final URL should utilize base URL that was passed in");
 }
 
 @end
