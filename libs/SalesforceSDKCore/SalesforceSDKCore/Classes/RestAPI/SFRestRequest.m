@@ -147,9 +147,6 @@ NSString * const kSFDefaultRestEndpoint = @"/services/data";
                 }
             }
             components.queryItems = queryItems;
-
-            // Not using NSUrlQueryItems because of https://stackoverflow.com/questions/41273994/special-characters-not-being-encoded-properly-inside-urlqueryitems
-            [fullUrl appendString:[SFRestRequest toQueryString:self.queryParams]];
         }
         self.request = [[NSMutableURLRequest alloc] initWithURL:components.URL];
 
