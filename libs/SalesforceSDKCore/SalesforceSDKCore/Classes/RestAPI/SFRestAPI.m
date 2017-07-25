@@ -101,7 +101,7 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
 
 - (void)cancelAllRequests {
     @synchronized(self) {
-        for (SFRestRequest *request in [_activeRequests allKeys]) {
+        for (SFRestRequest *request in _activeRequests) {
             [request cancel];
         }
         [_activeRequests removeAllObjects];
@@ -134,11 +134,12 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
 
 - (BOOL)forceTimeoutRequest:(SFRestRequest*)req {
     BOOL found = NO;
-    if (nil != req) {
+    SFRestRequest *toCancel = (nil != req ? req : [self.activeRequests anyObject]);
+    if (nil != toCancel) {
         found = YES;
-        if ([req.delegate respondsToSelector:@selector(requestDidTimeout:)]) {
-            [req.delegate requestDidTimeout:req];
-            [self removeActiveRequestObject:req];
+        if ([toCancel.delegate respondsToSelector:@selector(requestDidTimeout:)]) {
+            [toCancel.delegate requestDidTimeout:toCancel];
+            [self removeActiveRequestObject:toCancel];
         }
     }
     return found;
