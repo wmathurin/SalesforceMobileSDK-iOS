@@ -192,10 +192,9 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
 
     // If there are no demonstrable auth credentials, login before sending.
     SFUserAccount *user = [SFUserAccountManager sharedInstance].currentUser;
-    
+
     // Adds this request to the list of active requests if it's not already on the list.
     [self.activeRequests addObject:request];
-
     __weak __typeof(self) weakSelf = self;
     if (user.credentials.accessToken == nil && user.credentials.refreshToken == nil && request.requiresAuthentication) {
         [self log:SFLogLevelInfo msg:@"No auth credentials found. Authenticating before sending request."];
@@ -217,6 +216,7 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
 
 - (SFOAuthSessionRefresher *)sessionRefresherForUser:(SFUserAccount *)user {
     @synchronized (self) {
+
         /*
          * Session refresher should be a class level property because it gets de-allocated before
          * the callback is triggered otherwise, leading to a timeout or cancellation.
@@ -261,8 +261,9 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
     NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
     if (statusCode == 401 || statusCode == 403) {
         if (shouldRetry) {
-            SFUserAccount *user = [SFUserAccountManager sharedInstance].currentUser;
             [self log:SFLogLevelInfo format:@"%@: REST request failed due to expired credentials. Attempting to refresh credentials.", NSStringFromSelector(_cmd)];
+            SFUserAccount *user = [SFUserAccountManager sharedInstance].currentUser;
+
             /*
              * Sends the session refresh request if an OAuth session is not being refreshed.
              * Otherwise, wait for the current session refresh call to complete before sending.
@@ -288,7 +289,7 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
                         strongSelf.oauthSessionRefresher = nil;
                         if ([refreshError.domain isEqualToString:kSFOAuthErrorDomain] && refreshError.code == kSFOAuthErrorInvalidGrant) {
                             [strongSelf log:SFLogLevelInfo format:@"%@ Invalid grant error received, triggering logout.", NSStringFromSelector(_cmd)];
-                            
+    
                             // Make sure we call logout on the main thread.
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [strongSelf createAndStoreLogoutEvent:error user:user];
