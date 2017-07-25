@@ -262,6 +262,7 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
     NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
     if (statusCode == 401 || statusCode == 403) {
         if (shouldRetry) {
+            SFUserAccount *user = [SFUserAccountManager sharedInstance].currentUser;
             /*
              * Sends the session refresh request if an OAuth session is not being refreshed.
              * Otherwise, wait for the current session refresh call to complete before sending.
