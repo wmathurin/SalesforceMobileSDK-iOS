@@ -75,11 +75,10 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
     if (self) {
         _activeRequests = [[NSMutableSet alloc] initWithCapacity:10];
         self.apiVersion = kSFRestDefaultAPIVersion;
-        _accountMgr = [SFUserAccountManager sharedInstance];
-        [_accountMgr addDelegate:self];
-        _authMgr = [SFAuthenticationManager sharedManager];
         self.sessionRefreshInProgress = NO;
         self.pendingRequestsBeingProcessed = NO;
+        [[SFUserAccountManager sharedInstance] addDelegate:self];
+        _authMgr = [SFAuthenticationManager sharedManager];
         if (!kIsTestRun) {
             [SFSDKWebUtils configureUserAgent:[SFRestAPI userAgentString]];
         }
@@ -263,6 +262,7 @@ __strong static NSDateFormatter *httpDateFormatter = nil;
     if (statusCode == 401 || statusCode == 403) {
         if (shouldRetry) {
             SFUserAccount *user = [SFUserAccountManager sharedInstance].currentUser;
+            [self log:SFLogLevelInfo format:@"%@: REST request failed due to expired credentials. Attempting to refresh credentials.", NSStringFromSelector(_cmd)];
             /*
              * Sends the session refresh request if an OAuth session is not being refreshed.
              * Otherwise, wait for the current session refresh call to complete before sending.
