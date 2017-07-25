@@ -34,12 +34,11 @@
  */
 @interface SFRestAPI () <SFUserAccountManagerDelegate>
 {
-    SFUserAccountManager *_accountMgr;
     SFAuthenticationManager *_authMgr;
 }
 
 /**
- * Active requests property
+ * Active requests property.
  */
 @property (nonatomic, readonly, strong) NSMutableSet *activeRequests;
 
