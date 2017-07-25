@@ -1262,7 +1262,7 @@ static NSException *authException = nil;
     NSString *origRefreshToken = _currentUser.credentials.refreshToken;
     SFOAuthCredentials *origCreds = [_currentUser.credentials copy];
     
-    // set invalid tokens 
+    // set invalid tokens
     NSString *invalidAccessToken = @"xyz";
     NSString *invalidRefreshToken = @"xyz";
     [self changeOauthTokens:invalidAccessToken refreshToken:invalidRefreshToken];
