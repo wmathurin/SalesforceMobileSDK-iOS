@@ -34,7 +34,6 @@
  */
 @interface SFRestAPI () <SFUserAccountManagerDelegate>
 {
-    SFUserAccountManager *_accountMgr;
     SFAuthenticationManager *_authMgr;
 }
 
