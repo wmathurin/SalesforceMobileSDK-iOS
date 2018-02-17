@@ -22,11 +22,35 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
+#import <objc/runtime.h>
 #import <SalesforceSDKCore/TestSetupUtils.h>
 #import "ReactTestCase.h"
 
 static NSException *authException = nil;
+
+
+//
+// RCTTestRunner looks for the bundle in the wrong place
+//
+@interface RCTTestRunner (FixedBundlePath)
+@property (nonatomic, readwrite) NSURL *scriptURL;
+@end
+
+@implementation RCTTestRunner (FixedBundlePath)
++ (void)load
+{
+    method_exchangeImplementations(class_getInstanceMethod(self, @selector(updateScript)), class_getInstanceMethod(self, @selector(sfsdk_swizzled_updateScript)));
+}
+
+- (void) sfsdk_swizzled_updateScript
+{
+    if (getenv("CI_USE_PACKAGER") || self.useBundler) {
+        [self sfsdk_swizzled_updateScript];
+    } else {
+        self.scriptURL = [[NSBundle bundleForClass:[ReactTestCase class]] URLForResource:@"main" withExtension:@"jsbundle"];
+    }
+}
+@end
 
 @implementation ReactTestCase
 
