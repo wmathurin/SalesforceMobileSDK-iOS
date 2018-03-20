@@ -31,10 +31,14 @@
 #import "SFApplicationHelper.h"
 #import "SFSDKAppFeatureMarkers.h"
 #import "SFRestAPI+Blocks.h"
+#import "SFSDKCryptoUtils.h"
+#import "SFCrypto.h"
 
 static NSString* const kSFDeviceToken = @"deviceToken";
 static NSString* const kSFDeviceSalesforceId = @"deviceSalesforceId";
 static NSString* const kSFPushNotificationEndPoint = @"sobjects/MobilePushServiceDevice";
+static NSString* const kSFPushNotificationAPIVersion = @"v43.0";
+NSString* const kSFPushNotificationKeyName = @"com.salesforce.notificationkey";
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-const-variable"
@@ -171,10 +175,14 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
         [SFSDKCoreLogger e:[self class] format:@"Cannot register for notifications with Salesforce: no deviceToken"];
         return NO;
     }
-    NSString *path = [NSString stringWithFormat:@"/%@/%@", [SFRestAPI sharedInstance].apiVersion, kSFPushNotificationEndPoint];
+    NSString *path = [NSString stringWithFormat:@"/%@/%@", kSFPushNotificationAPIVersion, kSFPushNotificationEndPoint];
     SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:nil];
     NSString *bundleId = [NSBundle mainBundle].bundleIdentifier;
+    NSString *rsaPublicKey = [self getRSAPublicKey];
     NSDictionary* bodyDict = @{@"ConnectionToken":_deviceToken, @"ServiceType":@"Apple", @"ApplicationBundle":bundleId};
+    if (rsaPublicKey != nil) {
+        bodyDict = @{@"ConnectionToken":_deviceToken, @"ServiceType":@"Apple", @"ApplicationBundle":bundleId, @"RsaPublicKey":rsaPublicKey};
+    }
     [request setCustomRequestBodyDictionary:bodyDict contentType:@"application/json"];
     __weak typeof(self) weakSelf = self;
     [[SFRestAPI sharedInstance] sendRESTRequest:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
@@ -245,7 +253,7 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
         return NO;
     }
     NSString *deviceSFID = [[NSString alloc] initWithString:[pref stringForKey:kSFDeviceSalesforceId]];
-    NSString *path = [NSString stringWithFormat:@"/%@/%@/%@", [SFRestAPI sharedInstance].apiVersion, kSFPushNotificationEndPoint, deviceSFID];
+    NSString *path = [NSString stringWithFormat:@"/%@/%@/%@", kSFPushNotificationAPIVersion, kSFPushNotificationEndPoint, deviceSFID];
     SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodDELETE path:path queryParams:nil];
     __weak typeof(self) weakSelf = self;
     [[SFRestAPI sharedInstance] sendRESTRequest:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
@@ -286,6 +294,21 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
         [SFSDKCoreLogger i:[self class] format:@"Re-registering for Salesforce notification because application is being foregrounded"];
         [self registerForSalesforceNotifications];
     }
+}
+
+- (NSString *)getRSAPublicKey
+{
+    NSString *rsaPublicKey = nil;
+    int keyLength = 2048;
+    NSString *name = kSFPushNotificationKeyName;
+    if (name != nil) {
+        rsaPublicKey = [SFSDKCryptoUtils getRSAPublicKeyStringWithName:name keyLength:keyLength];
+        if (rsaPublicKey == nil) {
+            [SFSDKCryptoUtils createRSAKeyPairWithName:name keyLength:keyLength accessibleAttribute:kSecAttrAccessibleAlways];
+            rsaPublicKey = [SFSDKCryptoUtils getRSAPublicKeyStringWithName:name keyLength:keyLength];
+        }
+    }
+    return rsaPublicKey;
 }
 
 @end
