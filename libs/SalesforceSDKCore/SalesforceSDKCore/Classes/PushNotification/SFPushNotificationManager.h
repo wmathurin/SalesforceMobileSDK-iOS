@@ -27,6 +27,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+extern NSString * const kSFPushNotificationKeyName;
+
 @class SFUserAccount;
 
 /** Handles push notification registration and unregistration, both for Salesforce notifications and remote notifications.
