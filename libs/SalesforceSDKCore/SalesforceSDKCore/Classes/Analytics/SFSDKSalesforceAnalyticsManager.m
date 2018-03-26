@@ -295,7 +295,7 @@ SFSDK_USE_DEPRECATED_END
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         __block UIBackgroundTaskIdentifier task;
-        task = [[SFApplicationHelper sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        task = [[SFApplicationHelper sharedApplication] beginBackgroundTaskWithName:NSStringFromClass([self class]) expirationHandler:^{
             [[SFApplicationHelper sharedApplication] endBackgroundTask:task];
             task = UIBackgroundTaskInvalid;
         }];
