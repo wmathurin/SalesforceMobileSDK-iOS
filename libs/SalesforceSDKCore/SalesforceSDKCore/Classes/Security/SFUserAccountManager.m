@@ -1181,12 +1181,12 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
         NSString *message =[NSString stringWithFormat:[SFSDKResourceUtils localizedString:kAlertConnectionErrorFormatStringKey], [error localizedDescription]];
         NSString *retryButton = [SFSDKResourceUtils localizedString:kAlertOkButtonKey];
         [strongSelf showErrorAlertWithMessage:message buttonTitle:retryButton   andCompletion:^() {
-        SFSDKOAuthClient *client = [options objectForKey:kErroredClientKey];
-        [strongSelf disposeOAuthClient:client];
-        SFOAuthCredentials *credentials = [strongSelf newClientCredentials];
-        [strongSelf dismissAuthViewControllerIfPresent];
-        SFSDKOAuthClient *newClient = [strongSelf fetchOAuthClient:credentials completion:client.config.successCallbackBlock failure:client.config.failureCallbackBlock];
-        [newClient refreshCredentials];
+            SFSDKOAuthClient *client = [options objectForKey:kErroredClientKey];
+            [strongSelf disposeOAuthClient:client];
+            SFOAuthCredentials *credentials = [strongSelf newClientCredentials];
+            [strongSelf dismissAuthViewControllerIfPresent];
+            SFSDKOAuthClient *newClient = [strongSelf fetchOAuthClient:credentials completion:client.config.successCallbackBlock failure:client.config.failureCallbackBlock];
+            [newClient refreshCredentials];
         }];
     };
     
