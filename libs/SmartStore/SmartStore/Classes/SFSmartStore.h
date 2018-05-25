@@ -473,6 +473,7 @@ extern NSString *const EXPLAIN_ROWS;
  * @return An array with all the compile options used to build SQL Cipher.
  */
 - (NSArray *)getCompileOptions;
+- (NSArray*) getJournalMode;
 
 /**
  * Return sqlcipher version

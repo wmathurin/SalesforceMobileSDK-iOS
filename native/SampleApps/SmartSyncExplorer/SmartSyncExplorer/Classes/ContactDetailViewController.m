@@ -24,6 +24,7 @@
 
 #import "ContactDetailViewController.h"
 #import <SmartSyncExplorerCommon/ContactSObjectDataSpec.h>
+#import <SmartStore/SmartStore.h>
 
 @interface ContactDetailViewController ()
 
@@ -36,6 +37,7 @@
 @property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, assign) BOOL contactUpdated;
 @property (nonatomic, assign) BOOL isNewContact;
+@property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
 
 @end
 
@@ -259,9 +261,23 @@
 }
 
 - (void)deleteContact {
-    [self.dataMgr deleteLocalData:self.contact];
-    self.contactUpdated = YES;
-    [self.navigationController popViewControllerAnimated:YES];
+//    [self.dataMgr deleteLocalData:self.contact];
+//    self.contactUpdated = YES;
+//    [self.navigationController popViewControllerAnimated:YES];
+    
+    self.bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [[UIApplication sharedApplication] endBackgroundTask:self.bgTask];
+        self.bgTask = UIBackgroundTaskInvalid;
+    }];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (NSUInteger i = 0; i<1000; i++) {
+            SFSmartStore* store = [SFSmartStore sharedStoreWithName:kDefaultSmartStoreName];
+            
+            [store upsertEntries:@[@{@"FirstName": [NSString stringWithFormat:@"Hello%lu", i], @"LastName": @"Hello!!"}] toSoup:@"contacts"];
+            [NSThread sleepForTimeInterval:0.2];
+        }
+    });
 }
 
 - (void)undeleteContact {
@@ -279,7 +295,7 @@
 - (UIButton *)deleteButtonView {
     BOOL deleted = ([[self.contact fieldValueForFieldName:kSyncTargetLocallyDeleted] boolValue]);
     UIButton *deleteButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [deleteButton setTitle:(deleted ? @"Undelete Contact" : @"Delete Contact") forState:UIControlStateNormal];
+    [deleteButton setTitle:(deleted ? @"Undelete Contact" : @"Start BG Task") forState:UIControlStateNormal];
     [deleteButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     deleteButton.titleLabel.font = [UIFont systemFontOfSize:18.0];
     deleteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;

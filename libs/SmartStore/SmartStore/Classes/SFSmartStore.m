@@ -326,6 +326,8 @@ NSString *const EXPLAIN_ROWS = @"rows";
             if (store)
                 _allSharedStores[userKey][storeName] = store;
             
+//            [store setJournalMode:@"WAL"];
+            
             NSInteger numUserStores = [(NSDictionary *)(_allSharedStores[userKey]) count];
             [SFSDKEventBuilderHelper createAndStoreEvent:@"userSmartStoreInit" userAccount:user className:NSStringFromClass([self class]) attributes:@{ @"numUserStores" : [NSNumber numberWithInteger:numUserStores] }];
         }
@@ -2263,6 +2265,17 @@ NSString *const EXPLAIN_ROWS = @"rows";
 {
     return [self queryPragma:@"compile_options"];
 }
+
+- (NSArray*) getJournalMode
+{
+    return [self queryPragma:@"journal_mode"];
+}
+
+- (NSArray*) setJournalMode:(NSString*)newJournalMode
+{
+    return [self queryPragma:[NSString stringWithFormat:@"journal_mode = %@", newJournalMode]];
+}
+
 
 - (NSString*) getSQLCipherVersion
 {

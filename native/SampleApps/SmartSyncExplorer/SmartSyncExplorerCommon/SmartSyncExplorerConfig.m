@@ -43,7 +43,7 @@ static SmartSyncExplorerConfig *sharedInstance;
         _oauthRedirectURI = kOAuthRedirectURI;
         _appGroupName = kAppGroupName;
         _userLogInStatusKey = kUserLoggedIn;
-        _appGroupsEnabled = NO;
+        _appGroupsEnabled = YES;
     }
     return self;
 

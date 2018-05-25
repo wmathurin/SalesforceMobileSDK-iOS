@@ -92,6 +92,9 @@
     XCTAssertTrue([options containsObject:@"ENABLE_FTS3_PARENTHESIS"]);
     XCTAssertTrue([options containsObject:@"ENABLE_FTS5"]);
     XCTAssertTrue([options containsObject:@"ENABLE_JSON1"]);
+    
+    NSArray* journalMode = [self.store getJournalMode];
+    NSLog(@"journalMode= %@", journalMode);
 }
 
 - (void) testSqliteVersion

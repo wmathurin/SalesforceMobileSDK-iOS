@@ -88,6 +88,8 @@ static NSString* const kSyncUpName = @"syncUpContacts";
             completionBlock(sync);
         }
     }];
+    
+    NSLog(@"Journal mode===>%@", [self.syncMgr.store getJournalMode][0]);
 }
 
 - (void)filterOnSearchTerm:(NSString *)searchTerm completion:(void (^)(void))completionBlock {
