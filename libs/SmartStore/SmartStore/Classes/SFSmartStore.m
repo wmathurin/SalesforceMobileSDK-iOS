@@ -229,6 +229,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
 
     // Ensure that the store directory exists.
     result = [self.dbMgr createStoreDir:self.storeName];
+    [SFSDKSmartStoreLogger d:[self class] format:@"Smartstore directory: %@", self.storePath];
 
     // Need to create the db file itself before we can protect it.
     result = result && [self openStoreDatabase] && [self createMetaTables];
@@ -261,6 +262,8 @@ NSString *const EXPLAIN_ROWS = @"rows";
     // Adjusting filesystem protection if needed
     result = [self.dbMgr protectStoreDirIfNeeded:self.storeName protection:NSFileProtectionCompleteUntilFirstUserAuthentication];
     
+    [SFSDKSmartStoreLogger d:[self class] format:@"Smartstore directory: %@", self.storePath];
+
     // Open db file
     result = result && [self openStoreDatabase];
 
