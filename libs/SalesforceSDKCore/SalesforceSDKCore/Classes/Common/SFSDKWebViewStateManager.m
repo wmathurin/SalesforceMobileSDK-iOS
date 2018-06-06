@@ -81,37 +81,36 @@ static WKProcessPool *_processPool = nil;
     }
 }
 
-+ (void)removeWKWebViewCookies:(NSArray *)domainNames withCompletion:(nullable void(^)(void))completionBlock {
+// W-5019073
+//
+// DIVERGENCE:
+// This method has been reverted back to a pre-6.1 state. As implemented here, it does not
+// do what it's supposed to (it doesn't do anything). The changes in the Mobile SDK to
+// make this method work properly in 6.1 (see
+// https://github.com/forcedotcom/SalesforceMobileSDK-iOS/pull/2389) are causing an issue
+// with auth refresh in SSO/SAML setups. The underlying functionality needs to be
+// revisited in both the Mobile SDK and the Salesforce App.
++ (void)removeWKWebViewCookies:(NSArray *)domainNames withCompletion:(nullable void(^)())completionBlock {
     NSAssert(domainNames != nil && [domainNames count] > 0, ERR_NO_DOMAIN_NAMES);
-    WKWebsiteDataStore *dataStore = [WKWebsiteDataStore defaultDataStore];
+    WKWebsiteDataStore *dateStore = [WKWebsiteDataStore defaultDataStore];
     NSSet *websiteDataTypes = [NSSet setWithArray:@[ WKWebsiteDataTypeCookies]];
-    [dataStore fetchDataRecordsOfTypes:websiteDataTypes
+    [dateStore fetchDataRecordsOfTypes:websiteDataTypes
                      completionHandler:^(NSArray<WKWebsiteDataRecord *> *records) {
                          NSMutableArray<WKWebsiteDataRecord *> *deletedRecords = [NSMutableArray new];
-                         for (WKWebsiteDataRecord * record in records) {
-                             // Cookie record display names look like "salesforce.com", "force.com". Make
-                             // them look like proper cookie domain suffixes, for comparison.
-                             NSString *recordDisplayName = [NSString stringWithFormat:@".%@", record.displayName];
+                         for ( WKWebsiteDataRecord * record in records) {
                              for(NSString *domainName in domainNames) {
-                                 if ([domainName hasSuffix:recordDisplayName]) {
+                                 if ([record.displayName containsString:domainName]) {
                                      [deletedRecords addObject:record];
                                  }
                              }
                          }
-                         if (deletedRecords.count > 0) {
-                             [dataStore removeDataOfTypes:websiteDataTypes
-                                           forDataRecords:deletedRecords
-                                        completionHandler:^{
-                                            if (completionBlock)
-                                                completionBlock();
-                                        }];
-                         } else {
-                             dispatch_async(dispatch_get_main_queue(), ^{
-                                 if (completionBlock) {
-                                     completionBlock();
-                                 }
-                             });
-                         }
+                         if (deletedRecords.count > 0)
+                             [[WKWebsiteDataStore defaultDataStore] removeDataOfTypes:websiteDataTypes
+                                                                       forDataRecords:deletedRecords
+                                                                    completionHandler:^{
+                                                                        if (completionBlock)
+                                                                            completionBlock();
+                                                                    }];
                      }];
 }
 
