@@ -33,7 +33,6 @@
 
 typedef void (^SFDataResponseBlock) (NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error);
 
-@property (nonatomic, readwrite, assign) BOOL useBackground;
 
 /**
  * Sends a REST request and calls the appropriate completion block.
