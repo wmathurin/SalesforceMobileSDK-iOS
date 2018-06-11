@@ -32,7 +32,6 @@
 @interface SFNetwork()
 
 @property (nonatomic, readwrite, strong, nonnull) NSURLSession *ephemeralSession;
-@property (nonatomic, readwrite, strong, nonnull) NSURLSession *backgroundSession;
 
 @end
 
@@ -49,14 +48,6 @@ static NSURLSessionConfiguration *kSFBackgroundSessionConfig;
             ephemeralSessionConfig = kSFEphemeralSessionConfig;
         }
         self.ephemeralSession = [NSURLSession sessionWithConfiguration:ephemeralSessionConfig];
-        
-        NSString *identifier = [NSString stringWithFormat:@"com.salesforce.network.%lu", (unsigned long)self.hash];
-        NSURLSessionConfiguration *backgroundSessionConfig = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
-        if (kSFBackgroundSessionConfig) {
-            backgroundSessionConfig = kSFBackgroundSessionConfig;
-        }
-        self.backgroundSession = [NSURLSession sessionWithConfiguration:backgroundSessionConfig];
-        self.useBackground = NO;
     }
     return self;
 }
@@ -72,15 +63,11 @@ static NSURLSessionConfiguration *kSFBackgroundSessionConfig;
 }
 
 - (NSURLSession *)activeSession {
-    return (self.useBackground ? self.backgroundSession : self.ephemeralSession);
+    return self.ephemeralSession;
 }
 
 + (void)setSessionConfiguration:(NSURLSessionConfiguration *)sessionConfig isBackgroundSession:(BOOL)isBackgroundSession {
-    if (isBackgroundSession) {
-        kSFBackgroundSessionConfig = sessionConfig;
-    } else {
         kSFEphemeralSessionConfig = sessionConfig;
-    }
 }
 
 @end
