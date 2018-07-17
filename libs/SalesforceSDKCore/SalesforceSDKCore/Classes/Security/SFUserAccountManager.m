@@ -1333,16 +1333,15 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
     [client cancelAuthentication:NO];
 }
 
-
-- (void)finalizeAuthCompletion:(SFSDKOAuthClient *)client
-{
+- (void)finalizeAuthCompletion:(SFSDKOAuthClient *)client {
     // Apply the credentials that will ensure there is a user and that this
     // current user as the proper credentials.
     SFUserAccount *userAccount = [self applyCredentials:client.credentials withIdData:client.idData];
     client.isAuthenticating = NO;
     BOOL loginStateTransitionSucceeded = [userAccount transitionToLoginState:SFUserAccountLoginStateLoggedIn];
     if (!loginStateTransitionSucceeded) {
-        // We're in an unlikely, but nevertheless bad, state.  Fail this authentication.
+
+        // We're in an unlikely, but nevertheless bad state. Fail this authentication.
         [SFSDKCoreLogger e:[self class] format:@"%@: Unable to transition user to a logged in state.  Login failed.", NSStringFromSelector(_cmd)];
         NSString *reason = [NSString stringWithFormat:@"Unable to transition user to a logged in state.  Login failed "];
         [SFSDKCoreLogger w:[self class] format:reason];
@@ -1351,24 +1350,24 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
                                          userInfo:@{ NSLocalizedDescriptionKey : reason } ];
         [self handleFailure:error client:client notifyDelegates:YES];
     } else {
-        // Notify the session is ready
+
+        // Notify the session is ready.
         [self willChangeValueForKey:@"haveValidSession"];
         [self didChangeValueForKey:@"haveValidSession"];
         [self initAnalyticsManager];
-        if (client.config.successCallbackBlock)
+        if (client.config.successCallbackBlock) {
             client.config.successCallbackBlock(client.context.authInfo,userAccount);
-        
+        }
         [self handleAnalyticsAddUserEvent:client account:userAccount];
     }
-    
-   if (self.authPreferences.isIdentityProvider &&
-       ([client.context.callingAppOptions count] >0)) {
+
+    if (self.authPreferences.isIdentityProvider && ([client.context.callingAppOptions count] >0)) {
         SFSDKIDPAuthClient *idpClient = (SFSDKIDPAuthClient *)client;
-        
-        //if not current user has been set in the app yet then set this user as current.
-        if (self.currentUser==nil)
+
+        // If not current user has been set in the app yet then set this user as current.
+        if (self.currentUser == nil) {
             self.currentUser = userAccount;
-        
+        }
         [idpClient continueIDPFlow:userAccount.credentials];
     } else {
         NSDictionary *userInfo = @{kSFNotificationUserInfoAccountKey: userAccount,
@@ -1377,11 +1376,11 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
             NSNotification *loggedInNotification = [NSNotification notificationWithName:kSFNotificationUserIDPInitDidLogIn object:self  userInfo:userInfo];
             [[NSNotificationCenter defaultCenter] postNotification:loggedInNotification];
         } else {
-         [[NSNotificationCenter defaultCenter] postNotificationName:kSFNotificationUserDidLogIn
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSFNotificationUserDidLogIn
                                                                 object:self
                                                               userInfo:userInfo];
         }
-       [self disposeOAuthClient:client];
+        [self disposeOAuthClient:client];
     }
 }
 
@@ -1389,7 +1388,7 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
     if (client.context.authInfo.authType == SFOAuthTypeRefresh) {
         [SFSDKEventBuilderHelper createAndStoreEvent:@"tokenRefresh" userAccount:userAccount className:NSStringFromClass([self class]) attributes:nil];
     } else {
-        
+
         // Logging events for add user and number of servers.
         NSArray *accounts = self.allUserAccounts;
         NSMutableDictionary *userAttributes = [[NSMutableDictionary alloc] init];
@@ -1410,8 +1409,7 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
     }
 }
 
-- (void)initAnalyticsManager
-{
+- (void)initAnalyticsManager {
     SFSDKSalesforceAnalyticsManager *analyticsManager = [SFSDKSalesforceAnalyticsManager sharedInstanceWithUser:self.currentUser];
     [analyticsManager updateLoggingPrefs];
 }
@@ -1431,10 +1429,8 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
                 [delegate userAccountManager:self willSwitchFromUser:self.currentUser toUser:newCurrentUser];
             }
         }];
-        
         SFUserAccount *prevUser = self.currentUser;
         [self setCurrentUser:newCurrentUser];
-        
         [self enumerateDelegates:^(id<SFUserAccountManagerDelegate> delegate) {
             if ([delegate respondsToSelector:@selector(userAccountManager:didSwitchFromUser:toUser:)]) {
                 [delegate userAccountManager:self didSwitchFromUser:prevUser toUser:newCurrentUser];
