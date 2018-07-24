@@ -314,8 +314,8 @@
 
 @interface SFSDKFormatter : NSObject <DDLogFormatter>
 
-@property (nonatomic, readwrite, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, readwrite, strong, nonnull) NSDateFormatter *dateFormatter;
 
-- (instancetype)init;
+- (nonnull instancetype)init;
 
 @end
