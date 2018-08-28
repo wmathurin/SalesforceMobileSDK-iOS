@@ -334,9 +334,9 @@ SFSDK_USE_DEPRECATED_BEGIN
         }
     };
     if (![SFUserAccountManager sharedInstance].currentUser) {
-        [self loginWithCompletion:authCompletionBlock failure:authFailureBlock];
+        [[SFUserAccountManager sharedInstance] loginWithCompletion:authCompletionBlock failure:authFailureBlock];
     } else {
-        [self refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials
+        [[SFUserAccountManager sharedInstance] refreshCredentials:[SFUserAccountManager sharedInstance].currentUser.credentials
                                                          completion:authCompletionBlock
                                                             failure:authFailureBlock];
     }
