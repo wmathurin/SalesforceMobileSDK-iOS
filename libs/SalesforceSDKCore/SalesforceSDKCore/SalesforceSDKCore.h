@@ -44,6 +44,7 @@
 #import <SalesforceSDKCore/SFDecryptStream.h>
 #import <SalesforceSDKCore/NSData+SFAdditions.h>
 #import <SalesforceSDKCore/SFAuthenticationViewHandler.h>
+#import <SalesforceSDKCore/SFSDKSafeMutableArray.h>
 #import <SalesforceSDKCore/SFGeneratedKeyStore.h>
 #import <SalesforceSDKCore/SFSDKSalesforceAnalyticsManager.h>
 #import <SalesforceSDKCore/NSURL+SFAdditions.h>
