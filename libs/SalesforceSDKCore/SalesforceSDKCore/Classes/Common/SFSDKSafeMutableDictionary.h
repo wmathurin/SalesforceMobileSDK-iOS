@@ -44,6 +44,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)allKeysForObject:(id)anObject;
 
 /**
+ * Get a NSDictionary from the mutable Dictionary (Thread Safe)
+ */
+- (NSDictionary *)dictionary;
+
+/**
  Sets object for key specified (Thread Safe)
  @param object to add to collection
  @param aKey for to map the object to
@@ -78,7 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
  @param dictionary to set
  */
 - (void)setDictionary:(NSDictionary *)dictionary;
-
 
 @end
 
