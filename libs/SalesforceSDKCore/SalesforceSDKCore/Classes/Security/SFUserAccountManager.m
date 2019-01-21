@@ -503,9 +503,8 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
 
 - (BOOL)authClientDidCancelBrowserFlow:(SFSDKOAuthClient *)client {
     BOOL result = NO;
-    SFOAuthInfo *authInfo = [[SFOAuthInfo alloc] initWithAuthType:SFOAuthTypeAdvancedBrowser];
     NSDictionary *userInfo = @{ kSFNotificationUserInfoCredentialsKey: client.credentials,
-                                kSFNotificationUserInfoAuthTypeKey: authInfo };
+                                kSFNotificationUserInfoAuthTypeKey: client.context.authInfo };
     [[NSNotificationCenter defaultCenter] postNotificationName:kSFNotificationUserCanceledAuth
                                                         object:self userInfo:userInfo];
     if (self.authCancelledByUserHandlerBlock) {
