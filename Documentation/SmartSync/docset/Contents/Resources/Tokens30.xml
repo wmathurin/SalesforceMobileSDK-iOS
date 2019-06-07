@@ -801,6 +801,30 @@ or do not match the query results on the server anymore.</Abstract>
             <NodeRef refid="30"/>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSmartSyncSyncManager/addToActiveSyncs:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSmartSyncSyncManager+SFSyncTask.h</DeclaredIn>
+			
+			<Declaration>- (void)addToActiveSyncs:(SFSyncTask *)syncTask</Declaration>
+			
+			
+			<Anchor>//api/name/addToActiveSyncs:</Anchor>
+            <NodeRef refid="30"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSmartSyncSyncManager/removeFromActiveSyncs:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSmartSyncSyncManager+SFSyncTask.h</DeclaredIn>
+			
+			<Declaration>- (void)removeFromActiveSyncs:(SFSyncTask *)syncTask</Declaration>
+			
+			
+			<Anchor>//api/name/removeFromActiveSyncs:</Anchor>
+            <NodeRef refid="30"/>
+		</Token>
+		
         
         
 	</File>
