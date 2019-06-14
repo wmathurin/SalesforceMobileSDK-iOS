@@ -32,10 +32,15 @@
 #import "FMDatabaseQueue.h"
 #import <SalesforceSDKCore/SalesforceSDKCore.h>
 
-NSString * const kSSExternalStorage_TestSoupName = @"SSExternalStorage_TestSoupName";
 NSString * const kSSAlphabets = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY0123456789";
 
 static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
+
+@interface SFSmartStoreTests ()
+
+- (void) registerTestSoup:(SFSmartStore*)store indexType:(NSString*)indexType soupSpec:(SFSoupSpec*)soupSpec;
+
+@end
 
 @interface SFSmartStoreWithExternalStorageTests : SFSmartStoreTests
 
@@ -53,28 +58,22 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void)testRegisterSoupWithExternalStorage {
     NSUInteger const iterations = 10;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         for (NSUInteger i = 0; i < iterations; i++) {
             // Before
-            XCTAssertFalse([store soupExists:kSSExternalStorage_TestSoupName], @"Soup should not exist before registration.");
+            XCTAssertFalse([store soupExists:kTestSoupName], @"Soup should not exist before registration.");
             
             // Register
-            NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
-            NSError* error = nil;
-            [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:&error];
-            BOOL testSoupExists = [store soupExists:kSSExternalStorage_TestSoupName];
-            XCTAssertTrue(testSoupExists, @"Soup should exist after registration.");
-            XCTAssertNil(error, @"There should be no errors.");
+            [self registerTestSoup:store indexType:kSoupIndexTypeString];
             
             // Check attributes
-            SFSoupSpec *registeredSpecs = [store attributesForSoup:kSSExternalStorage_TestSoupName];
+            SFSoupSpec *registeredSpecs = [store attributesForSoup:kTestSoupName];
             XCTAssertTrue([registeredSpecs.features containsObject:kSoupFeatureExternalStorage], @"Soup did not register features.");
             
             // Check if external dir was created
             __block NSString *soupTableName;
             [store.storeQueue inDatabase:^(FMDatabase *db) {
-                soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+                soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
             }];
             NSString *externalSoupDir = [store externalStorageSoupDirectory:soupTableName];
             BOOL isDir;
@@ -82,8 +81,8 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
             XCTAssertTrue(dirExists && isDir, @"External diretory was not created correctly.");
             
             // Remove soup
-            [store removeSoup:kSSExternalStorage_TestSoupName];
-            testSoupExists = [store soupExists:kSSExternalStorage_TestSoupName];
+            [store removeSoup:kTestSoupName];
+            BOOL testSoupExists = [store soupExists:kTestSoupName];
             XCTAssertFalse(testSoupExists, @"Soup should no longer exist after dropping.");
             
             // Check if external dir was removed
@@ -94,15 +93,15 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 }
 
 - (void) testRegisterSoupWithExternalStorageAndJSON1 {
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         // Before
-        XCTAssertFalse([store soupExists:kSSExternalStorage_TestSoupName], @"Soup should not exist before registration.");
+        XCTAssertFalse([store soupExists:kTestSoupName], @"Soup should not exist before registration.");
         // Register
         NSDictionary* soupIndex = @{@"path": @"name", @"type": @"json1"};
         NSError* error = nil;
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:&error];
-        BOOL testSoupExists = [store soupExists:kSSExternalStorage_TestSoupName];
+        BOOL testSoupExists = [store soupExists:kTestSoupName];
         XCTAssertFalse(testSoupExists, @"Soup should exist after registration.");
         XCTAssertEqualObjects(error.localizedDescription, @"Can't have JSON1 index specs in externally stored soup");
     }
@@ -113,24 +112,22 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void)testInsertEntryWithExternalStorage {
     NSUInteger const iterations = 10;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
-    NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
-        [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
+        [self registerTestSoup:store indexType:kSoupIndexTypeString];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         // Insert entries
         for (NSUInteger i = 0; i < iterations; i++) {
             NSDictionary *entry = @{@"name": [NSString stringWithFormat:@"somebody_%lu", (unsigned long) i]};
-            [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            [store upsertEntries:@[entry] toSoup:kTestSoupName];
         }
         
         // Check if entries are in DB
-        SFQuerySpec *query = [SFQuerySpec newAllQuerySpec:kSSExternalStorage_TestSoupName
+        SFQuerySpec *query = [SFQuerySpec newAllQuerySpec:kTestSoupName
                                                  withOrderPath:nil
                                                 withOrder:kSFSoupQuerySortOrderAscending
                                              withPageSize:iterations];
@@ -152,9 +149,6 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 - (void)testMigrateNullIVtoIVWithExternalStorage {
     
     NSUInteger const iterations = 10;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
-    NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
-    
     SFEncryptionKey *key = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kSFSmartStoreEncryptionKeyLabel autoCreate:YES];
     
     // create a nill IV based store
@@ -170,22 +164,22 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
             key.initializationVector= nil;
             return key;
         };
-        
-        [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
+
+        [self registerTestSoup:store indexType:kSoupIndexTypeString];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         // Insert entries
         for (NSUInteger i = 0; i < iterations; i++) {
             NSDictionary *entry = @{@"name": [NSString stringWithFormat:@"somebody_%lu", (unsigned long) i]};
-            [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            [store upsertEntries:@[entry] toSoup:kTestSoupName];
             [entries addObject:entry];
         }
         
         // Check if entries are in DB
-        SFQuerySpec *query = [SFQuerySpec newAllQuerySpec:kSSExternalStorage_TestSoupName
+        SFQuerySpec *query = [SFQuerySpec newAllQuerySpec:kTestSoupName
                                             withOrderPath:nil
                                                 withOrder:kSFSoupQuerySortOrderAscending
                                              withPageSize:iterations];
@@ -209,7 +203,7 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
         
         // Check if external files exist
         NSArray *retrievedEntries = [store retrieveEntries:[self entriesIdFromEntries:entriesInserted]
-                                                  fromSoup:kSSExternalStorage_TestSoupName];
+                                                  fromSoup:kTestSoupName];
         XCTAssertEqualObjects(retrievedEntries, entriesInserted, @"Retrieve entries failed.");
         
         // now lets change back to nil IV and try to read files
@@ -220,7 +214,7 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
         
         // The retrievedEntries now must be nill.
         retrievedEntries = [store retrieveEntries:[self entriesIdFromEntries:entriesInserted]
-                                                  fromSoup:kSSExternalStorage_TestSoupName];
+                                                  fromSoup:kTestSoupName];
         XCTAssertNil(retrievedEntries,@"Migration of External soup storage failed.");
         
     }
@@ -228,27 +222,25 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void)testUpdateEntryWithExternalStorage {
     NSUInteger const iterations = 10;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
-    NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
-        [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
+        [self registerTestSoup:store indexType:kSoupIndexTypeString];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         NSDictionary *entry = @{@"name": @"somebody"};
-        NSArray *savedEntries = [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+        NSArray *savedEntries = [store upsertEntries:@[entry] toSoup:kTestSoupName];
         NSMutableDictionary *savedEntry = [savedEntries[0] mutableCopy];
         
         // Update
         for (NSUInteger i = 0; i < iterations; i++) {
             savedEntry[@"name"] = [NSString stringWithFormat:@"somebody_%lu", (unsigned long) i];
-            [store upsertEntries:@[savedEntry] toSoup:kSSExternalStorage_TestSoupName];
+            [store upsertEntries:@[savedEntry] toSoup:kTestSoupName];
         }
         
         // Check update
-        SFQuerySpec *query = [SFQuerySpec newAllQuerySpec:kSSExternalStorage_TestSoupName
+        SFQuerySpec *query = [SFQuerySpec newAllQuerySpec:kTestSoupName
                                                  withOrderPath:nil
                                                 withOrder:kSFSoupQuerySortOrderAscending
                                              withPageSize:iterations];
@@ -270,11 +262,9 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void)testRetrieveEntriesWithExternalStorage {
     NSUInteger const numberOfEntries = 10;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
-    NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
-        [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
+        [self registerTestSoup:store indexType:kSoupIndexTypeString];
         
         // Insert entries
         NSMutableArray *entriesToInsert = [[NSMutableArray alloc] initWithCapacity:numberOfEntries];
@@ -282,38 +272,38 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
             NSDictionary *entry = @{@"name": [NSString stringWithFormat:@"somebody_%lu", (unsigned long) i]};
             [entriesToInsert addObject:entry];
         }
-        NSArray *savedEntries = [store upsertEntries:entriesToInsert toSoup:kSSExternalStorage_TestSoupName];
+        NSArray *savedEntries = [store upsertEntries:entriesToInsert toSoup:kTestSoupName];
         XCTAssertEqual(savedEntries.count, numberOfEntries, @"Upsert failed.");
         
         // Retrieve
         NSArray *retrievedEntries = [store retrieveEntries:[self entriesIdFromEntries:savedEntries]
-                                                  fromSoup:kSSExternalStorage_TestSoupName];
+                                                  fromSoup:kTestSoupName];
         XCTAssertEqualObjects(retrievedEntries, savedEntries, @"Retrieve entries failed.");
     }
 }
 
 - (void)testRemoveEntryWithExternalStorage {
     NSUInteger const iterations = 10;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         for (NSUInteger i = 0; i < iterations; i++) {
             // Insert
             NSDictionary *entry = @{@"name": [NSString stringWithFormat:@"somebody_%lu", (unsigned long) i]};
-            NSArray *savedEntries = [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            NSArray *savedEntries = [store upsertEntries:@[entry] toSoup:kTestSoupName];
             XCTAssertEqual(savedEntries.count, 1, @"Upsert failed");
             NSDictionary *savedEntry = savedEntries[0];
             
             // Delete
-            [store removeEntries:@[savedEntry[SOUP_ENTRY_ID]] fromSoup:kSSExternalStorage_TestSoupName];
-            XCTAssertEqual([store retrieveEntries:savedEntries fromSoup:kSSExternalStorage_TestSoupName].count, 0, @"Did not clear entries");
+            [store removeEntries:@[savedEntry[SOUP_ENTRY_ID]] fromSoup:kTestSoupName];
+            XCTAssertEqual([store retrieveEntries:savedEntries fromSoup:kTestSoupName].count, 0, @"Did not clear entries");
             
             // Check if external file was deleted
             NSString *externalEntryFilePath = [store externalStorageSoupFilePath:savedEntry[SOUP_ENTRY_ID]
@@ -329,18 +319,18 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
  */
 -(void) testRemoveEntriesByQueryWithExternalStorage
 {
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* soupIndex = @{@"path": @"key", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         // Before
-        XCTAssertFalse([store soupExists:kSSExternalStorage_TestSoupName], @"%@ should not exist before registration.", kSSExternalStorage_TestSoupName);
+        XCTAssertFalse([store soupExists:kTestSoupName], @"%@ should not exist before registration.", kTestSoupName);
         
         // Register
         NSError* error = nil;
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:&error];
-        BOOL testSoupExists = [store soupExists:kSSExternalStorage_TestSoupName];
-        XCTAssertTrue(testSoupExists, @"Soup %@ should exist after registration.", kSSExternalStorage_TestSoupName);
+        BOOL testSoupExists = [store soupExists:kTestSoupName];
+        XCTAssertTrue(testSoupExists, @"Soup %@ should exist after registration.", kTestSoupName);
         XCTAssertNil(error, @"There should be no errors.");
         
         // Populate soup
@@ -350,36 +340,36 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
         NSDictionary* soupElt3 = @{@"key": @"defg", @"value":@"va1", @"otherValue":@"ova1"};
         
         
-        NSArray* soupEltsCreated = [store upsertEntries:@[soupElt0, soupElt1, soupElt2, soupElt3] toSoup:kSSExternalStorage_TestSoupName];
+        NSArray* soupEltsCreated = [store upsertEntries:@[soupElt0, soupElt1, soupElt2, soupElt3] toSoup:kTestSoupName];
         
         // Remove two entries
-        [store removeEntriesByQuery:[SFQuerySpec newLikeQuerySpec:kSSExternalStorage_TestSoupName withPath:@"key" withLikeKey:@"abc%" withOrderPath:@"key" withOrder:kSFSoupQuerySortOrderAscending withPageSize:10]
-                           fromSoup:kSSExternalStorage_TestSoupName
+        [store removeEntriesByQuery:[SFQuerySpec newLikeQuerySpec:kTestSoupName withPath:@"key" withLikeKey:@"abc%" withOrderPath:@"key" withOrder:kSFSoupQuerySortOrderAscending withPageSize:10]
+                           fromSoup:kTestSoupName
                               error:&error];
         XCTAssertNil(error, @"There should be no errors.");
         
         
         // Check soup
-        [self checkSoupTable:@[soupEltsCreated[1], soupEltsCreated[3]] shouldExist:YES store:store soupName:kSSExternalStorage_TestSoupName];
-        [self checkSoupTable:@[soupEltsCreated[0], soupEltsCreated[2]] shouldExist:NO store:store soupName:kSSExternalStorage_TestSoupName];
+        [self checkSoupTable:@[soupEltsCreated[1], soupEltsCreated[3]] shouldExist:YES store:store soupName:kTestSoupName];
+        [self checkSoupTable:@[soupEltsCreated[0], soupEltsCreated[2]] shouldExist:NO store:store soupName:kTestSoupName];
         
         // Check filesystem
-        [self checkFileSystem:@[soupEltsCreated[1], soupEltsCreated[3]] shouldExist:YES store:store soupName:kSSExternalStorage_TestSoupName];
-        [self checkFileSystem:@[soupEltsCreated[0], soupEltsCreated[2]] shouldExist:NO store:store soupName:kSSExternalStorage_TestSoupName];
+        [self checkFileSystem:@[soupEltsCreated[1], soupEltsCreated[3]] shouldExist:YES store:store soupName:kTestSoupName];
+        [self checkFileSystem:@[soupEltsCreated[0], soupEltsCreated[2]] shouldExist:NO store:store soupName:kTestSoupName];
         
         // Remove one more entry using a query all with page size of 1
-        [store removeEntriesByQuery:[SFQuerySpec newAllQuerySpec:kSSExternalStorage_TestSoupName withOrderPath:@"key" withOrder:kSFSoupQuerySortOrderAscending withPageSize:1]
-                           fromSoup:kSSExternalStorage_TestSoupName
+        [store removeEntriesByQuery:[SFQuerySpec newAllQuerySpec:kTestSoupName withOrderPath:@"key" withOrder:kSFSoupQuerySortOrderAscending withPageSize:1]
+                           fromSoup:kTestSoupName
                               error:&error];
         XCTAssertNil(error, @"There should be no errors.");
         
         // Check soup
-        [self checkSoupTable:@[soupEltsCreated[3]] shouldExist:YES store:store soupName:kSSExternalStorage_TestSoupName];
-        [self checkSoupTable:@[soupEltsCreated[0], soupEltsCreated[1], soupEltsCreated[2]] shouldExist:NO store:store soupName:kSSExternalStorage_TestSoupName];
+        [self checkSoupTable:@[soupEltsCreated[3]] shouldExist:YES store:store soupName:kTestSoupName];
+        [self checkSoupTable:@[soupEltsCreated[0], soupEltsCreated[1], soupEltsCreated[2]] shouldExist:NO store:store soupName:kTestSoupName];
         
         // Check filesystem
-        [self checkFileSystem:@[soupEltsCreated[3]] shouldExist:YES store:store soupName:kSSExternalStorage_TestSoupName];
-        [self checkFileSystem:@[soupEltsCreated[0], soupEltsCreated[1], soupEltsCreated[2]] shouldExist:NO store:store soupName:kSSExternalStorage_TestSoupName];
+        [self checkFileSystem:@[soupEltsCreated[3]] shouldExist:YES store:store soupName:kTestSoupName];
+        [self checkFileSystem:@[soupEltsCreated[0], soupEltsCreated[1], soupEltsCreated[2]] shouldExist:NO store:store soupName:kTestSoupName];
     }
 }
 
@@ -388,24 +378,24 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void)testClearSoupWithExternalStorage {
     NSUInteger const entriesToInsert = 10;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         // Insert
         for (NSUInteger i = 0; i < entriesToInsert; ++i) {
             NSDictionary *entry = @{@"name": [NSString stringWithFormat:@"somebody_%lu", (unsigned long) i]};
-            [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            [store upsertEntries:@[entry] toSoup:kTestSoupName];
         }
         
         // Verify entries are inserted
-        SFQuerySpec *query = [SFQuerySpec newAllQuerySpec:kSSExternalStorage_TestSoupName
+        SFQuerySpec *query = [SFQuerySpec newAllQuerySpec:kTestSoupName
                                             withOrderPath:nil
                                                 withOrder:kSFSoupQuerySortOrderAscending
                                              withPageSize:entriesToInsert];
@@ -415,7 +405,7 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
         XCTAssertEqual(entriesInDb.count, entriesToInsert, @"Did not insert all entries.");
         
         // Clear soup
-        [store clearSoup:kSSExternalStorage_TestSoupName];
+        [store clearSoup:kTestSoupName];
         
         // Verify db is cleared
         entriesInDb = [store queryWithQuerySpec:query
@@ -441,19 +431,19 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
     NSString * const superSecret = @"super secret";
     NSData * const superSecretAsData = [superSecret dataUsingEncoding:NSUTF8StringEncoding];
     
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* nameIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[nameIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         // Insert
         NSDictionary *entry = @{@"name": superSecret};
-        NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+        NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kTestSoupName];
         NSDictionary *savedEntry = insertedEntries[0];
         
         // Load external file as string
@@ -475,19 +465,19 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
     NSString * const notReallyASecret = @"there are no secrets";
     NSData * const notReallyASecretAsData = [notReallyASecret dataUsingEncoding:NSUTF8StringEncoding];
     
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* nameIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[nameIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         // Insert
         NSDictionary *entry = @{@"name": notReallyASecret};
-        NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+        NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kTestSoupName];
         NSDictionary *savedEntry = insertedEntries[0];
         
         // Load external file as string
@@ -507,14 +497,14 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void)FIXMEtestExternalStorageUpsertWithOneMBSizePayloadInRegression {
     NSInteger numberOfIterations = 500;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         //create 1 mega byte random payload string
@@ -524,7 +514,7 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
         for (NSUInteger i = 0; i < numberOfIterations; ++i) {
             // Insert
             NSDictionary *entry = @{@"name": payloadString};
-            NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kTestSoupName];
             NSDictionary *savedEntry = insertedEntries[0];
             
             // Load payload string from external saved file
@@ -540,14 +530,14 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void)FIXMEtestExternalStorageUpsertWithFiveMBSizePayloadInRegression {
     NSInteger numberOfIterations = 100;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         //create 1 mega byte random payload string
@@ -557,7 +547,7 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
         for (NSUInteger i = 0; i < numberOfIterations; ++i) {
             // Insert
             NSDictionary *entry = @{@"name": payloadString};
-            NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kTestSoupName];
             NSDictionary *savedEntry = insertedEntries[0];
             
             // Load payload string from external saved file
@@ -573,14 +563,14 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void)FIXMEtestExternalStorageUpsertWithPayloadSizeIncreasedIncrementally {
     NSInteger numberOfIterations = 25;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         for (NSUInteger i = 0; i < numberOfIterations; ++i) {
@@ -589,7 +579,7 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
             
             // Insert
             NSDictionary *entry = @{@"name": payloadString};
-            NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            NSArray *insertedEntries = [store upsertEntries:@[entry] toSoup:kTestSoupName];
             NSDictionary *savedEntry = insertedEntries[0];
             
             // Load payload string from external saved file
@@ -605,14 +595,14 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
 
 - (void) testGetExternalFileStorageSizeForSoup {
     NSInteger numberOfIterations = 25;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
 
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         //create 1 mega byte random payload string
@@ -622,23 +612,23 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
         for (NSUInteger i = 0; i < numberOfIterations; ++i) {
             // Insert
             NSDictionary *entry = @{@"name": payloadString};
-            [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            [store upsertEntries:@[entry] toSoup:kTestSoupName];
         }
         
-        XCTAssertGreaterThanOrEqual([store getExternalFileStorageSizeForSoup:kSSExternalStorage_TestSoupName], kSSMegaBytePayloadSize * numberOfIterations, @"Invalid external file size count returned.");
+        XCTAssertGreaterThanOrEqual([store getExternalFileStorageSizeForSoup:kTestSoupName], kSSMegaBytePayloadSize * numberOfIterations, @"Invalid external file size count returned.");
     }
 }
 
 - (void) testGetExternalFilesCountForSoup {
     NSInteger numberOfIterations = 25;
-    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kSSExternalStorage_TestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
     NSDictionary* soupIndex = @{@"path": @"name", @"type": @"string"};
     
     for (SFSmartStore *store in @[ self.store, self.globalStore ]) {
         [store registerSoupWithSpec:soupSpec withIndexSpecs:[SFSoupIndex asArraySoupIndexes:@[soupIndex]] error:nil];
         __block NSString *soupTableName;
         [store.storeQueue inDatabase:^(FMDatabase *db) {
-            soupTableName = [store tableNameForSoup:kSSExternalStorage_TestSoupName withDb:db];
+            soupTableName = [store tableNameForSoup:kTestSoupName withDb:db];
         }];
         
         //create 1 mega byte random payload string
@@ -648,11 +638,35 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
         for (NSUInteger i = 0; i < numberOfIterations; ++i) {
             // Insert
             NSDictionary *entry = @{@"name": payloadString};
-            [store upsertEntries:@[entry] toSoup:kSSExternalStorage_TestSoupName];
+            [store upsertEntries:@[entry] toSoup:kTestSoupName];
         }
         
-        XCTAssertEqual(numberOfIterations, [store getExternalFilesCountForSoup:kSSExternalStorage_TestSoupName], @"Invalid external file size count returned.");
+        XCTAssertEqual(numberOfIterations, [store getExternalFilesCountForSoup:kTestSoupName], @"Invalid external file size count returned.");
     }
+}
+
+- (void) testRegisterRemoveSoupWithJSON1Indexes {
+    // Doesn't apply to external storage case
+}
+
+-(void) testAllQueryWithJSON1Index {
+    // Doesn't apply to external storage case
+}
+
+-(void) testLikeQueryWithJSON1Index {
+    // Doesn't apply to external storage case
+}
+
+-(void) testRangeQueryWithJSON1Index {
+    // Doesn't apply to external storage case
+}
+
+-(void) testSmartQueryWithJSON1Index {
+    // Doesn't apply to external storage case
+}
+
+-(void) testQueryDataWithSpecialCharactersWithJSON1Index {
+    // Doesn't apply to external storage case
 }
 
 
@@ -677,6 +691,11 @@ static NSInteger const kSSMegaBytePayloadSize = 1024 * 1024;
     }
     
     return payloadString;
+}
+
+- (void) registerTestSoup:(SFSmartStore*) store indexType:(NSString*)indexType {
+    SFSoupSpec *soupSpec = [SFSoupSpec newSoupSpec:kTestSoupName withFeatures:@[kSoupFeatureExternalStorage]];
+    [super registerTestSoup:store indexType:indexType soupSpec:soupSpec];
 }
 
 @end

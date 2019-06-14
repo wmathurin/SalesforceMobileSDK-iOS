@@ -27,6 +27,9 @@
 
 #import "SFSmartStoreTestCase.h"
 
+#define kTestSmartStoreName  @"testSmartStore"
+#define kTestSoupName        @"testSoup"
+
 @interface SFSmartStoreTests : SFSmartStoreTestCase
 
 @property (nonatomic, strong) SFUserAccount *smartStoreUser;
