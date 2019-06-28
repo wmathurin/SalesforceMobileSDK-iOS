@@ -560,6 +560,7 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
     [options setObject:key forKey:kOptionsClientKey];
     controller.appOptions = options;
     [client.authWindow presentWindowAnimated:NO withCompletion:^{
+        client.authWindow.viewController.modalPresentationStyle = UIModalPresentationFullScreen;
         [client.authWindow.viewController presentViewController:controller animated:YES completion:^{
             [[SFSDKOAuthClientCache sharedInstance] addClient:client];
         }];
