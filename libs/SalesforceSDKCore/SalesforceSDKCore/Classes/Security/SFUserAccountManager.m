@@ -1437,8 +1437,8 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
 }
 
 - (void)retrieveUserPhotoIfNeeded:(SFUserAccount *)account {
-    if (account.idData.pictureUrl) {
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:account.idData.pictureUrl];
+    if (account.idData.thumbnailUrl) {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:account.idData.thumbnailUrl];
         [request setHTTPMethod:@"GET"];
         [request setValue:[NSString stringWithFormat:kHttpAuthHeaderFormatString, account.credentials.accessToken] forHTTPHeaderField:kHttpHeaderAuthorization];
         SFNetwork *network = [[SFNetwork alloc] initWithEphemeralSession];
