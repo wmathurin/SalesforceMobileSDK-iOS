@@ -41,6 +41,11 @@ extern NSString *const kDefaultSmartStoreName NS_SWIFT_NAME(SmartStore.defaultSt
 extern NSString * const kSFSmartStoreErrorDomain NS_SWIFT_NAME(SmartStore.errorDomain);
 
 /**
+ Notification for SmartStore JSON parsing errors.
+ */
+extern NSString * const kSFSmartStoreJSONParseErrorNotification NS_SWIFT_NAME(SmartStore.JSONParseErrorNotification);
+
+/**
  The NSError exceptionName for errors loading external Soups.
  */
 extern NSString * const kSFSmartStoreErrorLoadExternalSoup NS_SWIFT_NAME(SmartStore.externalSoupLoadingExceptionName);
@@ -345,6 +350,8 @@ NS_SWIFT_NAME(SmartStore)
  @return YES if successful
  */
 - (BOOL) queryAsString:(NSMutableString*)resultString querySpec:(SFQuerySpec *)querySpec pageIndex:(NSUInteger)pageIndex error:(NSError **)error NS_SWIFT_UNAVAILABLE("Use query(querySpec:pageIndex:) in native applications");
+
+@property (class, nonatomic,assign,getter=isJsonSerializationCheckEnabled) BOOL jsonSerializationCheckEnabled;
 
 /**
  * Run a query given by its query Spec, only returned results from selected page
