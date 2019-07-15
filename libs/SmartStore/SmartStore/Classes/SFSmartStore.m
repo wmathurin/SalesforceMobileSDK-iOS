@@ -33,6 +33,7 @@
 #import "SFSmartStoreUpgrade.h"
 #import "SFSmartStoreUtils.h"
 #import "SFSmartSqlHelper.h"
+#import "SFSmartSqlCache.h"
 #import "SFSoupIndex.h"
 #import "SFQuerySpec.h"
 #import "SFSoupSpec.h"
@@ -126,6 +127,9 @@ NSString *const EXPLAIN_SQL = @"sql";
 NSString *const EXPLAIN_ARGS = @"args";
 NSString *const EXPLAIN_ROWS = @"rows";
 
+// Caches count limit
+NSUInteger CACHES_COUNT_LIMIT = 1024;
+
 @implementation SFSmartStore
 
 + (void)initialize
@@ -205,11 +209,16 @@ NSString *const EXPLAIN_ROWS = @"rows";
                                                 this->_dataProtectionKnownAvailable = NO;
                                             }];
         
-        _soupNameToTableName = [[NSMutableDictionary alloc] init];
-        _attrSpecBySoup = [[NSMutableDictionary alloc] init];
-        _indexSpecsBySoup = [[NSMutableDictionary alloc] init];
+        _soupNameToTableName = [[NSCache alloc] init];
+        _soupNameToTableName.countLimit = CACHES_COUNT_LIMIT;
         
-        _smartSqlToSql = [[NSMutableDictionary alloc] init];
+        _attrSpecBySoup = [[NSCache alloc] init];
+        _attrSpecBySoup.countLimit = CACHES_COUNT_LIMIT;
+        
+        _indexSpecsBySoup = [[NSCache alloc] init];
+        _indexSpecsBySoup.countLimit = CACHES_COUNT_LIMIT;
+        
+        _smartSqlToSql = [[SFSmartSqlCache alloc] initWithCountLimit:CACHES_COUNT_LIMIT];
         
         // Using FTS5 by default
         _ftsExtension = SFSmartStoreFTS5;
@@ -220,7 +229,11 @@ NSString *const EXPLAIN_ROWS = @"rows";
             }
         } else {
             if (![self subsequentTimesStoreDatabaseSetup]) {
-                self = nil;
+                // If it couldn't be opened, it gets deleted
+                // So we should try to set a new one up
+                if (![self firstTimeStoreDatabaseSetup]) {
+                    self = nil;
+                }
             }
         }
         
@@ -285,7 +298,13 @@ NSString *const EXPLAIN_ROWS = @"rows";
     
     // Open db file
     result = result && [self openStoreDatabase];
-
+    
+    // Delete db file if it can no longer be opened
+    if (!result) {
+        [SFSDKSmartStoreLogger e:[self class] format:@"Deleting store dir since we can't open it anymore: %@", self.storeName];
+        [self.dbMgr removeStoreDir:self.storeName];
+    }
+    
     // Do any upgrade needed
     if (result) {
         // like the onUpgrade for android - create long operations table if needed (if db was created with sdk 2.2 or before)
@@ -453,6 +472,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
         return [[SFSmartStoreDatabaseManager sharedGlobalManager] allStoreNames];
     }
 }
+
 + (void)clearSharedStoreMemoryState
 {
     @synchronized (self) {
@@ -1073,22 +1093,22 @@ NSString *const EXPLAIN_ROWS = @"rows";
 - (NSString*) convertSmartSql:(NSString*)smartSql withDb:(FMDatabase*)db
 {
     [SFSDKSmartStoreLogger v:[self class] format:@"convertSmartSQl:%@", smartSql];
-    NSObject* sql = _smartSqlToSql[smartSql];
+    NSObject* sql = [_smartSqlToSql sqlForSmartSql:smartSql];
     if (nil == sql) {
         sql = [[SFSmartSqlHelper sharedInstance] convertSmartSql:smartSql withStore:self withDb:db];
         
         // Conversion failed, putting the NULL in the cache so that we don't retry conversion
         if (sql == nil) {
             [SFSDKSmartStoreLogger v:[self class] format:@"convertSmartSql:putting NULL in cache"];
-            _smartSqlToSql[smartSql] = [NSNull null];
+            [_smartSqlToSql setSql:@"null" forSmartSql:smartSql];
         }
         // Updating cache
         else {
             [SFSDKSmartStoreLogger v:[self class] format:@"convertSmartSql:putting %@ in cache", sql];
-            _smartSqlToSql[smartSql] = sql;
+            [_smartSqlToSql setSql:(NSString*)sql forSmartSql:smartSql];
         }
     }
-    else if ([sql isEqual:[NSNull null]]) {
+    else if ([sql isEqual:@"null"]) {
         [SFSDKSmartStoreLogger v:[self class] format:@"convertSmartSql:found NULL in cache"];
         return nil;
     }
@@ -1126,7 +1146,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
 #pragma mark - Soup manipulation methods
 
 - (NSString*)tableNameForSoup:(NSString*)soupName withDb:(FMDatabase*) db {
-    NSString *soupTableName = _soupNameToTableName[soupName];
+    NSString *soupTableName = [_soupNameToTableName objectForKey:soupName];
     
     if (nil == soupTableName) {
         NSString *sql = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ?",ID_COL,SOUP_ATTRS_TABLE,SOUP_NAME_COL];
@@ -1137,7 +1157,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
             soupTableName = [self tableNameBySoupId:soupId];
             
             // update cache
-            _soupNameToTableName[soupName] = soupTableName;
+            [_soupNameToTableName setObject:soupTableName forKey:soupName];
         } else {
             [SFSDKSmartStoreLogger d:[self class] format:@"No table for: '%@'", soupName];
         }
@@ -1178,7 +1198,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
 
 - (SFSoupSpec*)attributesForSoup:(NSString*)soupName withDb:(FMDatabase *)db {
     //look in the cache first
-    SFSoupSpec *attrs = _attrSpecBySoup[soupName];
+    SFSoupSpec *attrs = [_attrSpecBySoup objectForKey:soupName];
     if (nil == attrs) {
         //no cached attributes ...reload from SOUP_ATTRS_TABLE
         NSString *attrsSql = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ = ?", SOUP_ATTRS_TABLE, SOUP_NAME_COL];
@@ -1194,7 +1214,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
             attrs = [SFSoupSpec newSoupSpec:soupName withFeatures:soupFeatures];
             
             // update the cache
-            _attrSpecBySoup[soupName] = attrs;
+            [_attrSpecBySoup setObject:attrs forKey:soupName];
         }
         [frs close];
     }
@@ -1215,7 +1235,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
 
 - (NSArray*)indicesForSoup:(NSString*)soupName withDb:(FMDatabase *)db {
     //look in the cache first
-    NSMutableArray *result = _indexSpecsBySoup[soupName];
+    NSMutableArray *result = [_indexSpecsBySoup objectForKey:soupName];
     if (nil == result) {
         result = [NSMutableArray array];
         
@@ -1236,7 +1256,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
         [frs close];
         
         // update the cache
-        _indexSpecsBySoup[soupName] = result;
+        [_indexSpecsBySoup setObject:result forKey:soupName];
     }
     if (!(result.count > 0)) {
         [SFSDKSmartStoreLogger d:[self class] format:@"no indices for '%@'", soupName];
@@ -1498,20 +1518,8 @@ NSString *const EXPLAIN_ROWS = @"rows";
                                SOUP_ATTRS_TABLE, SOUP_NAME_COL, soupName];
     [self executeUpdateThrows:deleteNameSql withDb:db];
     
-    [_attrSpecBySoup removeObjectForKey:soupName ];
-    [_indexSpecsBySoup removeObjectForKey:soupName ];
-    [_soupNameToTableName removeObjectForKey:soupName ];
-    
-    // Cleanup _smartSqlToSql
-    NSString* soupRef = [@[@"{", soupName, @"}"] componentsJoinedByString:@""];
-    NSMutableArray* keysToRemove = [NSMutableArray array];
-    for (NSString* smartSql in [_smartSqlToSql allKeys]) {
-        if ([smartSql rangeOfString:soupRef].location != NSNotFound) {
-            [keysToRemove addObject:smartSql];
-            [SFSDKSmartStoreLogger d:[self class] format:@"removeSoup: removing cached sql for %@", smartSql];
-        }
-    }
-    [_smartSqlToSql removeObjectsForKeys:keysToRemove];
+    // Cleanup caches
+    [self removeFromCache:soupName];
     
     // Cleanup external storage directory
     if (soupUsesExternalStorage) {
@@ -1530,18 +1538,8 @@ NSString *const EXPLAIN_ROWS = @"rows";
 - (void)removeFromCache:(NSString*) soupName {
     [_attrSpecBySoup removeObjectForKey:soupName ];
     [_indexSpecsBySoup removeObjectForKey:soupName ];
-    
-    // Cleanup _smartSqlToSql
-    NSString* soupRef = [@[@"{", soupName, @"}"] componentsJoinedByString:@""];
-    NSMutableArray* keysToRemove = [NSMutableArray array];
-    for (NSString* smartSql in [_smartSqlToSql allKeys]) {
-        if ([smartSql rangeOfString:soupRef].location != NSNotFound) {
-            [keysToRemove addObject:smartSql];
-            [SFSDKSmartStoreLogger d:[self class] format:@"removeSoup: removing cached sql for %@", smartSql];
-        }
-    }
-    [_smartSqlToSql removeObjectsForKeys:keysToRemove];
-    
+    [_soupNameToTableName removeObjectForKey:soupName ];
+    [_smartSqlToSql removeEntriesForSoup:soupName ];
 }
 
 - (void) removeAllSoupWithDb:(FMDatabase*) db
@@ -2409,6 +2407,11 @@ NSString *const EXPLAIN_ROWS = @"rows";
 }
 
 #pragma mark - Misc info methods
+- (NSArray*) getRuntimeSettings
+{
+    return [self queryPragma:@"cipher_settings"];
+}
+
 - (NSArray*) getCompileOptions
 {
     return [self queryPragma:@"compile_options"];

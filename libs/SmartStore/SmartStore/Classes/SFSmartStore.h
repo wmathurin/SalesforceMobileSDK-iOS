@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SFEncryptionKey;
 @class SFSoupIndex;
+@class SFSmartSqlCache;
 
 /**
  The default store name used by the SFSmartStorePlugin: native code may choose
@@ -138,10 +139,10 @@ NS_SWIFT_NAME(SmartStore)
     FMDatabaseQueue *_storeQueue;
     NSString *_storeName;
 
-    NSMutableDictionary *_soupNameToTableName;
-    NSMutableDictionary *_attrSpecBySoup;
-    NSMutableDictionary *_indexSpecsBySoup;
-    NSMutableDictionary *_smartSqlToSql;
+    NSCache *_soupNameToTableName;
+    NSCache *_attrSpecBySoup;
+    NSCache *_indexSpecsBySoup;
+    SFSmartSqlCache *_smartSqlToSql;
 }
 
 /**
@@ -515,13 +516,19 @@ NS_SWIFT_NAME(SmartStore)
 - (BOOL) reIndexSoup:(NSString*)soupName withIndexPaths:(NSArray<NSString*>*)indexPaths NS_SWIFT_NAME(reIndexSoup(named:indexPaths:));
 
 /**
- * Return compile options
+ * Return SQLCipher runtime settings
+ * @return An array with all the compile options used to build SQL Cipher.
+ */
+- (NSArray*) getRuntimeSettings NS_SWIFT_NAME(runtimeSettings());
+
+/**
+ * Return SQLCipher compile options
  * @return An array with all the compile options used to build SQL Cipher.
  */
 - (NSArray *)getCompileOptions NS_SWIFT_NAME(compileOptions());
 
 /**
- * Return sqlcipher version
+ * Return SQLCipher version
  * @return The version of SQL Cipher in use.
  */
 - (NSString *)getSQLCipherVersion NS_SWIFT_NAME(versionOfSQLCipher());
