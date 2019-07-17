@@ -863,8 +863,9 @@ NSString *const EXPLAIN_ROWS = @"rows";
     log(@"2/4 Done writing to tmp file");
 
     // Renaming tmp file by using moveItemAtPath (but first check if destination exists and deletes it if it does)
-    log(@"3/4 Renaming tmp file");
     if (success) {
+        log(@"3/4 Renaming tmp file");
+        
         if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
             success = [[NSFileManager defaultManager] removeItemAtPath:filePath
                                                                  error:&error];
@@ -872,9 +873,12 @@ NSString *const EXPLAIN_ROWS = @"rows";
 
         if (success) {
             success = [[NSFileManager defaultManager] moveItemAtPath:tmpFilePath toPath:filePath error:&error];
+            
+            if (success) {
+                log(@"4/4 Done renaming tmp file");
+            }
         }
     }
-    log(@"4/4 Done renaming tmp file");
     
     if (!success) {
         NSString *errorMessage = [NSString stringWithFormat:@"Saving external soup to file failed! encrypted: %@, soupEntryId: %@, soupTableName: %@, tmpFilePath: '%@', filePath: '%@', error: %@.",
