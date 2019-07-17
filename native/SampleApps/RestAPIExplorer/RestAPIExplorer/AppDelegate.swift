@@ -148,7 +148,7 @@ class AppDelegate : UIResponder, UIApplicationDelegate
     {
         let rootVC = RootViewController(nibName: nil, bundle: nil)
         let navVC = UINavigationController(rootViewController: rootVC)
-        self.window!.rootViewController = navVC
+        SFSDKWindowManager.shared().mainWindow.viewController = navVC
     }
     
     func resetViewState(_ postResetBlock: @escaping () -> ())
