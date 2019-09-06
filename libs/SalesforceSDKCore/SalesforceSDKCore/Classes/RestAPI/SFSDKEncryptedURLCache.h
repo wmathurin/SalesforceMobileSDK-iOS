@@ -1,5 +1,5 @@
 /*
- Copyright (c) 2014-present, salesforce.com, inc. All rights reserved.
+ Copyright (c) 2019-present, salesforce.com, inc. All rights reserved.
  
  Redistribution and use of this software in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
@@ -26,54 +26,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- Data object representing an symmetric encryption key, with a key value and initialization vector.
- */
-@interface SFEncryptionKey : NSObject <NSCoding, NSCopying>
-
-/**
- Designated initializer.
- @param keyData The key component, represented as NSData.
- @param iv The initialization vector, represented as NSData.
- */
-- (id)initWithData:(NSData *)keyData initializationVector:(nullable NSData *)iv;
-
-/**
- Generate an encryption key
- */
-+ (SFEncryptionKey*) createKey;
-
-/**
- Encrypt given data
- @param dataToEncrypt The data to encrypt
- */
-- (nullable NSData *)encryptData:(NSData *)dataToEncrypt;
-
-/**
- Decrypt given data
- @param dataToDecrypt The data to decrypt
- */
-- (nullable NSData *)decryptData:(NSData *)dataToDecrypt;
-
-/**
- The key component of the object.
- */
-@property (nonatomic, copy, nullable) NSData *key;
-
-/**
- The initialization vector component of the object.
- */
-@property (nonatomic, copy) NSData *initializationVector;
-
-/**
- The base64 representation of the key data.
- */
-@property (nonatomic, readonly, nullable) NSString *keyAsString;
-
-/**
- The base64 representation of the initialization vector data.
- */
-@property (nonatomic, readonly, nullable) NSString *initializationVectorAsString;
+@interface SFSDKEncryptedURLCache : NSURLCache
 
 @end
 
