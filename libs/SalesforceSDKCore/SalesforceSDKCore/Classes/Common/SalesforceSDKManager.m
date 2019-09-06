@@ -53,10 +53,6 @@ static Class InstanceClass = nil;
 // AILTN app name
 static NSString* ailtnAppName = nil;
 
-// User agent support
-static WKWebView* webView = nil;
-static NSString* webViewUserAgent = nil;
-
 // Dev support
 static NSString *const SFSDKShowDevDialogNotification = @"SFSDKShowDevDialogNotification";
 
@@ -997,6 +993,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         [self.webView loadHTMLString:@"<html></html>" baseURL:nil];
         [self.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id __nullable userAgent, NSError * __nullable error) {
             self.webViewUserAgent = userAgent;
+            self.webView = nil;
         }];
     });
 }
