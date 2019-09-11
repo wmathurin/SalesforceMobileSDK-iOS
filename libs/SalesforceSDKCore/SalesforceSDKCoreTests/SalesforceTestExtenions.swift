@@ -1,5 +1,9 @@
 /*
- Copyright (c) 2015-present, salesforce.com, inc. All rights reserved.
+ SalesforceTestExtenions.swift
+ SalesforceSDKCoreTests
+ 
+ Created by Raj Rao on 7/25/19.
+ Copyright (c) 2019-present, salesforce.com, inc. All rights reserved.
  
  Redistribution and use of this software in source and binary forms, with or without modification,
  are permitted provided that the following conditions are met:
@@ -22,26 +26,36 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <Foundation/Foundation.h>
-#import <SalesforceSDKCore/SalesforceSDKCore.h>
-#import "SFOAuthCoordinator+Internal.h"
 
-@class SFOAuthInfo;
+import Foundation
+import XCTest
 
-@interface SFOAuthTestFlow : NSObject <SFOAuthCoordinatorFlow>
+// Good suggestion to avoid force unwraps in tests.
+// https://www.swiftbysundell.com/posts/avoiding-force-unwrapping-in-swift-unit-tests
 
-@property (nonatomic, assign) BOOL beginUserAgentFlowCalled;
-@property (nonatomic, assign) BOOL beginTokenEndpointFlowCalled;
-@property (nonatomic, assign) BOOL beginNativeBrowserFlowCalled;
-@property (nonatomic, assign) BOOL beginJwtTokenExchangeFlowCalled;
-@property (nonatomic, assign) SFOAuthTokenEndpointFlow tokenEndpointFlowType;
-@property (nonatomic, assign) BOOL handleTokenEndpointResponseCalled;
-
-@property (nonatomic, assign) NSTimeInterval timeBeforeUserAgentCompletion;
-@property (nonatomic, assign) NSTimeInterval timeBeforeRefreshTokenCompletion;
-@property (nonatomic, assign) BOOL userAgentFlowIsSuccessful;
-@property (nonatomic, assign) BOOL refreshTokenFlowIsSuccessful;
-
-- (id)initWithCoordinator:(SFOAuthCoordinator *)coordinator;
-
-@end
+extension XCTestCase {
+    // We conform to LocalizedError in order to be able to output
+    // a nice error message.
+    private struct RequireError<T>: LocalizedError {
+        let file: StaticString
+        let line: UInt
+        
+        // It's important to implement this property, otherwise we won't
+        // get a nice error message in the logs if our tests start to fail.
+        var errorDescription: String? {
+            return "😱 Required value of type \(T.self) was nil at line \(line) in file \(file)."
+        }
+    }
+    
+    // Using file and line lets us automatically capture where
+    // the expression took place in our source code.
+    func require<T>(_ expression: @autoclosure () -> T?,
+                    file: StaticString = #file,
+                    line: UInt = #line) throws -> T {
+        guard let value = expression() else {
+            throw RequireError<T>(file: file, line: line)
+        }
+        
+        return value
+    }
+}
