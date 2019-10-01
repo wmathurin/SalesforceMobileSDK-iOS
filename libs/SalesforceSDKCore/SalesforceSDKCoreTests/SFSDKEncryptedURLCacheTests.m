@@ -94,46 +94,6 @@
     XCTAssertTrue([cacheString isEqualToString:contentString]);
 }
 
-- (void)testRestCalls {
-    [NSURLCache.sharedURLCache removeAllCachedResponses];
-
-    Method networkForRequest = class_getInstanceMethod([SFRestAPI class], @selector(networkForRequest:));
-    IMP networkForRequestImplementation = method_getImplementation(networkForRequest);
-    Method ignoreCache_networkForRequest = class_getInstanceMethod([self class], @selector(ignoreCache_networkForRequest:));
-    Method useCache_networkForRequest = class_getInstanceMethod([self class], @selector(useCache_networkForRequest:));
-    IMP ignoreCache_networkForRequestImplementation = method_getImplementation(ignoreCache_networkForRequest);
-    IMP useCache_networkForRequestImplementation = method_getImplementation(useCache_networkForRequest);
-
-    @try {
-        // Don't need to login but want the instance URL from the config
-        SFSDKTestCredentialsData *credsData = [TestSetupUtils populateAuthCredentialsFromConfigFileForClass:[self class]];
-
-        // Calls that will hit network and should store into cache for next call to use
-        method_setImplementation(networkForRequest, ignoreCache_networkForRequestImplementation);
-        [self makeRequestsWithBaseURL:credsData.instanceUrl];
-
-        // Calls that will only load from cache
-        method_setImplementation(networkForRequest, useCache_networkForRequestImplementation);
-        [self makeRequestsWithBaseURL:credsData.instanceUrl];
-    } @finally {
-        method_setImplementation(networkForRequest, networkForRequestImplementation);
-    }
-}
-
-- (SFNetwork *)useCache_networkForRequest:(SFRestRequest *)request {
-    NSURLSessionConfiguration *cacheSessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-    cacheSessionConfig.requestCachePolicy = NSURLRequestReturnCacheDataDontLoad;
-    SFNetwork *network = [SFNetwork sharedInstanceWithIdentifier:[SFNetwork uniqueInstanceIdentifier] sessionConfiguration:cacheSessionConfig];
-    return network;
-}
-
-- (SFNetwork *)ignoreCache_networkForRequest:(SFRestRequest *)request {
-    NSURLSessionConfiguration *noCacheSessionConfig = [NSURLSessionConfiguration defaultSessionConfiguration];
-    noCacheSessionConfig.requestCachePolicy = NSURLRequestReloadIgnoringCacheData;
-    SFNetwork *network = [SFNetwork sharedInstanceWithIdentifier:[SFNetwork uniqueInstanceIdentifier] sessionConfiguration:noCacheSessionConfig];
-    return network;
-}
-
 - (void)makeRequestsWithBaseURL:(NSString *)baseURL {
     NSArray<NSString *> *standardPngs = @[@"today", @"task", @"report", @"note", @"groups", @"feed", @"dashboard", @"approval"];
     for (NSString *standardPng in standardPngs) {
