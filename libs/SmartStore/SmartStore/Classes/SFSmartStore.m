@@ -145,7 +145,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
             NSString* salt = nil;
             if ([[SFKeyStoreManager sharedInstance] keyWithLabelExists:kSFSmartStoreEncryptionSaltLabel] || [[SFSDKDatasharingHelper sharedInstance] appGroupEnabled]) {
                 SFEncryptionKey *saltKey = [[SFKeyStoreManager sharedInstance]   retrieveKeyWithLabel:kSFSmartStoreEncryptionSaltLabel autoCreate:YES];
-                salt = [[saltKey key] md5];
+                salt = [[saltKey key] digest];
             }
             return salt;
         };
