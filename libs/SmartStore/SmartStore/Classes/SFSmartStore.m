@@ -60,6 +60,7 @@ static SFSmartStoreEncryptionKeyBlock _encryptionKeyBlock = NULL;
 static SFSmartStoreEncryptionSaltBlock _encryptionSaltBlock = NULL;
 static BOOL _storeUpgradeHasRun = NO;
 static BOOL _jsonSerializationCheckEnabled = NO;
+static BOOL _postRawJsonOnError = NO;
 
 // The name of the store name used by the SFSmartStorePlugin for hybrid apps
 NSString * const kDefaultSmartStoreName   = @"defaultStore";
@@ -911,13 +912,16 @@ NSString *const EXPLAIN_ROWS = @"rows";
     return [SFJsonUtils objectFromJSONString:[self loadExternalSoupEntryAsString:soupEntryId soupTableName:soupTableName]];
 }
 
-+ (void)buildEventOnJsonParseErrorForUser:(SFUserAccount *)user fromMethod:(NSString*)fromMethod {
++ (void)buildEventOnJsonParseErrorForUser:(SFUserAccount *)user fromMethod:(NSString*)fromMethod rawJson:(NSString*)rawJson {
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
     attributes[@"errorCode"] = [NSNumber numberWithInteger:SFJsonUtils.lastError.code];
     attributes[@"errorMessage"] = SFJsonUtils.lastError.localizedDescription;
     attributes[@"fromMethod"] = fromMethod;
     [SFSDKEventBuilderHelper createAndStoreEvent:@"SmartStoreJSONParseError" userAccount:user className:NSStringFromClass([self class]) attributes:attributes];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSFSmartStoreJSONParseErrorNotification object:self];
+    
+    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithDictionary:attributes];
+    if (_postRawJsonOnError) info[@"rawJson"] = rawJson;
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSFSmartStoreJSONParseErrorNotification object:self userInfo:info];
 }
 
 + (void)buildEventOnJsonSerializationErrorForUser:(SFUserAccount *)user fromMethod:(NSString*)fromMethod error:(NSError*)error {
@@ -932,7 +936,7 @@ NSString *const EXPLAIN_ROWS = @"rows";
 - (BOOL)checkRawJson:(NSString*)rawJson fromMethod:(NSString*)fromMethod {
     if (_jsonSerializationCheckEnabled && [SFJsonUtils objectFromJSONString:rawJson] == nil) {
         [SFSDKSmartStoreLogger e:[self class] format:@"Error parsing JSON in SmartStore in %@", fromMethod];
-        [SFSmartStore buildEventOnJsonParseErrorForUser:self.user fromMethod:fromMethod];
+        [SFSmartStore buildEventOnJsonParseErrorForUser:self.user fromMethod:fromMethod rawJson:rawJson];
         return NO;
     } else {
         return YES;
@@ -2483,6 +2487,10 @@ NSString *const EXPLAIN_ROWS = @"rows";
 
 + (void)setJsonSerializationCheckEnabled:(BOOL)jsonSerializationCheckEnabled {
     _jsonSerializationCheckEnabled = jsonSerializationCheckEnabled;
+}
+
++ (void)setPostRawJsonOnError:(BOOL)postRawJsonOnError {
+    _postRawJsonOnError = postRawJsonOnError;
 }
 
 +(BOOL) isJsonSerializationCheckEnabled {
