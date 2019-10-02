@@ -930,7 +930,8 @@ NSString *const EXPLAIN_ROWS = @"rows";
     attributes[@"errorMessage"] = error.localizedDescription;
     attributes[@"fromMethod"] = fromMethod;
     [SFSDKEventBuilderHelper createAndStoreEvent:@"SmartStoreJSONSerializationError" userAccount:user className:NSStringFromClass([self class]) attributes:attributes];
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSFSmartStoreJSONSerializationErrorNotification object:self];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSFSmartStoreJSONParseErrorNotification object:self userInfo:attributes];
 }
 
 - (BOOL)checkRawJson:(NSString*)rawJson fromMethod:(NSString*)fromMethod {
