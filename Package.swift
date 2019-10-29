@@ -34,27 +34,30 @@ let package = Package(
     targets: [
         .target(
             name: "SalesforceAnalytics",
-            path: "libs/SalesforceAnalytics"
+            path: "libs/SalesforceAnalytics/SalesforceAnalytics"
         ),
         .target(
             name: "SalesforceSDKCommon",
             dependencies: ["SalesforceAnalytics"],
-            path: "libs/SalesforceSDKCommon"
+            path: "libs/SalesforceSDKCommon/SalesforceSDKCommon"
         ),
         .target(
             name: "SalesforceSDKCore",
             dependencies: ["SalesforceSDKCommon"],
-            path: "libs/SalesforceSDKCore"
+            path: "libs/SalesforceSDKCore/SalesforceSDKCore",
+            exclude: ["Classes/Extensions/RestClient.swift"]
         ),
         .target(
             name: "SmartStore",
             dependencies: ["SalesforceSDKCore"],
-            path: "libs/SmartStore"
+            path: "libs/SmartStore/SmartStore",
+            exclude: ["Classes/Extensions/SmartStore.swift"]
         ),
         .target(
             name: "MobileSync",
             dependencies: ["SmartStore"],
-            path: "libs/MobileSync"
+            path: "libs/MobileSync/MobileSync",
+            exclude: ["Classes/Extensions/MobileSync.swift"]
         )
     ],
     swiftLanguageVersions: [.v5]
