@@ -27,7 +27,7 @@ let package = Package(
         .library(
             name: "MobileSync",
             targets: ["MobileSync"]
-        )d,
+        ),
     ],
     dependencies: [
     ],
