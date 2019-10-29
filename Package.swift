@@ -4,7 +4,8 @@ import PackageDescription
 let package = Package(
     name: "SalesforceMobileSDK",
     platforms: [
-        .iOS(.v12),.watchOS(.v5)
+        .iOS(.v12),
+        .watchOS(.v5)
     ],
     products: [
         .library(
@@ -26,7 +27,7 @@ let package = Package(
         .library(
             name: "MobileSync",
             targets: ["MobileSync"]
-        ),
+        )d,
     ],
     dependencies: [
     ],
@@ -37,24 +38,24 @@ let package = Package(
         ),
         .target(
             name: "SalesforceSDKCommon",
-            path: "libs/SalesforceSDKCommon",
-            dependencies: ["SalesforceAnalytics"]
+            dependencies: ["SalesforceAnalytics"],
+            path: "libs/SalesforceSDKCommon"
         ),
         .target(
             name: "SalesforceSDKCore",
+            dependencies: ["SalesforceSDKCommon"],
             path: "libs/SalesforceSDKCore"
-            dependencies: ["SalesforceSDKCommon"]
         ),
         .target(
             name: "SmartStore",
-            path: "libs/SmartStore",
-            dependencies: ["SalesforceSDKCore"]
+            dependencies: ["SalesforceSDKCore"],
+            path: "libs/SmartStore"
         ),
         .target(
             name: "MobileSync",
+            dependencies: ["SmartStore"],
             path: "libs/MobileSync"
-            dependencies: ["SmartStore"]
-        ),
+        )
     ],
     swiftLanguageVersions: [.v5_0]
 )
