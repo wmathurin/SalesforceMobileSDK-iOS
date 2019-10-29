@@ -57,5 +57,5 @@ let package = Package(
             path: "libs/MobileSync"
         )
     ],
-    swiftLanguageVersions: [.v5_0]
+    swiftLanguageVersions: [.v5]
 )
