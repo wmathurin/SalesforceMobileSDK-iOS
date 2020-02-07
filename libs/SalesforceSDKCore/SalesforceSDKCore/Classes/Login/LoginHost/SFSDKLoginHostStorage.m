@@ -83,21 +83,31 @@ static NSString * const SFSDKLoginHostNameKey = @"SalesforceLoginHostNameKey";
             }
             NSArray *hostLabels = managedPreferences.loginHostLabels;
             [managedPreferences.loginHosts enumerateObjectsUsingBlock:^(NSString *loginHost, NSUInteger idx, BOOL *stop) {
+                NSString *sanitizedLoginHost = [loginHost stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 NSString *hostLabel = hostLabels.count > idx ? hostLabels[idx] : loginHost;
-                [self.loginHostList addObject:[SFSDKLoginHost hostWithName:hostLabel host:loginHost deletable:NO]];
+                [self.loginHostList addObject:[SFSDKLoginHost hostWithName:hostLabel host:sanitizedLoginHost deletable:NO]];
             }];
             
-            if(managedPreferences.onlyShowAuthorizedHosts)
+            if(managedPreferences.onlyShowAuthorizedHosts) {
                 return self;
-        }
-        
-        // Load from info.plist.
-        if([[NSBundle mainBundle] objectForInfoDictionaryKey:@"SFDCOAuthLoginHost"]) {
+            }
+        } else if ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"SFDCOAuthLoginHost"]) {
+
+            // Load from info.plist.
             NSString *customHost = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"SFDCOAuthLoginHost"];
 
-            // Add the login host from info.plist only if it is not already added.
-            if(![self loginHostForHostAddress:customHost]) {
-                [self.loginHostList addObject:[SFSDKLoginHost hostWithName:customHost host:customHost deletable:NO]];
+            /*
+             * Add the login host from info.plist if it doesn't exist already.
+             * This also handles the case where the custom host configured
+             * was changed between version updates of the application.
+             */
+            if (![self loginHostForHostAddress:customHost]) {
+                [self.loginHostList removeAllObjects];
+                [self.loginHostList addObject:production];
+                [self.loginHostList addObject:sandbox];
+                NSString *sanitizedCustomHost = [customHost stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                SFSDKLoginHost *customLoginHost = [SFSDKLoginHost hostWithName:customHost host:sanitizedCustomHost deletable:NO];
+                [self.loginHostList addObject:customLoginHost];
             }
         }
 
