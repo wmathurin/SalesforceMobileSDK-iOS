@@ -337,7 +337,7 @@ static NSMutableDictionary *analyticsManagerList = nil;
         }
         id<SFSDKAnalyticsPublisher> networkPublisher = tpp.publisher;
         if (networkPublisher) {
-            [networkPublisher publish:eventsArray publishCompleteBlock:publishCompleteBlock];
+            [networkPublisher publish:eventsArray user:self.userAccount publishCompleteBlock:publishCompleteBlock];
         }
     }
 }
