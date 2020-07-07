@@ -404,7 +404,7 @@ static NSString *const  kOptionsClientKey          = @"clientIdentifier";
     }
     UIViewController *presentedViewController = [SFSDKWindowManager sharedManager].authWindow.viewController.presentedViewController;
     
-    if (presentedViewController) {
+    if (presentedViewController && presentedViewController.isBeingPresented) {
         [presentedViewController dismissViewControllerAnimated:NO completion:^{
             [[SFSDKWindowManager sharedManager].authWindow dismissWindow];
         }];

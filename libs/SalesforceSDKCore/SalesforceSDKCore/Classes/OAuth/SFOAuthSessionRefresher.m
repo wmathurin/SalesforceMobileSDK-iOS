@@ -130,7 +130,7 @@
     [self finishForUnsupportedFlow:@"User Agent" coordinator:coordinator];
 }
 
-- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithSession:(SFAuthenticationSession *)session {
+- (void)oauthCoordinator:(SFOAuthCoordinator *)coordinator didBeginAuthenticationWithSession:(ASWebAuthenticationSession *)session {
     // Shouldn't happen (refreshSessionWithCompletion:error: is guarded by the presence of a refresh token), but....
     [self finishForUnsupportedFlow:@"Web Server" coordinator:coordinator];
 }
