@@ -135,7 +135,7 @@ NSException * SFOAuthInvalidIdentifierException() {
 }
 
 - (instancetype)initWithIdentifier:(NSString *)theIdentifier clientId:(NSString *)theClientId encrypted:(BOOL)encrypted storageType:(SFOAuthCredentialsStorageType)type {
-    Class targetClass = self.class;
+    Class targetClass;
     switch (type) {
         case SFOAuthCredentialsStorageTypeNone:
             targetClass = NSClassFromString(@"SFOAuthCredentials");
@@ -249,11 +249,8 @@ NSException * SFOAuthInvalidIdentifierException() {
 
 // This setter is exposed publicly for unit tests.
 - (void)setUserId:(NSString *)userId {
-    //ensure we only use the first 15 chars of any user ID,
-    //since some sources might set 15 char, some might set 18 char
-    NSString *truncUserId = [userId substringToIndex:MIN([userId length], 15)]; 
-    if (![truncUserId isEqualToString:_userId]) {
-        _userId = [truncUserId copy];
+    if (![userId isEqualToString:_userId]) {
+        _userId = [userId copy];
     }
 }
 

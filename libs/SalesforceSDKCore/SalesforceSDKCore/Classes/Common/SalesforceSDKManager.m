@@ -36,7 +36,10 @@
 #import "SFDefaultUserManagementViewController.h"
 #import <SalesforceSDKCommon/SFSwiftDetectUtil.h>
 #import "SFSDKEncryptedURLCache.h"
+#import "SFSDKNullURLCache.h"
 #import "UIColor+SFColors.h"
+#import "SFDirectoryManager+Internal.h"
+#import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 
 static NSString * const kSFAppFeatureSwiftApp   = @"SW";
 static NSString * const kSFAppFeatureMultiUser   = @"MU";
@@ -228,6 +231,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow  selector:@selector(handleIDPUserAddCompleted:)
                                                      name:kSFNotificationUserWillSendIDPResponse object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserWillLogout:) name:kSFNotificationUserWillLogout object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleUserDidLogout:)  name:kSFNotificationUserDidLogout object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserWillSwitch:)  name:kSFNotificationUserWillSwitch object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidSwitch:)  name:kSFNotificationUserDidSwitch object:nil];
@@ -236,8 +240,9 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         self.useSnapshotView = YES;
         [self computeWebViewUserAgent]; // web view user agent is computed asynchronously so very first call to self.userAgentString(...) will be missing it
         self.userAgentString = [self defaultUserAgentString];
-        self.encryptURLCache = YES;
+        self.URLCacheType = kSFURLCacheTypeEncrypted;
         [self setupServiceConfiguration];
+        [SFDirectoryManager upgradeUserDirectories];
     }
     return self;
 }
@@ -398,11 +403,10 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     return launchActionString;
 }
 - (void)setEncryptURLCache:(BOOL)encryptURLCache {
-    _encryptURLCache = encryptURLCache;
-    if (self.encryptURLCache) {
-        [self enableEncryptedURLCache];
+    if (encryptURLCache) {
+        [self setURLCacheType:kSFURLCacheTypeEncrypted];
     } else {
-        [self disableEncryptedURLCache];
+        [self setURLCacheType:kSFURLCacheTypeStandard];
     }
 }
 
@@ -788,6 +792,10 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         [self sendPostLaunch];
     }
 }
+- (void)handleUserWillLogout:(NSNotification *)notification {
+    SFUserAccount *user = notification.userInfo[kSFNotificationUserInfoAccountKey];
+    [SFSDKKeyValueEncryptedFileStore removeAllStoresForUser:user];
+}
 
 - (void)handlePostLogout
 {
@@ -1062,18 +1070,25 @@ void dispatch_once_on_main_thread(dispatch_once_t *predicate, dispatch_block_t b
     }
 }
 
-- (void)enableEncryptedURLCache {
-    if (![NSURLCache.sharedURLCache isKindOfClass:[SFSDKEncryptedURLCache class]]) {
+- (void)setURLCacheType:(SFURLCacheType)URLCacheType {
+    if (_URLCacheType != URLCacheType) {
+        _URLCacheType = URLCacheType;
         [NSURLCache.sharedURLCache removeAllCachedResponses];
-        SFSDKEncryptedURLCache *encryptedCache = [[SFSDKEncryptedURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
-        [NSURLCache setSharedURLCache:encryptedCache];
-    }
-}
-
-- (void)disableEncryptedURLCache {
-    if ([NSURLCache.sharedURLCache isKindOfClass:[SFSDKEncryptedURLCache class]]) {
-        [NSURLCache.sharedURLCache removeAllCachedResponses];
-        NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+        NSURLCache *cache;
+        switch (URLCacheType) {
+            case kSFURLCacheTypeEncrypted:
+                _encryptURLCache = YES;
+                cache = [[SFSDKEncryptedURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+            case kSFURLCacheTypeNull:
+                _encryptURLCache = NO;
+                 cache = [[SFSDKNullURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+            case kSFURLCacheTypeStandard:
+                _encryptURLCache = NO;
+                cache = [[NSURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+        }
         [NSURLCache setSharedURLCache:cache];
     }
 }
