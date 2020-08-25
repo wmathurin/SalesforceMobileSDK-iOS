@@ -445,6 +445,10 @@ static NSString * const kSFECParameter = @"ec";
 
     }];
     
+    if (@available(iOS 13.0, *)) {
+        _authSession.prefersEphemeralWebBrowserSession = YES;
+    }
+    
     [self.delegate oauthCoordinator:self didBeginAuthenticationWithSession:_authSession];
 
 }
