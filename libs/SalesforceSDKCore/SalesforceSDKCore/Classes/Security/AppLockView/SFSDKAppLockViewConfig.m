@@ -48,12 +48,15 @@
         _borderColor = [UIColor passcodeViewBorderColor];
         _instructionTextColor = [UIColor passcodeViewTextColor];
         _titleTextColor = [UIColor passcodeViewTextColor];
+        _logoutButtonColor = _primaryColor;
         _instructionFont = [UIFont systemFontOfSize:14];
         _titleFont = [UIFont systemFontOfSize:18 weight:UIFontWeightBold];
         _buttonFont = [UIFont systemFontOfSize:14 weight:UIFontWeightBold];
         _touchIdImage = [SFSDKResourceUtils imageNamed:@"touchId"];
         _faceIdImage = [SFSDKResourceUtils imageNamed:@"faceId"];
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
         _passcodeLength = [SFSecurityLockout passcodeLength];
+        SFSDK_USE_DEPRECATED_END
     }
     return self;
 }

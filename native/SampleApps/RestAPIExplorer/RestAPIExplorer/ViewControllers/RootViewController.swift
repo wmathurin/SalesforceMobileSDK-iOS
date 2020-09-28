@@ -586,8 +586,8 @@ class RootViewController: UIViewController {
     
     func handleError(request: RestRequest, error: RestClientError) {
         switch error {
-            case .apiInvocationFailed(let underlyinError, _):
-                SalesforceLogger.e(RootViewController.self, message: "Error invoking api \(underlyinError.localizedDescription)")
+            case .apiFailed(_, let underlyingError, _):
+                SalesforceLogger.e(RootViewController.self, message: "Error invoking api \(underlyingError.localizedDescription)")
             default:
                 DispatchQueue.main.async {
                     self.updateUI(request, response: nil, error: error)
@@ -874,7 +874,24 @@ extension RootViewController: ActionTableViewDelegate {
         case .exportCredentials:
             self.exportTestingCredentials()
             return
-            
+        case .overrideStyleLight:
+            // TODO: Remove this check in Mobile SDK 9.0
+            if #available(iOS 13, *) {
+                SFSDKWindowManager.shared().userInterfaceStyle = .light
+            }
+            return
+        case .overrideStyleDark:
+            // TODO: Remove this check in Mobile SDK 9.0
+            if #available(iOS 13, *) {
+                SFSDKWindowManager.shared().userInterfaceStyle = .dark
+            }
+            return
+        case .overrideStyleUnspecified:
+            // TODO: Remove this check in Mobile SDK 9.0
+            if #available(iOS 13, *) {
+                SFSDKWindowManager.shared().userInterfaceStyle = .unspecified
+            }
+            return
         }
         
         if let sendRequest = request {

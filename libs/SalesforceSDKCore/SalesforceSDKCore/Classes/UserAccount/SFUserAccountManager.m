@@ -146,13 +146,14 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 + (instancetype)sharedInstance {
     static dispatch_once_t pred;
     static SFUserAccountManager *userAccountManager = nil;
+    __block BOOL isFirstRun = NO;
     dispatch_once(&pred, ^{
-		userAccountManager = [[self alloc] init];
-	});
-    static dispatch_once_t pred2;
-    dispatch_once(&pred2, ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:SFUserAccountManagerDidFinishUserInitNotification object:nil];
+        userAccountManager = [[self alloc] init];
+        isFirstRun = YES;
     });
+    if (isFirstRun) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFUserAccountManagerDidFinishUserInitNotification object:nil];
+    };
     return userAccountManager;
 }
 
@@ -166,11 +167,13 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         _authPreferences = [SFSDKAuthPreferences  new];
         _errorManager = [[SFSDKAuthErrorManager alloc] init];
         __weak typeof (self) weakSelf = self;
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
         self.alertDisplayBlock = ^(SFSDKAlertMessage * message, SFSDKWindowContainer *window) {
             __strong typeof (weakSelf) strongSelf = weakSelf;
             strongSelf.alertView = [[SFSDKAlertView alloc] initWithMessage:message window:window];
             [strongSelf.alertView presentViewController:NO completion:nil];
         };
+        SFSDK_USE_DEPRECATED_END
         _authClient = ^(void){
             static  id<SFSDKOAuthProtocol> authClient = nil;
             static dispatch_once_t authClientPred;
@@ -366,7 +369,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
                 credentials.additionalOAuthFields = response.additionalOAuthFields;
             SFUserAccount *userAccount = [strongSelf accountForCredentials:credentials];
             if (!userAccount) {
-                 userAccount = [self applyCredentials:credentials];
+                SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
+                userAccount = [self applyCredentials:credentials];
+                SFSDK_USE_DEPRECATED_END
             }
             [self retrieveUserPhotoIfNeeded:userAccount];
             NSDictionary *userInfo = @{kSFNotificationUserInfoAccountKey: userAccount,
@@ -464,9 +469,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 
 - (BOOL)loginWithJwtToken:(NSString *)jwtToken completion:(SFUserAccountManagerSuccessCallbackBlock)completionBlock failure:(SFUserAccountManagerFailureCallbackBlock)failureBlock {
     NSAssert(jwtToken.length > 0, @"JWT token value required.");
-    SFSDKAuthRequest *request = [[SFSDKAuthRequest alloc] init];
+    SFSDKAuthRequest *request = [self defaultAuthRequest];
     request.jwtToken = jwtToken;
-    return [self authenticateWithCompletion:completionBlock failure:failureBlock];
+    return [self authenticateWithRequest:request completion:completionBlock failure:failureBlock];
 }
 
 - (void)logout {
@@ -534,7 +539,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     [self deleteAccountForUser:user error:nil];
     id<SFSDKOAuthProtocol> authClient = self.authClient();
     [authClient revokeRefreshToken:user.credentials];
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     [SFSecurityLockout clearPasscodeState:user];
+    SFSDK_USE_DEPRECATED_END
     BOOL isCurrentUser = [user isEqual:self.currentUser];
     if (isCurrentUser) {
         [self setCurrentUserInternal:nil];
@@ -686,7 +693,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
        builder.actionOneCompletion = completion;
    }];
     dispatch_async(dispatch_get_main_queue(), ^{
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
         self.alertDisplayBlock(messageObject, [SFSDKWindowManager sharedManager].authWindow);
+        SFSDK_USE_DEPRECATED_END
    });
     
 }
@@ -705,7 +714,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         };
     }];
     dispatch_async(dispatch_get_main_queue(), ^{
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
         self.alertDisplayBlock(messageObject, [SFSDKWindowManager sharedManager].authWindow);
+        SFSDK_USE_DEPRECATED_END
     });
 }
 // IDP related code fetched as an identity provider app
@@ -753,6 +764,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
                                kSFNotificationUserInfoAuthTypeKey: authInfo };
     [[NSNotificationCenter defaultCenter] postNotificationName:kSFNotificationUserCancelledAuth
                                                        object:self userInfo:userInfo];
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     if (!self.authCancelledByUserHandlerBlock) {
            SFSDKLoginHostListViewController *hostListViewController = [[SFSDKLoginHostListViewController alloc] initWithStyle:UITableViewStylePlain];
            hostListViewController.delegate = self;
@@ -765,6 +777,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     } else {
         self.authCancelledByUserHandlerBlock();
     }
+    SFSDK_USE_DEPRECATED_END
 }
 
 #pragma mark - SFIdentityCoordinatorDelegate
@@ -792,7 +805,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
             };
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
-           self.alertDisplayBlock(message, [SFSDKWindowManager sharedManager].authWindow);
+            SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
+            self.alertDisplayBlock(message, [SFSDKWindowManager sharedManager].authWindow);
+            SFSDK_USE_DEPRECATED_END
         });
     }
 }
@@ -809,8 +824,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 
 #pragma mark - SFSDKLoginHostDelegate
 - (void)hostListViewControllerDidSelectLoginHost:(SFSDKLoginHostListViewController *)hostListViewController {
-    [hostListViewController dismissViewControllerAnimated:YES completion:nil];
-    [self restartAuthentication];
+    [self loginHostSelected:hostListViewController];
 }
 
 - (void)hostListViewController:(SFSDKLoginHostListViewController *)hostListViewController didChangeLoginHost:(SFSDKLoginHost *)newLoginHost {
@@ -821,6 +835,15 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     [[NSNotificationCenter defaultCenter] postNotification:loginHostChangedNotification];
     self.authSession.oauthRequest.loginHost = newLoginHost.host;
     [_accountsLock unlock];
+}
+
+- (void)hostListViewControllerDidAddLoginHost:(SFSDKLoginHostListViewController *)hostListViewController {
+    [self loginHostSelected:hostListViewController];
+}
+
+- (void)loginHostSelected:(SFSDKLoginHostListViewController *)hostListViewController {
+    [hostListViewController dismissViewControllerAnimated:YES completion:nil];
+    [self restartAuthentication];
 }
 
 #pragma mark - SFSDKLoginFlowSelectionViewDelegate (SP App flow Related Actions)
@@ -869,13 +892,12 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     __weak typeof (self) weakSelf = self;
     SFOAuthCredentials *spAppCredentials = [self spAppCredentials:spAppOptions];
     SFRestRequest *request = [[SFRestAPI sharedInstanceWithUser:user] requestForUserInfo];
-    [[SFRestAPI sharedInstanceWithUser:user] sendRESTRequest:request failBlock:^(NSError *error, NSURLResponse *rawResponse) {
+    [[SFRestAPI sharedInstanceWithUser:user] sendRequest:request failureBlock:^(id response, NSError *error, NSURLResponse *rawResponse) {
         [SFSDKIDPAuthHelper invokeSPAppWithError:spAppCredentials error:error reason:@"Failed refreshing credentials"];
-    } completeBlock:^(id response, NSURLResponse *rawResponse) {
+    } successBlock:^(id response, NSURLResponse *rawResponse) {
         __strong typeof (self) strongSelf = weakSelf;
         [strongSelf authenticateOnBehalfOfSPApp:user spAppCredentials:spAppCredentials];
     }];
-
 }
 
 - (void)cancel:(NSDictionary *)spAppOptions {
@@ -939,7 +961,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     return _userAccountMap;
 }
 
+SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
 - (void)setAccountPersister:(id<SFUserAccountPersister>) persister {
+SFSDK_USE_DEPRECATED_END
     if(persister != _accountPersister) {
         [_accountsLock lock];
         _accountPersister = persister;
@@ -1083,7 +1107,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     [_accountsLock lock];
 
     NSError *internalError = nil;
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     NSDictionary<SFUserAccountIdentity *,SFUserAccount *> *accounts = [self.accountPersister fetchAllAccounts:&internalError];
+    SFSDK_USE_DEPRECATED_END
     
     if (_userAccountMap)
         [_userAccountMap removeAllObjects];
@@ -1183,7 +1209,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     if ([self.userAccountMap objectForKey:userAccount.accountIdentity]!=nil)
         [self.userAccountMap removeObjectForKey:userAccount.accountIdentity];
 
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     success = [self.accountPersister saveAccountForUser:userAccount error:error];
+    SFSDK_USE_DEPRECATED_END
     if (success) {
         [self.userAccountMap setObject:userAccount forKey:userAccount.accountIdentity];
         if (self.userAccountMap.count>1 && oldCount<self.userAccountMap.count ) {
@@ -1198,7 +1226,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 - (BOOL)deleteAccountForUser:(SFUserAccount *)user error:(NSError **)error {
     BOOL success = NO;
     [_accountsLock lock];
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     success = [self.accountPersister deleteAccountForUser:user error:error];
+    SFSDK_USE_DEPRECATED_END
 
     if (success) {
         user.userDeleted = YES;
@@ -1409,7 +1439,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 }
 
 - (BOOL)deviceHasBiometric {
-    return [[SFPasscodeManager sharedManager] deviceHasBiometric];
+    return [SFSecurityLockout deviceHasBiometric];
 }
 
 - (SFBiometricUnlockState)biometricUnlockState {
@@ -1531,7 +1561,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         };
     }];
     dispatch_async(dispatch_get_main_queue(), ^{
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
         weakSelf.alertDisplayBlock(message, SFSDKWindowManager.sharedManager.authWindow);
+        SFSDK_USE_DEPRECATED_END
     });
 }
 
@@ -1549,7 +1581,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         };
     }];
     dispatch_async(dispatch_get_main_queue(), ^{
-         weakSelf.alertDisplayBlock(message, SFSDKWindowManager.sharedManager.authWindow);
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
+        weakSelf.alertDisplayBlock(message, SFSDKWindowManager.sharedManager.authWindow);
+        SFSDK_USE_DEPRECATED_END
     });
 }
 
@@ -1615,8 +1649,11 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 }
 
 - (void)resetAuthentication {
+    
     [_accountsLock lock];
-    [self.authSession.oauthCoordinator.view removeFromSuperview];
+    if (self.authSession.authInfo.authType == SFOAuthTypeUserAgent) {
+        [self.authSession.oauthCoordinator.view removeFromSuperview];
+    }
     [self.authSession.oauthCoordinator stopAuthentication];
     self.authSession.identityCoordinator.idData = nil;
     self.authSession.isAuthenticating = NO;
@@ -1625,10 +1662,11 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 }
 
 - (void)finalizeAuthCompletion:(SFSDKAuthSession *)authSession {
-
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     // Apply the credentials that will ensure there is a user and that this
     // current user as the proper credentials.
     SFUserAccount *userAccount = [self applyCredentials:authSession.oauthCoordinator.credentials withIdData:authSession.identityCoordinator.idData];
+    SFSDK_USE_DEPRECATED_END
     BOOL loginStateTransitionSucceeded = [userAccount transitionToLoginState:SFUserAccountLoginStateLoggedIn];
     if (!loginStateTransitionSucceeded) {
 
@@ -1721,7 +1759,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         NSMutableArray<NSString *> *hosts = [[NSMutableArray alloc] init];
         for (int i = 0; i < numHosts; i++) {
             SFSDKLoginHost *host = [[SFSDKLoginHostStorage sharedInstance] loginHostAtIndex:i];
-            if (host) {
+            if (host.host) {
                 [hosts addObject:host.host];
             }
         }

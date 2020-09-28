@@ -100,7 +100,9 @@ static CGFloat      const kSFViewBorderWidth                   = 0.5f;
     self.passcodeTextView.layer.borderWidth = kSFViewBorderWidth;
     self.passcodeTextView.accessibilityIdentifier = @"passcodeTextField";
     self.passcodeTextView.accessibilityLabel = [SFSDKResourceUtils localizedString:@"accessibilityPasscodeFieldLabel"];
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     self.passcodeTextView.accessibilityHint = [[NSString alloc] initWithFormat:[SFSDKResourceUtils localizedString:@"accessibilityPasscodeLengthHint"], self.viewConfig.passcodeLength];
+    SFSDK_USE_DEPRECATED_END
     self.passcodeTextView.secureTextEntry = YES;
     self.passcodeTextView.isAccessibilityElement = YES;
     [self.passcodeTextView clearPasscode];
@@ -129,9 +131,13 @@ static CGFloat      const kSFViewBorderWidth                   = 0.5f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSString *instructions = self.updateMode ? @"passcodeChangeInstructions" : @"passcodeCreateInstructions";
-    self.passcodeInstructionsLabel.text = [SFSDKResourceUtils localizedString:instructions];
-    [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"createPasscodeNavTitle"]];
+    if (self.updateMode) {
+        self.passcodeInstructionsLabel.text = [SFSDKResourceUtils localizedString:@"passcodeChangeInstructions"];
+        [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"changePasscodeNavTitle"]];
+    } else {
+        self.passcodeInstructionsLabel.text = [SFSDKResourceUtils localizedString:@"passcodeCreateInstructions"];
+        [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"createPasscodeNavTitle"]];
+    }
     [self.passcodeInstructionsLabel setFont:self.viewConfig.instructionFont];
     if (UIAccessibilityIsVoiceOverRunning()) {
         UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, self.passcodeInstructionsLabel);
@@ -171,11 +177,13 @@ static CGFloat      const kSFViewBorderWidth                   = 0.5f;
 {
     [super viewDidAppear:animated];
     if (self.updateMode) {
-       self.passcodeInstructionsLabel.text = [SFSDKResourceUtils localizedString:@"passcodeCreateInstructions"];
+        [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"changePasscodeNavTitle"]];
+        self.passcodeInstructionsLabel.text = [SFSDKResourceUtils localizedString:@"passcodeChangeInstructions"];
     } else {
-       self.passcodeInstructionsLabel.text = [SFSDKResourceUtils localizedString:@"passcodeChangeInstructions"];
+        [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"createPasscodeNavTitle"]];
+        self.passcodeInstructionsLabel.text = [SFSDKResourceUtils localizedString:@"passcodeCreateInstructions"];
     }
-    [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"createPasscodeNavTitle"]];
+
     [self.passcodeInstructionsLabel setFont:self.viewConfig.instructionFont];
     [self.passcodeInstructionsLabel setHidden:NO];
     [self.passcodeTextView setHidden:NO];
@@ -194,11 +202,13 @@ static CGFloat      const kSFViewBorderWidth                   = 0.5f;
         return NO;
     }
     
-   if (self.passcodeTextView.passcodeInput.length < self.viewConfig.passcodeLength) {
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
+    if (self.passcodeTextView.passcodeInput.length < self.viewConfig.passcodeLength) {
         [self.passcodeTextView.passcodeInput appendString:rString];
     }
     
     if ([self.passcodeTextView.passcodeInput length] == self.viewConfig.passcodeLength) {
+    SFSDK_USE_DEPRECATED_END
         if (self.firstPasscodeValidated) {
             if ([self.passcodeTextView.passcodeInput isEqualToString:self.initialPasscode] ) {
                 if ([self.passcodeTextView isFirstResponder]) {
@@ -222,7 +232,11 @@ static CGFloat      const kSFViewBorderWidth                   = 0.5f;
             self.firstPasscodeValidated = YES;
             
             //Change labels for confirm passcode
-            [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"verifyPasscodeNavTitle"]];
+            if (self.updateMode) {
+                [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"confirmChangePasscodeNavTitle"]];
+            } else {
+                [self.navigationItem setTitle:[SFSDKResourceUtils localizedString:@"confirmPasscodeNavTitle"]];
+            }
             [self.passcodeInstructionsLabel setText:[SFSDKResourceUtils localizedString:@"passcodeConfirmInstructions"]];
             if (UIAccessibilityIsVoiceOverRunning()) {
                 UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, self.passcodeInstructionsLabel.text);

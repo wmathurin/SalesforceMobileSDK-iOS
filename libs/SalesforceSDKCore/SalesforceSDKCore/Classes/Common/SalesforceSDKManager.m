@@ -36,7 +36,10 @@
 #import "SFDefaultUserManagementViewController.h"
 #import <SalesforceSDKCommon/SFSwiftDetectUtil.h>
 #import "SFSDKEncryptedURLCache.h"
+#import "SFSDKNullURLCache.h"
 #import "UIColor+SFColors.h"
+#import "SFDirectoryManager+Internal.h"
+#import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 
 static NSString * const kSFAppFeatureSwiftApp   = @"SW";
 static NSString * const kSFAppFeatureMultiUser   = @"MU";
@@ -53,6 +56,9 @@ static Class InstanceClass = nil;
 
 // AILTN app name
 static NSString* ailtnAppName = nil;
+
+// App name
+static NSString* appName = nil;
 
 // Dev support
 static NSString *const SFSDKShowDevDialogNotification = @"SFSDKShowDevDialogNotification";
@@ -136,8 +142,21 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     return ailtnAppName;
 }
 
++ (void)setAppName:(NSString *)newAppName {
+    @synchronized (appName) {
+        if (newAppName) {
+            appName = newAppName;
+        }
+    }
+}
+
++ (NSString *)appName {
+    return appName;
+}
+
 + (void)initialize {
     if (self == [SalesforceSDKManager class]) {
+
         /*
          * Checks if an analytics app name has already been set by the app.
          * If not, fetches the default app name to be used and sets it.
@@ -147,6 +166,18 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
             NSString *ailtnAppName = [[NSBundle mainBundle] infoDictionary][(NSString *) kCFBundleNameKey];
             if (ailtnAppName) {
                 [SalesforceSDKManager setAiltnAppName:ailtnAppName];
+            }
+        }
+
+        /*
+         * Checks if an app name has already been set by the app.
+         * If not, fetches the default app name to be used and sets it.
+         */
+        NSString *currentAppName = [SalesforceSDKManager appName];
+        if (!currentAppName) {
+            NSString *appName = [[NSBundle mainBundle] infoDictionary][(NSString *) kCFBundleNameKey];
+            if (appName) {
+                [SalesforceSDKManager setAppName:appName];
             }
         }
     }
@@ -213,7 +244,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 #endif
         self.sdkManagerFlow = self;
         self.delegates = [NSHashTable weakObjectsHashTable];
-        [SFSecurityLockout addDelegate:self];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleAppForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleAppBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleAppTerminate:) name:UIApplicationWillTerminateNotification object:nil];
@@ -228,16 +258,22 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow  selector:@selector(handleIDPUserAddCompleted:)
                                                      name:kSFNotificationUserWillSendIDPResponse object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserWillLogout:) name:kSFNotificationUserWillLogout object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleUserDidLogout:)  name:kSFNotificationUserDidLogout object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserWillSwitch:)  name:kSFNotificationUserWillSwitch object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidSwitch:)  name:kSFNotificationUserDidSwitch object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserWillSwitch:) name:kSFNotificationUserWillSwitch object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidSwitch:) name:kSFNotificationUserDidSwitch object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passcodeFlowWillBegin:) name:kSFPasscodeFlowWillBegin object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passcodeFlowDidComplete:) name:kSFPasscodeFlowCompleted object:nil];
         
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in MobileSDK 9.0
         [SFPasscodeManager sharedManager].preferredPasscodeProvider = kSFPasscodeProviderPBKDF2;
+        SFSDK_USE_DEPRECATED_END
         self.useSnapshotView = YES;
         [self computeWebViewUserAgent]; // web view user agent is computed asynchronously so very first call to self.userAgentString(...) will be missing it
         self.userAgentString = [self defaultUserAgentString];
-        self.encryptURLCache = YES;
+        self.URLCacheType = kSFURLCacheTypeEncrypted;
         [self setupServiceConfiguration];
+        [SFDirectoryManager upgradeUserDirectories];
     }
     return self;
 }
@@ -398,11 +434,10 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     return launchActionString;
 }
 - (void)setEncryptURLCache:(BOOL)encryptURLCache {
-    _encryptURLCache = encryptURLCache;
-    if (self.encryptURLCache) {
-        [self enableEncryptedURLCache];
+    if (encryptURLCache) {
+        [self setURLCacheType:kSFURLCacheTypeEncrypted];
     } else {
-        [self disableEncryptedURLCache];
+        [self setURLCacheType:kSFURLCacheTypeStandard];
     }
 }
 
@@ -556,6 +591,8 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         [launchStateErrorMessages addObject:errorMessage];
         validInputs = NO;
     }
+    // TODO: Remove in Mobile SDK 9.0
+    SFSDK_USE_DEPRECATED_BEGIN
     if (!self.postLaunchAction) {
         [SFSDKCoreLogger w:[self class] format:@"No post-launch action set.  Nowhere to go after launch completes."];
     }
@@ -565,6 +602,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     if (!self.postLogoutAction) {
         [SFSDKCoreLogger w:[self class] format:@"No post-logout action set.  Nowhere to go when the user is logged out."];
     }
+    SFSDK_USE_DEPRECATED_END
     
     if (!validInputs && launchStateError) {
         *launchStateError = [[NSError alloc] initWithDomain:kSalesforceSDKManagerErrorDomain
@@ -604,6 +642,8 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     [SFUserAccountManager sharedInstance].scopes = self.appConfig.oauthScopes;
 }
 
+// TODO: Remove in Mobile SDK 9.0
+SFSDK_USE_DEPRECATED_BEGIN
 - (void)sendLaunchError:(NSError *)theLaunchError
 {
     _isLaunching = NO;
@@ -652,16 +692,20 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         }
     }
 }
+SFSDK_USE_DEPRECATED_END
 
 - (void)handleAppForeground:(NSNotification *)notification
 {
     [SFSDKCoreLogger d:[self class] format:@"App is entering the foreground."];
     
+    // TODO: Remove in Mobile SDK 9.0
+    SFSDK_USE_DEPRECATED_BEGIN
     [self enumerateDelegates:^(NSObject<SalesforceSDKManagerDelegate> *delegate) {
         if ([delegate respondsToSelector:@selector(sdkManagerWillEnterForeground)]) {
             [delegate sdkManagerWillEnterForeground];
         }
     }];
+    SFSDK_USE_DEPRECATED_END
     
     if (_isLaunching) {
         [SFSDKCoreLogger d:[self class] format:@"SDK is still launching.  No foreground action taken."];
@@ -684,8 +728,9 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
                 [SFSDKCoreLogger i:[self class] format:@"Passcode validation succeeded, or was not required, on app foreground.  Triggering postAppForeground handler."];
                 [self sendPostAppForegroundIfRequired];
             }];
-            
+            SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
             [SFSecurityLockout validateTimer];
+            SFSDK_USE_DEPRECATED_END
         }
     }
 }
@@ -694,11 +739,14 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 {
     [SFSDKCoreLogger d:[self class] format:@"App is entering the background."];
     
+    // TODO: Remove in Mobile SDK 9.0
+    SFSDK_USE_DEPRECATED_BEGIN
     [self enumerateDelegates:^(id<SalesforceSDKManagerDelegate> delegate) {
         if ([delegate respondsToSelector:@selector(sdkManagerDidEnterBackground)]) {
             [delegate sdkManagerDidEnterBackground];
         }
     }];
+    SFSDK_USE_DEPRECATED_END
     
     [self savePasscodeActivityInfo];
     [self clearClipboard];
@@ -713,11 +761,14 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 {
     [SFSDKCoreLogger d:[self class] format:@"App is resuming active state."];
     
+    // TODO: Remove in Mobile SDK 9.0
+    SFSDK_USE_DEPRECATED_BEGIN
     [self enumerateDelegates:^(id<SalesforceSDKManagerDelegate> delegate) {
         if ([delegate respondsToSelector:@selector(sdkManagerDidBecomeActive)]) {
             [delegate sdkManagerDidBecomeActive];
         }
     }];
+    SFSDK_USE_DEPRECATED_END
     
     @try {
         [self dismissSnapshot];
@@ -731,11 +782,14 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 {
     [SFSDKCoreLogger d:[self class] format:@"App is resigning active state."];
     
+    // TODO: Remove in Mobile SDK 9.0
+    SFSDK_USE_DEPRECATED_BEGIN
     [self enumerateDelegates:^(id<SalesforceSDKManagerDelegate> delegate) {
         if ([delegate respondsToSelector:@selector(sdkManagerWillResignActive)]) {
             [delegate sdkManagerWillResignActive];
         }
     }];
+    SFSDK_USE_DEPRECATED_END
     
     // Don't present snapshot during advanced authentication or Passcode Presentation
     // ==============================================================================
@@ -760,14 +814,18 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 - (void)handleAuthCompleted:(NSNotification *)notification
 {
     // Will set up the passcode timer for auth that occurs out of band from SDK Manager launch.
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     [SFSecurityLockout setupTimer];
+    SFSDK_USE_DEPRECATED_END
     [SFSecurityLockout startActivityMonitoring];
 }
 
 - (void)handleIDPInitiatedAuthCompleted:(NSNotification *)notification
 {
     // Will set up the passcode timer for auth that occurs out of band from SDK Manager launch.
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     [SFSecurityLockout setupTimer];
+    SFSDK_USE_DEPRECATED_END
     [SFSecurityLockout startActivityMonitoring];
     NSDictionary *userInfo = notification.userInfo;
     SFUserAccount *userAccount = userInfo[kSFNotificationUserInfoAccountKey];
@@ -782,11 +840,17 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     SFUserAccount *userAccount = userInfo[kSFNotificationUserInfoAccountKey];
     // this is the only user context in the idp app.
     if ([userAccount isEqual:[SFUserAccountManager sharedInstance].currentUser]) {
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
         [SFSecurityLockout setupTimer];
+        SFSDK_USE_DEPRECATED_END
         [SFSecurityLockout startActivityMonitoring];
         [[SFUserAccountManager sharedInstance] switchToUser:userAccount];
         [self sendPostLaunch];
     }
+}
+- (void)handleUserWillLogout:(NSNotification *)notification {
+    SFUserAccount *user = notification.userInfo[kSFNotificationUserInfoAccountKey];
+    [SFSDKKeyValueEncryptedFileStore removeAllStoresForUser:user];
 }
 
 - (void)handlePostLogout
@@ -794,6 +858,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     // Close the passcode screen and reset passcode monitoring.
     [SFSecurityLockout cancelPasscodeScreen];
     [SFSecurityLockout stopActivityMonitoring];
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     [SFSecurityLockout removeTimer];
     [self sendPostLogout];
 }
@@ -815,6 +880,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 - (void)savePasscodeActivityInfo
 {
     [SFSecurityLockout removeTimer];
+    SFSDK_USE_DEPRECATED_END
     [SFInactivityTimerCenter saveActivityTimestamp];
 }
     
@@ -862,7 +928,8 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     if ([self isSnapshotPresented]) {
         if (self.snapshotPresentationAction && self.snapshotDismissalAction) {
             self.snapshotDismissalAction(_snapshotViewController);
-            if ([SFSecurityLockout isPasscodeNeeded]) {
+            if ([SFSecurityLockout shouldLock]) {
+                SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
                 [SFSecurityLockout validateTimer];
             }
         } else {
@@ -870,6 +937,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
                 [[SFSDKWindowManager sharedManager].snapshotWindow dismissWindowAnimated:NO  withCompletion:^{
                     if ([SFSecurityLockout isPasscodeNeeded]) {
                         [SFSecurityLockout validateTimer];
+                        SFSDK_USE_DEPRECATED_END
                     }
                 }];
             }];
@@ -931,7 +999,9 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     
     SFUserAccountManagerSuccessCallbackBlock successBlock = ^(SFOAuthInfo *authInfo,SFUserAccount *userAccount) {
         [SFSDKCoreLogger i:[self class] format:@"Authentication (%@) succeeded.  Launch completed.", authInfo.authTypeDescription];
+        SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
         [SFSecurityLockout setupTimer];
+        SFSDK_USE_DEPRECATED_END
         [SFSecurityLockout startActivityMonitoring];
         [self authValidatedToPostAuth:SFSDKLaunchActionAuthenticated];
     };
@@ -966,7 +1036,9 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     // stays on the screen, masking the main UI.
     [[SFUserAccountManager sharedInstance] dismissAuthViewControllerIfPresent];
 
+    SFSDK_USE_DEPRECATED_BEGIN // TODO: Remove in Mobile SDK 9.0
     [SFSecurityLockout setupTimer];
+    SFSDK_USE_DEPRECATED_END
     [SFSecurityLockout startActivityMonitoring];
     [self authValidatedToPostAuth:noAuthLaunchAction];
 }
@@ -980,7 +1052,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 - (SFSDKUserAgentCreationBlock)defaultUserAgentString {
     return ^NSString *(NSString *qualifier) {
         UIDevice *curDevice = [UIDevice currentDevice];
-        NSString *appName = [[NSBundle mainBundle] infoDictionary][(NSString*)kCFBundleNameKey];
+        NSString *appName = [SalesforceSDKManager appName];
         NSString *prodAppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         NSString *buildNumber = [[NSBundle mainBundle] infoDictionary][(NSString*)kCFBundleVersionKey];
         NSString *appVersion = [NSString stringWithFormat:@"%@(%@)", prodAppVersion, buildNumber];
@@ -1053,6 +1125,8 @@ void dispatch_once_on_main_thread(dispatch_once_t *predicate, dispatch_block_t b
     }
 }
 
+// TODO: Remove in Mobile SDK 9.0
+SFSDK_USE_DEPRECATED_BEGIN
 - (void)enumerateDelegates:(void (^)(id<SalesforceSDKManagerDelegate>))block
 {
     @synchronized(self) {
@@ -1061,19 +1135,27 @@ void dispatch_once_on_main_thread(dispatch_once_t *predicate, dispatch_block_t b
         }
     }
 }
+SFSDK_USE_DEPRECATED_END
 
-- (void)enableEncryptedURLCache {
-    if (![NSURLCache.sharedURLCache isKindOfClass:[SFSDKEncryptedURLCache class]]) {
+- (void)setURLCacheType:(SFURLCacheType)URLCacheType {
+    if (_URLCacheType != URLCacheType) {
+        _URLCacheType = URLCacheType;
         [NSURLCache.sharedURLCache removeAllCachedResponses];
-        SFSDKEncryptedURLCache *encryptedCache = [[SFSDKEncryptedURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
-        [NSURLCache setSharedURLCache:encryptedCache];
-    }
-}
-
-- (void)disableEncryptedURLCache {
-    if ([NSURLCache.sharedURLCache isKindOfClass:[SFSDKEncryptedURLCache class]]) {
-        [NSURLCache.sharedURLCache removeAllCachedResponses];
-        NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+        NSURLCache *cache;
+        switch (URLCacheType) {
+            case kSFURLCacheTypeEncrypted:
+                _encryptURLCache = YES;
+                cache = [[SFSDKEncryptedURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+            case kSFURLCacheTypeNull:
+                _encryptURLCache = NO;
+                 cache = [[SFSDKNullURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+            case kSFURLCacheTypeStandard:
+                _encryptURLCache = NO;
+                cache = [[NSURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+        }
         [NSURLCache setSharedURLCache:cache];
     }
 }
@@ -1102,18 +1184,17 @@ void dispatch_once_on_main_thread(dispatch_once_t *predicate, dispatch_block_t b
     [self.sdkManagerFlow handleUserDidSwitch:fromUser toUser:toUser];
 }
 
-#pragma mark - SFSecurityLockoutDelegate
+#pragma mark - SFSecurityLockout
 
-- (void)passcodeFlowWillBegin:(SFAppLockControllerMode)mode
-{
+- (void)passcodeFlowWillBegin:(NSNotification *)notification {
     self.passcodeDisplayed = YES;
 }
 
-- (void)passcodeFlowDidComplete:(BOOL)success
-{
+- (void)passcodeFlowDidComplete:(NSNotification *)notification {
     self.passcodeDisplayed = NO;
     [self sendPostAppForegroundIfRequired];
 }
+
 @end
 
 NSString *SFAppTypeGetDescription(SFAppType appType){

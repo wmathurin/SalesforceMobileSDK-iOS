@@ -272,12 +272,12 @@
 }
 
 - (void)handleBackButtonAction {
-   
+    [[SFUserAccountManager sharedInstance] stopCurrentAuthentication:nil];
     if (![SFUserAccountManager sharedInstance].idpEnabled) {
         [[SFSDKWindowManager sharedManager].authWindow.viewController.presentedViewController dismissViewControllerAnimated:NO completion:^{
             [[SFSDKWindowManager sharedManager].authWindow dismissWindow];
         }];
-    }else {
+    } else {
         [[SFSDKWindowManager sharedManager].authWindow.viewController dismissViewControllerAnimated:NO completion:nil];
     }
 }
@@ -339,11 +339,7 @@
 
 - (void)showHostListView {
     SFSDKNavigationController *navController = [[SFSDKNavigationController alloc] initWithRootViewController:self.loginHostListViewController];
-    if (@available(iOS 13.0, *)) {
-        navController.modalPresentationStyle = UIModalPresentationFullScreen;
-    } else {
-       navController.modalPresentationStyle = UIModalPresentationPageSheet;
-    }
+    navController.modalPresentationStyle = UIModalPresentationPageSheet;
     
     [self presentViewController:navController animated:YES completion:nil];
 }
