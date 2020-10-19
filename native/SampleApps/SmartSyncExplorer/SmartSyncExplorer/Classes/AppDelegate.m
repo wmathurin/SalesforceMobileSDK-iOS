@@ -49,8 +49,6 @@
  * (Re-)sets the view state when the app first loads (or post-logout).
  */
 - (void)initializeAppViewState;
-
-- (void)setUserLoginStatus :(BOOL) loggedIn;
 @end
 
 @implementation AppDelegate
@@ -71,25 +69,14 @@
         __weak typeof (self) weakSelf = self;
         [SFSDKAuthHelper registerBlockForCurrentUserChangeNotifications:^{
             __strong typeof (weakSelf) strongSelf = weakSelf;
-            [strongSelf setUserLoginStatus:YES];
-            [strongSelf resetViewState:^{
+           [strongSelf resetUserloginStatus];
+           [strongSelf resetViewState:^{
                 [strongSelf setupRootViewController];
             }];
         }];
-        
-        //Uncomment following block to enable IDP Login flow.
-        /*
-        //scheme of idpAppp
-        [SmartSyncSDKManager sharedManager].idpAppURIScheme = @"sampleidpapp";
-         //user friendly display name
-        [SmartSyncSDKManager sharedManager].appDisplayName = @"SampleAppOne";
-         
-        //Use the following code block to replace the login flow selection dialog
-        [SmartSyncSDKManager sharedManager].idpLoginFlowSelectionBlock = ^UIViewController<SFSDKLoginFlowSelectionView> * _Nonnull{
-            IDPLoginNavViewController *controller = [[IDPLoginNavViewController alloc] init];
-            return controller;
-        };
-        */
+        //Uncomment following lines to enable IDP Login flow. Set scheme of idpAppp & display name (optional)
+        //[MobileSyncSDKManager sharedManager].idpAppURIScheme = @"sampleidpapp";
+        //[MobileSyncSDKManager sharedManager].appDisplayName = @"SampleAppOne";
     }
     return self;
 }
@@ -106,6 +93,7 @@
     [self initializeAppViewState];
     __weak typeof (self) weakSelf = self;
     [SFSDKAuthHelper loginIfRequired:^{
+        [self resetUserloginStatus];
         [weakSelf setupRootViewController];
     }];
     return YES;
@@ -138,7 +126,8 @@
 }
 
 #pragma mark - Private methods
-- (void)setUserLoginStatus:(BOOL) loggedIn {
+- (void)resetUserloginStatus {
+    BOOL loggedIn = [SFUserAccountManager.sharedInstance currentUser] != nil;
     [[NSUserDefaults msdkUserDefaults] setBool:loggedIn forKey:@"userLoggedIn"];
     [[NSUserDefaults msdkUserDefaults] synchronize];
     [SFSDKSmartSyncLogger log:[self class] level:SFLogLevelDebug format:@"%d userLoggedIn", [[NSUserDefaults msdkUserDefaults] boolForKey:@"userLoggedIn"] ];
