@@ -188,6 +188,8 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
     NSFileManager *manager = [[NSFileManager alloc] init];
     if ([manager fileExistsAtPath:filePath]) {
         NSError *removeAccountFileError = nil;
+        NSString *removeFile = [NSString stringWithFormat:@"Will remove old user account data at path '%@'",filePath];
+        [SFSDKCoreLogger w:[self class] format:removeFile];
         if (![manager removeItemAtPath:filePath error:&removeAccountFileError]) {
             NSString *reason = [NSString stringWithFormat:@"Failed to remove old user account data at path '%@': %@",filePath,[removeAccountFileError localizedDescription]];
             [SFSDKCoreLogger w:[self class] format:reason];
@@ -280,11 +282,13 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
             }
             return YES;
         } else {
+            reason = [NSString stringWithFormat:@"Could not unarchive user account data from '%@'", filePath];
             if (error) {
                 *error = [NSError errorWithDomain:SFUserAccountManagerErrorDomain
                                              code:SFUserAccountManagerCannotReadDecryptedArchive
                                          userInfo:@{NSLocalizedDescriptionKey: reason}];
             }
+            [SFSDKCoreLogger d:[self class] format:reason];
             return NO;
         }
 }
