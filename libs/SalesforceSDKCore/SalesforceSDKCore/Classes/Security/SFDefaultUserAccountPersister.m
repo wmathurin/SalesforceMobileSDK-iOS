@@ -143,22 +143,28 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
             NSError *folderRemovalError = nil;
             success= [manager removeItemAtPath:userDirectory error:&folderRemovalError];
             if (!success) {
-                [SFSDKCoreLogger d:[self class]
+                [SFSDKCoreLogger i:[self class]
                    format:@"Error removing the user folder for '%@': %@", user.idData.username, [folderRemovalError localizedDescription]];
                 if (folderRemovalError && error) {
                     *error = folderRemovalError;
                 }
+            } else {
+                [SFSDKCoreLogger i:[self class]
+                   format:@"Successfully removing the user folder for '%@': %@", user.idData.username, [folderRemovalError localizedDescription]];
             }
         } else {
             NSString *reason = [NSString stringWithFormat:@"User folder for user '%@' does not exist on the filesystem", user.idData.username];
             NSError *ferror = [NSError errorWithDomain:SFUserAccountManagerErrorDomain
                                                   code:SFUserAccountManagerCannotReadDecryptedArchive
                                               userInfo:@{NSLocalizedDescriptionKey: reason}];
-            [SFSDKCoreLogger d:[self class] format:@"User folder for user '%@' does not exist on the filesystem.", user.idData.username];
+            [SFSDKCoreLogger i:[self class] format:@"User folder for user '%@' does not exist on the filesystem.", user.idData.username];
             if(error)
                 *error = ferror;
         }
     }
+    [SFSDKCoreLogger i:[self class]
+                format:@"Finish removing the user folder with status: %@", success ? @"YES": @"NO"];
+
     return success;
 }
 
@@ -189,7 +195,8 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
     if ([manager fileExistsAtPath:filePath]) {
         NSError *removeAccountFileError = nil;
         NSString *removeFile = [NSString stringWithFormat:@"Will remove old user account data at path '%@'",filePath];
-        [SFSDKCoreLogger w:[self class] format:removeFile];
+        [SFSDKCoreLogger i:[self class] format:removeFile];
+        
         if (![manager removeItemAtPath:filePath error:&removeAccountFileError]) {
             NSString *reason = [NSString stringWithFormat:@"Failed to remove old user account data at path '%@': %@",filePath,[removeAccountFileError localizedDescription]];
             [SFSDKCoreLogger w:[self class] format:reason];
@@ -237,6 +244,9 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
         return NO;
     }
 
+    NSString *reason = [NSString stringWithFormat:@"Sucessfully save user account data file at path.  %@",filePath];
+    [SFSDKCoreLogger i:[self class] format:reason];
+
     return YES;
 }
 
@@ -258,7 +268,7 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
                                              code:SFUserAccountManagerCannotRetrieveUserData
                                          userInfo:@{NSLocalizedDescriptionKey: reason}];
             }
-            [SFSDKCoreLogger d:[self class] format:reason];
+            [SFSDKCoreLogger i:[self class] format:reason];
             return NO;
         }
         SFEncryptionKey *encKey = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kUserAccountEncryptionKeyLabel autoCreate:YES];
@@ -269,7 +279,7 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
                                              code:SFUserAccountManagerCannotRetrieveUserData
                                          userInfo:@{NSLocalizedDescriptionKey: reason}];
             }
-            [SFSDKCoreLogger w:[self class] format:reason];
+            [SFSDKCoreLogger i:[self class] format:reason];
             return NO;
         }
 
@@ -280,6 +290,8 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
             if (account) {
                 *account = decryptedAccount;
             }
+            NSString *reason = @"User account data loads succesfully";
+            [SFSDKCoreLogger i:[self class] format:reason];
             return YES;
         } else {
             reason = [NSString stringWithFormat:@"Could not unarchive user account data from '%@'", filePath];
@@ -288,7 +300,7 @@ static const NSUInteger SFUserAccountManagerCannotWriteUserData = 10004;
                                              code:SFUserAccountManagerCannotReadDecryptedArchive
                                          userInfo:@{NSLocalizedDescriptionKey: reason}];
             }
-            [SFSDKCoreLogger d:[self class] format:reason];
+            [SFSDKCoreLogger i:[self class] format:reason];
             return NO;
         }
 }
