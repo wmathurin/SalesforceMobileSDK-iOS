@@ -6,9 +6,6 @@
 
 @protocol SalesforceSDKManagerFlow <NSObject>
 
-- (void)passcodeValidationAtLaunch;
-- (void)authAtLaunch;
-- (void)authBypassAtLaunch;
 - (void)handleAppForeground:(nonnull NSNotification *)notification;
 - (void)handleAppBackground:(nonnull NSNotification *)notification;
 - (void)handleAppTerminate:(nonnull NSNotification *)notification;
@@ -27,7 +24,7 @@
 
 @end
 
-@interface SalesforceSDKManager () <SalesforceSDKManagerFlow, SFSecurityLockoutDelegate>
+@interface SalesforceSDKManager () <SalesforceSDKManagerFlow>
 {
     BOOL _isLaunching;
     UIViewController* _snapshotViewController;
@@ -35,14 +32,8 @@
 
 @property (nonatomic, assign) SFAppType appType;
 @property (nonatomic, weak, nullable) id<SalesforceSDKManagerFlow> sdkManagerFlow;
-@property (nonatomic, assign) BOOL hasVerifiedPasscodeAtStartup;
-@property (nonatomic, assign) SFSDKLaunchAction launchActions;
-@property (nonatomic, strong, nonnull) NSHashTable<id<SalesforceSDKManagerDelegate>> *delegates;
 @property (nonatomic, assign, getter=isPasscodeDisplayed) BOOL passcodeDisplayed;
-@property (nonatomic, assign, getter=isInManagerForegroundProcess) BOOL inManagerForegroundProcess;
 
-- (void)passcodeValidatedToAuthValidation;
-- (void)authValidatedToPostAuth:(SFSDKLaunchAction)launchAction;
 - (void)presentSnapshot;
 - (BOOL)isSnapshotPresented;
 - (void)dismissSnapshot;

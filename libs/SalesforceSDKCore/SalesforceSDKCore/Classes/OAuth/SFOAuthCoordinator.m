@@ -291,12 +291,9 @@
     self.authenticating = NO;
     self.advancedAuthState = SFOAuthAdvancedAuthStateNotStarted;
     if ([self.delegate respondsToSelector:@selector(oauthCoordinator:didFailWithError:authInfo:)]) {
-        [self.delegate oauthCoordinator:self didFailWithError:error authInfo:info];
-    } else if ([self.delegate respondsToSelector:@selector(oauthCoordinator:didFailWithError:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [self.delegate oauthCoordinator:self didFailWithError:error];
-#pragma clang diagnostic pop
+        dispatch_async(dispatch_get_main_queue(), ^{
+           [self.delegate oauthCoordinator:self didFailWithError:error authInfo:info];
+        });
     }
     self.authInfo = nil;
 }
@@ -384,7 +381,8 @@
         }
 
     }];
-    
+ 
+    _asWebAuthenticationSession.prefersEphemeralWebBrowserSession = [SalesforceSDKManager sharedManager].useEphemeralSessionForAdvancedAuth;
     [self.delegate oauthCoordinator:self didBeginAuthenticationWithSession:_asWebAuthenticationSession];
 
 }
@@ -617,6 +615,17 @@
         if (nil == error) {
             [self.credentials updateCredentials:params];
             self.credentials.refreshToken   = params[kSFOAuthRefreshToken];
+            // Parse additional flags
+            if(self.additionalOAuthParameterKeys.count > 0) {
+                NSMutableDictionary * parsedValues = [NSMutableDictionary dictionaryWithCapacity:self.additionalOAuthParameterKeys.count];
+                for(NSString * key in self.additionalOAuthParameterKeys) {
+                    id obj = params[key];
+                    if(obj) {
+                        parsedValues[key] = obj;
+                    }
+                }
+                self.credentials.additionalOAuthFields = parsedValues;
+            }
             [self notifyDelegateOfSuccess:self.authInfo];
         } else {
             NSError *finalError;

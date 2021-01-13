@@ -26,7 +26,6 @@ import XCTest
 import Combine
 @testable import SalesforceSDKCore
 
-@available(iOS 13.0, watchOS 6.0, *)
 class RestClientPublisherTests: XCTestCase {
     
     var currentUser: UserAccount?
@@ -51,6 +50,15 @@ class RestClientPublisherTests: XCTestCase {
         validTest.cancellable?.cancel()
     }
     
+    func testRecordsPublisher() {
+        let request = RestClient.shared.request(forQuery: "select name from CONTACT", apiVersion: nil)
+        let publisher: AnyPublisher<RestClient.QueryResponse<TestContact>, Never> = RestClient.shared.records(forRequest: request)
+        
+        let validTest = evaluateResults(publisher: publisher)
+        wait(for: validTest.expectations, timeout: 5)
+        validTest.cancellable?.cancel()
+    }
+  
     func testCompositePublisher() {
         let accountName = self.generateRecordName()
         let contactName = self.generateRecordName()
@@ -68,9 +76,8 @@ class RestClientPublisherTests: XCTestCase {
         wait(for: validTest.expectations, timeout: 10)
         validTest.cancellable?.cancel()
     }
-    
+
     func testBatchPublisher() {
-        
         let accountName = self.generateRecordName()
         let contactName = self.generateRecordName()
         let apiVersion = RestClient.shared.apiVersion
@@ -90,9 +97,7 @@ class RestClientPublisherTests: XCTestCase {
         validTest.cancellable?.cancel()
     }
     
-    
     private func evaluateResults<T: Publisher>(publisher: T?, evaluateValidResult: Bool = true) ->  (expectations:[XCTestExpectation], cancellable: AnyCancellable?)  {
-        
         let finished = expectation(description: "finished")
         let received = expectation(description: "received")
         let failed = expectation(description: "failed")

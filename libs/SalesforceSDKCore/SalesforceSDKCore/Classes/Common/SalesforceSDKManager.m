@@ -27,8 +27,6 @@
 #import "SFUserAccountManager+Internal.h"
 #import "SFSDKWindowManager.h"
 #import "SFManagedPreferences.h"
-#import "SFPasscodeManager.h"
-#import "SFPasscodeProviderManager.h"
 #import "SFInactivityTimerCenter.h"
 #import "SFApplicationHelper.h"
 #import "SFSDKAppFeatureMarkers.h"
@@ -36,7 +34,11 @@
 #import "SFDefaultUserManagementViewController.h"
 #import <SalesforceSDKCommon/SFSwiftDetectUtil.h>
 #import "SFSDKEncryptedURLCache.h"
+#import "SFSDKNullURLCache.h"
 #import "UIColor+SFColors.h"
+#import "SFDirectoryManager+Internal.h"
+#import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
+#import "SFSDKResourceUtils.h"
 
 static NSString * const kSFAppFeatureSwiftApp   = @"SW";
 static NSString * const kSFAppFeatureMultiUser   = @"MU";
@@ -53,6 +55,9 @@ static Class InstanceClass = nil;
 
 // AILTN app name
 static NSString* ailtnAppName = nil;
+
+// App name
+static NSString* appName = nil;
 
 // Dev support
 static NSString *const SFSDKShowDevDialogNotification = @"SFSDKShowDevDialogNotification";
@@ -136,8 +141,21 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     return ailtnAppName;
 }
 
++ (void)setAppName:(NSString *)newAppName {
+    @synchronized (appName) {
+        if (newAppName) {
+            appName = newAppName;
+        }
+    }
+}
+
++ (NSString *)appName {
+    return appName;
+}
+
 + (void)initialize {
     if (self == [SalesforceSDKManager class]) {
+
         /*
          * Checks if an analytics app name has already been set by the app.
          * If not, fetches the default app name to be used and sets it.
@@ -147,6 +165,18 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
             NSString *ailtnAppName = [[NSBundle mainBundle] infoDictionary][(NSString *) kCFBundleNameKey];
             if (ailtnAppName) {
                 [SalesforceSDKManager setAiltnAppName:ailtnAppName];
+            }
+        }
+
+        /*
+         * Checks if an app name has already been set by the app.
+         * If not, fetches the default app name to be used and sets it.
+         */
+        NSString *currentAppName = [SalesforceSDKManager appName];
+        if (!currentAppName) {
+            NSString *appName = [[NSBundle mainBundle] infoDictionary][(NSString *) kCFBundleNameKey];
+            if (appName) {
+                [SalesforceSDKManager setAppName:appName];
             }
         }
     }
@@ -193,16 +223,32 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         motionEndedImplementation = method_setImplementation(class_getInstanceMethod([UIWindow class], @selector(motionEnded:withEvent:)), sfsdkMotionEndedImplementation);
 
         // Pasteboard
-         method_exchangeImplementations(class_getClassMethod([UIPasteboard class], @selector(generalPasteboard)), class_getClassMethod([SalesforceSDKManager class], @selector(sdkPasteboard)));
+        // Get implementation of general pasteboard and store it
+        Method generalPasteboardMethod = class_getClassMethod([UIPasteboard class], @selector(generalPasteboard));
+        IMP generalPasteboardImplementation = method_getImplementation(generalPasteboardMethod);
+        method_setImplementation(class_getClassMethod([SalesforceSDKManager class], @selector(generalPasteboard)), generalPasteboardImplementation);
+        
+        // Set general pasteboard to sdkPasteboard that will either direct to a named pasteboard or the original [UIPasteboard generalPasteboard]
+        Method sdkPasteboardMethod = class_getClassMethod([SalesforceSDKManager class], @selector(sdkPasteboard));
+        IMP sdkPasteboardImplementation = method_getImplementation(sdkPasteboardMethod);
+        method_setImplementation(class_getClassMethod([UIPasteboard class], @selector(generalPasteboard)), sdkPasteboardImplementation);
     });
+}
+
++ (UIPasteboard *)generalPasteboard {
+    // As a result of swizzling, will contain the implementation of [UIPasteboard generalPasteboard]
+    return nil;
+}
+
++ (UIPasteboard *)sdkNamedPasteboard {
+     return [UIPasteboard pasteboardWithName:@"com.salesforce.mobilesdk.pasteboard" create:YES];
 }
 
 + (UIPasteboard *)sdkPasteboard {
     if ([SFManagedPreferences sharedPreferences].shouldDisableExternalPasteDefinedByConnectedApp) {
-        return [UIPasteboard pasteboardWithName:@"com.salesforce.mobilesdk.pasteboard" create:YES];
+        return [SalesforceSDKManager sdkNamedPasteboard];
     }
-    // General pasteboard that was swizzled
-    return [SalesforceSDKManager sdkPasteboard];
+    return [SalesforceSDKManager generalPasteboard];
 }
 
 - (instancetype)init {
@@ -212,8 +258,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         self.isDevSupportEnabled = YES;
 #endif
         self.sdkManagerFlow = self;
-        self.delegates = [NSHashTable weakObjectsHashTable];
-        [SFSecurityLockout addDelegate:self];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleAppForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleAppBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleAppTerminate:) name:UIApplicationWillTerminateNotification object:nil];
@@ -228,16 +272,20 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow  selector:@selector(handleIDPUserAddCompleted:)
                                                      name:kSFNotificationUserWillSendIDPResponse object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserWillLogout:) name:kSFNotificationUserWillLogout object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self.sdkManagerFlow selector:@selector(handleUserDidLogout:)  name:kSFNotificationUserDidLogout object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserWillSwitch:)  name:kSFNotificationUserWillSwitch object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidSwitch:)  name:kSFNotificationUserDidSwitch object:nil];
-        
-        [SFPasscodeManager sharedManager].preferredPasscodeProvider = kSFPasscodeProviderPBKDF2;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserWillSwitch:) name:kSFNotificationUserWillSwitch object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUserDidSwitch:) name:kSFNotificationUserDidSwitch object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passcodeFlowWillBegin:) name:kSFPasscodeFlowWillBegin object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(passcodeFlowDidComplete:) name:kSFPasscodeFlowCompleted object:nil];
+
         self.useSnapshotView = YES;
         [self computeWebViewUserAgent]; // web view user agent is computed asynchronously so very first call to self.userAgentString(...) will be missing it
         self.userAgentString = [self defaultUserAgentString];
-        self.encryptURLCache = YES;
+        self.URLCacheType = kSFURLCacheTypeEncrypted;
+        self.useEphemeralSessionForAdvancedAuth = YES;
         [self setupServiceConfiguration];
+        [SFDirectoryManager upgradeUserDirectories];
     }
     return self;
 }
@@ -314,11 +362,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     [SFUserAccountManager sharedInstance].idpAppURIScheme = idpAppURIScheme;
 }
 
-- (BOOL)isLaunching
-{
-    return _isLaunching;
-}
-
 - (NSString *)brandLoginPath
 {
     return [SFUserAccountManager sharedInstance].brandLoginPath;
@@ -327,83 +370,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 - (void)setBrandLoginPath:(NSString *)brandLoginPath
 {
     [SFUserAccountManager sharedInstance].brandLoginPath = brandLoginPath;
-}
-
-- (NSString *)preferredPasscodeProvider
-{
-    return [SFPasscodeManager sharedManager].preferredPasscodeProvider;
-}
-
-- (void)setPreferredPasscodeProvider:(NSString *)preferredPasscodeProvider
-{
-    [SFPasscodeManager sharedManager].preferredPasscodeProvider = preferredPasscodeProvider;
-}
-
-- (BOOL)launch
-{
-    if (_isLaunching) {
-        [SFSDKCoreLogger e:[self class] format:@"Launch already in progress."];
-        return NO;
-    }
-    [SFSDKCoreLogger i:[self class] format:@"Launching the Salesforce SDK."];
-    _isLaunching = YES;
-    self.launchActions = SFSDKLaunchActionNone;
-    if ([SFSDKWindowManager sharedManager].mainWindow == nil) {
-        [[SFSDKWindowManager sharedManager] setMainUIWindow:[SFApplicationHelper sharedApplication].windows[0]];
-    }
-    
-    NSError *launchStateError = nil;
-    if (![self validateLaunchState:&launchStateError]) {
-        [SFSDKCoreLogger e:[self class] format:@"Please correct errors and try again."];
-        [self sendLaunchError:launchStateError];
-    } else {
-        // Set service configuration values, based on app config.
-        [self setupServiceConfiguration];
-        
-        // If there's a passcode configured, and we haven't validated before (through a previous call to
-        // launch), we validate that first.
-        if (!self.hasVerifiedPasscodeAtStartup) {
-            [self.sdkManagerFlow passcodeValidationAtLaunch];
-        } else {
-            // Otherwise, passcode validation is subject to activity timeout.  Skip to auth check.
-            [self authValidationAtLaunch];
-        }
-    }
-    return YES;
-}
-
-+ (NSString *)launchActionsStringRepresentation:(SFSDKLaunchAction)launchActions
-{
-    if (launchActions == SFSDKLaunchActionNone)
-        return @"SFSDKLaunchActionNone";
-    
-    NSMutableString *launchActionString = [NSMutableString string];
-    NSString *joinString = @"";
-    if (launchActions & SFSDKLaunchActionPasscodeVerified) {
-        [launchActionString appendFormat:@"%@%@", joinString, @"SFSDKLaunchActionPasscodeVerified"];
-        joinString = @"|";
-    }
-    if (launchActions & SFSDKLaunchActionAuthBypassed) {
-        [launchActionString appendFormat:@"%@%@", joinString, @"SFSDKLaunchActionAuthBypassed"];
-        joinString = @"|";
-    }
-    if (launchActions & SFSDKLaunchActionAuthenticated) {
-        [launchActionString appendFormat:@"%@%@", joinString, @"SFSDKLaunchActionAuthenticated"];
-        joinString = @"|";
-    }
-    if (launchActions & SFSDKLaunchActionAlreadyAuthenticated) {
-        [launchActionString appendFormat:@"%@%@", joinString, @"SFSDKLaunchActionAlreadyAuthenticated"];
-    }
-    
-    return launchActionString;
-}
-- (void)setEncryptURLCache:(BOOL)encryptURLCache {
-    _encryptURLCache = encryptURLCache;
-    if (self.encryptURLCache) {
-        [self enableEncryptedURLCache];
-    } else {
-        [self disableEncryptedURLCache];
-    }
 }
 
 #pragma mark - Dev support methods
@@ -441,7 +407,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 
     // On larger devices we don't have an anchor point for the action sheet
     UIAlertControllerStyle style = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone ? UIAlertControllerStyleActionSheet : UIAlertControllerStyleAlert;
-    self.actionSheet = [UIAlertController alertControllerWithTitle:@"Mobile SDK Dev Support"
+    self.actionSheet = [UIAlertController alertControllerWithTitle:[SFSDKResourceUtils localizedString:@"devInfoTitle"]
                                                        message:@""
                                                 preferredStyle:style];
 
@@ -457,7 +423,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
                                                            }]];
     }
     
-    [self.actionSheet addAction:[UIAlertAction actionWithTitle:@"Cancel"
+    [self.actionSheet addAction:[UIAlertAction actionWithTitle:[SFSDKResourceUtils localizedString:@"devInfoCancelKey"]
                                                          style:UIAlertActionStyleCancel
                                                        handler:^(__unused UIAlertAction *action) {
                                                            self.actionSheet = nil;
@@ -482,6 +448,10 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
                      [presentedViewController dismissViewControllerAnimated:YES completion:nil];
                  }];
                  [presentedViewController presentViewController:umvc animated:YES completion:nil];
+             }],
+             [[SFSDKDevAction alloc]initWith:@"Inspect Key-Value Store" handler:^{
+                 UIViewController *keyValueStoreInspector = [[SFSDKKeyValueEncryptedFileStoreViewController new] createUI];
+                 [presentedViewController presentViewController:keyValueStoreInspector animated:YES completion:nil];
              }]
     ];
 }
@@ -493,11 +463,13 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
             @"SDK Version", SALESFORCE_SDK_VERSION,
             @"App Type", [self getAppTypeAsString],
             @"User Agent", self.userAgentString(@""),
-             @"Browser Login Enabled", [SFUserAccountManager sharedInstance].useBrowserAuth? @"YES" : @"NO",
+            @"Browser Login Enabled", [SFUserAccountManager sharedInstance].useBrowserAuth? @"YES" : @"NO",
             @"IDP Enabled", [self idpEnabled] ? @"YES" : @"NO",
             @"Identity Provider", [self isIdentityProvider] ? @"YES" : @"NO",
             @"Current User", [self userToString:userAccountManager.currentUser],
-            @"Authenticated Users", [self usersToString:userAccountManager.allUserAccounts]
+            @"Authenticated Users", [self usersToString:userAccountManager.allUserAccounts],
+            @"User Key-Value Stores", [self safeJoin:[SFSDKKeyValueEncryptedFileStore allStoreNames] separator:@", "],
+            @"Global Key-Value Stores", [self safeJoin:[SFSDKKeyValueEncryptedFileStore allGlobalStoreNames] separator:@", "]
     ]];
 
     [devInfos addObjectsFromArray:[self dictToDevInfos:self.appConfig.configDict keyPrefix:@"BootConfig"]];
@@ -534,50 +506,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 
 #pragma mark - Private methods
 
-- (BOOL)validateLaunchState:(NSError **)launchStateError
-{
-    BOOL validInputs = YES;
-    NSMutableArray *launchStateErrorMessages = [NSMutableArray array];
-    // Managed settings should override any equivalent local app settings.
-    [self configureManagedSettings];
-    
-    if ([SFSDKWindowManager sharedManager].mainWindow == nil) {
-        NSString *noWindowError = [NSString stringWithFormat:@"%@ cannot perform launch before the UIApplication main window property has been initialized.  Cannot continue.", [self class]];
-        [SFSDKCoreLogger e:[self class] format:noWindowError];
-        [launchStateErrorMessages addObject:noWindowError];
-        validInputs = NO;
-    }
-    
-    NSError *appConfigError = nil;
-    BOOL appConfigValidated = [self.appConfig validate:&appConfigError];
-    if (!appConfigValidated) {
-        NSString *errorMessage = [NSString stringWithFormat:@"App config did not validate: %@. Cannot continue.", appConfigError.localizedDescription];
-        [SFSDKCoreLogger e:[self class] message:errorMessage];
-        [launchStateErrorMessages addObject:errorMessage];
-        validInputs = NO;
-    }
-    if (!self.postLaunchAction) {
-        [SFSDKCoreLogger w:[self class] format:@"No post-launch action set.  Nowhere to go after launch completes."];
-    }
-    if (!self.launchErrorAction) {
-        [SFSDKCoreLogger w:[self class] format:@"No launch error action set.  Nowhere to go if an error occurs during launch."];
-    }
-    if (!self.postLogoutAction) {
-        [SFSDKCoreLogger w:[self class] format:@"No post-logout action set.  Nowhere to go when the user is logged out."];
-    }
-    
-    if (!validInputs && launchStateError) {
-        *launchStateError = [[NSError alloc] initWithDomain:kSalesforceSDKManagerErrorDomain
-                                                       code:kSalesforceSDKManagerErrorInvalidLaunchParameters
-                                                   userInfo:@{
-                                                              NSLocalizedDescriptionKey : @"Invalid launch parameters",
-                                                              kSalesforceSDKManagerErrorDetailsKey : launchStateErrorMessages
-                                                              }];
-    }
-    
-    return validInputs;
-}
-
 - (void)configureManagedSettings
 {
     if ([SFManagedPreferences sharedPreferences].requireCertificateAuthentication) {
@@ -604,102 +532,36 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     [SFUserAccountManager sharedInstance].scopes = self.appConfig.oauthScopes;
 }
 
-- (void)sendLaunchError:(NSError *)theLaunchError
-{
-    _isLaunching = NO;
-    if (self.launchErrorAction) {
-        self.launchErrorAction(theLaunchError, self.launchActions);
-    }
-}
-
-- (void)sendPostLogout
-{
-    [self logoutCleanup];
-    if (self.postLogoutAction) {
-        self.postLogoutAction();
-    }
-}
-
 - (void)logoutCleanup
 {
-    _isLaunching = NO;
-    self.inManagerForegroundProcess = NO;
     self.passcodeDisplayed = NO;
-}
-
-- (void)sendPostLaunch
-{
-    _isLaunching = NO;
-    if (self.postLaunchAction) {
-        self.postLaunchAction(self.launchActions);
-    }
-}
-
-- (void)sendUserAccountSwitch:(SFUserAccount *)fromUser toUser:(SFUserAccount *)toUser
-{
-    _isLaunching = NO;
-    if (self.switchUserAction) {
-        self.switchUserAction(fromUser, toUser);
-    }
-}
-
-- (void)sendPostAppForegroundIfRequired
-{
-    if (self.isInManagerForegroundProcess) {
-        self.inManagerForegroundProcess = NO;
-        if (self.postAppForegroundAction) {
-            self.postAppForegroundAction();
-        }
-    }
 }
 
 - (void)handleAppForeground:(NSNotification *)notification
 {
     [SFSDKCoreLogger d:[self class] format:@"App is entering the foreground."];
-    
-    [self enumerateDelegates:^(NSObject<SalesforceSDKManagerDelegate> *delegate) {
-        if ([delegate respondsToSelector:@selector(sdkManagerWillEnterForeground)]) {
-            [delegate sdkManagerWillEnterForeground];
-        }
-    }];
-    
-    if (_isLaunching) {
-        [SFSDKCoreLogger d:[self class] format:@"SDK is still launching.  No foreground action taken."];
+    if (self.isPasscodeDisplayed) {
+        // Passcode was already displayed prior to app foreground.
+        [SFSDKCoreLogger i:[self class] format:@"%@ Passcode screen already displayed.", NSStringFromSelector(_cmd)];
     } else {
-        self.inManagerForegroundProcess = YES;
-        if (self.isPasscodeDisplayed) {
-            // Passcode was already displayed prior to app foreground.  Leverage delegates to manage
-            // post-foreground process.
-            [SFSDKCoreLogger i:[self class] format:@"%@ Passcode screen already displayed. Post-app foreground will continue after passcode challenge completes.", NSStringFromSelector(_cmd)];
-        } else {
-            // Check to display pin code screen.
-            [SFSecurityLockout setLockScreenFailureCallbackBlock:^{
-                // Note: Failed passcode verification automatically logs out users, which the logout
-                // delegate handler will catch and pass on.  We just log the error and reset launch
-                // state here.
-                [SFSDKCoreLogger e:[self class] format:@"Passcode validation failed.  Logging the user out."];
-            }];
-            
-            [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction lockoutAction) {
-                [SFSDKCoreLogger i:[self class] format:@"Passcode validation succeeded, or was not required, on app foreground.  Triggering postAppForeground handler."];
-                [self sendPostAppForegroundIfRequired];
-            }];
-            
-            [SFSecurityLockout validateTimer];
-        }
+        // Check to display pin code screen.
+        [SFSecurityLockout setLockScreenFailureCallbackBlock:^{
+            // Note: Failed passcode verification automatically logs out users, which the logout
+            // delegate handler will catch and pass on.  We just log the error and reset launch
+            // state here.
+            [SFSDKCoreLogger e:[self class] format:@"Passcode validation failed.  Logging the user out."];
+        }];
+        
+        [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction lockoutAction) {
+            [SFSDKCoreLogger i:[self class] format:@"Passcode validation succeeded, or was not required, on app foreground."];
+        }];
+        [SFSecurityLockout validateTimer];
     }
 }
 
 - (void)handleAppBackground:(NSNotification *)notification
 {
     [SFSDKCoreLogger d:[self class] format:@"App is entering the background."];
-    
-    [self enumerateDelegates:^(id<SalesforceSDKManagerDelegate> delegate) {
-        if ([delegate respondsToSelector:@selector(sdkManagerDidEnterBackground)]) {
-            [delegate sdkManagerDidEnterBackground];
-        }
-    }];
-    
     [self savePasscodeActivityInfo];
     [self clearClipboard];
 }
@@ -712,13 +574,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 - (void)handleAppDidBecomeActive:(NSNotification *)notification
 {
     [SFSDKCoreLogger d:[self class] format:@"App is resuming active state."];
-    
-    [self enumerateDelegates:^(id<SalesforceSDKManagerDelegate> delegate) {
-        if ([delegate respondsToSelector:@selector(sdkManagerDidBecomeActive)]) {
-            [delegate sdkManagerDidBecomeActive];
-        }
-    }];
-    
     @try {
         [self dismissSnapshot];
     }
@@ -730,12 +585,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 - (void)handleAppWillResignActive:(NSNotification *)notification
 {
     [SFSDKCoreLogger d:[self class] format:@"App is resigning active state."];
-    
-    [self enumerateDelegates:^(id<SalesforceSDKManagerDelegate> delegate) {
-        if ([delegate respondsToSelector:@selector(sdkManagerWillResignActive)]) {
-            [delegate sdkManagerWillResignActive];
-        }
-    }];
     
     // Don't present snapshot during advanced authentication or Passcode Presentation
     // ==============================================================================
@@ -772,7 +621,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     NSDictionary *userInfo = notification.userInfo;
     SFUserAccount *userAccount = userInfo[kSFNotificationUserInfoAccountKey];
     [[SFUserAccountManager sharedInstance] switchToUser:userAccount];
-    [self sendPostLaunch];
 }
 
 - (void)handleIDPUserAddCompleted:(NSNotification *)notification
@@ -785,8 +633,11 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
         [SFSecurityLockout setupTimer];
         [SFSecurityLockout startActivityMonitoring];
         [[SFUserAccountManager sharedInstance] switchToUser:userAccount];
-        [self sendPostLaunch];
     }
+}
+- (void)handleUserWillLogout:(NSNotification *)notification {
+    SFUserAccount *user = notification.userInfo[kSFNotificationUserInfoAccountKey];
+    [SFSDKKeyValueEncryptedFileStore removeAllStoresForUser:user];
 }
 
 - (void)handlePostLogout
@@ -795,7 +646,7 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     [SFSecurityLockout cancelPasscodeScreen];
     [SFSecurityLockout stopActivityMonitoring];
     [SFSecurityLockout removeTimer];
-    [self sendPostLogout];
+    [self logoutCleanup];
 }
 
 - (void)handleUserWillSwitch:(SFUserAccount *)fromUser toUser:(SFUserAccount *)toUser
@@ -809,7 +660,6 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 {
     [SFSecurityLockout setupTimer];
     [SFSecurityLockout startActivityMonitoring];
-    [self sendUserAccountSwitch:fromUser toUser:toUser];
 }
 
 - (void)savePasscodeActivityInfo
@@ -862,13 +712,13 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
     if ([self isSnapshotPresented]) {
         if (self.snapshotPresentationAction && self.snapshotDismissalAction) {
             self.snapshotDismissalAction(_snapshotViewController);
-            if ([SFSecurityLockout isPasscodeNeeded]) {
+            if ([SFSecurityLockout shouldLock]) {
                 [SFSecurityLockout validateTimer];
             }
         } else {
             [[SFSDKWindowManager sharedManager].snapshotWindow.viewController dismissViewControllerAnimated:NO completion:^{
                 [[SFSDKWindowManager sharedManager].snapshotWindow dismissWindowAnimated:NO  withCompletion:^{
-                    if ([SFSecurityLockout isPasscodeNeeded]) {
+                    if ([SFSecurityLockout shouldLock]) {
                         [SFSecurityLockout validateTimer];
                     }
                 }];
@@ -882,105 +732,21 @@ static NSInteger const kDefaultCacheDiskCapacity = 1024 * 1024 * 20;  // 20MB
 {
     if ([SFManagedPreferences sharedPreferences].clearClipboardOnBackground) {
         [SFSDKCoreLogger i:[self class] format:@"%@: Clearing clipboard on app background.", NSStringFromSelector(_cmd)];
-        [UIPasteboard generalPasteboard].strings = @[ ];
-        [UIPasteboard generalPasteboard].URLs = @[ ];
-        [UIPasteboard generalPasteboard].images = @[ ];
-        [UIPasteboard generalPasteboard].colors = @[ ];
+        [SalesforceSDKManager generalPasteboard].strings = @[ ];
+        [SalesforceSDKManager generalPasteboard].URLs = @[ ];
+        [SalesforceSDKManager generalPasteboard].images = @[ ];
+        [SalesforceSDKManager generalPasteboard].colors = @[ ];
+        [SalesforceSDKManager sdkNamedPasteboard].strings = @[ ];
+        [SalesforceSDKManager sdkNamedPasteboard].URLs = @[ ];
+        [SalesforceSDKManager sdkNamedPasteboard].images = @[ ];
+        [SalesforceSDKManager sdkNamedPasteboard].colors = @[ ];
     }
-}
-
-- (void)passcodeValidationAtLaunch
-{
-    [SFSecurityLockout setLockScreenSuccessCallbackBlock:^(SFSecurityLockoutAction action) {
-        [SFSDKCoreLogger i:[self class] format:@"Passcode verified, or not configured.  Proceeding with authentication validation."];
-        [self passcodeValidatedToAuthValidation];
-    }];
-    [SFSecurityLockout setLockScreenFailureCallbackBlock:^{
-        
-        // Note: Failed passcode verification automatically logs out users, which the logout
-        // delegate handler will catch and pass on.  We just log the error and reset launch
-        // state here.
-        [SFSDKCoreLogger e:[self class] format:@"Passcode validation failed.  Logging the user out."];
-    }];
-    [SFSecurityLockout lock];
-}
-
-- (void)passcodeValidatedToAuthValidation
-{
-    self.launchActions |= SFSDKLaunchActionPasscodeVerified;
-    self.hasVerifiedPasscodeAtStartup = YES;
-    [self authValidationAtLaunch];
-}
-
-- (void)authValidationAtLaunch
-{
-    if (self.appConfig.shouldAuthenticate &&  [SFUserAccountManager sharedInstance].currentUser.credentials.accessToken==nil) {
-        // Access token check works equally well for any of the members being nil, which are all conditions to
-        // (re-)authenticate.
-        [self.sdkManagerFlow authAtLaunch];
-    } else {
-        // If credentials already exist, or launch shouldn't attempt authentication, we won't try
-        // to authenticate.
-        [self.sdkManagerFlow authBypassAtLaunch];
-    }
-}
-
-- (void)authAtLaunch
-{
-    [SFSDKCoreLogger i:[self class] format:@"No valid credentials found.  Proceeding with authentication."];
-    
-    SFUserAccountManagerSuccessCallbackBlock successBlock = ^(SFOAuthInfo *authInfo,SFUserAccount *userAccount) {
-        [SFSDKCoreLogger i:[self class] format:@"Authentication (%@) succeeded.  Launch completed.", authInfo.authTypeDescription];
-        [SFSecurityLockout setupTimer];
-        [SFSecurityLockout startActivityMonitoring];
-        [self authValidatedToPostAuth:SFSDKLaunchActionAuthenticated];
-    };
-    
-    SFUserAccountManagerFailureCallbackBlock failureBlock = ^(SFOAuthInfo *authInfo, NSError *authError) {
-        [SFSDKCoreLogger e:[self class] format:@"Authentication (%@) failed: %@.", (authInfo.authType == SFOAuthTypeUserAgent ? @"User Agent" : @"Refresh"), [authError localizedDescription]];
-        [self sendLaunchError:authError];
-    };
-    [[SFUserAccountManager sharedInstance] loginWithCompletion:successBlock failure:failureBlock];
-  
-}
-
-- (void)authBypassAtLaunch
-{
-    
-    SFSDKLaunchAction noAuthLaunchAction;
-    if (!self.appConfig.shouldAuthenticate) {
-        [SFSDKCoreLogger i:[self class] format:@"SDK Manager is configured not to attempt authentication at launch.  Skipping auth."];
-        noAuthLaunchAction = SFSDKLaunchActionAuthBypassed;
-    } else {
-        [SFSDKCoreLogger i:[self class] format:@"Credentials already present.  Will not attempt to authenticate."];
-        noAuthLaunchAction = SFSDKLaunchActionAlreadyAuthenticated;
-    }
-    
-    // Dismiss the auth view controller if present. This step is necessary,
-    // especially if the user is anonymous, to ensure the auth view controller
-    // is dismissed otherwise it stays visible - because by default it is dismissed
-    // only after a successfully authentication.
-    // A typical scenario when this happen is when the user switches to a new user
-    // but decides to "go back" to the existing user and that existing user is
-    // the anonymous user - the auth flow never happens and the auth view controller
-    // stays on the screen, masking the main UI.
-    [[SFUserAccountManager sharedInstance] dismissAuthViewControllerIfPresent];
-
-    [SFSecurityLockout setupTimer];
-    [SFSecurityLockout startActivityMonitoring];
-    [self authValidatedToPostAuth:noAuthLaunchAction];
-}
-
-- (void)authValidatedToPostAuth:(SFSDKLaunchAction)launchAction
-{
-    self.launchActions |= launchAction;
-    [self sendPostLaunch];
 }
 
 - (SFSDKUserAgentCreationBlock)defaultUserAgentString {
     return ^NSString *(NSString *qualifier) {
         UIDevice *curDevice = [UIDevice currentDevice];
-        NSString *appName = [[NSBundle mainBundle] infoDictionary][(NSString*)kCFBundleNameKey];
+        NSString *appName = [SalesforceSDKManager appName];
         NSString *prodAppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
         NSString *buildNumber = [[NSBundle mainBundle] infoDictionary][(NSString*)kCFBundleVersionKey];
         NSString *appVersion = [NSString stringWithFormat:@"%@(%@)", prodAppVersion, buildNumber];
@@ -1035,48 +801,30 @@ void dispatch_once_on_main_thread(dispatch_once_t *predicate, dispatch_block_t b
     return SFAppTypeGetDescription(self.appType);
 }
 
-- (void)addDelegate:(id<SalesforceSDKManagerDelegate>)delegate
-{
-    @synchronized(self) {
-        if (delegate) {
-            [self.delegates addObject:delegate];
-        }
-    }
-}
-
-- (void)removeDelegate:(id<SalesforceSDKManagerDelegate>)delegate
-{
-    @synchronized(self) {
-        if (delegate) {
-            [self.delegates removeObject:delegate];
-        }
-    }
-}
-
-- (void)enumerateDelegates:(void (^)(id<SalesforceSDKManagerDelegate>))block
-{
-    @synchronized(self) {
-        for (id<SalesforceSDKManagerDelegate> delegate in self.delegates) {
-            if (block) block(delegate);
-        }
-    }
-}
-
-- (void)enableEncryptedURLCache {
-    if (![NSURLCache.sharedURLCache isKindOfClass:[SFSDKEncryptedURLCache class]]) {
+- (void)setURLCacheType:(SFURLCacheType)URLCacheType {
+    if (_URLCacheType != URLCacheType) {
+        _URLCacheType = URLCacheType;
         [NSURLCache.sharedURLCache removeAllCachedResponses];
-        SFSDKEncryptedURLCache *encryptedCache = [[SFSDKEncryptedURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
-        [NSURLCache setSharedURLCache:encryptedCache];
-    }
-}
-
-- (void)disableEncryptedURLCache {
-    if ([NSURLCache.sharedURLCache isKindOfClass:[SFSDKEncryptedURLCache class]]) {
-        [NSURLCache.sharedURLCache removeAllCachedResponses];
-        NSURLCache *cache = [[NSURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+        NSURLCache *cache;
+        switch (URLCacheType) {
+            case kSFURLCacheTypeEncrypted:
+                cache = [[SFSDKEncryptedURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+            case kSFURLCacheTypeNull:
+                 cache = [[SFSDKNullURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+            case kSFURLCacheTypeStandard:
+                cache = [[NSURLCache alloc] initWithMemoryCapacity:kDefaultCacheMemoryCapacity diskCapacity:kDefaultCacheDiskCapacity diskPath:kDefaultCachePath];
+                break;
+        }
         [NSURLCache setSharedURLCache:cache];
     }
 }
+
+- (NSString*) safeJoin:(NSArray*)array separator:(NSString*)separator {
+    return array ? [array componentsJoinedByString:separator] : @"";
+}
+
 
 #pragma mark - SFUserAccountManagerDelegate
 - (void)handleUserDidLogout:(NSNotification *)notification {
@@ -1102,18 +850,16 @@ void dispatch_once_on_main_thread(dispatch_once_t *predicate, dispatch_block_t b
     [self.sdkManagerFlow handleUserDidSwitch:fromUser toUser:toUser];
 }
 
-#pragma mark - SFSecurityLockoutDelegate
+#pragma mark - SFSecurityLockout
 
-- (void)passcodeFlowWillBegin:(SFAppLockControllerMode)mode
-{
+- (void)passcodeFlowWillBegin:(NSNotification *)notification {
     self.passcodeDisplayed = YES;
 }
 
-- (void)passcodeFlowDidComplete:(BOOL)success
-{
+- (void)passcodeFlowDidComplete:(NSNotification *)notification {
     self.passcodeDisplayed = NO;
-    [self sendPostAppForegroundIfRequired];
 }
+
 @end
 
 NSString *SFAppTypeGetDescription(SFAppType appType){

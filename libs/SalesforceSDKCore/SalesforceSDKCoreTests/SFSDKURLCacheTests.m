@@ -25,6 +25,7 @@
 #import <XCTest/XCTest.h>
 #import <objc/runtime.h>
 #import "SFSDKEncryptedURLCache.h"
+#import "SFSDKNullURLCache.h"
 #import "SFRestAPI.h"
 #import "SFNativeRestRequestListener.h"
 #import "SFNetwork.h"
@@ -40,25 +41,29 @@
 
 @end
 
-@interface SFSDKEncryptedUrlCacheTests : XCTestCase
+@interface SFSDKUrlCacheTests : XCTestCase
 
 @end
 
-@implementation SFSDKEncryptedUrlCacheTests
+@implementation SFSDKUrlCacheTests
 
-- (void)testEnablingDisablingEncryptedCache {
-    // Enabled by default
+- (void)testSettingCacheTypes {
+    // Encrypted enabled by default
     [SalesforceSDKManager sharedManager];
     XCTAssertTrue([NSURLCache.sharedURLCache isMemberOfClass:[SFSDKEncryptedURLCache class]]);
     NSString *cachePath = [[SFDirectoryManager sharedManager] globalDirectoryOfType:NSCachesDirectory components:@[@"salesforce.mobilesdk.URLCache"]];
     XCTAssertNotNil(cachePath);
 
-    // Disable
-    [SalesforceSDKManager sharedManager].encryptURLCache = NO;
+    // Set back to vanilla URL cache
+    [SalesforceSDKManager sharedManager].URLCacheType = kSFURLCacheTypeStandard;
     XCTAssertTrue([NSURLCache.sharedURLCache isMemberOfClass:[NSURLCache class]]);
-
-    // Enable again
-    [SalesforceSDKManager sharedManager].encryptURLCache = YES;
+    
+    // Set to null cache
+    [SalesforceSDKManager sharedManager].URLCacheType = kSFURLCacheTypeNull;
+    XCTAssertTrue([NSURLCache.sharedURLCache isMemberOfClass:[SFSDKNullURLCache class]]);
+    
+    // Enable encrypted again
+    [SalesforceSDKManager sharedManager].URLCacheType = kSFURLCacheTypeEncrypted;
     XCTAssertTrue([NSURLCache.sharedURLCache isMemberOfClass:[SFSDKEncryptedURLCache class]]);
 }
 
@@ -76,7 +81,23 @@
     XCTAssertNil(cacheResult);
 }
 
-- (void)testEntry {
+- (void)testNullCacheEntry {
+    SFSDKNullURLCache *nullURLCache = [[SFSDKNullURLCache alloc] init];
+    NSString *contentString = @"This is my content";
+    NSData *contentData = [contentString dataUsingEncoding:NSUTF8StringEncoding];
+    NSUInteger dataLength = contentData.length;
+    NSURL *url = [[NSURL alloc] initWithString:@"https://www.salesforce.com"];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    NSURLResponse *response = [[NSURLResponse alloc] initWithURL:url MIMEType:@"text/plain" expectedContentLength:dataLength textEncodingName:@"NSUTF8StringEncoding"];
+
+    // Should not store
+    NSCachedURLResponse *toStore = [[NSCachedURLResponse alloc] initWithResponse:response data:contentData userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
+    [nullURLCache storeCachedResponse:toStore forRequest:request];
+    NSCachedURLResponse *cacheResult = [nullURLCache cachedResponseForRequest:request];
+    XCTAssertNil(cacheResult);
+}
+
+- (void)testEncryptedCacheEntry {
     SFSDKEncryptedURLCache *encryptedURLCache = [[SFSDKEncryptedURLCache alloc] init];
     NSString *contentString = @"This is my content";
     NSData *contentData = [contentString dataUsingEncoding:NSUTF8StringEncoding];
@@ -165,7 +186,7 @@
 
 - (void)sendRequest:(SFRestRequest *)request {
     SFSDKTestRequestListener *listener = [[SFSDKTestRequestListener alloc] init];
-    SFRestFailBlock failBlock = ^(NSError *error, NSURLResponse *rawResponse) {
+    SFRestRequestFailBlock failBlock = ^(id response, NSError *error, NSURLResponse *rawResponse) {
         listener.lastError = error;
         listener.returnStatus = kTestRequestStatusDidFail;
     };
@@ -173,9 +194,9 @@
         listener.dataResponse = data;
         listener.returnStatus = kTestRequestStatusDidLoad;
     };
-    [[SFRestAPI sharedGlobalInstance] sendRESTRequest:request
-                                            failBlock:failBlock
-                                        completeBlock:completeBlock];
+    [[SFRestAPI sharedGlobalInstance] sendRequest:request
+                                            failureBlock:failBlock
+                                        successBlock:completeBlock];
     [listener waitForCompletion];
     XCTAssertEqualObjects(listener.returnStatus, kTestRequestStatusDidLoad, @"request failed");
 }

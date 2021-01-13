@@ -29,7 +29,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "SFSDKWindowContainer.h"
+#import <SalesforceSDKCore/SFSDKWindowContainer.h>
 @class SFSDKWindowManager;
 /**
  Delegate of the SFSDKWindowManager
@@ -94,6 +94,10 @@
 /** Returns the SFSDKWindowContainer window representing the mainWindow that has been set
  */
 @property (readonly,nonatomic,strong) SFSDKWindowContainer * _Nonnull mainWindow;
+
+/** Sets overrideUserInterfaceStyle on managed windows. Default is UIUserInterfaceStyleUnspecified.
+ */
+@property (nonatomic, assign) UIUserInterfaceStyle userInterfaceStyle;
 
 /** Returns the SFSDKWindowContainer window representing the active presented Window that has been set
  */

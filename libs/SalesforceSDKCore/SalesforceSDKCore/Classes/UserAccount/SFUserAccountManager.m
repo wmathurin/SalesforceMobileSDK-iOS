@@ -54,9 +54,9 @@
 #import "SFSDKLoginHost.h"
 #import "SFSDKLoginHostStorage.h"
 #import "SFSDKEventBuilderHelper.h"
-#import "SFPasscodeManager.h"
 #import "SFNetwork.h"
 #import "SFSDKSalesforceAnalyticsManager.h"
+#import "SFSecurityLockout+Internal.h"
 
 // Notifications
 NSNotificationName SFUserAccountManagerDidChangeUserNotification       = @"SFUserAccountManagerDidChangeUserNotification";
@@ -146,13 +146,14 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 + (instancetype)sharedInstance {
     static dispatch_once_t pred;
     static SFUserAccountManager *userAccountManager = nil;
+    __block BOOL isFirstRun = NO;
     dispatch_once(&pred, ^{
-		userAccountManager = [[self alloc] init];
-	});
-    static dispatch_once_t pred2;
-    dispatch_once(&pred2, ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:SFUserAccountManagerDidFinishUserInitNotification object:nil];
+        userAccountManager = [[self alloc] init];
+        isFirstRun = YES;
     });
+    if (isFirstRun) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SFUserAccountManagerDidFinishUserInitNotification object:nil];
+    };
     return userAccountManager;
 }
 
@@ -366,7 +367,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
                 credentials.additionalOAuthFields = response.additionalOAuthFields;
             SFUserAccount *userAccount = [strongSelf accountForCredentials:credentials];
             if (!userAccount) {
-                 userAccount = [self applyCredentials:credentials];
+                userAccount = [self applyCredentials:credentials];
             }
             [self retrieveUserPhotoIfNeeded:userAccount];
             NSDictionary *userInfo = @{kSFNotificationUserInfoAccountKey: userAccount,
@@ -464,9 +465,9 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 
 - (BOOL)loginWithJwtToken:(NSString *)jwtToken completion:(SFUserAccountManagerSuccessCallbackBlock)completionBlock failure:(SFUserAccountManagerFailureCallbackBlock)failureBlock {
     NSAssert(jwtToken.length > 0, @"JWT token value required.");
-    SFSDKAuthRequest *request = [[SFSDKAuthRequest alloc] init];
+    SFSDKAuthRequest *request = [self defaultAuthRequest];
     request.jwtToken = jwtToken;
-    return [self authenticateWithCompletion:completionBlock failure:failureBlock];
+    return [self authenticateWithRequest:request completion:completionBlock failure:failureBlock];
 }
 
 - (void)logout {
@@ -614,10 +615,6 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
             }
         }];
     }
-}
-
-+ (BOOL)errorIsInvalidAuthCredentials:(NSError *)error {
-    return [SFSDKAuthErrorManager errorIsInvalidAuthCredentials:error];
 }
 
 #pragma mark - SFOAuthCoordinatorDelegate
@@ -792,7 +789,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
             };
         }];
         dispatch_async(dispatch_get_main_queue(), ^{
-           self.alertDisplayBlock(message, [SFSDKWindowManager sharedManager].authWindow);
+            self.alertDisplayBlock(message, [SFSDKWindowManager sharedManager].authWindow);
         });
     }
 }
@@ -809,8 +806,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 
 #pragma mark - SFSDKLoginHostDelegate
 - (void)hostListViewControllerDidSelectLoginHost:(SFSDKLoginHostListViewController *)hostListViewController {
-    [hostListViewController dismissViewControllerAnimated:YES completion:nil];
-    [self restartAuthentication];
+    [self loginHostSelected:hostListViewController];
 }
 
 - (void)hostListViewController:(SFSDKLoginHostListViewController *)hostListViewController didChangeLoginHost:(SFSDKLoginHost *)newLoginHost {
@@ -821,6 +817,15 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     [[NSNotificationCenter defaultCenter] postNotification:loginHostChangedNotification];
     self.authSession.oauthRequest.loginHost = newLoginHost.host;
     [_accountsLock unlock];
+}
+
+- (void)hostListViewControllerDidAddLoginHost:(SFSDKLoginHostListViewController *)hostListViewController {
+    [self loginHostSelected:hostListViewController];
+}
+
+- (void)loginHostSelected:(SFSDKLoginHostListViewController *)hostListViewController {
+    [hostListViewController dismissViewControllerAnimated:YES completion:nil];
+    [self restartAuthentication];
 }
 
 #pragma mark - SFSDKLoginFlowSelectionViewDelegate (SP App flow Related Actions)
@@ -869,13 +874,12 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     __weak typeof (self) weakSelf = self;
     SFOAuthCredentials *spAppCredentials = [self spAppCredentials:spAppOptions];
     SFRestRequest *request = [[SFRestAPI sharedInstanceWithUser:user] requestForUserInfo];
-    [[SFRestAPI sharedInstanceWithUser:user] sendRESTRequest:request failBlock:^(NSError *error, NSURLResponse *rawResponse) {
+    [[SFRestAPI sharedInstanceWithUser:user] sendRequest:request failureBlock:^(id response, NSError *error, NSURLResponse *rawResponse) {
         [SFSDKIDPAuthHelper invokeSPAppWithError:spAppCredentials error:error reason:@"Failed refreshing credentials"];
-    } completeBlock:^(id response, NSURLResponse *rawResponse) {
+    } successBlock:^(id response, NSURLResponse *rawResponse) {
         __strong typeof (self) strongSelf = weakSelf;
         [strongSelf authenticateOnBehalfOfSPApp:user spAppCredentials:spAppCredentials];
     }];
-
 }
 
 - (void)cancel:(NSDictionary *)spAppOptions {
@@ -1105,6 +1109,16 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     SFUserAccount *result = nil;
     [_accountsLock lock];
     result = (self.userAccountMap)[userIdentity];
+
+    // TODO: Remove this block in Mobile SDK 10.0, needed for upgrade step after changing from 15 character to 18 character user IDs
+    if (!result) {
+        for (SFUserAccountIdentity *key in self.userAccountMap.allKeys) {
+            if ([key isEqual:userIdentity]) {
+                result = self.userAccountMap[key];
+            }
+        }
+    }
+
     [_accountsLock unlock];
     return result;
 }
@@ -1221,11 +1235,6 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 }
 
 - (SFUserAccount *)applyCredentials:(SFOAuthCredentials*)credentials withIdData:(SFIdentityData *) identityData {
-    return [self applyCredentials:credentials withIdData:identityData andNotification:YES];
-}
-
-- (SFUserAccount *)applyCredentials:(SFOAuthCredentials*)credentials withIdData:(SFIdentityData *) identityData andNotification:(BOOL) shouldSendNotification{
-    
     SFUserAccount *currentAccount = [self accountForCredentials:credentials];
     SFUserAccountDataChange accountDataChange = SFUserAccountDataChangeUnknown;
     SFUserAccountChange userAccountChange = SFUserAccountChangeUnknown;
@@ -1261,13 +1270,11 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         currentAccount.idData = identityData;
     }
     [self saveAccountForUser:currentAccount error:nil];
-
-    if(shouldSendNotification) {
-        if (accountDataChange != SFUserAccountChangeUnknown) {
-            [self notifyUserDataChange:SFUserAccountManagerDidChangeUserDataNotification withUser:currentAccount andChange:accountDataChange];
-        } else if (userAccountChange!=SFUserAccountDataChangeUnknown) {
-            [self notifyUserChange:SFUserAccountManagerDidChangeUserNotification withUser:currentAccount andChange:userAccountChange];
-        }
+   
+    if (accountDataChange != SFUserAccountChangeUnknown) {
+        [self notifyUserDataChange:SFUserAccountManagerDidChangeUserDataNotification withUser:currentAccount andChange:accountDataChange];
+    } else if (userAccountChange!=SFUserAccountDataChangeUnknown) {
+        [self notifyUserChange:SFUserAccountManagerDidChangeUserNotification withUser:currentAccount andChange:userAccountChange];
     }
     return currentAccount;
 }
@@ -1360,36 +1367,6 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     [standardDefaults synchronize];
 }
 
-- (void)applyIdData:(SFIdentityData *)idData forUser:(SFUserAccount *)user {
-    if (user) {
-        [_accountsLock lock];
-        user.idData = idData;
-        [self saveAccountForUser:user error:nil];
-        [_accountsLock unlock];
-        [self notifyUserDataChange:SFUserAccountManagerDidChangeUserDataNotification withUser:user andChange:SFUserAccountDataChangeIdData];
-    }
-}
-
-- (void)applyIdDataCustomAttributes:(NSDictionary *)customAttributes forUser:(SFUserAccount *)user {
-    if (user) {
-        [_accountsLock lock];
-        user.idData.customAttributes = customAttributes;
-        [self saveAccountForUser:user error:nil];
-        [_accountsLock unlock];
-        [self notifyUserDataChange:SFUserAccountManagerDidChangeUserDataNotification withUser:user andChange:SFUserAccountDataChangeIdData];
-    }
-}
-
-- (void)applyIdDataCustomPermissions:(NSDictionary *)customPermissions forUser:(SFUserAccount *)user {
-     if (user) {
-        [_accountsLock lock];
-        user.idData.customPermissions = customPermissions;
-        [self saveAccountForUser:user error:nil];
-        [_accountsLock unlock];
-        [self notifyUserDataChange:SFUserAccountManagerDidChangeUserDataNotification withUser:user andChange:SFUserAccountDataChangeIdData];
-     }
-}
-
 - (void)setObjectForUserCustomData:(NSObject <NSCoding> *)object forKey:(NSString *)key andUser:(SFUserAccount *)user {
     if (user) {
         [_accountsLock lock];
@@ -1409,7 +1386,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 }
 
 - (BOOL)deviceHasBiometric {
-    return [[SFPasscodeManager sharedManager] deviceHasBiometric];
+    return [SFSecurityLockout deviceHasBiometric];
 }
 
 - (SFBiometricUnlockState)biometricUnlockState {
@@ -1549,7 +1526,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         };
     }];
     dispatch_async(dispatch_get_main_queue(), ^{
-         weakSelf.alertDisplayBlock(message, SFSDKWindowManager.sharedManager.authWindow);
+        weakSelf.alertDisplayBlock(message, SFSDKWindowManager.sharedManager.authWindow);
     });
 }
 
@@ -1615,8 +1592,11 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 }
 
 - (void)resetAuthentication {
+    
     [_accountsLock lock];
-    [self.authSession.oauthCoordinator.view removeFromSuperview];
+    if (self.authSession.authInfo.authType == SFOAuthTypeUserAgent) {
+        [self.authSession.oauthCoordinator.view removeFromSuperview];
+    }
     [self.authSession.oauthCoordinator stopAuthentication];
     self.authSession.identityCoordinator.idData = nil;
     self.authSession.isAuthenticating = NO;
@@ -1625,7 +1605,6 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 }
 
 - (void)finalizeAuthCompletion:(SFSDKAuthSession *)authSession {
-
     // Apply the credentials that will ensure there is a user and that this
     // current user as the proper credentials.
     SFUserAccount *userAccount = [self applyCredentials:authSession.oauthCoordinator.credentials withIdData:authSession.identityCoordinator.idData];
@@ -1721,7 +1700,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         NSMutableArray<NSString *> *hosts = [[NSMutableArray alloc] init];
         for (int i = 0; i < numHosts; i++) {
             SFSDKLoginHost *host = [[SFSDKLoginHostStorage sharedInstance] loginHostAtIndex:i];
-            if (host) {
+            if (host.host) {
                 [hosts addObject:host.host];
             }
         }
@@ -1800,9 +1779,6 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
 }
 
 #pragma mark - User Change Notifications
-- (void)userChanged:(SFUserAccount *)user change:(SFUserAccountDataChange)change {
-    [self notifyUserDataChange:SFUserAccountManagerDidChangeUserDataNotification withUser:user andChange:change];
-}
 
 - (void)notifyUserDataChange:(NSString *)notificationName withUser:(SFUserAccount *)user andChange:(SFUserAccountDataChange)change {
     if (user) {
@@ -1864,13 +1840,11 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
             }];
         }
         else {
-            if (@available(iOS 13.0, *)) {
-                SFSDKAuthRootController* authRootController = [[SFSDKAuthRootController alloc] init];
-                [SFSDKWindowManager sharedManager].authWindow.viewController = authRootController;
-                authRootController.modalPresentationStyle = UIModalPresentationFullScreen;
-                viewHandler.session.presentationContextProvider = (id<ASWebAuthenticationPresentationContextProviding>) [SFSDKWindowManager sharedManager].authWindow.viewController;
-            }
-           [viewHandler.session start];
+            SFSDKAuthRootController* authRootController = [[SFSDKAuthRootController alloc] init];
+            [SFSDKWindowManager sharedManager].authWindow.viewController = authRootController;
+            authRootController.modalPresentationStyle = UIModalPresentationFullScreen;
+            viewHandler.session.presentationContextProvider = (id<ASWebAuthenticationPresentationContextProviding>) [SFSDKWindowManager sharedManager].authWindow.viewController;
+            [viewHandler.session start];
         }
     };
   

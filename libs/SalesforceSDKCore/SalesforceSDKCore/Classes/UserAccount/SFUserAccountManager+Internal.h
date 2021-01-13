@@ -44,6 +44,34 @@ typedef NS_ENUM(NSUInteger, SFSDKUserAccountManagerErrorCode) {
     SFSDKUserAccountManagerCannotEncrypt = 10005,
 };
 
+@protocol SFUserAccountPersister <NSObject>
+
+/**
+ Called when the Account manager requires to save the state of an account.
+ @param userAccount The instance of SFUserAccount making the call.
+ @param  error On output, the error if the return value is NO
+ @return YES if the account was saved properly, NO in case of error
+ */
+- (BOOL)saveAccountForUser:(nonnull SFUserAccount *)userAccount error:(NSError * _Nonnull * _Nonnull) error;
+
+/** Fetches all the accounts.
+  @param error On output, the error if the return value is NO
+  @return NSDictionary with SFUserAccountIdentity as keys and SFUserAccount as values
+  */
+- (nonnull NSDictionary<SFUserAccountIdentity *,SFUserAccount *> *)fetchAllAccounts:(NSError * _Nonnull * _Nonnull)error;
+
+/**
+ Allows you to remove the given user account.
+ @param user The user account to remove.
+ @param error Output error parameter, populated if there was an error deleting
+ the account (likely from the filesystem operations).
+ @return YES if the deletion was successful, NO otherwise.  Note: If no persisted account matching
+ the user parameter is found, no action will be taken, and deletion will be reported as successful.
+ */
+- (BOOL)deleteAccountForUser:(nonnull SFUserAccount *)user error:(NSError * _Nonnull * _Nonnull)error;
+
+@end
+
 NS_ASSUME_NONNULL_BEGIN
 @interface SFUserAccountManager ()<SFOAuthCoordinatorDelegate, SFIdentityCoordinatorDelegate, SFSDKLoginHostDelegate, SFSDKUserSelectionViewDelegate, SFSDKLoginFlowSelectionViewDelegate, SFLoginViewControllerDelegate>
 {
@@ -70,6 +98,10 @@ NS_ASSUME_NONNULL_BEGIN
  *
  */
 @property (nonatomic, strong, nullable) SFSDKAlertView *alertView;
+
+@property (nonatomic, copy, nonnull) void (^alertDisplayBlock)(SFSDKAlertMessage *, SFSDKWindowContainer *);
+
+@property (nonatomic, copy, nonnull) void (^authCancelledByUserHandlerBlock)(void);
 
 /** SFSDKAlertView used to wrap display of SFSDKMessage using an AlertController.
  *
@@ -123,6 +155,21 @@ NS_ASSUME_NONNULL_BEGIN
  * @return SFUserAccountPersister that is used.
  */
 - (nullable id<SFUserAccountPersister>)accountPersister;
+
+/** Invoke this method to apply the specified credentials to the
+ a user whose credentials match. If no user exists, a new one is created. Fire notifications.
+ This will post user update notification.
+ @param credentials The credentials to apply
+ */
+- (SFUserAccount *)applyCredentials:(SFOAuthCredentials*)credentials;
+
+/** Invoke this method to apply the specified credentials to the
+ a user whose credentials match. If no user exists, a new one is created. Fire notifications.
+ This will post user update notification.
+ @param credentials The credentials to apply
+ @param identityData The identityData to apply
+ */
+- (SFUserAccount *)applyCredentials:(SFOAuthCredentials*)credentials withIdData:(nullable SFIdentityData *) identityData;
 
 /**
  * @param userIdentity to use for encoding to String
