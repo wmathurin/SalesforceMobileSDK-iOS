@@ -101,7 +101,6 @@
 		CE4CE4181C0E59DA009F6029 /* SFSmartStoreInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F96FBCF1BFD30030022F021 /* SFSmartStoreInspectorViewController.m */; };
 		CE4CE4191C0E59DA009F6029 /* SFSmartStoreUpgrade.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F96FBD01BFD30030022F021 /* SFSmartStoreUpgrade.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE4CE41A1C0E59DA009F6029 /* SFSmartStoreUpgrade.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F96FBD11BFD30030022F021 /* SFSmartStoreUpgrade.m */; };
-		CE4CE41B1C0E59DA009F6029 /* SFSmartStoreUpgrade+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F96FBD21BFD30030022F021 /* SFSmartStoreUpgrade+Internal.h */; };
 		CE4CE41C1C0E59DA009F6029 /* SFSmartStoreUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F96FBD31BFD30030022F021 /* SFSmartStoreUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE4CE41D1C0E59DA009F6029 /* SFSmartStoreUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F96FBD41BFD30030022F021 /* SFSmartStoreUtils.m */; };
 		CE4CE41E1C0E59DA009F6029 /* SFSoupIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F96FBD51BFD30030022F021 /* SFSoupIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -113,7 +112,6 @@
 		CE4CE5851C0FB648009F6029 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4CE5841C0FB648009F6029 /* libz.tbd */; };
 		CE682C801F01B5E3003C43C0 /* SFSDKSmartStoreLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = CE682C7E1F01B5E3003C43C0 /* SFSDKSmartStoreLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE682C811F01B5E3003C43C0 /* SFSDKSmartStoreLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = CE682C7F1F01B5E3003C43C0 /* SFSDKSmartStoreLogger.m */; };
-		CEAAAE57195911E600CBBFE9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAAAE56195911E600CBBFE9 /* XCTest.framework */; };
 		CEAAAE58195911E600CBBFE9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAAAE48195911E600CBBFE9 /* Foundation.framework */; };
 		FDCEC343F565157E01DA4FCC /* SFSDKStoreConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FDCEC27040E2DF5A8CEE0449 /* SFSDKStoreConfig.m */; };
 		FDCEC6B90C403AF110F6313E /* SFSDKStoreConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = FDCEC4788224558787F87BD6 /* SFSDKStoreConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -279,7 +277,6 @@
 		4F96FBCF1BFD30030022F021 /* SFSmartStoreInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSmartStoreInspectorViewController.m; path = SmartStore/Classes/SFSmartStoreInspectorViewController.m; sourceTree = SOURCE_ROOT; };
 		4F96FBD01BFD30030022F021 /* SFSmartStoreUpgrade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFSmartStoreUpgrade.h; path = SmartStore/Classes/SFSmartStoreUpgrade.h; sourceTree = SOURCE_ROOT; };
 		4F96FBD11BFD30030022F021 /* SFSmartStoreUpgrade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSmartStoreUpgrade.m; path = SmartStore/Classes/SFSmartStoreUpgrade.m; sourceTree = SOURCE_ROOT; };
-		4F96FBD21BFD30030022F021 /* SFSmartStoreUpgrade+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFSmartStoreUpgrade+Internal.h"; path = "SmartStore/Classes/SFSmartStoreUpgrade+Internal.h"; sourceTree = SOURCE_ROOT; };
 		4F96FBD31BFD30030022F021 /* SFSmartStoreUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFSmartStoreUtils.h; path = SmartStore/Classes/SFSmartStoreUtils.h; sourceTree = SOURCE_ROOT; };
 		4F96FBD41BFD30030022F021 /* SFSmartStoreUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFSmartStoreUtils.m; path = SmartStore/Classes/SFSmartStoreUtils.m; sourceTree = SOURCE_ROOT; };
 		4F96FBD51BFD30030022F021 /* SFSoupIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFSoupIndex.h; path = SmartStore/Classes/SFSoupIndex.h; sourceTree = SOURCE_ROOT; };
@@ -339,7 +336,6 @@
 		CE682C7F1F01B5E3003C43C0 /* SFSDKSmartStoreLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSDKSmartStoreLogger.m; sourceTree = "<group>"; };
 		CEAAAE48195911E600CBBFE9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CEAAAE55195911E600CBBFE9 /* SmartStoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartStoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CEAAAE56195911E600CBBFE9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		CEAAAE62195911E600CBBFE9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CECB66231C1BB886008038AE /* SmartStore-Dynamic-iOS-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SmartStore-Dynamic-iOS-Debug.xcconfig"; path = "Configuration/SmartStore-Dynamic-iOS-Debug.xcconfig"; sourceTree = "<group>"; };
 		CECB66241C1BB886008038AE /* SmartStore-Dynamic-iOS-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SmartStore-Dynamic-iOS-Release.xcconfig"; path = "Configuration/SmartStore-Dynamic-iOS-Release.xcconfig"; sourceTree = "<group>"; };
@@ -386,7 +382,6 @@
 				CE1F0B0B19ACF95B0007F22F /* Security.framework in Frameworks */,
 				CE1F0B0C19ACF95B0007F22F /* SystemConfiguration.framework in Frameworks */,
 				CE1F0B0D19ACF95B0007F22F /* UIKit.framework in Frameworks */,
-				CEAAAE57195911E600CBBFE9 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,7 +532,6 @@
 				CE1F0B0219ACF95B0007F22F /* SystemConfiguration.framework */,
 				CE1F0B0319ACF95B0007F22F /* UIKit.framework */,
 				CEAAAE48195911E600CBBFE9 /* Foundation.framework */,
-				CEAAAE56195911E600CBBFE9 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -625,7 +619,6 @@
 				4F96FBCF1BFD30030022F021 /* SFSmartStoreInspectorViewController.m */,
 				4F96FBD01BFD30030022F021 /* SFSmartStoreUpgrade.h */,
 				4F96FBD11BFD30030022F021 /* SFSmartStoreUpgrade.m */,
-				4F96FBD21BFD30030022F021 /* SFSmartStoreUpgrade+Internal.h */,
 				4F96FBD31BFD30030022F021 /* SFSmartStoreUtils.h */,
 				4F96FBD41BFD30030022F021 /* SFSmartStoreUtils.m */,
 				4F96FBD51BFD30030022F021 /* SFSoupIndex.h */,
@@ -659,7 +652,6 @@
 				4F75745222B9A96900528BE2 /* SFSmartSqlCache.h in Headers */,
 				B78928412243DE5700BEDED4 /* SFSmartStore+Instrumentation.h in Headers */,
 				828917841C52B705002F9981 /* FMDatabase.h in Headers */,
-				CE4CE41B1C0E59DA009F6029 /* SFSmartStoreUpgrade+Internal.h in Headers */,
 				CE4CE40F1C0E59DA009F6029 /* SFSmartSqlHelper.h in Headers */,
 				829DA2AA1C1266F70040F5F1 /* SmartStore.h in Headers */,
 				CE4CE4111C0E59DA009F6029 /* SFSmartStore.h in Headers */,
@@ -748,7 +740,7 @@
 		CEAAAE3D195911E600CBBFE9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Salesforce Inc.";
 				TargetAttributes = {
 					4F06AF081C499EB600F70798 = {
@@ -1070,7 +1062,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = SmartStoreTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1097,7 +1089,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = SmartStoreTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1126,7 +1118,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = SmartStore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1161,7 +1153,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = SmartStore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1202,6 +1194,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1225,7 +1218,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -1255,6 +1248,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1271,7 +1265,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
