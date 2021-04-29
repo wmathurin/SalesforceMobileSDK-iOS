@@ -1,1 +1,1 @@
-../../Classes//Manager/SFSDKAnalyticsManager.h
+../Classes//Manager/SFSDKAnalyticsManager.h

@@ -1,1 +1,1 @@
-../../Classes//Model/SFSDKDeviceAppAttributes.h
+../Classes//Model/SFSDKDeviceAppAttributes.h
