@@ -1,0 +1,1 @@
+../Classes/SmartStoreSDKManager.h
