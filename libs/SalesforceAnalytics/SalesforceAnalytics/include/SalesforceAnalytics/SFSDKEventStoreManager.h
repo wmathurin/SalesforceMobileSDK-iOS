@@ -1,0 +1,1 @@
+../../Classes//Store/SFSDKEventStoreManager.h
