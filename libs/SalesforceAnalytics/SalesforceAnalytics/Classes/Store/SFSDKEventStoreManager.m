@@ -28,7 +28,7 @@
  */
 
 #import "SFSDKEventStoreManager.h"
-#import "SFSDKInstrumentationEvent+Internal.h"
+#import "../Model/SFSDKInstrumentationEvent+Internal.h"
 
 @interface SFSDKEventStoreManager ()
 
