@@ -10,12 +10,12 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "SalesforceAnalytics",
-            targets: ["SalesforceAnalytics-ObjC"]
-        ),
-        .library(
             name: "SalesforceSDKCommon",
             targets: ["SalesforceSDKCommon-ObjC", "SalesforceSDKCommon-Swift"]
+        ),
+        .library(
+            name: "SalesforceAnalytics",
+            targets: ["SalesforceAnalytics-ObjC"]
         ),
         .library(
             name: "SalesforceSDKCore",
@@ -36,12 +36,7 @@ let package = Package(
             path: "external/ThirdPartyDependencies/sqlcipher/SQLCipher.xcframework"
         ),
         .target(
-            name: "SalesforceAnalytics-ObjC",
-            path: "libs/SalesforceAnalytics/SalesforceAnalytics"
-        ),
-        .target(
             name: "SalesforceSDKCommon-ObjC",
-            dependencies: ["SalesforceAnalytics-ObjC"],
             path: "libs/SalesforceSDKCommon/SalesforceSDKCommon",
             exclude: ["Classes/Keychain/KeychainManager.swift"]
         ),
@@ -52,8 +47,13 @@ let package = Package(
             sources: ["Classes/Keychain/KeychainManager.swift"]
         ),
         .target(
-            name: "SalesforceSDKCore-ObjC",
+            name: "SalesforceAnalytics-ObjC",
             dependencies: ["SalesforceSDKCommon-ObjC"],
+            path: "libs/SalesforceAnalytics/SalesforceAnalytics"
+        ),
+        .target(
+            name: "SalesforceSDKCore-ObjC",
+            dependencies: ["SalesforceAnalytics-ObjC"],
             path: "libs/SalesforceSDKCore/SalesforceSDKCore",
             exclude: [
                 "Classes/Storage/KeyValueEncryptedFileStoreViewController.swift",
