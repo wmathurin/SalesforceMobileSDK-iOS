@@ -1,1 +1,0 @@
-../../../../libs/SalesforceSDKCore/SalesforceSDKCore/Classes/Security/AppLockView/SFSDKAppLockViewConfig.h

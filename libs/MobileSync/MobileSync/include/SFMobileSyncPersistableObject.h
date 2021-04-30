@@ -1,1 +1,0 @@
-../../../../libs/MobileSync/MobileSync/Classes/Model/SFMobileSyncPersistableObject.h
