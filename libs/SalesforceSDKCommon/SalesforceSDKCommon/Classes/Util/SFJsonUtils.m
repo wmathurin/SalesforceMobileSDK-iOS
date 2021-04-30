@@ -23,7 +23,7 @@
  */
 
 #import "SFJsonUtils.h"
-#import "SFLogger.h"
+#import <SalesforceSDKCommon/SFLogger.h>
 
 static NSError *sLastError = nil;
 
