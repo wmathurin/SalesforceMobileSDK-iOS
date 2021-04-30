@@ -923,6 +923,7 @@
 				CE4CE2C61C0E463C009F6029 /* Headers */,
 				CE4CE4F81C0E6DC4009F6029 /* ShellScript */,
 				CE4CE4FF1C0E6E5C009F6029 /* ShellScript */,
+				4F1BF3C2263B8F6B00CA430F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1133,6 +1134,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4F1BF3C2263B8F6B00CA430F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PROJECT_DIR}/../../shared/common/build/tools/update_public_header_links.sh\"\n";
+		};
 		CE4CE4F81C0E6DC4009F6029 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1144,7 +1162,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$SRCROOT/../../shared/common/build/tools/generate_headers.sh\" -o \"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Headers/$PRODUCT_NAME.h\" -u \"$SRCROOT/$TARGET_NAME/$TARGET_NAME.h\"";
+			shellScript = "\"$SRCROOT/../../shared/common/build/tools/generate_headers.sh\" -o \"$TARGET_BUILD_DIR/$PRODUCT_NAME.framework/Headers/$PRODUCT_NAME.h\" -u \"$SRCROOT/$TARGET_NAME/$TARGET_NAME.h\"\n";
 		};
 		CE4CE4FF1C0E6E5C009F6029 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1157,7 +1175,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PROJECT_DIR}/../../shared/common/build/tools/update_podspec_headers.sh\" -s mobilesync";
+			shellScript = "\"${PROJECT_DIR}/../../shared/common/build/tools/update_podspec_headers.sh\" -s mobilesync\n";
 		};
 		CEAAAE79195A184100CBBFE9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

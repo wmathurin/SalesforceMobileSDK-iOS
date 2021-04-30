@@ -329,6 +329,7 @@
 				B7136CFC216684A700F6A221 /* Resources */,
 				B7D55E402181691800827C89 /* ShellScript */,
 				B7D55E412181696500827C89 /* ShellScript */,
+				4F1BF39B263B8B4800CA430F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -448,6 +449,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4F1BF39B263B8B4800CA430F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PROJECT_DIR}/../../shared/common/build/tools/update_public_header_links.sh\"\n";
+		};
 		B7D55E402181691800827C89 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

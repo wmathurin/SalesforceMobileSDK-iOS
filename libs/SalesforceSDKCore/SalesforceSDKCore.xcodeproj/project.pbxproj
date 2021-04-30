@@ -1994,6 +1994,7 @@
 				82C5E3DE1C1B628A00376C00 /* Resources */,
 				CE4CE4F41C0E6D14009F6029 /* ShellScript */,
 				E1C80D751C5C5056001B3A21 /* ShellScript */,
+				4F1BF3B3263B8F4B00CA430F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2151,6 +2152,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "docOutputDir=\"${PROJECT_DIR}/../../build/artifacts/doc/build_out/${PROJECT_NAME}\"\nif [ ! -d \"$docOutputDir\" ]; then\nmkdir -p \"$docOutputDir\"\nfi\n\n/usr/bin/headerdoc2html \\\n-o \"$docOutputDir\" \\\n${PROJECT_DIR}/SalesforceSDKCore/ -j -C -L -N -Q -t --tocformat=\"default\"";
+		};
+		4F1BF3B3263B8F4B00CA430F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PROJECT_DIR}/../../shared/common/build/tools/update_public_header_links.sh\"\n";
 		};
 		CE4CE4F41C0E6D14009F6029 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

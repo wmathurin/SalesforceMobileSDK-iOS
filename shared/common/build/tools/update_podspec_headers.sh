@@ -73,7 +73,7 @@ cd "$repoDir"
 publicHeaderFileList=""
 isFirstFile=1
 for headerFile in `ls -1 "${publicHeaderDirectory}"`; do
-	repoHeaderFile=`find ${projectDir} -name $headerFile`
+	repoHeaderFile=`find ${projectDir} -name $headerFile -not -path "*/include/*"`
 	if [ "$repoHeaderFile" != "" ]; then
 		if [ $isFirstFile -eq 1 ]; then
 			publicHeaderFileList="'$repoHeaderFile'"
