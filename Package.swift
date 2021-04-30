@@ -38,7 +38,8 @@ let package = Package(
         .target(
             name: "SalesforceSDKCommon-ObjC",
             path: "libs/SalesforceSDKCommon/SalesforceSDKCommon",
-            exclude: ["Classes/Keychain/KeychainManager.swift"]
+            exclude: ["Classes/Keychain/KeychainManager.swift"],
+            publicHeadersPath: "include"
         ),
         .target(
             name: "SalesforceSDKCommon-Swift",
