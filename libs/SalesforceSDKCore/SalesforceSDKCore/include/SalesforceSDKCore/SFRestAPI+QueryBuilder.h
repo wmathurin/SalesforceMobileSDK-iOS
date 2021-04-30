@@ -1,0 +1,1 @@
+../../../../../libs/SalesforceSDKCore/SalesforceSDKCore/Classes/RestAPI/SFRestAPI+QueryBuilder.h

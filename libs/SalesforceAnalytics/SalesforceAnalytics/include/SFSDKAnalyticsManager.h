@@ -1,1 +1,0 @@
-../../../../libs/SalesforceAnalytics/SalesforceAnalytics/Classes/Manager/SFSDKAnalyticsManager.h

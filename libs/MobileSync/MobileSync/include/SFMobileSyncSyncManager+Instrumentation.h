@@ -1,1 +1,0 @@
-../../../../libs/MobileSync/MobileSync/Classes/Instrumentation/SFMobileSyncSyncManager+Instrumentation.h

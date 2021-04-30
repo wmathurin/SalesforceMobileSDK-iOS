@@ -1,0 +1,1 @@
+../../../../../libs/SalesforceSDKCore/SalesforceSDKCore/Classes/Common/NSDictionary+SFAdditions.h
