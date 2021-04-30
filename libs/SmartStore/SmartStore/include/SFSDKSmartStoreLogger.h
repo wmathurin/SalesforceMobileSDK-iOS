@@ -1,1 +1,1 @@
-../Classes/SFSDKSmartStoreLogger.h
+../../../../libs/SmartStore/SmartStore/Classes/SFSDKSmartStoreLogger.h

@@ -1,1 +1,1 @@
-../SalesforceSDKCore/SalesforceSDKCore.h
+../../../../libs/SalesforceSDKCore/SalesforceSDKCore/SalesforceSDKCore.h

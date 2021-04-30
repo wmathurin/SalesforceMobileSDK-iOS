@@ -1,1 +1,1 @@
-../Classes/Util/SFSDKSafeMutableArray.h
+../../../../libs/SalesforceSDKCommon/SalesforceSDKCommon/Classes/Util/SFSDKSafeMutableArray.h

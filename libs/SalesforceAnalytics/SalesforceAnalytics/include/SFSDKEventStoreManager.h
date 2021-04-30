@@ -1,1 +1,1 @@
-../Classes//Store/SFSDKEventStoreManager.h
+../../../../libs/SalesforceAnalytics/SalesforceAnalytics/Classes/Store/SFSDKEventStoreManager.h

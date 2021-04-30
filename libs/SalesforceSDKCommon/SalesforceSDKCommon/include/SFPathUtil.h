@@ -1,1 +1,1 @@
-../Classes/Util/SFPathUtil.h
+../../../../libs/SalesforceSDKCommon/SalesforceSDKCommon/Classes/Util/SFPathUtil.h

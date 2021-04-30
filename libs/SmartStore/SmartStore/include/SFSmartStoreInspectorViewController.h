@@ -1,1 +1,1 @@
-../Classes/SFSmartStoreInspectorViewController.h
+../../../../libs/SmartStore/SmartStore/Classes/SFSmartStoreInspectorViewController.h

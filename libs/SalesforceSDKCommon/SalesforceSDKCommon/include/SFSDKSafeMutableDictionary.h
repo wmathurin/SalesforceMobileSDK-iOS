@@ -1,1 +1,1 @@
-../Classes/Util/SFSDKSafeMutableDictionary.h
+../../../../libs/SalesforceSDKCommon/SalesforceSDKCommon/Classes/Util/SFSDKSafeMutableDictionary.h

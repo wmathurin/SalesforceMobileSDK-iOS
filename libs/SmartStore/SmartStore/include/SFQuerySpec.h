@@ -1,1 +1,1 @@
-../Classes/SFQuerySpec.h
+../../../../libs/SmartStore/SmartStore/Classes/SFQuerySpec.h

@@ -1,1 +1,1 @@
-../Classes/Util/SFFileProtectionHelper.h
+../../../../libs/SalesforceSDKCommon/SalesforceSDKCommon/Classes/Util/SFFileProtectionHelper.h

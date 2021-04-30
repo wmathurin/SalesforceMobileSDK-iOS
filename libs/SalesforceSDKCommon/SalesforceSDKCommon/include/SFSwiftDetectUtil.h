@@ -1,1 +1,1 @@
-../Classes/Util/SFSwiftDetectUtil.h
+../../../../libs/SalesforceSDKCommon/SalesforceSDKCommon/Classes/Util/SFSwiftDetectUtil.h

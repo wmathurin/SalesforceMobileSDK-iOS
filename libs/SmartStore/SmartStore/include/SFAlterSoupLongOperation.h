@@ -1,1 +1,1 @@
-../Classes/SFAlterSoupLongOperation.h
+../../../../libs/SmartStore/SmartStore/Classes/SFAlterSoupLongOperation.h

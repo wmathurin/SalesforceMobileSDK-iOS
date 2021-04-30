@@ -1,1 +1,1 @@
-../Classes/SFSmartSqlHelper.h
+../../../../libs/SmartStore/SmartStore/Classes/SFSmartSqlHelper.h

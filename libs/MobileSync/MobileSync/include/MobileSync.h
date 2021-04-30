@@ -1,1 +1,1 @@
-../MobileSync/MobileSync.h
+../../../../libs/MobileSync/MobileSync/MobileSync.h

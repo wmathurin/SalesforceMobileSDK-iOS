@@ -1,1 +1,1 @@
-../Classes/Logger/SFDefaultLogger.h
+../../../../libs/SalesforceSDKCommon/SalesforceSDKCommon/Classes/Logger/SFDefaultLogger.h

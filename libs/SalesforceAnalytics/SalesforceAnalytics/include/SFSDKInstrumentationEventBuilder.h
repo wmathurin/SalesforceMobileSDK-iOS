@@ -1,1 +1,1 @@
-../Classes//Model/SFSDKInstrumentationEventBuilder.h
+../../../../libs/SalesforceAnalytics/SalesforceAnalytics/Classes/Model/SFSDKInstrumentationEventBuilder.h

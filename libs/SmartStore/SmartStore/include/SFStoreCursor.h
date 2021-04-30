@@ -1,1 +1,1 @@
-../Classes/SFStoreCursor.h
+../../../../libs/SmartStore/SmartStore/Classes/SFStoreCursor.h

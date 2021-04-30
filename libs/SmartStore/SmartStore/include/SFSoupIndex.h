@@ -1,1 +1,1 @@
-../Classes/SFSoupIndex.h
+../../../../libs/SmartStore/SmartStore/Classes/SFSoupIndex.h

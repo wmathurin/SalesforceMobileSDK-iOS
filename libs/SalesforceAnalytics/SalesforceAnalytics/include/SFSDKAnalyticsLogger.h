@@ -1,1 +1,1 @@
-../Classes//Util/SFSDKAnalyticsLogger.h
+../../../../libs/SalesforceAnalytics/SalesforceAnalytics/Classes/Util/SFSDKAnalyticsLogger.h

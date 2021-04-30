@@ -1,1 +1,1 @@
-../Classes/SFSmartStoreUtils.h
+../../../../libs/SmartStore/SmartStore/Classes/SFSmartStoreUtils.h

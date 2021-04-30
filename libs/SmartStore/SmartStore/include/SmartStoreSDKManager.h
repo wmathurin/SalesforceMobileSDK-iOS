@@ -1,1 +1,1 @@
-../Classes/SmartStoreSDKManager.h
+../../../../libs/SmartStore/SmartStore/Classes/SmartStoreSDKManager.h
