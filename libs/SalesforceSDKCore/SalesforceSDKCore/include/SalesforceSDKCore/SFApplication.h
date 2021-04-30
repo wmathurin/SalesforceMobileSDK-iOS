@@ -1,1 +1,0 @@
-../../../../../libs/SalesforceSDKCore/SalesforceSDKCore/Classes/Common/SFApplication.h

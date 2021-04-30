@@ -1,0 +1,1 @@
+../../../../libs/SalesforceAnalytics/SalesforceAnalytics/Classes/Store/SFSDKEventStoreManager.h

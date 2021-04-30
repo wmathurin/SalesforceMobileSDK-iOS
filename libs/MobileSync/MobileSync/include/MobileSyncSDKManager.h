@@ -1,0 +1,1 @@
+../../../../libs/MobileSync/MobileSync/Classes/Manager/MobileSyncSDKManager.h

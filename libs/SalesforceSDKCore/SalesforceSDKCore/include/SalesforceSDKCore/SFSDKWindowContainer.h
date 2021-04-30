@@ -1,1 +1,0 @@
-../../../../../libs/SalesforceSDKCore/SalesforceSDKCore/Classes/Views/SFSDKWindowContainer.h

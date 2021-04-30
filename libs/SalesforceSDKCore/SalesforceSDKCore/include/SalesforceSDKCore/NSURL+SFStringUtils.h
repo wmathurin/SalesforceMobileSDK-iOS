@@ -1,1 +1,0 @@
-../../../../../libs/SalesforceSDKCore/SalesforceSDKCore/Classes/Util/NSURL+SFStringUtils.h

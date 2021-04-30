@@ -1,0 +1,1 @@
+../../../../libs/SalesforceAnalytics/SalesforceAnalytics/Classes/Model/SFSDKDeviceAppAttributes.h

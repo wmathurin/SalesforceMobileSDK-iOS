@@ -1,1 +1,0 @@
-../../../../../libs/SmartStore/SmartStore/Classes/SFSDKStoreConfig.h

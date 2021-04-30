@@ -32,7 +32,7 @@ set -e
 
 repoDir=$(cd "$(dirname ${BASH_SOURCE[0]})" && cd ../../../.. && pwd)
 publicHeaderDirectory="${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}"
-includeDir="${repoDir}/libs/${PROJECT_NAME}/${PROJECT_NAME}/include/${PROJECT_NAME}"
+includeDir="${repoDir}/libs/${PROJECT_NAME}/${PROJECT_NAME}/include"
 projectDir=`echo "${PROJECT_DIR}" | sed "s#${repoDir}/##g"`
 
 cd "$repoDir"
@@ -45,7 +45,7 @@ done
 for headerFile in `ls -1 "${publicHeaderDirectory}"`; do
 	repoHeaderFile=`find ${projectDir} -name $headerFile -not -path "*/include/*"`
 	if [ "$repoHeaderFile" != "" ]; then
-        ln -s "../../../../../${repoHeaderFile}" "${includeDir}/"
+        ln -s "../../../../${repoHeaderFile}" "${includeDir}/"
 	fi
 done
 
