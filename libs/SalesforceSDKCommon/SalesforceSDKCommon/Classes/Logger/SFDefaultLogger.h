@@ -28,11 +28,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#ifdef SWIFT_PACKAGE
-#import "SFLogger.h"
-#else
 #import <SalesforceSDKCommon/SFLogger.h>
-#endif
 
 NS_ASSUME_NONNULL_BEGIN
 
