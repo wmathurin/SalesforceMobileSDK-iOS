@@ -27,6 +27,7 @@
 #import "SFKeychainItemWrapper+Internal.h"
 #import "NSData+SFAdditions.h"
 #import "NSString+SFAdditions.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 @interface SFKeychainItemWrapper ()
 

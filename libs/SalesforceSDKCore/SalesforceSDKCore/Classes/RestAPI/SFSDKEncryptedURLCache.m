@@ -25,6 +25,7 @@
 #import "SFSDKEncryptedURLCache.h"
 #import "../Security/SFKeyStoreManager.h"
 #import "../Common/NSData+SFAdditions.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 static NSString * const kURLSchemePrefix = @"sfsdkURLCache://";
 static NSString * const kURLCacheEncryptionKeyLabel = @"com.salesforce.URLCache.encryptionKey";

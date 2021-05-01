@@ -35,6 +35,8 @@
 #import "../Common/NSString+SFAdditions.h"
 #import "SFSDKCompositeRequest.h"
 #import "SFSDKBatchRequest.h"
+#import "../Util/SFSDKCoreLogger.h"
+
 
 NSString* const kSFRestDefaultAPIVersion = @"v49.0";
 NSString* const kSFRestIfUnmodifiedSince = @"If-Unmodified-Since";

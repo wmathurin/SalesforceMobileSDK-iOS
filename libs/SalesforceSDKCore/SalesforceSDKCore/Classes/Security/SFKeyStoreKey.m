@@ -24,6 +24,8 @@
 
 #import "SFKeyStoreKey.h"
 #import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+#import "../Util/SFSDKCoreLogger.h"
+
 // NSCoding constants
 static NSString * const kKeyStoreKeyDataArchiveKey = @"com.salesforce.keystore.keyStoreKeyDataArchive";
 

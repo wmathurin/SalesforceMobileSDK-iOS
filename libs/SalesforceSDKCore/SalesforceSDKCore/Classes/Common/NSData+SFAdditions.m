@@ -26,6 +26,7 @@
 #define COMMON_DIGEST_FOR_OPENSSL
 #import <CommonCrypto/CommonDigest.h>
 #include "zlib.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 // Map 8-bit character to 6-bit byte
 #define INVALID_BYTE64 255

@@ -6,5 +6,5 @@
 
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
-    // Don't use it breaks SPM
+    // Don't use it, it breaks SPM
 #endif

@@ -25,6 +25,7 @@
 #import "SFInstrumentation.h"
 #import "SFMethodInterceptor.h"
 #import <objc/runtime.h>
+#import "../Util/SFSDKCoreLogger.h"
 
 @interface SFInstrumentation ()
 

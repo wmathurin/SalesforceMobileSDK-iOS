@@ -60,6 +60,7 @@
 #import "../Analytics/SFSDKSalesforceAnalyticsManager.h"
 #import "../Security/SFSecurityLockout+Internal.h"
 #import "../Util/SFApplicationHelper.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 // Notifications
 NSNotificationName SFUserAccountManagerDidChangeUserNotification       = @"SFUserAccountManagerDidChangeUserNotification";

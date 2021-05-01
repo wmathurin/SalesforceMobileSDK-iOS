@@ -33,6 +33,7 @@
 #import "../RestAPI/SFRestAPI+Blocks.h"
 #import "SFSDKPushNotificationEncryptionConstants.h"
 #import "../Security/SFSDKCryptoUtils.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 static NSString* const kSFDeviceToken = @"deviceToken";
 static NSString* const kSFDeviceSalesforceId = @"deviceSalesforceId";

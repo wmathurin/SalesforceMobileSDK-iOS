@@ -29,6 +29,7 @@
 #import "SFSDKAuthConfigUtil.h"
 #import "../RestAPI/SFNetwork.h"
 #import <SalesforceSDKCommon/SFJsonUtils.h>
+#import "SFSDKCoreLogger.h"
 
 static NSString * const kSFOAuthEndPointAuthConfiguration = @"/.well-known/auth-configuration";
 

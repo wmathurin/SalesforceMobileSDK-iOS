@@ -36,6 +36,8 @@
 #import "../UserAccount/ViewControllers/SFDefaultUserManagementViewController.h"
 #import "../Security/SFSecurityLockout.h"
 #import "SFApplicationHelper.h"
+#import "SFSDKCoreLogger.h"
+
 
 @implementation SFSDKAuthHelper
 

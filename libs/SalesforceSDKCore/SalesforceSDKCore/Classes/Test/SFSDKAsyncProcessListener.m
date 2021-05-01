@@ -23,6 +23,7 @@
  */
 
 #import "SFSDKAsyncProcessListener.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 static NSTimeInterval const kDefaultWaitTimeout = 5.0;
 

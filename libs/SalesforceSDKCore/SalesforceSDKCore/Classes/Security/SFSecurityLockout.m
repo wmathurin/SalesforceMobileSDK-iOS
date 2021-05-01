@@ -48,6 +48,7 @@
 #import "SFSDKCryptoUtils.h"
 #import "SFPBKDFData.h"
 #import "../Common/NSData+SFAdditions.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 // Private constants
 

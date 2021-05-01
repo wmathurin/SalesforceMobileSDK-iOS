@@ -32,6 +32,7 @@
 #import "../Common/SalesforceSDKManager.h"
 #import "../Common/NSData+SFAdditions.h"
 #import "../RestAPI/SFRestAPI+Blocks.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 static NSString* const kCode = @"code";
 static NSString* const kAiltn = @"ailtn";

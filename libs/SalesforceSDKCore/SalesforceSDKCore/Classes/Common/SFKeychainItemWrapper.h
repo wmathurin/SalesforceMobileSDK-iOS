@@ -46,6 +46,8 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <SalesforceSDKCore/SalesforceSDKConstants.h>
+
 
 // Keychain item exception defines
 SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0")

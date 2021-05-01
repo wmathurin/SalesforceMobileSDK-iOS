@@ -26,6 +26,8 @@
 #import "../Common/SFCrypto.h"
 #import "SFSDKCryptoUtils.h"
 #import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+#import "../Util/SFSDKCoreLogger.h"
+
 
 @implementation SFKeyStore
 

@@ -24,6 +24,7 @@
 
 #import "SFCryptChunks.h"
 #import <CommonCrypto/CommonCrypto.h>
+#import "../Util/SFSDKCoreLogger.h"
 
 size_t const SFCryptChunksCipherBlockSize = kCCBlockSizeAES128;
 uint32_t const SFCryptChunksCipherAlgorithm = kCCAlgorithmAES;

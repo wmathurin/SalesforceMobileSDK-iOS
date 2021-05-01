@@ -42,6 +42,7 @@
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
 #import "../Common/SFSDKAppFeatureMarkers.h"
 #import "../Common/SFSDKAppConfig.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 static NSString * const kAnalyticsUnauthenticatedManagerKey = @"-unauthenticated-";
 static NSString * const kEventStoresDirectory = @"event_stores";

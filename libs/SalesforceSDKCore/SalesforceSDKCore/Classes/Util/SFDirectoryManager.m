@@ -29,6 +29,7 @@
 #import "../Common/NSString+SFAdditions.h"
 #import <SalesforceSDKCommon/SFFileProtectionHelper.h>
 #import <SalesforceSDKCommon/SFSDKDatasharingHelper.h>
+#import "SFSDKCoreLogger.h"
 
 static NSString * const kDefaultOrgName = @"org";
 NSString * const kDefaultCommunityName = @"internal";

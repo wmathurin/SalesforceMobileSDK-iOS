@@ -25,6 +25,7 @@
 #import "NSDictionary+SFAdditions.h"
 #import "NSString+SFAdditions.h"
 #import "NSArray+SFAdditions.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 @implementation NSDictionary (SFAdditions)
 

@@ -30,7 +30,7 @@
 #import "../Security/SFKeyStoreManager.h"
 #import "../Security/SFSDKCryptoUtils.h"
 #import <SalesforceSDKCommon/SFFileProtectionHelper.h>
-
+#import "../Util/SFSDKCoreLogger.h"
 
 // Name of the individual file containing the archived SFUserAccount class
 static NSString * const kUserAccountPlistFileName = @"UserAccount.plist";

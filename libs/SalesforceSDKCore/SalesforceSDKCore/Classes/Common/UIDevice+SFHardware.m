@@ -15,6 +15,7 @@
 #import "UIDevice+SFHardware.h"
 #import "UIScreen+SFAdditions.h"
 #import "../Util/SFApplicationHelper.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 @implementation UIDevice (SFHardware)
 /*

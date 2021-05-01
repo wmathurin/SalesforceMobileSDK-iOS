@@ -5,6 +5,5 @@
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
-    #import "SalesforceSDKConstants.h"
-    #import "SFSDKCoreLogger.h"
+    // Don't use it, it breaks SPM
 #endif

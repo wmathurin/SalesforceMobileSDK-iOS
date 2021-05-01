@@ -30,6 +30,7 @@
 #import "../UserAccount/SFUserAccountManager.h"
 #import "../RestAPI/SFNetwork.h"
 #import "../OAuth/SFSDKAuthSession.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 // Public constants
 
