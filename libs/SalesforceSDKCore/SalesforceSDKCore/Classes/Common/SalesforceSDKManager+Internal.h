@@ -1,8 +1,8 @@
 #import <SalesforceSDKCommon/SFSDKSafeMutableDictionary.h>
 #import "SalesforceSDKManager.h"
-#import "SFSecurityLockout+Internal.h"
+#import "../Security/SFSecurityLockout+Internal.h"
 #import "../UserAccount/SFUserAccountManager.h"
-#import "SFUserAccount.h"
+#import "../UserAccount/SFUserAccount.h"
 #import "SFSDKAppConfig.h"
 
 @protocol SalesforceSDKManagerFlow <NSObject>
