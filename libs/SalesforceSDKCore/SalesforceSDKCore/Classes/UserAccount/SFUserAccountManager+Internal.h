@@ -23,16 +23,16 @@
  */
 
 #import "SFUserAccountManager.h"
-#import "SFSDKUserSelectionView.h"
-#import "SFSDKLoginFlowSelectionView.h"
-#import "SFSDKAlertView.h"
+#import "../IDP/SFSDKUserSelectionView.h"
+#import "../IDP/SFSDKLoginFlowSelectionView.h"
+#import "../Views/SFSDKAlertView.h"
 #import "SFSDKAuthErrorManager.h"
-#import "SFSDKAuthSession.h"
-#import "SFDefaultUserManagementListViewController.h"
-#import "SFIdentityCoordinator+Internal.h"
-#import "SFSDKLoginHostDelegate.h"
-#import "SFLoginViewController.h"
-#import "SFSDKAuthViewHandler.h"
+#import "../OAuth/SFSDKAuthSession.h"
+#import "ViewControllers/SFDefaultUserManagementListViewController.h"
+#import "../Identity/SFIdentityCoordinator+Internal.h"
+#import "../Login/LoginHost/SFSDKLoginHostDelegate.h"
+#import "../Login/SFLoginViewController.h"
+#import "../OAuth/SFSDKAuthViewHandler.h"
 #import <SalesforceSDKCommon/SFSDKSafeMutableDictionary.h>
 
 @class SFSDKAuthPreferences;

@@ -24,8 +24,9 @@
 
 #import <Foundation/Foundation.h>
 #import "SFIdentityCoordinator.h"
-#import "SFSDKAuthSession.h"
-#import "SFOAuthInfo.h"
+#import "../OAuth/SFSDKAuthSession.h"
+#import "../OAuth/SFOAuthInfo.h"
+
 @class SFIdentityData;
 @class SFOAuthSessionRefresher;
 NS_ASSUME_NONNULL_BEGIN
