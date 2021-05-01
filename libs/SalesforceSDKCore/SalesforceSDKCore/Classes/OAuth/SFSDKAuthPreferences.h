@@ -28,7 +28,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#include "SFOAuthCoordinator.h"
+#import "SFOAuthCoordinator.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SFSDKAuthPreferences : NSObject

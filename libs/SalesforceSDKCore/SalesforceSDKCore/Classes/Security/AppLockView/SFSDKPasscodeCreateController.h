@@ -26,7 +26,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#include "SFSDKAppLockViewConfig.h"
+#import "SFSDKAppLockViewConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

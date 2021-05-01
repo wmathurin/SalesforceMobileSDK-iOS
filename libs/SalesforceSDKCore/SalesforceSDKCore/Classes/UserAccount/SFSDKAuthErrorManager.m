@@ -31,10 +31,10 @@
 #import "SFAuthErrorHandlerList.h"
 #import "SFAuthErrorHandler.h"
 #import "../OAuth/SFOAuthCoordinator+Internal.h"
-#include "SFSDKResourceUtils.h"
-#include "SFUserAccountManager.h"
-#include "SFSDKOAuth2.h"
-#include "SFSDKAuthSession.h"
+#import "../Util/SFSDKResourceUtils.h"
+#import "SFUserAccountManager.h"
+#import "../Util/SFSDKOAuth2.h"
+#import "../OAuth/SFSDKAuthSession.h"
 #import "../Util/SFSDKCoreLogger.h"
 
 // Auth error handler name constants
