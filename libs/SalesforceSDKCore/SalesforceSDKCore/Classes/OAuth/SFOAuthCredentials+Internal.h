@@ -23,7 +23,7 @@
  */
 
 #import "SFOAuthCredentials.h"
-#import "SFEncryptionKey.h"
+#import "../Security/SFEncryptionKey.h"
 
 typedef NS_ENUM(NSUInteger, SFOAuthCredsEncryptionType) {
     kSFOAuthCredsEncryptionTypeNotSet,
