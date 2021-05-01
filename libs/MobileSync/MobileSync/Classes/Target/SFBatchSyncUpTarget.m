@@ -24,10 +24,12 @@
 
 #import <SalesforceSDKCommon/SFJsonUtils.h>
 #import <SalesforceSDKCore/SFSDKCompositeResponse.h>
-#import "MobileSync.h"
+#import "SFBatchSyncUpTarget.h"
 #import "SFSyncTarget+Internal.h"
 #import "SFSyncUpTarget+Internal.h"
-#import "SFCompositeRequestHelper.h"
+#import "../Util/SFCompositeRequestHelper.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import <SalesforceSDKCore/SFRestAPI.h>
 
 NSString * const kSFSyncUpTargetMaxBatchSize = @"maxBatchSize";
 

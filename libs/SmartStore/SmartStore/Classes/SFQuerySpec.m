@@ -27,6 +27,7 @@
 #import "SFSmartStore.h"
 #import "SFSmartStore+Internal.h"
 #import "SFQuerySpec.h"
+#import "SFSDKSmartStoreLogger.h"
 
 NSString * const kQuerySpecSortOrderAscending = @"ascending";
 NSString * const kQuerySpecSortOrderDescending = @"descending";

@@ -28,9 +28,9 @@
  */
 #import "SFSDKURLHandler.h"
 #import "SFSDKAdvancedAuthURLHandler.h"
-#import "SFSDKAuthPreferences.h"
-#import "SFUserAccountManager+URLHandlers.h"
-#import "NSURL+SFAdditions.h"
+#import "../OAuth/SFSDKAuthPreferences.h"
+#import "../IDP/SFUserAccountManager+URLHandlers.h"
+#import "../Common/NSURL+SFAdditions.h"
 @implementation SFSDKAdvancedAuthURLHandler
 
 - (BOOL)canHandleRequest:(NSURL *)url options:(NSDictionary *)options {

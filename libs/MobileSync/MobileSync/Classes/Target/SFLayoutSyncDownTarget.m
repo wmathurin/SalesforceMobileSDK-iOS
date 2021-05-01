@@ -28,9 +28,9 @@
  */
 
 #import "SFLayoutSyncDownTarget.h"
-#import "SFMobileSyncSyncManager.h"
-#import "SFMobileSyncConstants.h"
-#import "SFMobileSyncNetworkUtils.h"
+#import "../Manager/SFMobileSyncSyncManager.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncNetworkUtils.h"
 
 static NSString * const kSFSyncTargetObjectType = @"sobjectType";
 static NSString * const kSFSyncTargetFormFactor = @"formFactor";

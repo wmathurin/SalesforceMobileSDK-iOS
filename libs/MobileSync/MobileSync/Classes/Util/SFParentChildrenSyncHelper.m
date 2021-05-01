@@ -22,7 +22,7 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFSyncTarget+Internal.h"
+#import "../Target/SFSyncTarget+Internal.h"
 #import "SFParentChildrenSyncHelper.h"
 #import <SmartStore/SFSmartStore.h>
 #import <SmartStore/SFQuerySpec.h>

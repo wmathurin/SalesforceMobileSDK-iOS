@@ -27,7 +27,7 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #import "SFSDKAuthViewHandler.h"
-#import "SFLoginViewController.h"
+#import "../Login/SFLoginViewController.h"
 @implementation SFSDKAuthViewHolder
 
 - (WKWebView *)wkWebView {

@@ -28,20 +28,20 @@
  */
 
 #import "SFSDKSalesforceAnalyticsManager+Internal.h"
-#import "SFUserAccountManager.h"
-#import "SalesforceSDKManager.h"
-#import "SFDirectoryManager.h"
-#import "SFKeyStoreManager.h"
-#import "SFSDKCryptoUtils.h"
+#import "../UserAccount/SFUserAccountManager.h"
+#import "../Common/SalesforceSDKManager.h"
+#import "../Util/SFDirectoryManager.h"
+#import "../Security/SFKeyStoreManager.h"
+#import "../Security/SFSDKCryptoUtils.h"
 #import "SFSDKAILTNPublisher.h"
-#import "UIDevice+SFHardware.h"
-#import "SFIdentityData.h"
-#import "SFApplicationHelper.h"
+#import "../Common/UIDevice+SFHardware.h"
+#import "../Identity/SFIdentityData.h"
+#import "../Util/SFApplicationHelper.h"
 #import <SalesforceAnalytics/SFSDKAILTNTransform.h>
 #import <SalesforceAnalytics/SFSDKDeviceAppAttributes.h>
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
-#import "SFSDKAppFeatureMarkers.h"
-#import "SFSDKAppConfig.h"
+#import "../Common/SFSDKAppFeatureMarkers.h"
+#import "../Common/SFSDKAppConfig.h"
 
 static NSString * const kAnalyticsUnauthenticatedManagerKey = @"-unauthenticated-";
 static NSString * const kEventStoresDirectory = @"event_stores";

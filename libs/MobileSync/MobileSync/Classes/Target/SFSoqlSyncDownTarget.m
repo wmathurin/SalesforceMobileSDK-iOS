@@ -23,11 +23,11 @@
  */
 
 #import "SFSoqlSyncDownTarget.h"
-#import "SFMobileSyncSyncManager.h"
-#import "SFMobileSyncConstants.h"
-#import "SFMobileSyncObjectUtils.h"
-#import "SFMobileSyncNetworkUtils.h"
-#import "SFSDKSoqlMutator.h"
+#import "../Manager/SFMobileSyncSyncManager.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncObjectUtils.h"
+#import "../Util/SFMobileSyncNetworkUtils.h"
+#import "../Util/SFSDKSoqlMutator.h"
 
 static NSString * const kSFSoqlSyncTargetQuery = @"query";
 static NSString * const kSFSoqlSyncTargetMaxBatchSize = @"maxBatchSize";

@@ -28,7 +28,7 @@
  */
 
 #import "SFSDKEventBuilderHelper.h"
-#import "SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager.h"
 #import "SFSDKSalesforceAnalyticsManager.h"
 #import <SalesforceAnalytics/SFSDKInstrumentationEventBuilder.h>
 

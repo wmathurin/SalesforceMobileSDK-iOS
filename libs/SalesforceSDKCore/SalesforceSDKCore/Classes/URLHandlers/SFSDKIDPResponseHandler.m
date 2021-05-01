@@ -27,12 +27,12 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFSDKIDPConstants.h"
+#import "../IDP/SFSDKIDPConstants.h"
 #import "SFSDKIDPResponseHandler.h"
-#import "SFSDKAuthPreferences.h"
-#import "NSURL+SFAdditions.h"
+#import "../OAuth/SFSDKAuthPreferences.h"
+#import "../Common/NSURL+SFAdditions.h"
 #import "SFUserAccountManager+URLHandlers.h"
-#import "SFSDKAuthPreferences.h"
+#import "../OAuth/SFSDKAuthPreferences.h"
 #import "SFSDKAuthResponseCommand.h"
 
 @implementation SFSDKIDPResponseHandler

@@ -24,15 +24,15 @@
 
 #import <SalesforceSDKCommon/SFJsonUtils.h>
 #import <SalesforceSDKCommon/SFSDKSafeMutableDictionary.h>
-#import "SFSDKOAuth2.h"
+#import "../Util/SFSDKOAuth2.h"
 #import "SFRestAPI+Internal.h"
 #import "SFRestRequest+Internal.h"
-#import "SFSDKWebUtils.h"
-#import "SalesforceSDKManager.h"
-#import "SFSDKEventBuilderHelper.h"
+#import "../Util/SFSDKWebUtils.h"
+#import "../Common/SalesforceSDKManager.h"
+#import "../Analytics/SFSDKEventBuilderHelper.h"
 #import "SFNetwork.h"
-#import "SFOAuthSessionRefresher.h"
-#import "NSString+SFAdditions.h"
+#import "../OAuth/SFOAuthSessionRefresher.h"
+#import "../Common/NSString+SFAdditions.h"
 #import "SFSDKCompositeRequest.h"
 #import "SFSDKBatchRequest.h"
 

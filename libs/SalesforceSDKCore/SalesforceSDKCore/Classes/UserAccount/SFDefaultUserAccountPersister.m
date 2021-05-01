@@ -23,12 +23,12 @@
  */
 
 #import "SFUserAccountManager.h"
-#import "SFIdentityData.h"
+#import "../Identity/SFIdentityData.h"
 #import "SFDefaultUserAccountPersister.h"
-#import "SFDirectoryManager.h"
-#import "SFDirectoryManager+Internal.h"
-#import "SFKeyStoreManager.h"
-#import "SFSDKCryptoUtils.h"
+#import "../Util/SFDirectoryManager.h"
+#import "../Util/SFDirectoryManager+Internal.h"
+#import "../Security/SFKeyStoreManager.h"
+#import "../Security/SFSDKCryptoUtils.h"
 #import <SalesforceSDKCommon/SFFileProtectionHelper.h>
 
 

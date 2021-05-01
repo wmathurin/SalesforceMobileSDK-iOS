@@ -30,7 +30,7 @@
 #import "SFSDKLoginHostListViewController.h"
 #import "SFSDKLoginHost.h"
 #import "SFSDKTextFieldTableViewCell.h"
-#import "SFSDKResourceUtils.h"
+#import "../../Util/SFSDKResourceUtils.h"
 
 @implementation SFSDKNewLoginHostViewController
 

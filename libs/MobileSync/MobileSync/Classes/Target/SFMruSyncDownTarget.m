@@ -23,10 +23,10 @@
  */
 
 #import "SFMruSyncDownTarget.h"
-#import "SFMobileSyncSyncManager.h"
+#import "../Manager/SFMobileSyncSyncManager.h"
 #import <SalesforceSDKCore/SFSDKSoqlBuilder.h>
-#import "SFMobileSyncConstants.h"
-#import "SFMobileSyncNetworkUtils.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncNetworkUtils.h"
 
 static NSString * const kSFSyncTargetObjectType = @"sobjectType";
 static NSString * const kSFSyncTargetFieldlist = @"fieldlist";

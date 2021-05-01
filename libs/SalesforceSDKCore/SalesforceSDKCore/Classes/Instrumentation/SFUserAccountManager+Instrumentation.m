@@ -31,7 +31,7 @@
 #import <objc/runtime.h>
 #import <os/log.h>
 #import <os/signpost.h>
-#import "SFSDKCoreLogger.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 @implementation SFUserAccountManager(Instrumentation)
 

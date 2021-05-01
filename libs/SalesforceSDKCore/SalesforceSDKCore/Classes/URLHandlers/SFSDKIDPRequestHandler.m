@@ -27,8 +27,8 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #import "SFSDKIDPRequestHandler.h"
-#import "SFSDKIDPConstants.h"
-#import "SFOAuthCredentials.h"
+#import "../IDP/SFSDKIDPConstants.h"
+#import "../OAuth/SFOAuthCredentials.h"
 #import "SFSDKUserSelectionNavViewController.h"
 #import "SFUserAccountManager+URLHandlers.h"
 #import "SFSDKAuthRequestCommand.h"

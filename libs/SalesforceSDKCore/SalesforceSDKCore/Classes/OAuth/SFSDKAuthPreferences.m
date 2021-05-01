@@ -28,9 +28,9 @@
  */
 
 #import "SFSDKAuthPreferences.h"
-#import "SFManagedPreferences.h"
-#import "SFSDKLoginHostStorage.h"
-#import "SFSDKLoginHost.h"
+#import "../Util/SFManagedPreferences.h"
+#import "../Login/LoginHost/SFSDKLoginHostStorage.h"
+#import "../Login/LoginHost/SFSDKLoginHost.h"
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
 
 static NSString * const kSFLoginHostChangedNotification = @"kSFLoginHostChanged";

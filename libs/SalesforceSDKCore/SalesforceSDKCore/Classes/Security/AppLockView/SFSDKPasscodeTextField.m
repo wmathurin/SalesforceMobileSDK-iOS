@@ -26,8 +26,8 @@
  */
 
 #import "SFSDKPasscodeTextField.h"
-#import "SFSecurityLockout+Internal.h"
-#import "UIColor+SFColors.h"
+#import "../SFSecurityLockout+Internal.h"
+#import "../../Util/UIColor+SFColors.h"
 
 static CGFloat      const kDefaultLineWidth                  = 1;
 static NSUInteger   const kMaxPasscodeLength                 = 8;

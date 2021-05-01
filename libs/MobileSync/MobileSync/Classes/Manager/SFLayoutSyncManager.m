@@ -28,7 +28,7 @@
  */
 
 #import "SFLayoutSyncManager.h"
-#import "SFLayoutSyncDownTarget.h"
+#import "../Target/SFLayoutSyncDownTarget.h"
 #import <SmartStore/SFSoupIndex.h>
 #import <SmartStore/SFQuerySpec.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>

@@ -28,10 +28,10 @@
  */
 
 #import "SFSDKAILTNPublisher.h"
-#import "SFUserAccountManager.h"
-#import "SalesforceSDKManager.h"
-#import "NSData+SFAdditions.h"
-#import "SFRestAPI+Blocks.h"
+#import "../UserAccount/SFUserAccountManager.h"
+#import "../Common/SalesforceSDKManager.h"
+#import "../Common/NSData+SFAdditions.h"
+#import "../RestAPI/SFRestAPI+Blocks.h"
 
 static NSString* const kCode = @"code";
 static NSString* const kAiltn = @"ailtn";

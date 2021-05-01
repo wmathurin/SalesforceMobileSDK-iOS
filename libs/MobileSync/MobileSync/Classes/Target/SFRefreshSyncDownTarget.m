@@ -23,11 +23,11 @@
  */
 
 #import "SFRefreshSyncDownTarget.h"
-#import "SFMobileSyncSyncManager.h"
+#import "../Manager/SFMobileSyncSyncManager.h"
 #import <SalesforceSDKCore/SFSDKSoqlBuilder.h>
-#import "SFMobileSyncConstants.h"
-#import "SFMobileSyncNetworkUtils.h"
-#import "SFMobileSyncObjectUtils.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncNetworkUtils.h"
+#import "../Util/SFMobileSyncObjectUtils.h"
 #import <SmartStore/SFQuerySpec.h>
 #import <SmartStore/SFSmartStore.h>
 

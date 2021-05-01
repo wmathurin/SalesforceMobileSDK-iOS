@@ -28,9 +28,9 @@
 #import "SFSDKPasscodeVerifyController.h"
 #import "SFSecurityLockout.h"
 #import "SFSDKPasscodeTextField.h"
-#import "SFSDKResourceUtils.h"
+#import "../../Util/SFSDKResourceUtils.h"
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
-#import "SFSecurityLockout+Internal.h"
+#import "../SFSecurityLockout+Internal.h"
 
 // Private view layout constants
 static NSUInteger   const kSFMaxPasscodeLength                 = 8;

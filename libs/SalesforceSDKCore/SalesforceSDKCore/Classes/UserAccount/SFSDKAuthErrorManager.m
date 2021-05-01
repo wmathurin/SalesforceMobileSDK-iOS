@@ -30,7 +30,7 @@
 #import "SFSDKAuthErrorManager.h"
 #import "SFAuthErrorHandlerList.h"
 #import "SFAuthErrorHandler.h"
-#import "SFOAuthCoordinator+Internal.h"
+#import "../OAuth/SFOAuthCoordinator+Internal.h"
 #include "SFSDKResourceUtils.h"
 #include "SFUserAccountManager.h"
 #include "SFSDKOAuth2.h"

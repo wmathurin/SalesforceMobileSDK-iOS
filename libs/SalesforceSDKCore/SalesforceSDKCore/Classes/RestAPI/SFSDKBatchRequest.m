@@ -24,6 +24,7 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 
 #import "SFSDKBatchRequest.h"
 #import "SFRestRequest+Internal.h"
+
 @interface SFSDKBatchRequest()
 @property (nonatomic, readwrite) NSArray<SFRestRequest *> *batchRequests;
 @property (nonatomic, readwrite) BOOL haltOnError;

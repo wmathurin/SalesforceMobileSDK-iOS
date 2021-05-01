@@ -23,7 +23,7 @@
  */
 
 #import "SFRestAPI.h"
-#import "SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager.h"
 #import <SalesforceSDKCommon/SFSDKSafeMutableSet.h>
 /**
  We declare here a set of interfaces that are meant to be used by code running internally

@@ -29,7 +29,7 @@
 
 #import "SFSDKEventStoreManager.h"
 #import "../Model/SFSDKInstrumentationEvent+Internal.h"
-#import <SalesforceAnalytics/SFSDKAnalyticsLogger.h>
+#import "../Util/SFSDKAnalyticsLogger.h"
 
 @interface SFSDKEventStoreManager ()
 

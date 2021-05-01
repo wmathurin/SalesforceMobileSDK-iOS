@@ -28,17 +28,17 @@
 
 @import UIKit;
 #import "SFLoginViewController.h"
-#import "SFManagedPreferences.h"
+#import "../Util/SFManagedPreferences.h"
 #import "SFSDKLoginHostListViewController.h"
 #import "SFSDKLoginHostDelegate.h"
-#import "UIColor+SFColors.h"
-#import "SFSDKResourceUtils.h"
-#import "SFUserAccountManager.h"
+#import "../Util/UIColor+SFColors.h"
+#import "../Util/SFSDKResourceUtils.h"
+#import "../UserAccount/SFUserAccountManager.h"
 #import "SFSDKLoginViewControllerConfig.h"
-#import "SFOAuthInfo.h"
-#import "SFSDKWindowManager.h"
-#import "SFSDKNavigationController.h"
-#import "SFSDKViewUtils.h"
+#import "../OAuth/SFOAuthInfo.h"
+#import "../Views/SFSDKWindowManager.h"
+#import "../Views/SFSDKNavigationController.h"
+#import "../Util/SFSDKViewUtils.h"
 @interface SFLoginViewController () <SFSDKLoginHostDelegate, SFUserAccountManagerDelegate>
 
 @property (nonatomic, strong) UINavigationBar *navBar;

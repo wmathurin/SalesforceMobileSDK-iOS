@@ -23,15 +23,15 @@
  */
 
 #import <SalesforceSDKCommon/SFJsonUtils.h>
-#import "SalesforceSDKManager+Internal.h"
-#import "SFUserAccountManager.h"
+#import "../Common/SalesforceSDKManager+Internal.h"
+#import "../UserAccount/SFUserAccountManager.h"
 #import "TestSetupUtils.h"
-#import "SFUserAccountManager+Internal.h"
-#import "SFUserAccount.h"
+#import "../UserAccount/SFUserAccountManager+Internal.h"
+#import "../UserAccount/SFUserAccount.h"
 #import "SFSDKTestRequestListener.h"
 #import "SFSDKTestCredentialsData.h"
-#import "SFOAuthCredentials+Internal.h"
-#import "SFSDKAppConfig.h"
+#import "../OAuth/SFOAuthCredentials+Internal.h"
+#import "../Common/SFSDKAppConfig.h"
 static SFOAuthCredentials *credentials = nil;
 
 @implementation TestSetupUtils

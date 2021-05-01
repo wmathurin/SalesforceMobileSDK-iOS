@@ -24,9 +24,9 @@
 
 
 #import "SFSDKDevInfoViewController.h"
-#import "SalesforceSDKManager.h"
-#import "SFSDKResourceUtils.h"
-#import "UIColor+SFColors.h"
+#import "../Common/SalesforceSDKManager.h"
+#import "../Util/SFSDKResourceUtils.h"
+#import "../Util/UIColor+SFColors.h"
 
 // Nav bar
 static CGFloat      const kNavBarHeight          = 44.0;

@@ -26,9 +26,9 @@
  */
 
 #import "SFSDKAppLockViewConfig.h"
-#import "UIColor+SFColors.h"
-#import "SFSDKResourceUtils.h"
-#import "SFSecurityLockout+Internal.h"
+#import "../../Util/UIColor+SFColors.h"
+#import "../../Util/SFSDKResourceUtils.h"
+#import "../SFSecurityLockout+Internal.h"
 
 @implementation SFSDKAppLockViewConfig
 

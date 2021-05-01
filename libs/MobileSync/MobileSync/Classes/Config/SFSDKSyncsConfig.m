@@ -26,7 +26,8 @@
 #import <SalesforceSDKCore/SalesforceSDKCore.h>
 #import <SmartStore/SmartStore.h>
 #import "SFSDKSyncsConfig.h"
-#import "SFMobileSyncSyncManager.h"
+#import "../Manager/SFMobileSyncSyncManager.h"
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 static NSString *const kSyncsConfigSyncs = @"syncs";
 static NSString *const kSyncsConfigSyncName = @"syncName";

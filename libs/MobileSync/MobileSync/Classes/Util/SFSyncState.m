@@ -23,13 +23,14 @@
  */
 
 #import "SFSyncState.h"
-#import "SFSyncDownTarget.h"
+#import "../Target/SFSyncDownTarget.h"
 #import "SFSyncOptions.h"
-#import "SFSyncUpTarget.h"
+#import "../Target/SFSyncUpTarget.h"
 #import <SmartStore/SFSmartStore.h>
 #import <SmartStore/SFSoupIndex.h>
 #import <SmartStore/SFQuerySpec.h>
 #import <SalesforceSDKCommon/SFJsonUtils.h>
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 // soups and soup fields
 NSString * const kSFSyncStateSyncsSoupName = @"syncs_soup";

@@ -23,7 +23,7 @@
  */
 
 #import "SFSDKSoqlBuilder.h"
-#import "NSString+SFAdditions.h"
+#import "../Common/NSString+SFAdditions.h"
 
 @interface SFSDKSoqlBuilder() {
     NSMutableDictionary *properties;

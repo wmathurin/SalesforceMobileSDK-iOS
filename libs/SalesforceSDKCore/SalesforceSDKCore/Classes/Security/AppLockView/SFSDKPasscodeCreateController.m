@@ -26,9 +26,9 @@
  */
 
 #import "SFSDKPasscodeCreateController.h"
-#import "SFSecurityLockout+Internal.h"
+#import "../SFSecurityLockout+Internal.h"
 #import "SFSDKPasscodeTextField.h"
-#import "SFSDKResourceUtils.h"
+#import "../../Util/SFSDKResourceUtils.h"
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
 
 // Private view layout constants

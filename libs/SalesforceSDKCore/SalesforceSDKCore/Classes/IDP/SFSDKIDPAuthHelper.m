@@ -29,19 +29,19 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 
 
 #import "SFSDKIDPAuthHelper.h"
-#import "SFOAuthCoordinator+Internal.h"
-#import "SFSDKAuthSession.h"
-#import "SFSDKCryptoUtils.h"
-#import "NSData+SFSDKUtils.h"
+#import "../OAuth/SFOAuthCoordinator+Internal.h"
+#import "../OAuth/SFSDKAuthSession.h"
+#import "../Security/SFSDKCryptoUtils.h"
+#import "../Common/NSData+SFSDKUtils.h"
 #import "SFSDKIDPConstants.h"
-#import "SFSDKAuthRequest.h"
+#import "../OAuth/SFSDKAuthRequest.h"
 #import "SFSDKAuthRequestCommand.h"
-#import "SFApplicationHelper.h"
-#import "NSString+SFAdditions.h"
+#import "../Util/SFApplicationHelper.h"
+#import "../Common/NSString+SFAdditions.h"
 #import "SFSDKAuthResponseCommand.h"
-#import "SFSDKWindowManager.h"
+#import "../Views/SFSDKWindowManager.h"
 #import "SFSDKAuthErrorCommand.h"
-#import "SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager.h"
 @implementation SFSDKIDPAuthHelper
 
 + (void)invokeIDPApp:(SFSDKAuthSession *)session completion:(void (^)(BOOL))completionBlock {

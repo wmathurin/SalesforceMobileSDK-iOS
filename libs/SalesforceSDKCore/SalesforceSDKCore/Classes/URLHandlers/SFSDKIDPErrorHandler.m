@@ -27,10 +27,10 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #import "SFSDKIDPErrorHandler.h"
-#import "SFSDKIDPConstants.h"
+#import "../IDP/SFSDKIDPConstants.h"
 #import "SFSDKURLHandler.h"
 #import "SFSDKIDPErrorHandler.h"
-#import "NSURL+SFAdditions.h"
+#import "../Common/NSURL+SFAdditions.h"
 #import "SFUserAccountManager+URLHandlers.h"
 #import "SFSDKAuthErrorCommand.h"
 

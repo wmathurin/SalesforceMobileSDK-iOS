@@ -24,7 +24,7 @@
 
 #import "SFUserAccountIdentity+Internal.h"
 #import "SFUserAccount.h"
-#import "NSString+SFAdditions.h"
+#import "../Common/NSString+SFAdditions.h"
 
 static NSString * const kUserAccountIdentityUserIdKey = @"userIdKey";
 static NSString * const kUserAccountIdentityOrgIdKey = @"orgIdKey";

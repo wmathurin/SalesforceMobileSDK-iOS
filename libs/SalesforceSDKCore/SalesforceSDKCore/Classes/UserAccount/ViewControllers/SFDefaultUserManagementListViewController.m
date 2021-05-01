@@ -27,7 +27,7 @@
 #import "SFDefaultUserManagementDetailViewController.h"
 #import "SFUserAccountManager.h"
 #import "SFUserAccount.h"
-#import "SFIdentityData.h"
+#import "../../Identity/SFIdentityData.h"
 
 @interface SFDefaultUserManagementListViewController ()
 {

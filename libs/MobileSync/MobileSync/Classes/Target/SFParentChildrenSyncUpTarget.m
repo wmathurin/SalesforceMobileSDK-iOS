@@ -25,10 +25,13 @@
 #import <SalesforceSDKCore/SFSDKSoqlBuilder.h>
 #import <SalesforceSDKCore/SFSDKCompositeResponse.h>
 #import <SalesforceSDKCommon/SFJsonUtils.h>
-#import "MobileSync.h"
+#import "SFParentChildrenSyncUpTarget.h"
 #import "SFSyncTarget+Internal.h"
 #import "SFSyncUpTarget+Internal.h"
-#import "SFCompositeRequestHelper.h"
+#import "../Util/SFCompositeRequestHelper.h"
+#import "../Util/SFMobileSyncNetworkUtils.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 typedef void (^SFFetchLastModifiedDatesCompleteBlock)(NSDictionary<NSString *, NSString *> * idToLastModifiedDates);
 

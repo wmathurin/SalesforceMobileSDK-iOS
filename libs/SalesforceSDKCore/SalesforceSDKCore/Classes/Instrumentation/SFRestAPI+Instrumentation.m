@@ -27,13 +27,13 @@
  */
 
 #import "SFRestAPI+Instrumentation.h"
-#import "SFRestRequest+Internal.h"
-#import "SalesforceSDKConstants.h"
+#import "../RestAPI/SFRestRequest+Internal.h"
+#import "../Common/SalesforceSDKConstants.h"
 #import "SFSDKInstrumentationHelper.h"
 #import <objc/runtime.h>
 #import <os/log.h>
 #import <os/signpost.h>
-#import "SFSDKCoreLogger.h"
+#import "../Util/SFSDKCoreLogger.h"
 
 @interface SFRestDelegateWrapperWithInstrumentation<SFRestDelegate, SFRestRequestDelegate>: NSObject
 

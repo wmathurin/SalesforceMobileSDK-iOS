@@ -24,7 +24,7 @@
 
 #import "SFSDKTestRequestListener.h"
 #import "TestSetupUtils.h"
-#import "SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager.h"
 
 NSString* const kTestRequestStatusWaiting = @"waiting";
 NSString* const kTestRequestStatusDidLoad = @"didLoad";

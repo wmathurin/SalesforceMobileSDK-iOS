@@ -30,10 +30,10 @@
 #import "SFSDKNewLoginHostViewController.h"
 #import "SFSDKLoginHostStorage.h"
 #import "SFSDKLoginHost.h"
-#import "SFSDKResourceUtils.h"
-#import "SFManagedPreferences.h"
-#import "SFUserAccountManager.h"
-#import "SFSDKViewUtils.h"
+#import "../../Util/SFSDKResourceUtils.h"
+#import "../../Util/SFManagedPreferences.h"
+#import "../../UserAccount/SFUserAccountManager.h"
+#import "../../Util/SFSDKViewUtils.h"
 static NSString * const SFDCLoginHostListCellIdentifier = @"SFDCLoginHostListCellIdentifier";
 
 @interface SFSDKLoginHostListViewController () <UINavigationControllerDelegate>

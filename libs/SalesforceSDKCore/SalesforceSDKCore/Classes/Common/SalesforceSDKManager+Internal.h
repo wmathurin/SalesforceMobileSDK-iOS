@@ -1,7 +1,7 @@
 #import <SalesforceSDKCommon/SFSDKSafeMutableDictionary.h>
 #import "SalesforceSDKManager.h"
 #import "SFSecurityLockout+Internal.h"
-#import "SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager.h"
 #import "SFUserAccount.h"
 #import "SFSDKAppConfig.h"
 

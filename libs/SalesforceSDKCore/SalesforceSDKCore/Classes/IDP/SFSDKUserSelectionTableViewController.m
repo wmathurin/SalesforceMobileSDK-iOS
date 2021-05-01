@@ -29,12 +29,12 @@
 
 #import "SFSDKUserSelectionTableViewController.h"
 #import "SFSDKIDPConstants.h"
-#import "UIColor+SFColors.h"
+#import "../Util/UIColor+SFColors.h"
 #import "UIFont+SFSDKIDP.h"
 #import "SFSDKUITableViewCell.h"
-#import "SFUserAccountManager.h"
-#import "SFIdentityData.h"
-#import "SFSDKResourceUtils.h"
+#import "../UserAccount/SFUserAccountManager.h"
+#import "../Identity/SFIdentityData.h"
+#import "../Util/SFSDKResourceUtils.h"
 static CGFloat kVerticalSpace = 16;
 static CGFloat kHorizontalSpace = 12;
 

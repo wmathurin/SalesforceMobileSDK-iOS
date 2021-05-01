@@ -27,10 +27,10 @@
 
 #import "SFSDKBiometricViewController+Internal.h"
 #import "SFSDKAppLockViewConfig.h"
-#import "SFSDKResourceUtils.h"
-#import "SFSDKWindowManager.h"
-#import "SalesforceSDKManager.h"
-#import "UIColor+SFColors.h"
+#import "../../Util/SFSDKResourceUtils.h"
+#import "../../Views/SFSDKWindowManager.h"
+#import "../../Common/SalesforceSDKManager.h"
+#import "../../Util/UIColor+SFColors.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 
 static CGFloat      const kSFFaceIdIconWidth                   = 36.0f;

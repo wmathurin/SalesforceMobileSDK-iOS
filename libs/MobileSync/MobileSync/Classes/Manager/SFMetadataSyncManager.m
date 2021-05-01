@@ -28,7 +28,7 @@
  */
 
 #import "SFMetadataSyncManager.h"
-#import "SFMetadataSyncDownTarget.h"
+#import "../Target/SFMetadataSyncDownTarget.h"
 #import <SmartStore/SFSoupIndex.h>
 #import <SmartStore/SFQuerySpec.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>

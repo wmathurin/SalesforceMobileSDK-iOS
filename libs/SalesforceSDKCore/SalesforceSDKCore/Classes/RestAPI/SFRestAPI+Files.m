@@ -27,7 +27,7 @@
 #import <SalesforceSDKCommon/SFJsonUtils.h>
 #import "SFRestAPI+Files.h"
 #import "SFRestRequest+Internal.h"
-#import "SFOAuthCredentials.h"
+#import "../OAuth/SFOAuthCredentials.h"
 #import "SFRestAPI+Internal.h"
 
 #define ME @"me"

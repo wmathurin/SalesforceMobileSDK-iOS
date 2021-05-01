@@ -23,7 +23,7 @@
  */
 
 #import "SFIdentityData+Internal.h"
-#import "NSDictionary+SFAdditions.h"
+#import "../Common/NSDictionary+SFAdditions.h"
 
 // Private constants
 

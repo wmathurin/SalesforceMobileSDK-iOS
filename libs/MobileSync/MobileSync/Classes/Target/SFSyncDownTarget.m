@@ -29,11 +29,12 @@
 #import "SFRefreshSyncDownTarget.h"
 #import "SFSoqlSyncDownTarget.h"
 #import "SFSoslSyncDownTarget.h"
-#import "SFMobileSyncConstants.h"
-#import "SFMobileSyncObjectUtils.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncObjectUtils.h"
 #import "SFParentChildrenSyncDownTarget.h"
 #import "SFMetadataSyncDownTarget.h"
 #import "SFLayoutSyncDownTarget.h"
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 // query types
 NSString * const kSFSyncTargetQueryTypeMru = @"mru";

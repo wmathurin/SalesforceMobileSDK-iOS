@@ -23,7 +23,7 @@
  */
 #import <WebKit/WebKit.h>
 #import "SFSDKWebViewStateManager.h"
-#import "SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager.h"
 static NSString *const ERR_NO_DOMAIN_NAMES = @"No domain names given for deleting cookies.";
 
 @implementation SFSDKWebViewStateManager

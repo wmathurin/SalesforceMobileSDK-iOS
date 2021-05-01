@@ -27,7 +27,7 @@
 #import "SFSDKStoreConfig.h"
 #import "SFSoupIndex.h"
 #import "SFSmartStore.h"
-
+#import "SFSDKSmartStoreLogger.h"
 
 static NSString *const kStoreConfigSoups = @"soups";
 static NSString *const kStoreConfigSoupName = @"soupName";

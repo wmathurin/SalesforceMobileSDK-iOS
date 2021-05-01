@@ -23,16 +23,16 @@
  */
 
 #import <SalesforceSDKCommon/SFJsonUtils.h>
-#import "NSString+SFAdditions.h"
-#import "SFPreferences.h"
-#import "SFUserAccountManager.h"
+#import "../Common/NSString+SFAdditions.h"
+#import "../Util/SFPreferences.h"
+#import "../UserAccount/SFUserAccountManager.h"
 #import "SFPushNotificationManager.h"
-#import "SFUserAccountManager.h"
-#import "SFApplicationHelper.h"
-#import "SFSDKAppFeatureMarkers.h"
-#import "SFRestAPI+Blocks.h"
+#import "../UserAccount/SFUserAccountManager.h"
+#import "../Util/SFApplicationHelper.h"
+#import "../Common/SFSDKAppFeatureMarkers.h"
+#import "../RestAPI/SFRestAPI+Blocks.h"
 #import "SFSDKPushNotificationEncryptionConstants.h"
-#import "SFSDKCryptoUtils.h"
+#import "../Security/SFSDKCryptoUtils.h"
 
 static NSString* const kSFDeviceToken = @"deviceToken";
 static NSString* const kSFDeviceSalesforceId = @"deviceSalesforceId";

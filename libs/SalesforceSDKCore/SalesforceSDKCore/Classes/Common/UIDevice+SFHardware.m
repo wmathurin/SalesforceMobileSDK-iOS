@@ -14,7 +14,7 @@
 #import <CoreTelephony/CTCarrier.h>
 #import "UIDevice+SFHardware.h"
 #import "UIScreen+SFAdditions.h"
-#import "SFApplicationHelper.h"
+#import "../Util/SFApplicationHelper.h"
 
 @implementation UIDevice (SFHardware)
 /*

@@ -23,7 +23,8 @@
  */
 
 #import "SFSyncUpTask.h"
-#import "SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 @implementation SFSyncUpTask
 

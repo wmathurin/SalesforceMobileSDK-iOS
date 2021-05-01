@@ -34,6 +34,7 @@
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
 #import <SalesforceSDKCommon/SFSDKDataSharinghelper.h>
 #import "FMDatabase.h"
+#import "SFSDKSmartStoreLogger.h"
 
 static NSString * const kLegacyDefaultPasscodeStoresKey = @"com.salesforce.smartstore.defaultPasscodeStores";
 static NSString * const kLegacyDefaultEncryptionTypeKey = @"com.salesforce.smartstore.defaultEncryptionType";

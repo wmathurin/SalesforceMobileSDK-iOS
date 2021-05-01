@@ -27,8 +27,8 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 #import "SFSDKAuthCommand+Internal.h"
-#import "NSURL+SFAdditions.h"
-#import "NSString+SFAdditions.h"
+#import "../Common/NSURL+SFAdditions.h"
+#import "../Common/NSString+SFAdditions.h"
 #import "SFSDKIDPConstants.h"
 @interface SFSDKAuthCommand()
 @property (strong, nonatomic) NSMutableDictionary *commandParameters;

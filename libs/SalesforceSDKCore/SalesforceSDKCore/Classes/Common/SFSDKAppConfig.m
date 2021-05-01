@@ -23,7 +23,7 @@
  */
 
 #import "SFSDKAppConfig.h"
-#import "SFSDKResourceUtils.h"
+#import "../Util/SFSDKResourceUtils.h"
 
 // Config error constants
 NSString * const SFSDKDefaultNativeAppConfigFilePath = @"/bootconfig.plist";

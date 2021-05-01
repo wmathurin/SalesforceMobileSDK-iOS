@@ -28,8 +28,8 @@
  */
 
 #import "SFSDKIDPInitiatedAuthRequestHandler.h"
-#import "SFSDKIDPConstants.h"
-#import "NSURL+SFAdditions.h"
+#import "../IDP/SFSDKIDPConstants.h"
+#import "../Common/NSURL+SFAdditions.h"
 #import "SFUserAccountManager+URLHandlers.h"
 #import "SalesforceSDKCore.h"
 #import "SFSDKIDPInitCommand.h"

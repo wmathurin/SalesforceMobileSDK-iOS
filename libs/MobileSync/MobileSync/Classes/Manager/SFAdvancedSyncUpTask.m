@@ -24,6 +24,7 @@
 
 #import "SFAdvancedSyncUpTask.h"
 #import "SFAdvancedSyncUpTarget.h"
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 @implementation SFAdvancedSyncUpTask
 

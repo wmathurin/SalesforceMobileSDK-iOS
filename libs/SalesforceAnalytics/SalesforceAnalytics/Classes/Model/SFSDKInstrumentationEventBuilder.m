@@ -29,10 +29,10 @@
 
 #import "SFSDKInstrumentationEventBuilder.h"
 #import "../Manager/SFSDKAnalyticsManager+Internal.h"
+#import "../Util/SFSDKAnalyticsLogger.h"
 #import "SFSDKInstrumentationEvent+Internal.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <SalesforceSDKCommon/SFSDKReachability.h>
-#import <SalesforceAnalytics/SFSDKAnalyticsLogger.h>
 
 @interface SFSDKInstrumentationEventBuilder ()
 

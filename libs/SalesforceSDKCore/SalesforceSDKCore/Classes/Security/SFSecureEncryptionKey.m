@@ -24,7 +24,7 @@
 
 #import "SFSecureEncryptionKey.h"
 #import "SFSDKCryptoUtils.h"
-#import "NSData+SFAdditions.h"
+#import "../Common/NSData+SFAdditions.h"
 
 // NSCoding constants
 static NSString * const kSecureEncryptionKeyCodingValue = @"com.salesforce.encryption.securekey.label";

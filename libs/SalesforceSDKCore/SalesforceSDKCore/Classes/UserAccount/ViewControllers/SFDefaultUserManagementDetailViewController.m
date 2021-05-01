@@ -24,10 +24,11 @@
 
 #import "SFDefaultUserManagementDetailViewController.h"
 #import "SFDefaultUserManagementViewController+Internal.h"
-#import "SFUserAccountManager.h"
-#import "UIColor+SFColors.h"
-#import "SFUserAccount.h"
-#import "SFIdentityData.h"
+#import "../SFUserAccountManager.h"
+#import "../../Util/UIColor+SFColors.h"
+#import "../SFUserAccount.h"
+#import "../../Identity/SFIdentityData.h"
+
 static CGFloat const kButtonWidth = 150.0f;
 static CGFloat const kButtonHeight = 40.0f;
 static CGFloat const kButtonPadding = 10.0f;

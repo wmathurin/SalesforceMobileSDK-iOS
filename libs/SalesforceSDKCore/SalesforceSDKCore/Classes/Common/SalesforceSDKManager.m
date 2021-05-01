@@ -24,21 +24,21 @@
 
 #import <objc/runtime.h>
 #import "SalesforceSDKManager+Internal.h"
-#import "SFUserAccountManager+Internal.h"
-#import "SFSDKWindowManager.h"
-#import "SFManagedPreferences.h"
+#import "../UserAccount/SFUserAccountManager+Internal.h"
+#import "../Views/SFSDKWindowManager.h"
+#import "../Util/SFManagedPreferences.h"
 #import "SFInactivityTimerCenter.h"
-#import "SFApplicationHelper.h"
+#import "../Util/SFApplicationHelper.h"
 #import "SFSDKAppFeatureMarkers.h"
-#import "SFSDKDevInfoViewController.h"
-#import "SFDefaultUserManagementViewController.h"
+#import "../Views/SFSDKDevInfoViewController.h"
+#import "../UserAccount/ViewControllers/SFDefaultUserManagementViewController.h"
 #import <SalesforceSDKCommon/SFSwiftDetectUtil.h>
-#import "SFSDKEncryptedURLCache.h"
-#import "SFSDKNullURLCache.h"
-#import "UIColor+SFColors.h"
-#import "SFDirectoryManager+Internal.h"
+#import "../RestAPI/SFSDKEncryptedURLCache.h"
+#import "../RestAPI/SFSDKNullURLCache.h"
+#import "../Util/UIColor+SFColors.h"
+#import "../Util/SFDirectoryManager+Internal.h"
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
-#import "SFSDKResourceUtils.h"
+#import "../Util/SFSDKResourceUtils.h"
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
 
 static NSString * const kSFAppFeatureSwiftApp   = @"SW";

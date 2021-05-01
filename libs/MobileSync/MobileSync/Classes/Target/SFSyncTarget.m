@@ -23,10 +23,12 @@
  */
 
 #import "SFSyncTarget.h"
-#import "SFMobileSyncConstants.h"
-#import "SFMobileSyncSyncManager.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Manager/SFMobileSyncSyncManager.h"
 #import <SmartStore/SFQuerySpec.h>
 #import <SmartStore/SFSmartStore.h>
+#import <SalesforceSDKCore/SalesforceSDKConstants.h>
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 // Page size
 NSUInteger const kSyncTargetPageSize = 2000;

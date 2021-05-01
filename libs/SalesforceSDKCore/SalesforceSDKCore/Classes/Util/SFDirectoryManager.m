@@ -24,9 +24,9 @@
 
 #import "SFDirectoryManager.h"
 #import "SFDirectoryManager+Internal.h"
-#import "SFUserAccountManager.h"
-#import "SFUserAccount.h"
-#import "NSString+SFAdditions.h"
+#import "../UserAccount/SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccount.h"
+#import "../Common/NSString+SFAdditions.h"
 #import <SalesforceSDKCommon/SFFileProtectionHelper.h>
 #import <SalesforceSDKCommon/SFSDKDatasharingHelper.h>
 

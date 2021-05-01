@@ -25,6 +25,7 @@
 #import "SFCleanSyncGhostsTask.h"
 #import "SFMobileSyncSyncManager+SFSyncTask.h"
 #import <SalesforceSDKCore/SFSDKEventBuilderHelper.h>
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 @interface SFCleanSyncGhostsTask ()
 

@@ -27,7 +27,7 @@
 #import "SmartStoreSDKManager.h"
 #import "SFSDKStoreConfig.h"
 #import "SFSmartStoreInspectorViewController.h"
-
+#import "SFSDKSmartStoreLogger.h"
 
 @interface SalesforceSDKManager()
 @end

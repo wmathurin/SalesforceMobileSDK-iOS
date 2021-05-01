@@ -53,6 +53,7 @@
 #import <SalesforceSDKCore/SFSDKCryptoUtils.h>
 #import <SalesforceSDKCore/SFKeychainItemWrapper.h>
 #import <SalesforceSDKCommon/SFSDKDataSharingHelper.h>
+#import "SFSDKSmartStoreLogger.h"
 
 static NSMutableDictionary *_allSharedStores;
 static NSMutableDictionary *_allGlobalSharedStores;

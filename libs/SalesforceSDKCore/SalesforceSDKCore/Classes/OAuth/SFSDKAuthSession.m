@@ -25,8 +25,8 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 #import "SFSDKAuthSession.h"
 #import "SFSDKAuthRequest.h"
 #import "SFOAuthCredentials+Internal.h"
-#import "SFUserAccountManager+Internal.h"
-#import "SFOAuthCoordinator+Internal.h"
+#import "../UserAccount/SFUserAccountManager+Internal.h"
+#import "../OAuth/SFOAuthCoordinator+Internal.h"
 #import "SFIdentityCoordinator.h"
 
 @interface SFSDKAuthSession()

@@ -24,8 +24,8 @@
 
 #import "SFObject+Internal.h"
 #import "SFMobileSyncPersistableObject+Internal.h"
-#import "SFMobileSyncObjectUtils.h"
-#import "SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncObjectUtils.h"
+#import "../Util/SFMobileSyncConstants.h"
 
 @implementation SFObject
 

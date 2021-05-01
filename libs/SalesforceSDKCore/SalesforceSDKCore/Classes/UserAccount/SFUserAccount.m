@@ -24,10 +24,10 @@
 
 #import "SFUserAccount+Internal.h"
 #import "SFUserAccountManager+Internal.h"
-#import "SFDirectoryManager.h"
-#import "SFOAuthCredentials.h"
-#import "SFSDKAppFeatureMarkers.h"
-#import "SFOAuthCredentials+Internal.h"
+#import "../Util/SFDirectoryManager.h"
+#import "../OAuth/SFOAuthCredentials.h"
+#import "../Common/SFSDKAppFeatureMarkers.h"
+#import "../OAuth/SFOAuthCredentials+Internal.h"
 #import "SFUserAccountIdentity+Internal.h"
 
 static NSString * const kUser_ACCESS_SCOPES       = @"accessScopes";

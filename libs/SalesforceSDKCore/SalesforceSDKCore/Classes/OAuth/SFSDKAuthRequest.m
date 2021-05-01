@@ -22,10 +22,9 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWIS
 WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #import "SFSDKAuthRequest.h"
-#import "SFSDKLoginViewControllerConfig.h"
-#import "SFSDKAppLockViewConfig.h"
-#import "SFSDKLoginFlowSelectionView.h"
-
+#import "../Login/SFSDKLoginViewControllerConfig.h"
+#import "../Security/AppLockView/SFSDKAppLockViewConfig.h"
+#import "../IDP/SFSDKLoginFlowSelectionView.h"
 
 @implementation SFSDKAuthRequest
 

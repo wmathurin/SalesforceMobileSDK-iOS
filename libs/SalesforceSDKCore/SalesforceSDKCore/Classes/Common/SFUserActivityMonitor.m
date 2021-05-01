@@ -25,7 +25,7 @@
 #import "SFUserActivityMonitor.h"
 #import "SFApplication.h"
 #import "SFInactivityTimerCenter.h"
-#import "SFApplicationHelper.h"
+#import "../Util/SFApplicationHelper.h"
 
 // Singleton instance
 static SFUserActivityMonitor *_instance;

@@ -26,8 +26,8 @@
 #import "SFSyncDownTarget+Internal.h"
 #import "SFSoqlSyncDownTarget+Internal.h"
 #import "SFParentChildrenSyncDownTarget.h"
-#import "SFMobileSyncObjectUtils.h"
-#import "SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncObjectUtils.h"
+#import "../Util/SFMobileSyncConstants.h"
 #import <SalesforceSDKCore/SFSDKSoqlBuilder.h>
 
 @interface SFParentChildrenSyncDownTarget ()

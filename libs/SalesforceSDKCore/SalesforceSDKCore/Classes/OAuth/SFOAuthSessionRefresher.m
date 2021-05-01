@@ -23,7 +23,7 @@
  */
 
 #import "SFOAuthSessionRefresher+Internal.h"
-#import "SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager.h"
 #import "SFOAuthCredentials+Internal.h"
 #import "SFOAuthInfo.h"
 #import "SFSDKOAuth2.h"

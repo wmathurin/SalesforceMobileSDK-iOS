@@ -27,7 +27,7 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFSDKMobileSyncLogger.h"
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 NSString * const kSFSDKMobileSyncComponentName = @"MobileSync";
 

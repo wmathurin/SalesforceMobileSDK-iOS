@@ -28,15 +28,14 @@
  */
 
 #import "SFSDKLoginFlowSelectionViewController.h"
-#import "UIColor+SFColors.h"
-#import "SFSDKResourceUtils.h"
-#import "SFSDKAuthPreferences.h"
+#import "../Util/UIColor+SFColors.h"
+#import "../Util/SFSDKResourceUtils.h"
+#import "../OAuth/SFSDKAuthPreferences.h"
 #import "SFSDKLoginHostListViewController.h"
-#import "SFUserAccountManager.h"
-#import "SFSDKLoginHost.h"
-#import "SFManagedPreferences.h"
-#import "SFUserAccountManager.h"
-#import "SFSDKViewUtils.h"
+#import "../UserAccount/SFUserAccountManager.h"
+#import "../Login/LoginHost/SFSDKLoginHost.h"
+#import "../Util/SFManagedPreferences.h"
+#import "../Util/SFSDKViewUtils.h"
 #import "SFSDKIDPConstants.h"
 
 @interface SFSDKLoginFlowSelectionViewController ()<SFSDKLoginHostDelegate>

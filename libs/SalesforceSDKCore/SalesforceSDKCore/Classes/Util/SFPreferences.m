@@ -23,7 +23,7 @@
  */
 
 #import "SFPreferences.h"
-#import "SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager.h"
 #import "SFUserAccountIdentity.h"
 #import "SFDirectoryManager.h"
 

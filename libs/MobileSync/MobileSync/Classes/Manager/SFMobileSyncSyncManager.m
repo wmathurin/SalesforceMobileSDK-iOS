@@ -28,13 +28,13 @@
 #import <SalesforceSDKCore/SFSDKEventBuilderHelper.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>
 #import "SFAdvancedSyncUpTarget.h"
-#import "SFMobileSyncConstants.h"
-#import "SFSyncUpTarget+Internal.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Target/SFSyncUpTarget+Internal.h"
 #import "SFSyncUpTask.h"
 #import "SFSyncDownTask.h"
 #import "SFAdvancedSyncUpTask.h"
 #import "SFCleanSyncGhostsTask.h"
-
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 static NSString * const kSFAppFeatureMobileSync   = @"SY";
 

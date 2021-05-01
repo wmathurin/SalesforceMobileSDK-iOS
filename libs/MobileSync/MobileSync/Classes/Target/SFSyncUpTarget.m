@@ -24,13 +24,14 @@
 
 #import "SFSyncUpTarget+Internal.h"
 #import "SFBatchSyncUpTarget.h"
-#import "SFMobileSyncConstants.h"
-#import "SFMobileSyncNetworkUtils.h"
-#import "SFMobileSyncSyncManager.h"
-#import "SFMobileSyncObjectUtils.h"
+#import "../Util/SFMobileSyncConstants.h"
+#import "../Util/SFMobileSyncNetworkUtils.h"
+#import "../Manager/SFMobileSyncSyncManager.h"
+#import "../Util/SFMobileSyncObjectUtils.h"
 #import "SFSyncTarget+Internal.h"
 #import <SalesforceSDKCommon/SFJsonUtils.h>
 #import <SmartStore/SFSmartStore.h>
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 //
 NSString * const kSFSyncUpTargetCreateFieldlist = @"createFieldlist";

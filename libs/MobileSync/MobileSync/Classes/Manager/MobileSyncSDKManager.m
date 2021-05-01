@@ -24,7 +24,8 @@
 
 #import <SmartStore/SFSmartStore.h>
 #import "MobileSyncSDKManager.h"
-#import "SFSDKSyncsConfig.h"
+#import "../Config/SFSDKSyncsConfig.h"
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 @implementation MobileSyncSDKManager
 @dynamic sharedManager;

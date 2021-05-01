@@ -29,7 +29,8 @@
 
 #import "SFLogger.h"
 #import "SFDefaultLogger.h"
-#import <SalesforceSDKCommon/SFSDKSafeMutableDictionary.h>
+#import "../Util/SFSDKSafeMutableDictionary.h"
+
 static NSString * const kDefaultComponentName = @"SFSDK";
 
 static Class InstanceClass;

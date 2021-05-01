@@ -27,22 +27,22 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFUserAccountManager+Internal.h"
-#import "SFSDKWindowManager+Internal.h"
+#import "../UserAccount/SFUserAccountManager+Internal.h"
+#import "../Views/SFSDKWindowManager+Internal.h"
 #import "SFUserAccountManager+URLHandlers.h"
 #import "SFSDKAuthRequestCommand.h"
 #import "SFSDKIDPConstants.h"
 #import "SFSDKAuthResponseCommand.h"
 #import "SFSDKAuthErrorCommand.h"
 #import "SFSDKIDPInitCommand.h"
-#import "SFSDKAlertMessage.h"
-#import "SFSDKAlertMessageBuilder.h"
+#import "../Views/SFSDKAlertMessage.h"
+#import "../Views/SFSDKAlertMessageBuilder.h"
 #import "SFSDKStartURLHandler.h"
-#import "SFOAuthCredentials+Internal.h"
+#import "../OAuth/SFOAuthCredentials+Internal.h"
 #import "SFSDKUserSelectionView.h"
 #import "SFSDKLoginFlowSelectionView.h"
 #import "SFSDKLoginFlowSelectionViewController.h"
-#import "SFSDKAuthRequest.h"
+#import "../OAuth/SFSDKAuthRequest.h"
 
 @implementation SFUserAccountManager (URLHandlers)
 

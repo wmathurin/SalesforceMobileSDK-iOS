@@ -37,6 +37,7 @@
 #import "FMDatabase.h"
 #import "FMDatabaseQueue.h"
 #import "FMResultSet.h"
+#import "SFSDKSmartStoreLogger.h"
 
 static NSMutableDictionary *sDatabaseManagers;
 

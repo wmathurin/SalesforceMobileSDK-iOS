@@ -26,14 +26,14 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFSDKOAuth2+Internal.h"
-#import "SFSDKOAuthConstants.h"
-#import "NSString+SFAdditions.h"
-#import "SFOAuthCredentials+Internal.h"
-#import "SFNetwork.h"
+#import "../Util/SFSDKOAuth2+Internal.h"
+#import "../Util/SFSDKOAuthConstants.h"
+#import "../Common/NSString+SFAdditions.h"
+#import "../OAuth/SFOAuthCredentials+Internal.h"
+#import "../RestAPI/SFNetwork.h"
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
 #import <SalesforceSDKCommon/SFJsonUtils.h>
-#import "NSData+SFAdditions.h"
+#import "../Common/NSData+SFAdditions.h"
 
 NSString * const  kSFOAuthErrorDomain  = @"com.salesforce.OAuth.ErrorDomain";
 const NSTimeInterval kSFOAuthDefaultTimeout  = 120.0; // seconds

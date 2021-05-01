@@ -25,6 +25,7 @@
 #import "SFSyncTask.h"
 #import "SFMobileSyncSyncManager+SFSyncTask.h"
 #import <SalesforceSDKCore/SFSDKEventBuilderHelper.h>
+#import "../Util/SFSDKMobileSyncLogger.h"
 
 NSInteger const kSyncManagerUnchanged = -1;
 

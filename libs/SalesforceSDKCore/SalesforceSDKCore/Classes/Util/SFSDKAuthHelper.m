@@ -25,16 +25,16 @@
  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#import "SalesforceSDKManager.h"
+#import "../Common/SalesforceSDKManager.h"
 #import "SalesforceSDKManager+Internal.h"
-#import "SFSDKAppConfig.h"
+#import "../Common/SFSDKAppConfig.h"
 #import "SFSDKAuthHelper.h"
-#import "SFUserAccountManager.h"
-#import "SFUserAccountManager+Internal.h"
-#import "SFSDKWindowManager.h"
-#import "SFSDKWindowManager+Internal.h"
-#import "SFDefaultUserManagementViewController.h"
-#import "SFSecurityLockout.h"
+#import "../UserAccount/SFUserAccountManager.h"
+#import "../UserAccount/SFUserAccountManager+Internal.h"
+#import "../Views/SFSDKWindowManager.h"
+#import "../Views/SFSDKWindowManager+Internal.h"
+#import "../UserAccount/ViewControllers/SFDefaultUserManagementViewController.h"
+#import "../Security/SFSecurityLockout.h"
 #import "SFApplicationHelper.h"
 
 @implementation SFSDKAuthHelper

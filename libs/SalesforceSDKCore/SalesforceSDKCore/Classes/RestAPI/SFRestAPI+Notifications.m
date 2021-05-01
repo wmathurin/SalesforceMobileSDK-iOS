@@ -27,7 +27,7 @@
 
 #import "SFRestAPI+Notifications.h"
 #import "SFRestAPI+Internal.h"
-#import "SFFormatUtils.h"
+#import "../Common/SFFormatUtils.h"
 
 @implementation SFRestAPI(Notifications)
 

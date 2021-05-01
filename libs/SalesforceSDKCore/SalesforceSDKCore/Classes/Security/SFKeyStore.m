@@ -23,7 +23,7 @@
  */
 
 #import "SFKeyStore+Internal.h"
-#import "SFCrypto.h"
+#import "../Common/SFCrypto.h"
 #import "SFSDKCryptoUtils.h"
 #import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
 

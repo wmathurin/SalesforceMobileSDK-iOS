@@ -29,8 +29,8 @@
  */
 #import "SFSDKWindowManager.h"
 #import "SFSDKWindowContainer.h"
-#import "SFApplicationHelper.h"
-#import "SFSecurityLockout.h"
+#import "../Util/SFApplicationHelper.h"
+#import "../Security/SFSecurityLockout.h"
 
 /*
 Attempt to resolve issues related to  the multi-windowing implementation in the SDK. Multiple visible UI windows tend to have some really bad side effects with rotations (keyboard and views) and status bar. We previously resorted to using the hidden property, unfortunately using hidden property on the UIWindow leads to really bad flicker issues ( black screen ). Reverted back to using alpha with a slightly different strategy.
