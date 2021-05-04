@@ -11,7 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "SalesforceSDKCommon",
-            targets: ["SalesforceSDKCommon-Swift", "SalesforceSDKCommon-ObjC"]
+            targets: ["SalesforceSDKCommon-Logger", "SalesforceSDKCommon-KeychainManager", "SalesforceSDKCommon-ObjC"]
         ),
         .library(
             name: "SalesforceAnalytics",
@@ -19,7 +19,7 @@ let package = Package(
         ),
         .library(
             name: "SalesforceSDKCore",
-            targets: ["SalesforceSDKCore-Swift", "SalesforceSDKCore-ObjC", "SalesforceSDKCore-Swift-Extensions"]
+            targets: ["SalesforceSDKCore-KeyValueStore", "SalesforceSDKCore-ObjC", "SalesforceSDKCore-Swift-Extensions"]
         ),
         .library(
             name: "SmartStore",
@@ -36,15 +36,21 @@ let package = Package(
             path: "external/ThirdPartyDependencies/sqlcipher/SQLCipher.xcframework"
         ),
         .target(
-            name: "SalesforceSDKCommon-Swift",
+            name: "SalesforceSDKCommon-Logger",
+            path: "libs/SalesforceSDKCommon/SalesforceSDKCommon",
+            sources: ["Classes/Logger/SFLogger.m"]
+        ),
+        .target(
+            name: "SalesforceSDKCommon-KeychainManager",
+            dependencies: ["SalesforceSDKCommon-Logger"],
             path: "libs/SalesforceSDKCommon/SalesforceSDKCommon",
             sources: ["Classes/Keychain/KeychainManager.swift"]
         ),
         .target(
             name: "SalesforceSDKCommon-ObjC",
-            dependencies: ["SalesforceSDKCommon-Swift"],
+            dependencies: ["SalesforceSDKCommon-KeychainManager"],
             path: "libs/SalesforceSDKCommon/SalesforceSDKCommon",
-            exclude: ["Classes/Keychain/KeychainManager.swift"]
+            exclude: ["Classes/Logger/SFLogger.m", "Classes/Keychain/KeychainManager.swift"]
         ),
         .target(
             name: "SalesforceAnalytics-ObjC",
@@ -52,19 +58,18 @@ let package = Package(
             path: "libs/SalesforceAnalytics/SalesforceAnalytics"
         ),
         .target(
-            name: "SalesforceSDKCore-Swift",
+            name: "SalesforceSDKCore-KeyValueStore",
             dependencies: ["SalesforceSDKCommon-ObjC"],
             path: "libs/SalesforceSDKCore/SalesforceSDKCore",
             sources: [
                 "Classes/Storage/KeyValueEncryptedFileStoreViewController.swift",
                 "Classes/Storage/KeyValueEncryptedFileStore.swift",
-                "Classes/Storage/KeyValueEncryptedFileStoreInspector.swift",
-                "Classes/Extensions/PushNotificationManager.swift"
+                "Classes/Storage/KeyValueEncryptedFileStoreInspector.swift"
             ]
         ),
         .target(
             name: "SalesforceSDKCore-ObjC",
-            dependencies: ["SalesforceAnalytics-ObjC", "SalesforceSDKCore-Swift"],
+            dependencies: ["SalesforceAnalytics-ObjC", "SalesforceSDKCore-KeyValueStore"],
             path: "libs/SalesforceSDKCore/SalesforceSDKCore",
             exclude: [
                 "Classes/Storage/KeyValueEncryptedFileStoreViewController.swift",
@@ -85,7 +90,8 @@ let package = Package(
             path: "libs/SalesforceSDKCore/SalesforceSDKCore",
             sources: [
                 "Classes/Extensions/RestClient.swift",
-                "Classes/Extensions/UserAccountManager.swift"
+                "Classes/Extensions/UserAccountManager.swift",
+                "Classes/Extensions/PushNotificationManager.swift"
             ]
         ),
         .target(
