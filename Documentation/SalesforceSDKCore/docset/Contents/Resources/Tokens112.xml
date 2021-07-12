@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKTestCredentialsData.html">
+	<File path="Classes/SFSDKPasscodeVerifyController.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKTestCredentialsData</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKPasscodeVerifyController</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
             
 			
 			<NodeRef refid="112"/>
@@ -13,302 +13,122 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/initWithDict:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/setViewConfig:</TokenIdentifier>
+			<Abstract type="html">Setup passcode view related preferences.</Abstract>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>- (id)initWithDict:(NSDictionary *)credentialsDict</Declaration>
+			<Declaration>@property (nonatomic, readonly) SFSDKAppLockViewConfig *viewConfig</Declaration>
 			
 			
-			<Anchor>//api/name/initWithDict:</Anchor>
+			<Anchor>//api/name/viewConfig</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setAccessToken:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/viewConfig</TokenIdentifier>
+			<Abstract type="html">Setup passcode view related preferences.</Abstract>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *accessToken</Declaration>
+			<Declaration>@property (nonatomic, readonly) SFSDKAppLockViewConfig *viewConfig</Declaration>
 			
 			
-			<Anchor>//api/name/accessToken</Anchor>
+			<Anchor>//api/name/viewConfig</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/accessToken</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPasscodeVerifyController/viewConfig</TokenIdentifier>
+			<Abstract type="html">Setup passcode view related preferences.</Abstract>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *accessToken</Declaration>
+			<Declaration>@property (nonatomic, readonly) SFSDKAppLockViewConfig *viewConfig</Declaration>
 			
 			
-			<Anchor>//api/name/accessToken</Anchor>
+			<Anchor>//api/name/viewConfig</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/accessToken</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/setPasscodeLengthKnown:</TokenIdentifier>
+			<Abstract type="html">Wether the passcode length is known.</Abstract>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *accessToken</Declaration>
+			<Declaration>@property (nonatomic) BOOL passcodeLengthKnown</Declaration>
 			
 			
-			<Anchor>//api/name/accessToken</Anchor>
+			<Anchor>//api/name/passcodeLengthKnown</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setRefreshToken:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/passcodeLengthKnown</TokenIdentifier>
+			<Abstract type="html">Wether the passcode length is known.</Abstract>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *refreshToken</Declaration>
+			<Declaration>@property (nonatomic) BOOL passcodeLengthKnown</Declaration>
 			
 			
-			<Anchor>//api/name/refreshToken</Anchor>
+			<Anchor>//api/name/passcodeLengthKnown</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/refreshToken</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPasscodeVerifyController/passcodeLengthKnown</TokenIdentifier>
+			<Abstract type="html">Wether the passcode length is known.</Abstract>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *refreshToken</Declaration>
+			<Declaration>@property (nonatomic) BOOL passcodeLengthKnown</Declaration>
 			
 			
-			<Anchor>//api/name/refreshToken</Anchor>
+			<Anchor>//api/name/passcodeLengthKnown</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/refreshToken</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/setVerifyDelegate:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *refreshToken</Declaration>
+			<Declaration>@property (nonatomic, weak) id&lt;SFSDKPasscodeVerifyDelegate&gt; verifyDelegate</Declaration>
 			
 			
-			<Anchor>//api/name/refreshToken</Anchor>
+			<Anchor>//api/name/verifyDelegate</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setIdentityUrl:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/verifyDelegate</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *identityUrl</Declaration>
+			<Declaration>@property (nonatomic, weak) id&lt;SFSDKPasscodeVerifyDelegate&gt; verifyDelegate</Declaration>
 			
 			
-			<Anchor>//api/name/identityUrl</Anchor>
+			<Anchor>//api/name/verifyDelegate</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/identityUrl</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPasscodeVerifyController/verifyDelegate</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *identityUrl</Declaration>
+			<Declaration>@property (nonatomic, weak) id&lt;SFSDKPasscodeVerifyDelegate&gt; verifyDelegate</Declaration>
 			
 			
-			<Anchor>//api/name/identityUrl</Anchor>
+			<Anchor>//api/name/verifyDelegate</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/identityUrl</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/initWithViewConfig:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *identityUrl</Declaration>
-			
-			
-			<Anchor>//api/name/identityUrl</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setInstanceUrl:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *instanceUrl</Declaration>
+			<Declaration>- (instancetype)initWithViewConfig:(SFSDKAppLockViewConfig *)config</Declaration>
 			
 			
-			<Anchor>//api/name/instanceUrl</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/instanceUrl</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *instanceUrl</Declaration>
-			
-			
-			<Anchor>//api/name/instanceUrl</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/instanceUrl</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *instanceUrl</Declaration>
-			
-			
-			<Anchor>//api/name/instanceUrl</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setClientId:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *clientId</Declaration>
-			
-			
-			<Anchor>//api/name/clientId</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/clientId</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *clientId</Declaration>
-			
-			
-			<Anchor>//api/name/clientId</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/clientId</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *clientId</Declaration>
-			
-			
-			<Anchor>//api/name/clientId</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setRedirectUri:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *redirectUri</Declaration>
-			
-			
-			<Anchor>//api/name/redirectUri</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/redirectUri</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *redirectUri</Declaration>
-			
-			
-			<Anchor>//api/name/redirectUri</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/redirectUri</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *redirectUri</Declaration>
-			
-			
-			<Anchor>//api/name/redirectUri</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setLoginHost:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *loginHost</Declaration>
-			
-			
-			<Anchor>//api/name/loginHost</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/loginHost</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *loginHost</Declaration>
-			
-			
-			<Anchor>//api/name/loginHost</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/loginHost</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *loginHost</Declaration>
-			
-			
-			<Anchor>//api/name/loginHost</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setCommunityUrl:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *communityUrl</Declaration>
-			
-			
-			<Anchor>//api/name/communityUrl</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/communityUrl</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *communityUrl</Declaration>
-			
-			
-			<Anchor>//api/name/communityUrl</Anchor>
-            <NodeRef refid="112"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/communityUrl</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSString *communityUrl</Declaration>
-			
-			
-			<Anchor>//api/name/communityUrl</Anchor>
+			<Anchor>//api/name/initWithViewConfig:</Anchor>
             <NodeRef refid="112"/>
 		</Token>
 		

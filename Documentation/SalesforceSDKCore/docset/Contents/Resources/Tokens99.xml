@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKOAuthClientCache.html">
+	<File path="Classes/SFSDKLoginHostStorage.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKOAuthClientCache</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKLoginHostStorage</TokenIdentifier>
+			<Abstract type="html">This class manages the list of login hosts as well its persistence.
+Currently this list is persisted in the user defaults.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
             
 			
 			<NodeRef refid="99"/>
@@ -13,108 +14,11 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientCache/clientForKey:</TokenIdentifier>
-			<Abstract type="html">Fetch A Client from the cache given key</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKLoginHostStorage/sharedInstance</TokenIdentifier>
+			<Abstract type="html">Returns the shared instance of this class.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
 			
-			<Declaration>- (SFSDKOAuthClient *)clientForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">to use for lookup</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">a cached instance of SFSDKOAuthClient</Abstract></ReturnValue>
-			<Anchor>//api/name/clientForKey:</Anchor>
-            <NodeRef refid="99"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientCache/addClient:</TokenIdentifier>
-			<Abstract type="html">Add A Client to the cache given key</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
-			
-			<Declaration>- (void)addClient:(SFSDKOAuthClient *)client</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>client</Name>
-					<Abstract type="html">instance to add</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/addClient:</Anchor>
-            <NodeRef refid="99"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientCache/addClient:forKey:</TokenIdentifier>
-			<Abstract type="html">Add A Client to the cache given key</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
-			
-			<Declaration>- (void)addClient:(SFSDKOAuthClient *)client forKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>client</Name>
-					<Abstract type="html">instance to add</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/addClient:forKey:</Anchor>
-            <NodeRef refid="99"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientCache/removeClientForKey:</TokenIdentifier>
-			<Abstract type="html">Remove A Cached Client given key</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
-			
-			<Declaration>- (void)removeClientForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">to use for looking up client</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/removeClientForKey:</Anchor>
-            <NodeRef refid="99"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientCache/removeClient:</TokenIdentifier>
-			<Abstract type="html">Remove a Cached Client</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
-			
-			<Declaration>- (void)removeClient:(SFSDKOAuthClient *)client</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>client</Name>
-					<Abstract type="html">being removed</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/removeClient:</Anchor>
-            <NodeRef refid="99"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientCache/removeAllClients</TokenIdentifier>
-			<Abstract type="html">Remove All Cached Clients</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
-			
-			<Declaration>- (void)removeAllClients</Declaration>
-			
-			
-			<Anchor>//api/name/removeAllClients</Anchor>
-            <NodeRef refid="99"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuthClientCache/sharedInstance</TokenIdentifier>
-			<Abstract type="html">Shared Singleton</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
-			
-			<Declaration>+ (instancetype)sharedInstance</Declaration>
+			<Declaration>+ (SFSDKLoginHostStorage *)sharedInstance</Declaration>
 			
 			
 			<Anchor>//api/name/sharedInstance</Anchor>
@@ -122,50 +26,123 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuthClientCache/keyFromClient:</TokenIdentifier>
-			<Abstract type="html">Get unique key from a client instance</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostStorage/addLoginHost:</TokenIdentifier>
+			<Abstract type="html">Adds a new login host.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
 			
-			<Declaration>+ (NSString *)keyFromClient:(SFSDKOAuthClient *)client</Declaration>
+			<Declaration>- (void)addLoginHost:(SFSDKLoginHost *)loginHost</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>loginHost</Name>
+					<Abstract type="html">Login host to be added</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/keyFromClient:</Anchor>
+			<Anchor>//api/name/addLoginHost:</Anchor>
             <NodeRef refid="99"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuthClientCache/keyFromCredentials:</TokenIdentifier>
-			<Abstract type="html">Get unique key from SFOAuthCredentials</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostStorage/removeLoginHostAtIndex:</TokenIdentifier>
+			<Abstract type="html">Removes the login host at the specified index.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
 			
-			<Declaration>+ (NSString *)keyFromCredentials:(SFOAuthCredentials *)credentials</Declaration>
+			<Declaration>- (void)removeLoginHostAtIndex:(NSUInteger)index</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>index</Name>
+					<Abstract type="html">Index of the login host</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/keyFromCredentials:</Anchor>
+			<Anchor>//api/name/removeLoginHostAtIndex:</Anchor>
             <NodeRef refid="99"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuthClientCache/keyFromCredentials:type:</TokenIdentifier>
-			<Abstract type="html">Get unique key from SFOAuthCredentials</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostStorage/indexOfLoginHost:</TokenIdentifier>
+			<Abstract type="html">Returns the index of the specified host if exists.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
 			
-			<Declaration>+ (NSString *)keyFromCredentials:(SFOAuthCredentials *)client type:(SFOAuthClientKeyType)clientType</Declaration>
+			<Declaration>- (NSUInteger)indexOfLoginHost:(SFSDKLoginHost *)host</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>host</Name>
+					<Abstract type="html">Requested login host</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/keyFromCredentials:type:</Anchor>
+			<Anchor>//api/name/indexOfLoginHost:</Anchor>
             <NodeRef refid="99"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuthClientCache/keyFromIdentifierPrefixWithType:type:</TokenIdentifier>
-			<Abstract type="html">Get a state identifier key encode for type of client specified</Abstract>
-			<DeclaredIn>SFSDKOAuthClientCache.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostStorage/loginHostAtIndex:</TokenIdentifier>
+			<Abstract type="html">Returns the login host at the specified index.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
 			
-			<Declaration>+ (NSString *)keyFromIdentifierPrefixWithType:(NSString *)prefix type:(SFOAuthClientKeyType)clientType</Declaration>
+			<Declaration>- (SFSDKLoginHost *)loginHostAtIndex:(NSUInteger)index</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>index</Name>
+					<Abstract type="html">Requested index</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/loginHostAtIndex:</Anchor>
+            <NodeRef refid="99"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostStorage/loginHostForHostAddress:</TokenIdentifier>
+			<Abstract type="html">Returns the login host with a particular host address, if any.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
+			
+			<Declaration>- (nullable SFSDKLoginHost *)loginHostForHostAddress:(NSString *)hostAddress</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>hostAddress</Name>
+					<Abstract type="html">Address to be queried</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/loginHostForHostAddress:</Anchor>
+            <NodeRef refid="99"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostStorage/removeAllLoginHosts</TokenIdentifier>
+			<Abstract type="html">Removes all the login hosts.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
+			
+			<Declaration>- (void)removeAllLoginHosts</Declaration>
 			
 			
-			<Anchor>//api/name/keyFromIdentifierPrefixWithType:type:</Anchor>
+			<Anchor>//api/name/removeAllLoginHosts</Anchor>
+            <NodeRef refid="99"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostStorage/numberOfLoginHosts</TokenIdentifier>
+			<Abstract type="html">Returns the number of login hosts.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
+			
+			<Declaration>- (NSUInteger)numberOfLoginHosts</Declaration>
+			
+			
+			<Anchor>//api/name/numberOfLoginHosts</Anchor>
+            <NodeRef refid="99"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostStorage/save</TokenIdentifier>
+			<Abstract type="html">Stores all the login host except the non-deletable ones in the user defaults.</Abstract>
+			<DeclaredIn>SFSDKLoginHostStorage.h</DeclaredIn>
+			
+			<Declaration>- (void)save</Declaration>
+			
+			
+			<Anchor>//api/name/save</Anchor>
             <NodeRef refid="99"/>
 		</Token>
 		

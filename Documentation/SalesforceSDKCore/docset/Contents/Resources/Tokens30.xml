@@ -277,6 +277,42 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFManagedPreferences/setShouldDisableExternalPasteDefinedByConnectedApp:</TokenIdentifier>
+			<Abstract type="html">Whether or not external paste is disabled in the connected app.</Abstract>
+			<DeclaredIn>SFManagedPreferences.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL shouldDisableExternalPasteDefinedByConnectedApp</Declaration>
+			
+			
+			<Anchor>//api/name/shouldDisableExternalPasteDefinedByConnectedApp</Anchor>
+            <NodeRef refid="30"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFManagedPreferences/shouldDisableExternalPasteDefinedByConnectedApp</TokenIdentifier>
+			<Abstract type="html">Whether or not external paste is disabled in the connected app.</Abstract>
+			<DeclaredIn>SFManagedPreferences.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL shouldDisableExternalPasteDefinedByConnectedApp</Declaration>
+			
+			
+			<Anchor>//api/name/shouldDisableExternalPasteDefinedByConnectedApp</Anchor>
+            <NodeRef refid="30"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFManagedPreferences/shouldDisableExternalPasteDefinedByConnectedApp</TokenIdentifier>
+			<Abstract type="html">Whether or not external paste is disabled in the connected app.</Abstract>
+			<DeclaredIn>SFManagedPreferences.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL shouldDisableExternalPasteDefinedByConnectedApp</Declaration>
+			
+			
+			<Anchor>//api/name/shouldDisableExternalPasteDefinedByConnectedApp</Anchor>
+            <NodeRef refid="30"/>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/SFManagedPreferences/setOnlyShowAuthorizedHosts:</TokenIdentifier>
 			<Abstract type="html">Whether or not to display only the authorized hosts. (OnlyShowAuthorizedHosts)</Abstract>
 			<DeclaredIn>SFManagedPreferences.h</DeclaredIn>

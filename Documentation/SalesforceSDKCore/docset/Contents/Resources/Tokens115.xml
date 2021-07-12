@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKUITableViewCell.html">
+	<File path="Classes/SFSDKResourceUtils.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKUITableViewCell</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKResourceUtils</TokenIdentifier>
+			<Abstract type="html">Class that handles access to Mobile SDK&apos;s main bundle.</Abstract>
+			<DeclaredIn>SFSDKResourceUtils.h</DeclaredIn>
             
 			
 			<NodeRef refid="115"/>
@@ -13,218 +13,68 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/setUserName:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKResourceUtils/mainSdkBundle</TokenIdentifier>
+			<Abstract type="html">Mobile SDK&apos;s main bundle.</Abstract>
+			<DeclaredIn>SFSDKResourceUtils.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) NSString *userName</Declaration>
+			<Declaration>+ (NSBundle *)mainSdkBundle</Declaration>
 			
-			
-			<Anchor>//api/name/userName</Anchor>
+			<ReturnValue><Abstract type="html">Mobile SDK&apos;s main bundle.</Abstract></ReturnValue>
+			<Anchor>//api/name/mainSdkBundle</Anchor>
             <NodeRef refid="115"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/userName</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKResourceUtils/localizedString:</TokenIdentifier>
+			<Abstract type="html">Gets a localized string from the main Mobile SDK bundle.</Abstract>
+			<DeclaredIn>SFSDKResourceUtils.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) NSString *userName</Declaration>
-			
-			
-			<Anchor>//api/name/userName</Anchor>
+			<Declaration>+ (NSString *)localizedString:(NSString *)localizationKey</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>localizationKey</Name>
+					<Abstract type="html">Localization key used to look up the localized string.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">Localized string associated with the key.</Abstract></ReturnValue>
+			<Anchor>//api/name/localizedString:</Anchor>
             <NodeRef refid="115"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKUITableViewCell/userName</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKResourceUtils/imageNamed:</TokenIdentifier>
+			<Abstract type="html">Retrieves an image from the &quot;Images&quot; asset catalog of the Mobile SDK framework bundle.</Abstract>
+			<DeclaredIn>SFSDKResourceUtils.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) NSString *userName</Declaration>
-			
-			
-			<Anchor>//api/name/userName</Anchor>
+			<Declaration>+ (UIImage *)imageNamed:(NSString *)name</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>name</Name>
+					<Abstract type="html">Name of the image in the asset catalog.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">UIImage object containing the named image from the asset catalog.</Abstract></ReturnValue>
+			<Anchor>//api/name/imageNamed:</Anchor>
             <NodeRef refid="115"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/setHostName:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKResourceUtils/loadConfigFromFile:error:</TokenIdentifier>
+			<Abstract type="html">Read a configuration resource file and parse its contents. The file must be in JSON format.</Abstract>
+			<DeclaredIn>SFSDKResourceUtils.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) NSString *hostName</Declaration>
-			
-			
-			<Anchor>//api/name/hostName</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/hostName</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, assign) NSString *hostName</Declaration>
-			
-			
-			<Anchor>//api/name/hostName</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKUITableViewCell/hostName</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, assign) NSString *hostName</Declaration>
-			
-			
-			<Anchor>//api/name/hostName</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/setImageURL:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, assign) NSURL *imageURL</Declaration>
-			
-			
-			<Anchor>//api/name/imageURL</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/imageURL</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, assign) NSURL *imageURL</Declaration>
-			
-			
-			<Anchor>//api/name/imageURL</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKUITableViewCell/imageURL</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, assign) NSURL *imageURL</Declaration>
-			
-			
-			<Anchor>//api/name/imageURL</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/setProfileImage:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (strong, nonatomic) UIImage *profileImage</Declaration>
-			
-			
-			<Anchor>//api/name/profileImage</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/profileImage</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (strong, nonatomic) UIImage *profileImage</Declaration>
-			
-			
-			<Anchor>//api/name/profileImage</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKUITableViewCell/profileImage</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (strong, nonatomic) UIImage *profileImage</Declaration>
-			
-			
-			<Anchor>//api/name/profileImage</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/setReuseCellIdentifier:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (class, nonatomic, readonly) NSString *reuseCellIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/reuseCellIdentifier</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/reuseCellIdentifier</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (class, nonatomic, readonly) NSString *reuseCellIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/reuseCellIdentifier</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKUITableViewCell/reuseCellIdentifier</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (class, nonatomic, readonly) NSString *reuseCellIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/reuseCellIdentifier</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/setCellHeight:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (class, nonatomic, readonly) CGFloat cellHeight</Declaration>
-			
-			
-			<Anchor>//api/name/cellHeight</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUITableViewCell/cellHeight</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (class, nonatomic, readonly) CGFloat cellHeight</Declaration>
-			
-			
-			<Anchor>//api/name/cellHeight</Anchor>
-            <NodeRef refid="115"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKUITableViewCell/cellHeight</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUITableViewCell.h</DeclaredIn>
-			
-			<Declaration>@property (class, nonatomic, readonly) CGFloat cellHeight</Declaration>
-			
-			
-			<Anchor>//api/name/cellHeight</Anchor>
+			<Declaration>+ (nullable NSDictionary *)loadConfigFromFile:(NSString *)configFilePath error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>configFilePath</Name>
+					<Abstract type="html">Path to the configuration resource file.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">Input-output parameter that sets or returns any error that occurs during file reading.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">NSDictionary object built from the file&apos;s contents.</Abstract></ReturnValue>
+			<Anchor>//api/name/loadConfigFromFile:error:</Anchor>
             <NodeRef refid="115"/>
 		</Token>
 		

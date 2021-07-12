@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Constants/SFRestMethod.html">
+	<File path="Constants/SFSDKNetworkServiceType.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/c/tdef/SFRestMethod</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/c/tdef/SFSDKNetworkServiceType</TokenIdentifier>
 			<Abstract type="html">HTTP methods for requests.</Abstract>
 			<DeclaredIn>SFRestRequest.h</DeclaredIn>
             
@@ -14,9 +14,9 @@
 		
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodGET</TokenIdentifier>
+            <TokenIdentifier>//apple_ref/c/econst/SFNetworkServiceTypeDefault</TokenIdentifier>
             <Abstract type="html"></Abstract>
-            <Declaration>SFRestMethodGET</Declaration>
+            <Declaration>SFNetworkServiceTypeDefault</Declaration>
             
             <DeclaredIn>SFRestRequest.h</DeclaredIn>
             
@@ -24,9 +24,9 @@
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodPOST</TokenIdentifier>
+            <TokenIdentifier>//apple_ref/c/econst/SFNetworkServiceTypeResponsiveData</TokenIdentifier>
             <Abstract type="html"></Abstract>
-            <Declaration>SFRestMethodPOST</Declaration>
+            <Declaration>SFNetworkServiceTypeResponsiveData</Declaration>
             
             <DeclaredIn>SFRestRequest.h</DeclaredIn>
             
@@ -34,39 +34,9 @@
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodPUT</TokenIdentifier>
+            <TokenIdentifier>//apple_ref/c/econst/SFNetworkServiceTypeBackground</TokenIdentifier>
             <Abstract type="html"></Abstract>
-            <Declaration>SFRestMethodPUT</Declaration>
-            
-            <DeclaredIn>SFRestRequest.h</DeclaredIn>
-            
-            <NodeRef refid="215"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodDELETE</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>SFRestMethodDELETE</Declaration>
-            
-            <DeclaredIn>SFRestRequest.h</DeclaredIn>
-            
-            <NodeRef refid="215"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodHEAD</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>SFRestMethodHEAD</Declaration>
-            
-            <DeclaredIn>SFRestRequest.h</DeclaredIn>
-            
-            <NodeRef refid="215"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodPATCH</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>SFRestMethodPATCH</Declaration>
+            <Declaration>SFNetworkServiceTypeBackground</Declaration>
             
             <DeclaredIn>SFRestRequest.h</DeclaredIn>
             

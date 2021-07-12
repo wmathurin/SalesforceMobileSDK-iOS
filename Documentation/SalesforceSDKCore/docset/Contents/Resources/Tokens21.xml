@@ -250,7 +250,7 @@ default value is represented by the kSFIdentityRequestDefaultTimeoutSeconds prop
 			<Abstract type="html">The NSURLSession associated with the ID request.</Abstract>
 			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSURLSession *session</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSURLSession *session</Declaration>
 			
 			
 			<Anchor>//api/name/session</Anchor>
@@ -262,7 +262,7 @@ default value is represented by the kSFIdentityRequestDefaultTimeoutSeconds prop
 			<Abstract type="html">The NSURLSession associated with the ID request.</Abstract>
 			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSURLSession *session</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSURLSession *session</Declaration>
 			
 			
 			<Anchor>//api/name/session</Anchor>
@@ -274,7 +274,7 @@ default value is represented by the kSFIdentityRequestDefaultTimeoutSeconds prop
 			<Abstract type="html">The NSURLSession associated with the ID request.</Abstract>
 			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSURLSession *session</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSURLSession *session</Declaration>
 			
 			
 			<Anchor>//api/name/session</Anchor>
@@ -286,7 +286,7 @@ default value is represented by the kSFIdentityRequestDefaultTimeoutSeconds prop
 			<Abstract type="html">The OAuth sesssion refresher to use if the identity request fails with expired credentials.</Abstract>
 			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthSessionRefresher *oauthSessionRefresher</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthSessionRefresher *oauthSessionRefresher</Declaration>
 			
 			
 			<Anchor>//api/name/oauthSessionRefresher</Anchor>
@@ -298,7 +298,7 @@ default value is represented by the kSFIdentityRequestDefaultTimeoutSeconds prop
 			<Abstract type="html">The OAuth sesssion refresher to use if the identity request fails with expired credentials.</Abstract>
 			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthSessionRefresher *oauthSessionRefresher</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthSessionRefresher *oauthSessionRefresher</Declaration>
 			
 			
 			<Anchor>//api/name/oauthSessionRefresher</Anchor>
@@ -310,7 +310,7 @@ default value is represented by the kSFIdentityRequestDefaultTimeoutSeconds prop
 			<Abstract type="html">The OAuth sesssion refresher to use if the identity request fails with expired credentials.</Abstract>
 			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthSessionRefresher *oauthSessionRefresher</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthSessionRefresher *oauthSessionRefresher</Declaration>
 			
 			
 			<Anchor>//api/name/oauthSessionRefresher</Anchor>
@@ -350,6 +350,54 @@ default value is represented by the kSFIdentityRequestDefaultTimeoutSeconds prop
 			
 			
 			<Anchor>//api/name/typeToCodeDict</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFIdentityCoordinator/setAuthSession:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, nullable) SFSDKAuthSession *authSession</Declaration>
+			
+			
+			<Anchor>//api/name/authSession</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFIdentityCoordinator/authSession</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, nullable) SFSDKAuthSession *authSession</Declaration>
+			
+			
+			<Anchor>//api/name/authSession</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFIdentityCoordinator/authSession</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, nullable) SFSDKAuthSession *authSession</Declaration>
+			
+			
+			<Anchor>//api/name/authSession</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFIdentityCoordinator/initWithAuthSession:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFIdentityCoordinator+Internal.h</DeclaredIn>
+			
+			<Declaration>- (id)initWithAuthSession:(SFSDKAuthSession *)authSession</Declaration>
+			
+			
+			<Anchor>//api/name/initWithAuthSession:</Anchor>
             <NodeRef refid="21"/>
 		</Token>
 		

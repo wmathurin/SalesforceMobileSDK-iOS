@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFCryptChunksDelegate.html">
+	<File path="Categories/NSNotificationCenter+SFAdditions.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFCryptChunksDelegate</TokenIdentifier>
-			<Abstract type="html">SFCryptChunksDelegate</Abstract>
-			<DeclaredIn>SFCryptChunks.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cat/NSNotificationCenter(SFAdditions)</TokenIdentifier>
+			<Abstract type="html">Posts notifications either once with a run loop, or on the main thread.</Abstract>
+			<DeclaredIn>NSNotificationCenter+SFAdditions.h</DeclaredIn>
             
 			
 			<NodeRef refid="164"/>
@@ -13,26 +13,48 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFCryptChunksDelegate/cryptChunk:chunkResult:bufferLen:</TokenIdentifier>
-			<Abstract type="html">Encrypted / Decrypted chunk results.
-This method may be invoked none to multiple times - until all result is informed to delegate.</Abstract>
-			<DeclaredIn>SFCryptChunks.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/NSNotificationCenter/postNotificationOnceWithName:object:userInfo:</TokenIdentifier>
+			<Abstract type="html">Posts a notification once within a runloop - coalescing on the name.</Abstract>
+			<DeclaredIn>NSNotificationCenter+SFAdditions.h</DeclaredIn>
 			
-			<Declaration>- (void)cryptChunk:(SFCryptChunks *)cryptChunks chunkResult:(uint8_t *)buffer bufferLen:(size_t)len</Declaration>
+			<Declaration>+ (void)postNotificationOnceWithName:(NSString *)notificationName object:(id)object userInfo:(nullable NSDictionary *)userInfo</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>cryptChunks</Name>
-					<Abstract type="html">the instance sending this message.</Abstract>
+					<Name>notificationName</Name>
+					<Abstract type="html">The name of the notification.</Abstract>
 				</Parameter><Parameter>
-					<Name>buffer</Name>
-					<Abstract type="html">the chunk results buffer.</Abstract>
+					<Name>object</Name>
+					<Abstract type="html">The object for the new notification.</Abstract>
 				</Parameter><Parameter>
-					<Name>len</Name>
-					<Abstract type="html">the chunk results buffer length.</Abstract>
+					<Name>userInfo</Name>
+					<Abstract type="html">The user information dictionary for the new notification. May be nil.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/cryptChunk:chunkResult:bufferLen:</Anchor>
+			<Anchor>//api/name/postNotificationOnceWithName:object:userInfo:</Anchor>
+            <NodeRef refid="164"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSNotificationCenter/postNotificationOnMainThreadWithName:object:userInfo:</TokenIdentifier>
+			<Abstract type="html">Posts a notification on the main thread.</Abstract>
+			<DeclaredIn>NSNotificationCenter+SFAdditions.h</DeclaredIn>
+			
+			<Declaration>- (void)postNotificationOnMainThreadWithName:(NSString *)notificationName object:(id)object userInfo:(nullable NSDictionary *)userInfo</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>notificationName</Name>
+					<Abstract type="html">The name of the notification.</Abstract>
+				</Parameter><Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The object for the new notificaiton.</Abstract>
+				</Parameter><Parameter>
+					<Name>userInfo</Name>
+					<Abstract type="html">The user information dictionary for the new notification. May be nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/postNotificationOnMainThreadWithName:object:userInfo:</Anchor>
             <NodeRef refid="164"/>
 		</Token>
 		

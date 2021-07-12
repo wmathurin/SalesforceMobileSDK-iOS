@@ -280,38 +280,38 @@ https://help.salesforce.com/apex/HTViewHelpDoc?language=en&amp;amp;id=remoteacce
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/setAuthSession:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/setAsWebAuthenticationSession:</TokenIdentifier>
 			<Abstract type="html">Auth session through which the user will input OAuth credentials for the user-agent flow OAuth process.</Abstract>
 			<DeclaredIn>SFOAuthCoordinator.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, null_unspecified) SFAuthenticationSession *authSession</Declaration>
+			<Declaration>@property (nonatomic, readonly, null_unspecified) ASWebAuthenticationSession *asWebAuthenticationSession</Declaration>
 			
 			
-			<Anchor>//api/name/authSession</Anchor>
+			<Anchor>//api/name/asWebAuthenticationSession</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/authSession</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/asWebAuthenticationSession</TokenIdentifier>
 			<Abstract type="html">Auth session through which the user will input OAuth credentials for the user-agent flow OAuth process.</Abstract>
 			<DeclaredIn>SFOAuthCoordinator.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, null_unspecified) SFAuthenticationSession *authSession</Declaration>
+			<Declaration>@property (nonatomic, readonly, null_unspecified) ASWebAuthenticationSession *asWebAuthenticationSession</Declaration>
 			
 			
-			<Anchor>//api/name/authSession</Anchor>
+			<Anchor>//api/name/asWebAuthenticationSession</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthCoordinator/authSession</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthCoordinator/asWebAuthenticationSession</TokenIdentifier>
 			<Abstract type="html">Auth session through which the user will input OAuth credentials for the user-agent flow OAuth process.</Abstract>
 			<DeclaredIn>SFOAuthCoordinator.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, null_unspecified) SFAuthenticationSession *authSession</Declaration>
+			<Declaration>@property (nonatomic, readonly, null_unspecified) ASWebAuthenticationSession *asWebAuthenticationSession</Declaration>
 			
 			
-			<Anchor>//api/name/authSession</Anchor>
+			<Anchor>//api/name/asWebAuthenticationSession</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
@@ -508,6 +508,45 @@ https://community.force.com/services/oauth2/authorize/&lt;brand&gt;?response_typ
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/setAuthClient:</TokenIdentifier>
+			<Abstract type="html">Setup the coordinator to use SafariViewController for authentication.
+   </Abstract>
+			<DeclaredIn>SFOAuthCoordinator.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;SFSDKOAuthProtocol&gt; authClient</Declaration>
+			
+			
+			<Anchor>//api/name/authClient</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/authClient</TokenIdentifier>
+			<Abstract type="html">Setup the coordinator to use SafariViewController for authentication.
+   </Abstract>
+			<DeclaredIn>SFOAuthCoordinator.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;SFSDKOAuthProtocol&gt; authClient</Declaration>
+			
+			
+			<Anchor>//api/name/authClient</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthCoordinator/authClient</TokenIdentifier>
+			<Abstract type="html">Setup the coordinator to use SafariViewController for authentication.
+   </Abstract>
+			<DeclaredIn>SFOAuthCoordinator.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;SFSDKOAuthProtocol&gt; authClient</Declaration>
+			
+			
+			<Anchor>//api/name/authClient</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/initWithCredentials:</TokenIdentifier>
 			<Abstract type="html">Initializes a new OAuth coordinator with the supplied credentials. This is the designated initializer.</Abstract>
 			<DeclaredIn>SFOAuthCoordinator.h</DeclaredIn>
@@ -628,50 +667,14 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/beginIDPFlow:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/beginIDPFlow</TokenIdentifier>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator.h</DeclaredIn>
 			
-			<Declaration>- (void)beginIDPFlow:(SFOAuthCredentials *)spAppCredentials</Declaration>
+			<Declaration>- (void)beginIDPFlow</Declaration>
 			
 			
-			<Anchor>//api/name/beginIDPFlow:</Anchor>
-            <NodeRef refid="35"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/setOauthCoordinatorFlow:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;SFOAuthCoordinatorFlow&gt; oauthCoordinatorFlow</Declaration>
-			
-			
-			<Anchor>//api/name/oauthCoordinatorFlow</Anchor>
-            <NodeRef refid="35"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/oauthCoordinatorFlow</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;SFOAuthCoordinatorFlow&gt; oauthCoordinatorFlow</Declaration>
-			
-			
-			<Anchor>//api/name/oauthCoordinatorFlow</Anchor>
-            <NodeRef refid="35"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthCoordinator/oauthCoordinatorFlow</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;SFOAuthCoordinatorFlow&gt; oauthCoordinatorFlow</Declaration>
-			
-			
-			<Anchor>//api/name/oauthCoordinatorFlow</Anchor>
+			<Anchor>//api/name/beginIDPFlow</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
@@ -716,7 +719,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSURLSession *session</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSURLSession *session</Declaration>
 			
 			
 			<Anchor>//api/name/session</Anchor>
@@ -728,7 +731,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSURLSession *session</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSURLSession *session</Declaration>
 			
 			
 			<Anchor>//api/name/session</Anchor>
@@ -740,7 +743,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSURLSession *session</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSURLSession *session</Declaration>
 			
 			
 			<Anchor>//api/name/session</Anchor>
@@ -752,7 +755,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSMutableData *responseData</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSMutableData *responseData</Declaration>
 			
 			
 			<Anchor>//api/name/responseData</Anchor>
@@ -764,7 +767,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSMutableData *responseData</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSMutableData *responseData</Declaration>
 			
 			
 			<Anchor>//api/name/responseData</Anchor>
@@ -776,7 +779,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSMutableData *responseData</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSMutableData *responseData</Declaration>
 			
 			
 			<Anchor>//api/name/responseData</Anchor>
@@ -860,7 +863,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSString *codeVerifier</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSString *codeVerifier</Declaration>
 			
 			
 			<Anchor>//api/name/codeVerifier</Anchor>
@@ -872,7 +875,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSString *codeVerifier</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSString *codeVerifier</Declaration>
 			
 			
 			<Anchor>//api/name/codeVerifier</Anchor>
@@ -884,7 +887,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) NSString *codeVerifier</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) NSString *codeVerifier</Declaration>
 			
 			
 			<Anchor>//api/name/codeVerifier</Anchor>
@@ -896,7 +899,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthInfo *authInfo</Declaration>
 			
 			
 			<Anchor>//api/name/authInfo</Anchor>
@@ -908,7 +911,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthInfo *authInfo</Declaration>
 			
 			
 			<Anchor>//api/name/authInfo</Anchor>
@@ -920,7 +923,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthInfo *authInfo</Declaration>
 			
 			
 			<Anchor>//api/name/authInfo</Anchor>
@@ -968,7 +971,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthCredentials *spAppCredentials</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthCredentials *spAppCredentials</Declaration>
 			
 			
 			<Anchor>//api/name/spAppCredentials</Anchor>
@@ -980,7 +983,7 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthCredentials *spAppCredentials</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthCredentials *spAppCredentials</Declaration>
 			
 			
 			<Anchor>//api/name/spAppCredentials</Anchor>
@@ -992,10 +995,58 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) SFOAuthCredentials *spAppCredentials</Declaration>
+			<Declaration>@property (nonatomic, strong, nullable) SFOAuthCredentials *spAppCredentials</Declaration>
 			
 			
 			<Anchor>//api/name/spAppCredentials</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/setAuthSession:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, nullable) SFSDKAuthSession *authSession</Declaration>
+			
+			
+			<Anchor>//api/name/authSession</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/authSession</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, nullable) SFSDKAuthSession *authSession</Declaration>
+			
+			
+			<Anchor>//api/name/authSession</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthCoordinator/authSession</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, nullable) SFSDKAuthSession *authSession</Declaration>
+			
+			
+			<Anchor>//api/name/authSession</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/initWithAuthSession:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithAuthSession:(SFSDKAuthSession *)authSession</Declaration>
+			
+			
+			<Anchor>//api/name/initWithAuthSession:</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
@@ -1065,50 +1116,14 @@ should handle, NO otherwise.</Abstract></ReturnValue>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFOAuthCoordinator/parseQueryString:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthCoordinator/beginUserAgentFlow</TokenIdentifier>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
 			
-			<Declaration>+ (NSDictionary *)parseQueryString:(NSString *)query</Declaration>
+			<Declaration>- (void)beginUserAgentFlow</Declaration>
 			
 			
-			<Anchor>//api/name/parseQueryString:</Anchor>
-            <NodeRef refid="35"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFOAuthCoordinator/errorWithType:description:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
-			
-			<Declaration>+ (NSError *)errorWithType:(NSString *)type description:(NSString *)description</Declaration>
-			
-			
-			<Anchor>//api/name/errorWithType:description:</Anchor>
-            <NodeRef refid="35"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFOAuthCoordinator/errorWithType:description:underlyingError:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
-			
-			<Declaration>+ (NSError *)errorWithType:(NSString *)type description:(NSString *)description underlyingError:(NSError *)underlyingError</Declaration>
-			
-			
-			<Anchor>//api/name/errorWithType:description:underlyingError:</Anchor>
-            <NodeRef refid="35"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFOAuthCoordinator/timestampStringToDate:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
-			
-			<Declaration>+ (NSDate *)timestampStringToDate:(NSString *)timestamp</Declaration>
-			
-			
-			<Anchor>//api/name/timestampStringToDate:</Anchor>
+			<Anchor>//api/name/beginUserAgentFlow</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		

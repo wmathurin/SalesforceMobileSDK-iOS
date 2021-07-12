@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSecureEncryptionKey.html">
+	<File path="Classes/SFSDKUpdateNotificationsRequestBuilder.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSecureEncryptionKey</TokenIdentifier>
-			<Abstract type="html">A secure encryption key.
-The key bits are not exposed.
-The key lives in the key chain / Secure Enclave (if available).
-NB: Might not be appropriate for encrypting/decrypting large amounts of data.</Abstract>
-			<DeclaredIn>SFSecureEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKUpdateNotificationsRequestBuilder</TokenIdentifier>
+			<Abstract type="html">Use this interface to create a PATCH RestRequest object that calls the Notifications REST API.</Abstract>
+			<DeclaredIn>SFRestAPI+Notifications.h</DeclaredIn>
             
 			
 			<NodeRef refid="128"/>
@@ -16,53 +13,104 @@ NB: Might not be appropriate for encrypting/decrypting large amounts of data.</A
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSecureEncryptionKey/createKey:</TokenIdentifier>
-			<Abstract type="html">Create a new SFSecureEncryptionKey with given label</Abstract>
-			<DeclaredIn>SFSecureEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUpdateNotificationsRequestBuilder/setNotificationId:</TokenIdentifier>
+			<Abstract type="html">Sets the notification to update. Shouldn&apos;t be used with setNotificationIds or setBefore.</Abstract>
+			<DeclaredIn>SFRestAPI+Notifications.h</DeclaredIn>
 			
-			<Declaration>+ (instancetype)createKey:(NSString *)label</Declaration>
+			<Declaration>- (SFSDKUpdateNotificationsRequestBuilder *)setNotificationId:(NSString *)notificationId</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>label</Name>
-					<Abstract type="html">the key label</Abstract>
+					<Name>notificationId</Name>
+					<Abstract type="html">ID of notification to update.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/createKey:</Anchor>
+			<Anchor>//api/name/setNotificationId:</Anchor>
             <NodeRef refid="128"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSecureEncryptionKey/retrieveKey:</TokenIdentifier>
-			<Abstract type="html">Retrieve key with given label from keychain</Abstract>
-			<DeclaredIn>SFSecureEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUpdateNotificationsRequestBuilder/setNotificationIds:</TokenIdentifier>
+			<Abstract type="html">Sets a list of notifications to update (max 50). Shouldn&apos;t be used with setNotificationId or setBefore.</Abstract>
+			<DeclaredIn>SFRestAPI+Notifications.h</DeclaredIn>
 			
-			<Declaration>+ (nullable instancetype)retrieveKey:(NSString *)label</Declaration>
+			<Declaration>- (SFSDKUpdateNotificationsRequestBuilder *)setNotificationIds:(NSArray&lt;NSString*&gt; *)notificationIds</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>label</Name>
-					<Abstract type="html">the key label</Abstract>
+					<Name>notificationIds</Name>
+					<Abstract type="html">Array of notifications IDs to update.</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract type="html">nil if not found</Abstract></ReturnValue>
-			<Anchor>//api/name/retrieveKey:</Anchor>
+			
+			<Anchor>//api/name/setNotificationIds:</Anchor>
             <NodeRef refid="128"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSecureEncryptionKey/deleteKey:</TokenIdentifier>
-			<Abstract type="html">Delete key with given label from keychain</Abstract>
-			<DeclaredIn>SFSecureEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUpdateNotificationsRequestBuilder/setBefore:</TokenIdentifier>
+			<Abstract type="html">Notifications occurring before the provided date will be updated. Shouldn&apos;t be used with setNotificationId or setNotificationIds.</Abstract>
+			<DeclaredIn>SFRestAPI+Notifications.h</DeclaredIn>
 			
-			<Declaration>+ (void)deleteKey:(NSString *)label</Declaration>
+			<Declaration>- (SFSDKUpdateNotificationsRequestBuilder *)setBefore:(NSDate *)date</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>label</Name>
-					<Abstract type="html">the key label</Abstract>
+					<Name>date</Name>
+					<Abstract type="html">Before date. If unspecified, defaults to current date and time.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/deleteKey:</Anchor>
+			<Anchor>//api/name/setBefore:</Anchor>
+            <NodeRef refid="128"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUpdateNotificationsRequestBuilder/setSeen:</TokenIdentifier>
+			<Abstract type="html">Marks the notification(s) as seen (true) or unseen (false)</Abstract>
+			<DeclaredIn>SFRestAPI+Notifications.h</DeclaredIn>
+			
+			<Declaration>- (SFSDKUpdateNotificationsRequestBuilder *)setSeen:(BOOL)seen</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>seen</Name>
+					<Abstract type="html">If the notification is seen or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setSeen:</Anchor>
+            <NodeRef refid="128"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUpdateNotificationsRequestBuilder/setRead:</TokenIdentifier>
+			<Abstract type="html">Marks the notification(s) as read (true) or unread (false)</Abstract>
+			<DeclaredIn>SFRestAPI+Notifications.h</DeclaredIn>
+			
+			<Declaration>- (SFSDKUpdateNotificationsRequestBuilder *)setRead:(BOOL)read</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>read</Name>
+					<Abstract type="html">If the notification is read or not.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setRead:</Anchor>
+            <NodeRef refid="128"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKUpdateNotificationsRequestBuilder/buildUpdateNotificationsRequest:</TokenIdentifier>
+			<Abstract type="html">Returns a request to update notifications based on values from the builder.</Abstract>
+			<DeclaredIn>SFRestAPI+Notifications.h</DeclaredIn>
+			
+			<Declaration>- (SFRestRequest *)buildUpdateNotificationsRequest:(NSString *)apiVersion</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>apiVersion</Name>
+					<Abstract type="html">API version.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/buildUpdateNotificationsRequest:</Anchor>
             <NodeRef refid="128"/>
 		</Token>
 		

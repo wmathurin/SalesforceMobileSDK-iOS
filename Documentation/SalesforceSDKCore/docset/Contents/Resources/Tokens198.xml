@@ -13,42 +13,6 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerFlow/passcodeValidationAtLaunch</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SalesforceSDKManager+Internal.h</DeclaredIn>
-			
-			<Declaration>- (void)passcodeValidationAtLaunch</Declaration>
-			
-			
-			<Anchor>//api/name/passcodeValidationAtLaunch</Anchor>
-            <NodeRef refid="198"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerFlow/authAtLaunch</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SalesforceSDKManager+Internal.h</DeclaredIn>
-			
-			<Declaration>- (void)authAtLaunch</Declaration>
-			
-			
-			<Anchor>//api/name/authAtLaunch</Anchor>
-            <NodeRef refid="198"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerFlow/authBypassAtLaunch</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SalesforceSDKManager+Internal.h</DeclaredIn>
-			
-			<Declaration>- (void)authBypassAtLaunch</Declaration>
-			
-			
-			<Anchor>//api/name/authBypassAtLaunch</Anchor>
-            <NodeRef refid="198"/>
-		</Token>
-		
-		<Token>
 			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerFlow/handleAppForeground:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SalesforceSDKManager+Internal.h</DeclaredIn>
@@ -81,30 +45,6 @@
 			
 			
 			<Anchor>//api/name/handleAppTerminate:</Anchor>
-            <NodeRef refid="198"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerFlow/handleAppDidBecomeActive:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SalesforceSDKManager+Internal.h</DeclaredIn>
-			
-			<Declaration>- (void)handleAppDidBecomeActive:(nonnull NSNotification *)notification</Declaration>
-			
-			
-			<Anchor>//api/name/handleAppDidBecomeActive:</Anchor>
-            <NodeRef refid="198"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerFlow/handleAppWillResignActive:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SalesforceSDKManager+Internal.h</DeclaredIn>
-			
-			<Declaration>- (void)handleAppWillResignActive:(nonnull NSNotification *)notification</Declaration>
-			
-			
-			<Anchor>//api/name/handleAppWillResignActive:</Anchor>
             <NodeRef refid="198"/>
 		</Token>
 		

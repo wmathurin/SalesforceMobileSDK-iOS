@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKAuthErrorCommand.html">
+	<File path="Classes/SFSDKAuthResponseCommand.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAuthErrorCommand</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAuthResponseCommand</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
             
 			
 			<NodeRef refid="66"/>
@@ -13,117 +13,9 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/setErrorCode:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthResponseCommand/setState:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorCode</Declaration>
-			
-			
-			<Anchor>//api/name/errorCode</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/errorCode</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorCode</Declaration>
-			
-			
-			<Anchor>//api/name/errorCode</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthErrorCommand/errorCode</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorCode</Declaration>
-			
-			
-			<Anchor>//api/name/errorCode</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/setErrorReason:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorReason</Declaration>
-			
-			
-			<Anchor>//api/name/errorReason</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/errorReason</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorReason</Declaration>
-			
-			
-			<Anchor>//api/name/errorReason</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthErrorCommand/errorReason</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorReason</Declaration>
-			
-			
-			<Anchor>//api/name/errorReason</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/setErrorDescription:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorDescription</Declaration>
-			
-			
-			<Anchor>//api/name/errorDescription</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/errorDescription</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorDescription</Declaration>
-			
-			
-			<Anchor>//api/name/errorDescription</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthErrorCommand/errorDescription</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *errorDescription</Declaration>
-			
-			
-			<Anchor>//api/name/errorDescription</Anchor>
-            <NodeRef refid="66"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/setState:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
 			
@@ -133,9 +25,9 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/state</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthResponseCommand/state</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
 			
@@ -145,14 +37,86 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthErrorCommand/state</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthResponseCommand/state</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
 			
 			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
 			
 			
 			<Anchor>//api/name/state</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthResponseCommand/setAuthCode:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
+			
+			
+			<Anchor>//api/name/authCode</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthResponseCommand/authCode</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
+			
+			
+			<Anchor>//api/name/authCode</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthResponseCommand/authCode</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
+			
+			
+			<Anchor>//api/name/authCode</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthResponseCommand/setDomain:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *domain</Declaration>
+			
+			
+			<Anchor>//api/name/domain</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthResponseCommand/domain</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *domain</Declaration>
+			
+			
+			<Anchor>//api/name/domain</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthResponseCommand/domain</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAuthResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *domain</Declaration>
+			
+			
+			<Anchor>//api/name/domain</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		

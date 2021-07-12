@@ -62,23 +62,17 @@
 		
 		<option value="//api/name/faceIdImage">faceIdImage</option>
 		
-		<option value="//api/name/forcePasscodeLength">forcePasscodeLength</option>
-		
 		<option value="//api/name/instructionFont">instructionFont</option>
 		
 		<option value="//api/name/instructionTextColor">instructionTextColor</option>
 		
+		<option value="//api/name/logoutButtonColor">logoutButtonColor</option>
+		
 		<option value="//api/name/maxNumberOfAttempts">maxNumberOfAttempts</option>
 		
-		<option value="//api/name/navBarColor">navBarColor</option>
-		
-		<option value="//api/name/navBarFont">navBarFont</option>
-		
-		<option value="//api/name/navBarTextColor">navBarTextColor</option>
-		
-		<option value="//api/name/passcodeLength">passcodeLength</option>
-		
 		<option value="//api/name/primaryColor">primaryColor</option>
+		
+		<option value="//api/name/secondaryBackgroundColor">secondaryBackgroundColor</option>
 		
 		<option value="//api/name/secondaryColor">secondaryColor</option>
 		
@@ -119,7 +113,7 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<th>Inherits from</th>
-	<td>NSObject</td>
+	<td><a href="../Classes/SFSDKViewControllerConfig.html">SFSDKViewControllerConfig</a> : NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
 	<td>SFSDKAppLockViewConfig.h</td>
@@ -157,50 +151,6 @@
 		    
 
 			<div class="method-subsection method-declaration"><code>+ (instancetype)createDefaultConfig</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SFSDKAppLockViewConfig.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/forcePasscodeLength" title="forcePasscodeLength"></a>
-	<h3 class="method-title"><code><a href="#//api/name/forcePasscodeLength">&nbsp;&nbsp;forcePasscodeLength</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Warning - only set to YES/true if the app has always enforced a passcode of the exact length of
-the connected app setting (not longer).  This setting is used to force a cleaner UI,
-but users will be unable to unlock the app if their pin is longer than the specified
-length.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) BOOL forcePasscodeLength</code></div>
 
 		    
 			
@@ -389,6 +339,47 @@ length.</p>
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/secondaryBackgroundColor" title="secondaryBackgroundColor"></a>
+	<h3 class="method-title"><code><a href="#//api/name/secondaryBackgroundColor">&nbsp;&nbsp;secondaryBackgroundColor</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The background color of layered content.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) UIColor *secondaryBackgroundColor</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SFSDKAppLockViewConfig.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/borderColor" title="borderColor"></a>
 	<h3 class="method-title"><code><a href="#//api/name/borderColor">&nbsp;&nbsp;borderColor</a></code>
 </h3>
@@ -512,8 +503,8 @@ length.</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/navBarColor" title="navBarColor"></a>
-	<h3 class="method-title"><code><a href="#//api/name/navBarColor">&nbsp;&nbsp;navBarColor</a></code>
+	<a name="//api/name/logoutButtonColor" title="logoutButtonColor"></a>
+	<h3 class="method-title"><code><a href="#//api/name/logoutButtonColor">&nbsp;&nbsp;logoutButtonColor</a></code>
 </h3>
 
 	<div class="method-info">
@@ -523,53 +514,12 @@ length.</p>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Color of the navigation bar.</p>
+				<p>Color of the logout button on passcode verify screen.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) UIColor *navBarColor</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SFSDKAppLockViewConfig.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/navBarTextColor" title="navBarTextColor"></a>
-	<h3 class="method-title"><code><a href="#//api/name/navBarTextColor">&nbsp;&nbsp;navBarTextColor</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Color of the text displayed in the navigation bar.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) UIColor *navBarTextColor</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nonnull) UIColor *logoutButtonColor</code></div>
 
 		    
 			
@@ -652,47 +602,6 @@ length.</p>
 		    
 
 			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) UIFont *titleFont</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SFSDKAppLockViewConfig.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/navBarFont" title="navBarFont"></a>
-	<h3 class="method-title"><code><a href="#//api/name/navBarFont">&nbsp;&nbsp;navBarFont</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Font used for displaying nav bar titles.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) UIFont *navBarFont</code></div>
 
 		    
 			
@@ -839,47 +748,6 @@ length.</p>
 			
 		</div>
 	</div>
-</div><div class="section-method">
-	<a name="//api/name/passcodeLength" title="passcodeLength"></a>
-	<h3 class="method-title"><code><a href="#//api/name/passcodeLength">&nbsp;&nbsp;passcodeLength</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Length of the user&rsquo;s passcode.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) NSUInteger passcodeLength</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SFSDKAppLockViewConfig.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
 </div>
 						</div>
 						
@@ -895,7 +763,7 @@ length.</p>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2019 Salesforce.com. All rights reserved. Updated: 2019-05-22</p>
+						<p class="copyright">Copyright &copy; 2021 Salesforce.com. All rights reserved. Updated: 2021-07-12</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Categories/NSData+SFHexSupport.html">
+	<File path="Classes/SFUserActivityMonitor.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cat/NSData(SFHexSupport)</TokenIdentifier>
-			<Abstract type="html">Provides hex string conversion support.</Abstract>
-			<DeclaredIn>NSData+SFAdditions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFUserActivityMonitor</TokenIdentifier>
+			<Abstract type="html">Singleton class to monitor the application for user activity, and update SFInactivityTimerCenter when
+a change is detected.</Abstract>
+			<DeclaredIn>SFUserActivityMonitor.h</DeclaredIn>
             
 			
 			<NodeRef refid="147"/>
@@ -13,14 +14,38 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSData/newHexStringFromBytes</TokenIdentifier>
-			<Abstract type="html">Creates a hex string representation of this object&apos;s data.</Abstract>
-			<DeclaredIn>NSData+SFAdditions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFUserActivityMonitor/sharedInstance</TokenIdentifier>
+			<Abstract type="html">Returns the singleton instance of the class.</Abstract>
+			<DeclaredIn>SFUserActivityMonitor.h</DeclaredIn>
 			
-			<Declaration>- (NSString *)newHexStringFromBytes</Declaration>
+			<Declaration>+ (instancetype)sharedInstance</Declaration>
 			
-			<ReturnValue><Abstract type="html">Hex string representation of this object&apos;s data.</Abstract></ReturnValue>
-			<Anchor>//api/name/newHexStringFromBytes</Anchor>
+			
+			<Anchor>//api/name/sharedInstance</Anchor>
+            <NodeRef refid="147"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFUserActivityMonitor/startMonitoring</TokenIdentifier>
+			<Abstract type="html">Starts the application monitoring process.</Abstract>
+			<DeclaredIn>SFUserActivityMonitor.h</DeclaredIn>
+			
+			<Declaration>- (void)startMonitoring</Declaration>
+			
+			
+			<Anchor>//api/name/startMonitoring</Anchor>
+            <NodeRef refid="147"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFUserActivityMonitor/stopMonitoring</TokenIdentifier>
+			<Abstract type="html">Stops the application monitoring process.</Abstract>
+			<DeclaredIn>SFUserActivityMonitor.h</DeclaredIn>
+			
+			<Declaration>- (void)stopMonitoring</Declaration>
+			
+			
+			<Anchor>//api/name/stopMonitoring</Anchor>
             <NodeRef refid="147"/>
 		</Token>
 		

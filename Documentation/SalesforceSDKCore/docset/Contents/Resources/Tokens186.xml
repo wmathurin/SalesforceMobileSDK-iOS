@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKPasscodeDeleteProtocol.html">
+	<File path="Protocols/SFSDKOAuthSessionManaging.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKPasscodeDeleteProtocol</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intf/SFSDKOAuthSessionManaging</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeTextField.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
             
 			
 			<NodeRef refid="186"/>
@@ -13,14 +13,14 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKPasscodeDeleteProtocol/deleteBackward</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKOAuthSessionManaging/createURLSessionWithIdentifier:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeTextField.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>- (void)deleteBackward</Declaration>
+			<Declaration>- (NSURLSession *)createURLSessionWithIdentifier:(nonnull NSString *)identifier</Declaration>
 			
 			
-			<Anchor>//api/name/deleteBackward</Anchor>
+			<Anchor>//api/name/createURLSessionWithIdentifier:</Anchor>
             <NodeRef refid="186"/>
 		</Token>
 		

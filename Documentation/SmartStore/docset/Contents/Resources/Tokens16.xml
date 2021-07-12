@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSmartStoreFullTextSearchSpeedTests.html">
+	<File path="Classes/SFSmartStoreUpgrade.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSmartStoreFullTextSearchSpeedTests</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSmartStoreFullTextSearchSpeedTests.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSmartStoreUpgrade</TokenIdentifier>
+			<Abstract type="html">Used internally for upgrading SmartStore.</Abstract>
+			<DeclaredIn>SFSmartStoreUpgrade.h</DeclaredIn>
             
 			
 			<NodeRef refid="16"/>
 		</Token>
 		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSmartStoreUpgrade/updateStoreLocations</TokenIdentifier>
+			<Abstract type="html">Updates any existing stores from their legacy location to their new user-specific location.</Abstract>
+			<DeclaredIn>SFSmartStoreUpgrade.h</DeclaredIn>
+			
+			<Declaration>+ (void)updateStoreLocations</Declaration>
+			
+			
+			<Anchor>//api/name/updateStoreLocations</Anchor>
+            <NodeRef refid="16"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSmartStoreUpgrade/updateEncryptionSalt</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSmartStoreUpgrade.h</DeclaredIn>
+			
+			<Declaration>+ (void)updateEncryptionSalt</Declaration>
+			
+			
+			<Anchor>//api/name/updateEncryptionSalt</Anchor>
+            <NodeRef refid="16"/>
+		</Token>
 		
         
         

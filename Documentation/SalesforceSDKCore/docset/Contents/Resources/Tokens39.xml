@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFOAuthKeychainCredentials.html">
+	<File path="Classes/SFOAuthOrgAuthConfiguration.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthKeychainCredentials</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthOrgAuthConfiguration</TokenIdentifier>
+			<Abstract type="html">Data class representing the org authentication configuration.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
             
 			
 			<NodeRef refid="39"/>
@@ -13,170 +13,163 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyMacForService:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setUseNativeBrowserForAuth:</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK whether to use the native browser for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)keyMacForService:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
 			
 			
-			<Anchor>//api/name/keyMacForService:</Anchor>
+			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyVendorIdForService:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/useNativeBrowserForAuth</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK whether to use the native browser for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)keyVendorIdForService:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
 			
 			
-			<Anchor>//api/name/keyVendorIdForService:</Anchor>
+			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyBaseAppIdForService:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/useNativeBrowserForAuth</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK whether to use the native browser for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)keyBaseAppIdForService:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
 			
 			
-			<Anchor>//api/name/keyBaseAppIdForService:</Anchor>
+			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyStoreKeyForService:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setSsoUrls:</TokenIdentifier>
+			<Abstract type="html">List of configured SSO URLs.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (SFEncryptionKey *)keyStoreKeyForService:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
 			
 			
-			<Anchor>//api/name/keyStoreKeyForService:</Anchor>
+			<Anchor>//api/name/ssoUrls</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyWithSeed:service:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/ssoUrls</TokenIdentifier>
+			<Abstract type="html">List of configured SSO URLs.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)keyWithSeed:(NSString *)seed service:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
 			
 			
-			<Anchor>//api/name/keyWithSeed:service:</Anchor>
+			<Anchor>//api/name/ssoUrls</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/refreshTokenWithKey:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/ssoUrls</TokenIdentifier>
+			<Abstract type="html">List of configured SSO URLs.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)refreshTokenWithKey:(NSData *)key</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
 			
 			
-			<Anchor>//api/name/refreshTokenWithKey:</Anchor>
+			<Anchor>//api/name/ssoUrls</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/refreshTokenWithSFEncryptionKey:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setLoginPageUrl:</TokenIdentifier>
+			<Abstract type="html">Configured login page URL.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)refreshTokenWithSFEncryptionKey:(SFEncryptionKey *)encryptionKey</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
 			
 			
-			<Anchor>//api/name/refreshTokenWithSFEncryptionKey:</Anchor>
+			<Anchor>//api/name/loginPageUrl</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/setRefreshToken:withSFEncryptionKey:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/loginPageUrl</TokenIdentifier>
+			<Abstract type="html">Configured login page URL.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (void)setRefreshToken:(nullable NSString *)token withSFEncryptionKey:(SFEncryptionKey *)key</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
 			
 			
-			<Anchor>//api/name/setRefreshToken:withSFEncryptionKey:</Anchor>
+			<Anchor>//api/name/loginPageUrl</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/accessTokenWithKey:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/loginPageUrl</TokenIdentifier>
+			<Abstract type="html">Configured login page URL.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)accessTokenWithKey:(NSData *)key</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
 			
 			
-			<Anchor>//api/name/accessTokenWithKey:</Anchor>
+			<Anchor>//api/name/loginPageUrl</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/accessTokenWithSFEncryptionKey:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setAuthConfigDict:</TokenIdentifier>
+			<Abstract type="html">Raw dictionary data representing the org auth configuration.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)accessTokenWithSFEncryptionKey:(SFEncryptionKey *)encryptionKey</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
 			
 			
-			<Anchor>//api/name/accessTokenWithSFEncryptionKey:</Anchor>
+			<Anchor>//api/name/authConfigDict</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/setAccessToken:withSFEncryptionKey:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/authConfigDict</TokenIdentifier>
+			<Abstract type="html">Raw dictionary data representing the org auth configuration.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (void)setAccessToken:(nullable NSString *)token withSFEncryptionKey:(SFEncryptionKey *)key</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
 			
 			
-			<Anchor>//api/name/setAccessToken:withSFEncryptionKey:</Anchor>
+			<Anchor>//api/name/authConfigDict</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/updateTokenEncryption</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/authConfigDict</TokenIdentifier>
+			<Abstract type="html">Raw dictionary data representing the org auth configuration.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (void)updateTokenEncryption</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
 			
 			
-			<Anchor>//api/name/updateTokenEncryption</Anchor>
+			<Anchor>//api/name/authConfigDict</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/setAccessToken:withKey:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/initWithConfigDict:</TokenIdentifier>
+			<Abstract type="html">Designated initializer.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (void)setAccessToken:(NSString *)token withKey:(NSData *)key</Declaration>
+			<Declaration>- (nonnull id)initWithConfigDict:(nullable NSDictionary *)authConfigDict</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>authConfigDict</Name>
+					<Abstract type="html">NSDictionary containing the org auth configuration.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/setAccessToken:withKey:</Anchor>
-            <NodeRef refid="39"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/setRefreshToken:withKey:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
-			
-			<Declaration>- (void)setRefreshToken:(NSString *)token withKey:(NSData *)key</Declaration>
-			
-			
-			<Anchor>//api/name/setRefreshToken:withKey:</Anchor>
+			<Anchor>//api/name/initWithConfigDict:</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		

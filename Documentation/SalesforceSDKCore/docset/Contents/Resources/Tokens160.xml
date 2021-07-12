@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Categories/UIColor+SFSDKPasscodeView.html">
+	<File path="Categories/NSData+SFSDKUtilsInternal.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cat/UIColor(SFSDKPasscodeView)</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>UIColor+SFSDKPasscodeView.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cat/NSData(SFSDKUtilsInternal)</TokenIdentifier>
+			<Abstract type="html">Internal definitions for the Mobile SDK NSData utilities.</Abstract>
+			<DeclaredIn>NSData+SFSDKUtils_Internal.h</DeclaredIn>
             
 			
 			<NodeRef refid="160"/>
@@ -13,38 +13,19 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/UIColor/backgroundColor</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>UIColor+SFSDKPasscodeView.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/NSData/replaceBase64CharsForBase64UrlString:</TokenIdentifier>
+			<Abstract type="html">Replace the base64 characters that are invalid in a base64url string.</Abstract>
+			<DeclaredIn>NSData+SFSDKUtils_Internal.h</DeclaredIn>
 			
-			<Declaration>+ (UIColor *)backgroundColor</Declaration>
-			
-			
-			<Anchor>//api/name/backgroundColor</Anchor>
-            <NodeRef refid="160"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/UIColor/textColor</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>UIColor+SFSDKPasscodeView.h</DeclaredIn>
-			
-			<Declaration>+ (UIColor *)textColor</Declaration>
-			
-			
-			<Anchor>//api/name/textColor</Anchor>
-            <NodeRef refid="160"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/UIColor/borderColor</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>UIColor+SFSDKPasscodeView.h</DeclaredIn>
-			
-			<Declaration>+ (UIColor *)borderColor</Declaration>
-			
-			
-			<Anchor>//api/name/borderColor</Anchor>
+			<Declaration>+ (NSString *)replaceBase64CharsForBase64UrlString:(NSString *)base64String</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>base64String</Name>
+					<Abstract type="html">The input string with characters to replace.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The base64 string with the URL chars replaced (i.e. the base64url string).</Abstract></ReturnValue>
+			<Anchor>//api/name/replaceBase64CharsForBase64UrlString:</Anchor>
             <NodeRef refid="160"/>
 		</Token>
 		
