@@ -200,8 +200,10 @@ static CFTypeRef sKeychainAccessibleAttribute;
                     [query setObject:[keychainItem objectForKey:(id)kSecAttrAccount] forKey:(id)kSecAttrAccount];
                 }
                 
-                if (!keychainItem[(id)kSecValueData])
+                if (!keychainItem[(id)kSecValueData]) {
+                    SecItemDelete((CFDictionaryRef)query);
                     continue;
+                }
                 
                 NSDictionary *updatedKeychainItem = @{ (id)kSecAttrAccessible : (id)sKeychainAccessibleAttribute, (id)kSecValueData : keychainItem[(id)kSecValueData] };
                 
