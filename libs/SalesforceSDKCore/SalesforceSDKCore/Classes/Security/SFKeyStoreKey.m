@@ -23,7 +23,8 @@
  */
 
 #import "SFKeyStoreKey.h"
-#import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+#import "SFKeychainItemWrapper.h"
+
 // NSCoding constants
 static NSString * const kKeyStoreKeyDataArchiveKey = @"com.salesforce.keystore.keyStoreKeyDataArchive";
 
@@ -70,8 +71,8 @@ static NSString * const kKeyStoreKeyDataArchiveKey = @"com.salesforce.keystore.k
 {
     
     SFKeyStoreKey* keyStoreKey;
-    SFSDKKeychainResult *result = [SFSDKKeychainHelper createIfNotPresentWithService:keychainId account:nil];
-    NSData *keyStoreKeyData = result.data;
+    SFKeychainItemWrapper *keychainItem = [SFKeychainItemWrapper itemWithIdentifier:keychainId account:nil];
+    NSData *keyStoreKeyData = [keychainItem valueData];
 
     if (keyStoreKeyData == nil) {
         return nil;
@@ -92,14 +93,11 @@ static NSString * const kKeyStoreKeyDataArchiveKey = @"com.salesforce.keystore.k
 
 - (OSStatus) toKeyChain:(NSString*)keychainId archiverKey:(NSString*)archiverKey
 {
+    SFKeychainItemWrapper *keychainItem = [SFKeychainItemWrapper itemWithIdentifier:keychainId account:nil];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initRequiringSecureCoding:NO];
     [archiver encodeObject:self forKey:archiverKey];
     [archiver finishEncoding];
-    SFSDKKeychainResult *result = [SFSDKKeychainHelper writeWithService:keychainId data:archiver.encodedData account:nil];
-    if (!result.success) {
-        [SFSDKCoreLogger e:[self class] format:@"Failed to write data for key store key %@  to the keychain: %@", keychainId, result.error];
-    }
-    return result.status;
+    return [keychainItem setValueData:archiver.encodedData];
 }
 
 - (NSData*)encryptData:(NSData *)dataToEncrypt

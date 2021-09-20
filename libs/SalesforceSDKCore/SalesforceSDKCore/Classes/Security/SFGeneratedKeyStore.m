@@ -24,7 +24,7 @@
 
 #import "SFGeneratedKeyStore.h"
 #import "SFKeyStore+Internal.h"
-#import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+#import "SFKeychainItemWrapper.h"
 
 // Keychain and NSCoding constants
 static NSString * const kGeneratedKeyStoreKeychainIdentifier = @"com.salesforce.keystore.generatedKeystoreKeychainId";
@@ -102,9 +102,10 @@ NSString * const kGeneratedKeyLabelSuffix = @"Generated";
     
         // Store the key store key in the keychain.
         if (keyStoreKey == nil) {
-            SFSDKKeychainResult *result = [SFSDKKeychainHelper createIfNotPresentWithService:self.encryptionKeyKeychainIdentifier account:nil];
-            if (!result.success) {
-                [SFSDKCoreLogger e:[self class] format:@"Error removing key store key %@ from the keychain.", self.encryptionKeyKeychainIdentifier];
+            SFKeychainItemWrapper *keychainItem = [SFKeychainItemWrapper itemWithIdentifier:self.encryptionKeyKeychainIdentifier account:nil];
+            BOOL resetItemResult = [keychainItem resetKeychainItem];
+            if (!resetItemResult) {
+                [SFSDKCoreLogger e:[self class] format:@"Error removing key store key from the keychain."];
             }
         } else {
             OSStatus saveKeyResult = [keyStoreKey toKeyChain:self.encryptionKeyKeychainIdentifier archiverKey:self.encryptionKeyDataArchiveKey];

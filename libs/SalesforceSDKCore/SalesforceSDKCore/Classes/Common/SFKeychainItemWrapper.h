@@ -48,7 +48,6 @@
 #import <Foundation/Foundation.h>
 
 // Keychain item exception defines
-SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0")
 typedef NS_ENUM(NSUInteger, SFKeychainItemExceptionErrorCode) {
     SFKeychainItemExceptionKeychainInaccessible = 1,
 };
@@ -59,25 +58,24 @@ extern NSString * _Nullable const kSFKeychainItemExceptionErrorCodeKey SFSDK_DEP
 /**
  This class is a wrapper class used to interact with the keychain.
  */
-SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0, use SFSDKKeychainHelper instead.")
 API_UNAVAILABLE(macCatalyst)
 @interface SFKeychainItemWrapper : NSObject 
 
 /**
  Returns the accessible attribute used to store this keychain item.
  */
-@property (nonatomic, readonly, nullable) CFTypeRef accessibleAttribute SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
+@property (nonatomic, readonly, nullable) CFTypeRef accessibleAttribute;
 
 /**
  @return Indicates whether keychain access errors cause a fatal exception.  Default is YES.
  */
-+ (BOOL)keychainAccessErrorsAreFatal SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0.");
++ (BOOL)keychainAccessErrorsAreFatal;
 
 /**
  Sets whether or not keychain access errors cause a fatal exception.
  @param errorsAreFatal Whether keychain access errors should be fatal.
  */
-+ (void)setKeychainAccessErrorsAreFatal:(BOOL)errorsAreFatal SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
++ (void)setKeychainAccessErrorsAreFatal:(BOOL)errorsAreFatal;
 
 /**
  Sets the accessible attribute used by this keychain item wrapper class.
@@ -85,7 +83,7 @@ API_UNAVAILABLE(macCatalyst)
  an update of all the items in the keychain.
  @param accessibleAttribute The accessible attribute for this keychain item wrapper class.
  */
-+ (void)setAccessibleAttribute:(nullable CFTypeRef)accessibleAttribute SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
++ (void)setAccessibleAttribute:(nullable CFTypeRef)accessibleAttribute;
 
 /**
  Factory method to hand out an SFKeychainItemWrapper object with the given identifier and account.
@@ -94,44 +92,44 @@ API_UNAVAILABLE(macCatalyst)
  @param identifier Identifier to use for the SFKeychainItemWrapper object.
  @param account Account to use for the SFKeychainItemWrapper object.
  */
-+ (nullable SFKeychainItemWrapper *)itemWithIdentifier:(nullable NSString *)identifier account:(nullable NSString *)account SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
++ (nullable SFKeychainItemWrapper *)itemWithIdentifier:(nullable NSString *)identifier account:(nullable NSString *)account;
 
 /**
  Reset the keychain item.
  */
-- (BOOL)resetKeychainItem SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
+- (BOOL)resetKeychainItem;
 
 /**
  Store arbitrary data to the keychain for the service (identifier) and account specified in the initializer.
  @param data Arbitrary data to store in the keychain. Can be `nil`.
  @return The status of the keychain update request.
  */
-- (OSStatus)setValueData:(nullable NSData *)data SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
+- (OSStatus)setValueData:(nullable NSData *)data;
 
 /**
  Read arbitrary string from the keychain for the service (identifier) and account specified in the initializer.
  @return Arbitrary string read from the keychain. Can be `nil`.
  */
-- (nullable NSString *)valueString SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
+- (nullable NSString *)valueString;
 
 /**
  Store arbitrary string to the keychain for the service (identifier) and account specified in the initializer.
  @param string Arbitrary string to store in the keychain. Can be `nil`.
  @return The status of the keychain update request.
  */
-- (OSStatus)setValueString:(nullable NSString *)string SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
+- (OSStatus)setValueString:(nullable NSString *)string;
 
 /**
  Read arbitrary data from the keychain for the service (identifier) and account specified in the initializer.
  @return Arbitrary data read from the keychain. Can be `nil`.
  */
-- (nullable NSData *)valueData SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
+- (nullable NSData *)valueData;
 
 /**
  Return a string value for an `OSStatus` error code.
  @param errorCode The code to stringify.
  @return The string version of the error code.
  */
-+ (nullable NSString *)keychainErrorCodeString:(OSStatus)errorCode SFSDK_DEPRECATED("9.1", "10.0", "Will be removed in Mobile SDK 10.0. Use SFKeychainHelper instead.");
++ (nullable NSString *)keychainErrorCodeString:(OSStatus)errorCode;
 
 @end

@@ -26,11 +26,11 @@
 #import "SFOAuthCredentials+Internal.h"
 #import "SFSDKCryptoUtils.h"
 #import "SFKeyStoreManager.h"
+#import "SFKeychainItemWrapper.h"
 #import "SFCrypto.h"
 #import "UIDevice+SFHardware.h"
 #import "NSString+SFAdditions.h"
 #import  <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
-#import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
 NSString * const kSFOAuthEncryptionTypeKey = @"com.salesforce.oauth.creds.encryption.type";
 
 @implementation SFOAuthKeychainCredentials
@@ -78,11 +78,9 @@ NSString * const kSFOAuthEncryptionTypeKey = @"com.salesforce.oauth.creds.encryp
     if (!([self.identifier length] > 0)) {
         @throw SFOAuthInvalidIdentifierException();
     }
-    SFSDKKeychainResult *result = [SFSDKKeychainHelper createIfNotPresentWithService:service account:self.identifier];
-    NSData *tokenData = result.data;
-    if (result.error) {
-        [SFSDKCoreLogger e:[self class] format:@"Could not read %@ from keychain, %@", service, result.error];
-    }
+    
+    SFKeychainItemWrapper *keychainItem = [SFKeychainItemWrapper itemWithIdentifier:service account:self.identifier];
+    NSData *tokenData = [keychainItem valueData];
     return tokenData;
 }
 
@@ -153,20 +151,22 @@ NSString * const kSFOAuthEncryptionTypeKey = @"com.salesforce.oauth.creds.encryp
     if (!([self.identifier length] > 0)) {
         @throw SFOAuthInvalidIdentifierException();
     }
-    SFSDKKeychainResult *result = [SFSDKKeychainHelper createIfNotPresentWithService:service account:self.identifier];
+    SFKeychainItemWrapper *keychainItem = [SFKeychainItemWrapper itemWithIdentifier:service account:self.identifier];
+    BOOL keychainOperationSuccessful;
     if (tokenData != nil) {
-        result = [SFSDKKeychainHelper writeWithService:service data:tokenData account:self.identifier];
-        if (!result.success) {
-            [SFSDKCoreLogger w:[self class] format:@"%@:%@ - Error saving token data to keychain: %@", [self class], NSStringFromSelector(_cmd), result.error];
+        OSStatus result = [keychainItem setValueData:tokenData];
+        keychainOperationSuccessful = (result == errSecSuccess || result == errSecItemNotFound);
+        if (!keychainOperationSuccessful) { // errSecItemNotFound is an expected condition
+            [SFSDKCoreLogger w:[self class] format:@"%@:%@ - Error saving token data to keychain: %@", [self class], NSStringFromSelector(_cmd), [SFKeychainItemWrapper keychainErrorCodeString:result]];
         }
     } else {
-        result = [SFSDKKeychainHelper resetWithService:service account:self.identifier];
-        if (!result.success) {
-            [SFSDKCoreLogger w:[self class] format:@"%@:%@ - Error resetting tokenData in keychain: %@", [self class], NSStringFromSelector(_cmd), result.error];
+        keychainOperationSuccessful = [keychainItem resetKeychainItem];
+        if (!keychainOperationSuccessful) {
+            [SFSDKCoreLogger w:[self class] format:@"%@:%@ - Error resetting keychain data.", [self class], NSStringFromSelector(_cmd)];
         }
     }
     
-    return result.success;
+    return keychainOperationSuccessful;
 }
 
 - (NSData *)keyMacForService:(NSString *)service
