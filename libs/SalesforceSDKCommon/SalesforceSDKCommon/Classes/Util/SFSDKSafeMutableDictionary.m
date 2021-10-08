@@ -90,7 +90,9 @@
 
 - (void)setObject:(id)object forKey:(id<NSCopying>)aKey {
     dispatch_barrier_async(self.queue, ^{
-        self.backingDictionary[aKey] = object;
+        if (aKey) {
+            self.backingDictionary[aKey] = object;
+        }
     });
 }
 
