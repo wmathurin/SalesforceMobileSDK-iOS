@@ -65,6 +65,7 @@ static NSString *const EXPLAIN_ROWS = @"rows";
 @interface SFSmartStore ()
 
 @property (nonatomic, strong) FMDatabaseQueue *storeQueue;
+@property (nonatomic, strong) SFDatabasePool *storePool;
 @property (nonatomic, strong) SFSmartStoreDatabaseManager *dbMgr;
 @property (nonatomic, assign) BOOL isGlobal;
 @property (nonatomic, assign) SFSmartStoreFtsExtension ftsExtension;
