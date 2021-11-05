@@ -1,0 +1,6 @@
+Steps:
+- git clone git://github.com/wmathurin/GRDB.swift
+- git checkout SDKs
+- ./build_for_sdk.sh
+- copy generated GRDB.xcframework here
+

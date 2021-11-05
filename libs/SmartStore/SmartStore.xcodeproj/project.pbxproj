@@ -38,6 +38,7 @@
 		4F883C761C16279F007D4BAE /* SmartStoreSDKManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F883C751C16279F007D4BAE /* SmartStoreSDKManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F883C7B1C1627BD007D4BAE /* SmartStoreSDKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F883C7A1C1627BD007D4BAE /* SmartStoreSDKManager.m */; };
 		4F99B53C1CEA81A6007BC4D2 /* SFSmartStoreLoadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F99B53B1CEA81A6007BC4D2 /* SFSmartStoreLoadTests.m */; };
+		4FAB63AB2734AD4F007ADD84 /* GRDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAB63A12734AD41007ADD84 /* GRDB.xcframework */; };
 		4FAB7D791F8D888400226249 /* userstore.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FAB7D781F8D888400226249 /* userstore.json */; };
 		4FAB7D7E1F8D88C100226249 /* globalstore.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FAB7D7D1F8D88C100226249 /* globalstore.json */; };
 		4FAB7D811F8D8C3C00226249 /* SFSDKStoreConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAB7D801F8D8C3C00226249 /* SFSDKStoreConfigTests.m */; };
@@ -288,6 +289,7 @@
 		4F96FC4D1BFD31EF0022F021 /* SmartStore-Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SmartStore-Common.xcconfig"; path = "Configuration/SmartStore-Common.xcconfig"; sourceTree = "<group>"; };
 		4F96FC501BFD31EF0022F021 /* SmartStore-Test.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SmartStore-Test.xcconfig"; path = "Configuration/SmartStore-Test.xcconfig"; sourceTree = "<group>"; };
 		4F99B53B1CEA81A6007BC4D2 /* SFSmartStoreLoadTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSmartStoreLoadTests.m; sourceTree = "<group>"; };
+		4FAB63A12734AD41007ADD84 /* GRDB.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GRDB.xcframework; path = ../../external/ThirdPartyDependencies/GRDB/GRDB.xcframework; sourceTree = "<group>"; };
 		4FAB7D781F8D888400226249 /* userstore.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = userstore.json; sourceTree = "<group>"; };
 		4FAB7D7D1F8D88C100226249 /* globalstore.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = globalstore.json; sourceTree = "<group>"; };
 		4FAB7D7F1F8D8BB500226249 /* SFSDKStoreConfigTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSDKStoreConfigTests.h; sourceTree = "<group>"; };
@@ -522,6 +524,7 @@
 			isa = PBXGroup;
 			children = (
 				F238E04125B9201F0036E9DB /* CoreServices.framework */,
+				4FAB63A12734AD41007ADD84 /* GRDB.xcframework */,
 				B716A3C5218F6ABA009D407F /* SalesforceSDKCore.xcodeproj */,
 				B716A3B9218F6AB3009D407F /* SalesforceSDKCommon.xcodeproj */,
 				69B2B322261D2C9B00AB86C2 /* SQLCipher.xcframework */,

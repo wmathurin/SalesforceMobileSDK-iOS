@@ -57,6 +57,13 @@
       location = "group:external/ThirdPartyDependencies"
       name = "ThirdPartyDependencies">
       <Group
+         location = "container:"
+         name = "GRDB">
+         <FileRef
+            location = "group:external/ThirdPartyDependencies/GRDB/GRDB.xcframework">
+         </FileRef>
+      </Group>
+      <Group
          location = "group:sqlcipher"
          name = "sqlcipher">
          <FileRef
