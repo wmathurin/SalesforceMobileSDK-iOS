@@ -38,7 +38,6 @@
 		4F883C761C16279F007D4BAE /* SmartStoreSDKManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F883C751C16279F007D4BAE /* SmartStoreSDKManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4F883C7B1C1627BD007D4BAE /* SmartStoreSDKManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F883C7A1C1627BD007D4BAE /* SmartStoreSDKManager.m */; };
 		4F99B53C1CEA81A6007BC4D2 /* SFSmartStoreLoadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F99B53B1CEA81A6007BC4D2 /* SFSmartStoreLoadTests.m */; };
-		4FAB63AB2734AD4F007ADD84 /* GRDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAB63A12734AD41007ADD84 /* GRDB.xcframework */; };
 		4FAB7D791F8D888400226249 /* userstore.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FAB7D781F8D888400226249 /* userstore.json */; };
 		4FAB7D7E1F8D88C100226249 /* globalstore.json in Resources */ = {isa = PBXBuildFile; fileRef = 4FAB7D7D1F8D88C100226249 /* globalstore.json */; };
 		4FAB7D811F8D8C3C00226249 /* SFSDKStoreConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAB7D801F8D8C3C00226249 /* SFSDKStoreConfigTests.m */; };
@@ -1144,6 +1143,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(SRCROOT)/../../external/ThirdPartyDependencies/GRDB/**";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = SmartStore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
