@@ -39,14 +39,14 @@ class DBPool : NSObject {
 
 @objc(SFDBHelper)
 class DBHelper : NSObject {
-    public func openDatabase(path:String, key:String, salt:String?) throws -> DatabasePool? {
+    public func openDatabase(path:String, key:String, salt:String?) throws -> DBPool? {
         var config = Configuration()
         config.prepareDatabase { db in
             // Using sqlcipher 2.x kdf iter because 3.x default (64000) and 4.x default (256000) are too slow
             try db.execute(sql: "PRAGMA cipher_default_kdf_iter = 4000")
             
             if (key.count > 0) {
-                db.usePassphrase(key)
+                try db.usePassphrase(key)
             }
             
             // Migrating and upgrading an existing database in place (preserving data and schema) if necessary
@@ -54,9 +54,9 @@ class DBHelper : NSObject {
             
             if (key.count > 0) {
                 if let salt = salt {
-                    db.execute(sql: "PRAGMA cipher_plaintext_header_size = 32")
-                    db.execute(sql: "PRAGMA cipher_salt = \"x'\(salt)'\"")
-                    db.execute(sql: "PRAGMA journal_mode = WAL")
+                    try db.execute(sql: "PRAGMA cipher_plaintext_header_size = 32")
+                    try db.execute(sql: "PRAGMA cipher_salt = \"x'\(salt)'\"")
+                    try db.execute(sql: "PRAGMA journal_mode = WAL")
                 }
             }
             
@@ -65,8 +65,8 @@ class DBHelper : NSObject {
         }
         
         do {
-            return DbPool(DatabasePool(path, config))
-        } catch (_ : DatabaseError) {
+            return DBPool(dbPool: try DatabasePool(path: path, configuration: config))
+        } catch (_ : _) {
             return nil
         }
     }
