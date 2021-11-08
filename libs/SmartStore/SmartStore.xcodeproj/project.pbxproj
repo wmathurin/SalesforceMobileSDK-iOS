@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4F001EC02739BEE2001E0835 /* GRDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FAB63A12734AD41007ADD84 /* GRDB.xcframework */; };
 		4F06AF0D1C499EB600F70798 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F06AF0C1C499EB600F70798 /* main.m */; };
 		4F06AF101C499EB600F70798 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F06AF0F1C499EB600F70798 /* AppDelegate.m */; };
 		4F06AF131C499EB600F70798 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F06AF121C499EB600F70798 /* ViewController.m */; };
@@ -365,6 +366,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F001EC02739BEE2001E0835 /* GRDB.xcframework in Frameworks */,
 				B716A3D7218F6AD6009D407F /* SalesforceAnalytics.framework in Frameworks */,
 				69B2B323261D2C9B00AB86C2 /* SQLCipher.xcframework in Frameworks */,
 				B716A3D8218F6AD6009D407F /* SalesforceSDKCommon.framework in Frameworks */,
