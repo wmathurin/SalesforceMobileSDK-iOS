@@ -1,6 +1,3 @@
 [submodule "external/fmdb"]
 	path = external/fmdb
 	url = https://github.com/forcedotcom/fmdb
-[submodule "external/grdb"]
-	path = external/grdb
-	url = https://github.com/groue/GRDB.swift
