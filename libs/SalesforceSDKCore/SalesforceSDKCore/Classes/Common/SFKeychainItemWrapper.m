@@ -200,9 +200,6 @@ static CFTypeRef sKeychainAccessibleAttribute;
                     [query setObject:[keychainItem objectForKey:(id)kSecAttrAccount] forKey:(id)kSecAttrAccount];
                 }
                 
-                if (!keychainItem[(id)kSecValueData])
-                    continue;
-                
                 NSDictionary *updatedKeychainItem = @{ (id)kSecAttrAccessible : (id)sKeychainAccessibleAttribute, (id)kSecValueData : keychainItem[(id)kSecValueData] };
                 
                 OSStatus updateItemStatus = SecItemUpdate((CFDictionaryRef)query, (CFDictionaryRef)updatedKeychainItem);
