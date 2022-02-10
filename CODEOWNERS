@@ -1,0 +1,4 @@
+# CODEOWNERS defines who gets automatically added as a PR reviewer when specific files are changed.
+
+#GUSINFO:Mobile Integrations Team,P-One - iOS
+* @mwimmer @tongtong-liu

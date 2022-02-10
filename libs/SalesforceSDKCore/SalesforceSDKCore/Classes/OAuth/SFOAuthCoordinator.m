@@ -242,7 +242,8 @@
 - (BOOL)handleAdvancedAuthenticationResponse:(NSURL *)appUrlResponse {
      self.authInfo = [[SFOAuthInfo alloc] initWithAuthType:SFOAuthTypeAdvancedBrowser];
     NSString *appUrlResponseString = [appUrlResponse absoluteString];
-    if (![[appUrlResponseString lowercaseString] hasPrefix:[self.credentials.redirectUri lowercaseString]]) {
+    BOOL containsCallbackURL = [[appUrlResponseString lowercaseString] hasPrefix:[self.credentials.redirectUri lowercaseString]] || [[appUrlResponseString lowercaseString] hasPrefix:@"https://mobileauthentication.salesforce.com"];
+    if (!containsCallbackURL) {
         [SFSDKCoreLogger i:[self class] format:@"%@ URL does not match redirect URI.", NSStringFromSelector(_cmd)];
         return NO;
     }
