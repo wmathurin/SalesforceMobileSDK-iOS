@@ -363,6 +363,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     SFSDKOAuthTokenEndpointRequest *request = [[SFSDKOAuthTokenEndpointRequest alloc] init];
     request.additionalOAuthParameterKeys = self.additionalOAuthParameterKeys;
     request.additionalTokenRefreshParams = self.additionalTokenRefreshParams;
+    request.userAgentForAuth = self.userAgentForAuth;
     request.clientID = credentials.clientId;
     request.refreshToken = credentials.refreshToken;
     request.redirectURI = credentials.redirectUri;
@@ -459,6 +460,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     request.spAppLoginFlowSelectionAction = self.idpLoginFlowSelectionAction;
     request.idpAppURIScheme = self.idpAppURIScheme;
     request.scene = [[SFSDKWindowManager sharedManager] defaultScene];
+    request.userAgentForAuth = self.userAgentForAuth;
     return request;
 }
 

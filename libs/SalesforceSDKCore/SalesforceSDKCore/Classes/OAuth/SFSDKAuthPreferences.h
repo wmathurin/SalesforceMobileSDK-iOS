@@ -42,6 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, strong) NSDictionary * additionalTokenRefreshParams;
 
+/** User Agent for Auth
+ */
+@property (nonatomic, copy) NSString *userAgentForAuth;
+
 /** The host that will be used for login.
  */
 @property (nonatomic, strong, nullable) NSString *loginHost;

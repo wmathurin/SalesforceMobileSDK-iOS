@@ -266,6 +266,7 @@ NS_SWIFT_NAME(UserAccountManager)
  */
 @property (nonatomic, strong) NSDictionary<NSString *,id> * additionalTokenRefreshParams  NS_SWIFT_NAME(additionalTokenRefreshParameters);
 
+
 /** The host that will be used for login.
  */
 @property (nonatomic, strong) NSString *loginHost;
@@ -293,6 +294,10 @@ NS_SWIFT_NAME(UserAccountManager)
  The Branded Login path configured for this application.
  */
 @property (nonatomic, nullable, copy) NSString *brandLoginPath;
+
+/** User Agent for Auth
+ */
+@property (nonatomic, copy) NSString *userAgentForAuth;
 
 /**
  The OAuth scopes associated with the app.
