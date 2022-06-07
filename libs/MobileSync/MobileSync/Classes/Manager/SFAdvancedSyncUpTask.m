@@ -24,6 +24,7 @@
 
 #import "SFAdvancedSyncUpTask.h"
 #import "SFAdvancedSyncUpTarget.h"
+#import <MobileSync/MobileSync-Swift.h>
 
 @implementation SFAdvancedSyncUpTask
 
@@ -32,25 +33,39 @@
 }
 
 - (void)syncUp:(SFSyncState*)sync recordIds:(NSArray*)recordIds {
-    [self syncUpMultipleEntries:sync recordIds:recordIds index:0 batch:[NSMutableArray new]];
+    __weak typeof(self) weakSelf = self;
+    [SFAdvancedSyncUpTaskHelper syncUpWithSyncManager:self.syncManager sync:sync dirtyRecordIds:recordIds onUpdate:^(SFSyncState * _Nonnull sync, NSUInteger countSynched) {
+        [weakSelf updateSync:sync countSynched:countSynched];
+    } onFail:^(SFSyncState * _Nonnull sync, NSString * _Nonnull failureMessage, NSError * _Nonnull error) {
+        [weakSelf failSync:sync failureMessage:failureMessage error:error];
+    }];
+}
+
+/*
+
+- (void)syncUp:(SFSyncState*)sync recordIds:(NSArray*)recordIds {
+    SFSyncUpTarget *target = (SFSyncUpTarget *)sync.target;
+    NSString* soupName = sync.soupName;
+    NSArray<NSDictionary*>* dirtyRecords = [target getFromLocalStore:self.syncManager soupName:soupName storeId:recordIds];
+    [self syncUpMultipleEntries:sync records:dirtyRecords index:0 batch:[NSMutableArray new]];
 }
 
 - (void)syncUpMultipleEntries:(SFSyncState*)sync
-                    recordIds:(NSArray*)recordIds
+                      records:(NSArray<NSDictionary*>*)records
                         index:(NSUInteger)i
                         batch:(NSMutableArray*)batch {
 
     SFSyncStateMergeMode mergeMode = sync.mergeMode;
     SFSyncUpTarget *target = (SFSyncUpTarget *)sync.target;
     NSString* soupName = sync.soupName;
-    sync.totalSize = recordIds.count;
+    sync.totalSize = records.count;
     [self updateSync:sync countSynched:i];
     
     if ([sync isDone] || [self shouldStop]) {
         return;
     }
 
-    NSMutableDictionary* record = [[target getFromLocalStore:self.syncManager soupName:soupName storeId:recordIds[i]] mutableCopy];
+    NSMutableDictionary* record = [records[i] mutableCopy];
     [SFSDKMobileSyncLogger d:[self class] format:@"syncUpMultipleEntries:%@", record];
     
     if (mergeMode == SFSyncStateMergeModeLeaveIfChanged && ![target isLocallyCreated:record]) {
@@ -124,4 +139,5 @@
                         failBlock:failBlock];
 }
 
+*/
 @end

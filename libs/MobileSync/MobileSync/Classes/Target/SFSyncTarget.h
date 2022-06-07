@@ -118,6 +118,14 @@ extern NSString * const kSyncTargetLastError;
 - (NSDictionary*) getFromLocalStore:(SFMobileSyncSyncManager *)syncManager soupName:(NSString*)soupName storeId:(NSNumber*)storeId;
 
 /**
+ * @param syncManager The sync manager
+ * @param soupName The soup
+ * @param storeIds The soup entry ids
+ * @return Record from local store by storeId
+ */
+- (NSArray<NSDictionary*>*) getFromLocalStore:(SFMobileSyncSyncManager *)syncManager soupName:(NSString*)soupName storeIds:(NSArray<NSNumber*>*)storeIds;
+
+/**
  * Delete record from local store
  * @param syncManager The sync manager
  * @param soupName The soup

@@ -54,6 +54,7 @@
 		4F5BBBDC235F734F00E6D619 /* MobileSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5BBBDB235F734F00E6D619 /* MobileSync.swift */; };
 		4F9079811A82EDF600E32659 /* SFSyncUpdateCallbackQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9079801A82EDF600E32659 /* SFSyncUpdateCallbackQueue.m */; };
 		4F9732D61A816C2D006E2A86 /* SyncManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F9732D51A816C2D006E2A86 /* SyncManagerTests.m */; };
+		4F9E9393284FF3EB00E1F310 /* AdvancedSyncUpTaskHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9E9392284FF3EB00E1F310 /* AdvancedSyncUpTaskHelper.swift */; };
 		4FA9C0CB22A5D0A70058D179 /* SFMobileSyncSyncManager+SFSyncTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FA9C0BC22A5D0720058D179 /* SFMobileSyncSyncManager+SFSyncTask.h */; };
 		4FAA9B4F22545AEF0006810D /* SFSyncTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FAA9B4E22545AEF0006810D /* SFSyncTask.h */; };
 		4FAA9B5F22545B630006810D /* SFSyncTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA9B5E22545B630006810D /* SFSyncTask.m */; };
@@ -351,6 +352,7 @@
 		4F9079801A82EDF600E32659 /* SFSyncUpdateCallbackQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFSyncUpdateCallbackQueue.m; sourceTree = "<group>"; };
 		4F9079821A82EE5100E32659 /* SFSyncUpdateCallbackQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFSyncUpdateCallbackQueue.h; sourceTree = "<group>"; };
 		4F9732D51A816C2D006E2A86 /* SyncManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncManagerTests.m; sourceTree = "<group>"; };
+		4F9E9392284FF3EB00E1F310 /* AdvancedSyncUpTaskHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSyncUpTaskHelper.swift; sourceTree = "<group>"; };
 		4FA9C0BC22A5D0720058D179 /* SFMobileSyncSyncManager+SFSyncTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SFMobileSyncSyncManager+SFSyncTask.h"; path = "Manager/SFMobileSyncSyncManager+SFSyncTask.h"; sourceTree = "<group>"; };
 		4FAA9B4E22545AEF0006810D /* SFSyncTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SFSyncTask.h; path = Manager/SFSyncTask.h; sourceTree = "<group>"; };
 		4FAA9B5E22545B630006810D /* SFSyncTask.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SFSyncTask.m; path = Manager/SFSyncTask.m; sourceTree = "<group>"; };
@@ -792,6 +794,7 @@
 				4FAA9B6C225461910006810D /* SFAdvancedSyncUpTask.m */,
 				4FAA9B672254609B0006810D /* SFCleanSyncGhostsTask.h */,
 				4FAA9B6A225461910006810D /* SFCleanSyncGhostsTask.m */,
+				4F9E9392284FF3EB00E1F310 /* AdvancedSyncUpTaskHelper.swift */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -1223,6 +1226,7 @@
 				4FF85989283C517A0069B189 /* CompositeRequestHelper.swift in Sources */,
 				4FAA9B6F225461910006810D /* SFSyncUpTask.m in Sources */,
 				4F5BBBDC235F734F00E6D619 /* MobileSync.swift in Sources */,
+				4F9E9393284FF3EB00E1F310 /* AdvancedSyncUpTaskHelper.swift in Sources */,
 				CE01BB1020B759D3008E91B6 /* SFMetadataSyncManager.m in Sources */,
 				4FAA9B6D225461910006810D /* SFSyncDownTask.m in Sources */,
 				CE98A682209F698400507927 /* SFLayoutSyncDownTarget.m in Sources */,
