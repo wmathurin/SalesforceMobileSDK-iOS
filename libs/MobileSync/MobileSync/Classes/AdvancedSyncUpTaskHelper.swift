@@ -40,63 +40,69 @@ class AdvancedSyncUpTaskHelper:NSObject {
                        onUpdate: OnSyncUpUpdateCallback,
                        onFail: OnSyncUpFailCallback
     ) {
-/*
-
-        final String soupName = sync.getSoupName();
-        final SyncUpTarget target = (SyncUpTarget) sync.getTarget();
-        final SyncOptions options = sync.getOptions();
-        int totalSize = dirtyRecordIds.size();
-        int maxBatchSize = ((AdvancedSyncUpTarget) target).getMaxBatchSize();
-        List<JSONObject> batch = new ArrayList<>();
-
-        updateSync(sync, SyncState.Status.RUNNING, 0, callback);
-        List<JSONObject> dirtyRecords = target.getFromLocalStore(syncManager, soupName, dirtyRecordIds);
-
-        // Figuring out what records need to be synced up based on merge mode and last mod date on server
-        Map<String, Boolean> recordIdToShouldSyncUp = shouldSyncUpRecords(syncManager, target, dirtyRecords, options);
-
-        // Syncing up records
-        for (int i=0; i<totalSize; i++) {
-            checkIfStopRequested();
-
-            JSONObject record = dirtyRecords.get(i);
-            String recordId = record.getString(SmartStore.SOUP_ENTRY_ID);
-
-            if (Boolean.TRUE.equals(recordIdToShouldSyncUp.get(recordId))) {
-                batch.add(record);
-            }
-
-            // Process batch if max batch size reached or at the end of dirtyRecordIds
-            if (batch.size() == maxBatchSize || i == totalSize - 1) {
-                ((AdvancedSyncUpTarget) target).syncUpRecords(syncManager, batch, options.getFieldlist(), options.getMergeMode(), sync.getSoupName());
-                batch.clear();
-            }
-
-            // Updating status
-            int progress = (i + 1) * 100 / totalSize;
-            if (progress < 100) {
-                updateSync(sync, SyncState.Status.RUNNING, progress, callback);
-            }
- 
         
-*/
+//        final String soupName = sync.getSoupName();
+//        final SyncUpTarget target = (SyncUpTarget) sync.getTarget();
+//        final SyncOptions options = sync.getOptions();
+
+        let totalSize = dirtyRecordIds.count
+        let maxBatchSize = (sync.target as! AdvancedSyncUpTarget).maxBatchSize
+        var batch = Array<Dictionary<AnyHashable, Any>>()
+        
+        onUpdate(sync, 0)
+        let dirtyRecords = sync.target.getFromLocalStore(syncManager,
+                                                         soupName: sync.soupName,
+                                                         storeIds: dirtyRecordIds)
+        
+        // Figuring out what records need to be synced up based on merge mode and last mod date on server
+        let recordIdToShouldSyncUp = shouldSyncUpRecords(syncManager: syncManager,
+                                                         target: sync.target,
+                                                         records: dirtyRecords,
+                                                         options:sync.options)
+        
+        // Syncing up records
+        for i in 0...totalSize {
+//            checkIfStopRequested();
+            let record = dirtyRecords[i]
+            if let recordId = record[SmartStore.soupEntryId] as? String {
+
+                if (recordIdToShouldSyncUp[recordId] == true) {
+                    batch.append(record)
+                }
+               
+                // Process batch if max batch size reached or at the end of dirtyRecordIds
+    //            if (batch.size() == maxBatchSize || i == totalSize - 1) {
+    //                ((AdvancedSyncUpTarget) target).syncUpRecords(syncManager, batch, options.getFieldlist(), options.getMergeMode(), sync.getSoupName());
+    //                batch.clear();
+    //            }
+    //
+    //            // Updating status
+    //            int progress = (i + 1) * 100 / totalSize;
+    //            if (progress < 100) {
+    //                updateSync(sync, SyncState.Status.RUNNING, progress, callback);
+    //            }
+            }
+        }
     }
     
-/*
- protected Map<String, Boolean> shouldSyncUpRecords(SyncManager syncManager, SyncUpTarget target, List<JSONObject> records, SyncOptions options) throws IOException, JSONException {
-     Map<String, Boolean> recordIdToShouldSyncUp = new HashMap<>();
-
-     if (options.getMergeMode() == MergeMode.OVERWRITE) {
-         for (JSONObject record : records) {
-             String recordId = record.getString(SmartStore.SOUP_ENTRY_ID);
-             recordIdToShouldSyncUp.put(recordId, true);
-         }
-     } else {
-         recordIdToShouldSyncUp = target.areNewerThanServer(syncManager, records);
-     }
-
-     return recordIdToShouldSyncUp;
- }
- */
-    
+    @objc
+    static func shouldSyncUpRecords(syncManager:SyncManager,
+                                    target:SyncTarget,
+                                    records:Array<Dictionary<AnyHashable, Any>>,
+                                    options:SyncOptions
+    ) -> Dictionary<String, Bool> {
+        
+        var recordIdToShouldSyncUp = Dictionary<String, Bool>()
+        
+        if (options.mergeMode == .overwrite) {
+            for record in records {
+                if let recordId = record[SmartStore.soupEntryId] as? String {
+                    recordIdToShouldSyncUp[recordId] = true
+                }
+            }
+        } else {
+//            recordIdToShouldSyncUp = target.areNewerThanServer(syncManager, records);
+        }
+        return recordIdToShouldSyncUp
+    }
 }
