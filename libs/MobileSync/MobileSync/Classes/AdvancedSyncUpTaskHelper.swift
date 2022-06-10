@@ -60,6 +60,8 @@ class AdvancedSyncUpTaskHelper:NSObject {
                                                          records: dirtyRecords,
                                                          options:sync.options)
         
+        let group = DispatchGroup()
+        
         // Syncing up records
         for i in 0...totalSize {
 //            checkIfStopRequested();
@@ -71,6 +73,16 @@ class AdvancedSyncUpTaskHelper:NSObject {
                 }
                
                 // Process batch if max batch size reached or at the end of dirtyRecordIds
+                if (batch.count == maxBatchSize || i == totalSize - 1) {
+                    group.enter()
+                    (sync.target as! AdvancedSyncUpTarget).syncUpRecords(syncManager, records: batch, fieldlist: options.fieldlist, mergeMode: options.mergeMode, syncSoupName: sync.soupName) { <#[AnyHashable : Any]?#> in
+                        
+                    } fail: { <#Error#> in
+                        <#code#>
+                    }
+
+                }
+                
     //            if (batch.size() == maxBatchSize || i == totalSize - 1) {
     //                ((AdvancedSyncUpTarget) target).syncUpRecords(syncManager, batch, options.getFieldlist(), options.getMergeMode(), sync.getSoupName());
     //                batch.clear();
