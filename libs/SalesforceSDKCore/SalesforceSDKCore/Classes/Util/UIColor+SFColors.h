@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (nullable UIColor *)colorFromHexValue:(NSString *)hexString;
 
++ (UIColor *)colorForLightStyle:(UIColor *)lightStyleColor darkStyle:(UIColor *)darkStyleColor;
+
 /** Returns a CSS hex color representation
  of this color
  */
@@ -52,11 +54,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, readonly) UIColor *salesforceAltBackgroundColor;
 @property (class, nonatomic, readonly) UIColor *salesforceAlt2BackgroundColor;
 @property (class, nonatomic, readonly) UIColor *salesforceTableCellBackgroundColor;
-@property (class, nonatomic, readonly) UIColor *passcodeViewBackgroundColor;
-@property (class, nonatomic, readonly) UIColor *passcodeViewSecondaryBackgroundColor;
-@property (class, nonatomic, readonly) UIColor *passcodeViewTextColor;
-@property (class, nonatomic, readonly) UIColor *passcodeViewBorderColor;
-@property (class, nonatomic, readonly) UIColor *passcodeViewNavBarColor;
 
 @end
 

@@ -57,8 +57,7 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
 
 #pragma mark - Initialization
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     if (self) {
 #if TARGET_IPHONE_SIMULATOR
@@ -66,7 +65,6 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
 #else
         self.isSimulator = NO;
 #endif
-        _encryptionEnabled = NO;
         // Queue for requests
         _queue = [[NSOperationQueue alloc] init];
         
@@ -85,8 +83,7 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
     return self;
 }
 
-+ (SFPushNotificationManager *) sharedInstance
-{
++ (SFPushNotificationManager *) sharedInstance {
     static dispatch_once_t pred;
     static SFPushNotificationManager *mgr = nil;
     dispatch_once(&pred, ^{
@@ -97,8 +94,7 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
 
 #pragma mark - APNS registration
 
-- (void)registerForRemoteNotifications
-{
+- (void)registerForRemoteNotifications {
     if (self.isSimulator)  {  // remote notifications are not supported in the simulator
         [SFSDKCoreLogger i:[self class] format:@"Skipping push notification registration with Apple because push isn't supported on the simulator"];
         return;
@@ -109,8 +105,7 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
     [[SFApplicationHelper sharedApplication] performSelector:@selector(registerForRemoteNotifications)];
 }
 
-- (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceTokenData
-{
+- (void)didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceTokenData {
     [SFSDKCoreLogger i:[self class] format:@"Registration with Apple for remote push notifications succeeded"];
     _deviceToken = [NSString stringWithHexData:deviceTokenData];
     [[SFPreferences currentUserLevelPreferences] setObject:_deviceToken forKey:kSFDeviceToken];
@@ -118,14 +113,17 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
 
 #pragma mark - Salesforce registration
 
-- (BOOL)registerSalesforceNotificationsWithCompletionBlock:(void (^)(void))completionBlock failBlock:(nullable void (^)(void))failBlock
-{
+- (BOOL)registerSalesforceNotificationsWithCompletionBlock:(void (^)(void))completionBlock failBlock:(nullable void (^)(void))failBlock {
+    return [self registerSalesforceNotificationsWithCompletionBlock:[SFUserAccountManager  sharedInstance].currentUser completionBlock:completionBlock failBlock:failBlock];
+}
+
+- (BOOL)registerSalesforceNotificationsWithCompletionBlock:(SFUserAccount *)user completionBlock:(void (^)(void))completionBlock failBlock:(nullable void (^)(void))failBlock {
     if (self.isSimulator) {  // remote notifications are not supported in the simulator
         [SFSDKCoreLogger i:[self class] format:@"Skipping Salesforce push notification registration because push isn't supported on the simulator"];
         [self postPushNotificationRegistration: completionBlock];
         return YES;  // "Successful", from this standpoint.
     }
-    SFOAuthCredentials *credentials = [SFUserAccountManager  sharedInstance].currentUser.credentials;
+    SFOAuthCredentials *credentials = user.credentials;
     if (!credentials) {
         [SFSDKCoreLogger e:[self class] format:@"Cannot register for notifications with Salesforce: not authenticated"];
         [self postPushNotificationRegistration: failBlock];
@@ -139,36 +137,33 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
     NSString *path = [NSString stringWithFormat:@"/%@/%@", [SFRestAPI sharedInstance].apiVersion, kSFPushNotificationEndPoint];
     SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodPOST path:path queryParams:nil];
     NSString *bundleId = [NSBundle mainBundle].bundleIdentifier;
-    
     NSMutableDictionary* bodyDict = [NSMutableDictionary dictionaryWithDictionary:@{@"ConnectionToken":_deviceToken, @"ServiceType":@"Apple", @"ApplicationBundle":bundleId}];
-
     if (_customPushRegistrationBody != nil) {
         [bodyDict addEntriesFromDictionary: _customPushRegistrationBody];
     }
-    
-    if (self.encryptionEnabled) {
-        NSString *rsaPublicKey = [self getRSAPublicKey];
-        if (!rsaPublicKey) {
-            [SFSDKCoreLogger e:[self class] format:@"Cannot register for notifications with Salesforce: no RSA key for encrypted notifications"];
-            return NO;
-        }
+
+    // Sends community ID as part of the registration call, to ensure notifications are scoped by community.
+    NSString *communityId = user.credentials.communityId;
+    if (communityId) {
+        bodyDict[@"NetworkId"] = communityId;
+    }
+    NSString *rsaPublicKey = [self getRSAPublicKey];
+    if (rsaPublicKey) {
         bodyDict[@"RsaPublicKey"] = rsaPublicKey;
     }
-    
     [request setCustomRequestBodyDictionary:bodyDict contentType:@"application/json"];
     __weak typeof(self) weakSelf = self;
-    [[SFRestAPI sharedInstance] sendRESTRequest:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+    [[SFRestAPI sharedInstance] sendRequest:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (e != nil) {
             [SFSDKCoreLogger e:[strongSelf class] format:@"Registration for notifications with Salesforce failed with error %@", e];
         }
         [strongSelf postPushNotificationRegistration:failBlock];
-    } completeBlock:^(id response, NSURLResponse *rawResponse) {
+    } successBlock:^(id response, NSURLResponse *rawResponse) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [SFSDKAppFeatureMarkers registerAppFeature:kSFAppFeaturePushNotifications];
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse*) rawResponse;
         NSInteger statusCode = httpResponse.statusCode;
-
         if (statusCode < 200 || statusCode >= 300) {
             [SFSDKCoreLogger e:[strongSelf class] format:@"Registration for notifications with Salesforce failed with status %ld", statusCode];
             [SFSDKCoreLogger e:[strongSelf class] format:@"Response:%@", response];
@@ -188,15 +183,17 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
     return YES;
 }
 
-- (void)postPushNotificationRegistration:(void (^)(void))completionBlock
-{
+- (void)postPushNotificationRegistration:(void (^)(void))completionBlock {
     if (completionBlock != nil) {
         completionBlock();
     }
 }
 
-- (BOOL)unregisterSalesforceNotificationsWithCompletionBlock:(SFUserAccount*)user completionBlock:(void (^)(void))completionBlock
-{
+- (BOOL)unregisterSalesforceNotificationsWithCompletionBlock:(void (^)(void))completionBlock {
+    return [self unregisterSalesforceNotificationsWithCompletionBlock:[SFUserAccountManager sharedInstance].currentUser completionBlock:completionBlock];
+}
+
+- (BOOL)unregisterSalesforceNotificationsWithCompletionBlock:(SFUserAccount*)user completionBlock:(void (^)(void))completionBlock {
     if (!_deviceSalesforceId) {
         // Nothing to do - we have not registered for push notifications
         [self postPushNotificationUnregistration:completionBlock];
@@ -228,13 +225,13 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
     NSString *path = [NSString stringWithFormat:@"/%@/%@/%@", [SFRestAPI sharedInstance].apiVersion, kSFPushNotificationEndPoint, deviceSFID];
     SFRestRequest *request = [SFRestRequest requestWithMethod:SFRestMethodDELETE path:path queryParams:nil];
     __weak typeof(self) weakSelf = self;
-    [[SFRestAPI sharedInstance] sendRESTRequest:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+    [[SFRestAPI sharedInstance] sendRequest:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (e) {
             [SFSDKCoreLogger e:[strongSelf class] format:@"Push notification unregistration failed %ld %@", (long)[e code], [e localizedDescription]];
         }
         [strongSelf postPushNotificationUnregistration:completionBlock];
-    } completeBlock:^(id response, NSURLResponse *rawResponse) {
+    } successBlock:^(id response, NSURLResponse *rawResponse) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf postPushNotificationUnregistration:completionBlock];
     }];
@@ -242,8 +239,7 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
     return YES;
 }
 
-- (void)postPushNotificationUnregistration:(void (^)(void))completionBlock
-{
+- (void)postPushNotificationUnregistration:(void (^)(void))completionBlock {
     if (completionBlock != nil) {
         completionBlock();
     }
@@ -259,8 +255,7 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
 }
 
 #pragma mark - Events observers
-- (void)onUserLoggedIn:(NSNotification *)notification
-{
+- (void)onUserLoggedIn:(NSNotification *)notification {
     // Registering with Salesforce after login
     if (self.deviceToken) {
         [SFSDKCoreLogger i:[self class] format:@"Registering for Salesforce notification because user just logged in"];
@@ -268,8 +263,7 @@ static NSString * const kSFAppFeaturePushNotifications = @"PN";
     }
 }
 
-- (void)onAppWillEnterForeground:(NSNotification *)notification
-{
+- (void)onAppWillEnterForeground:(NSNotification *)notification {
     // Re-registering with Salesforce if we have a device token unless we are logging out
     if (![SFUserAccountManager sharedInstance].logoutSettingEnabled && self.deviceToken) {
         [SFSDKCoreLogger i:[self class] format:@"Re-registering for Salesforce notification because application is being foregrounded"];

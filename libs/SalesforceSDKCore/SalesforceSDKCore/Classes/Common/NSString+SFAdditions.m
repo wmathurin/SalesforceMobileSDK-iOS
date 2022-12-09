@@ -43,7 +43,7 @@ static inline BOOL IsValidEntityId(NSString *string) {
 @implementation NSString (SFAdditions)
 
 + (BOOL)isEmpty:(nullable NSString *)string {
-    if (nil == string){
+    if (nil == string || [string isKindOfClass:[NSNull class]]) {
         return YES;
     }
     string = [string trim];
@@ -112,7 +112,9 @@ static inline BOOL IsValidEntityId(NSString *string) {
     returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&#38;" withString:@"&"];
     returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&#34;" withString:@"\""];
     returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&#60;" withString:@"<"];
+    returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
     returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&#62;" withString:@">"];
+    returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
     returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
     returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&#169;" withString:@"©"];
     returnValue = [returnValue stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
@@ -141,8 +143,9 @@ static inline BOOL IsValidEntityId(NSString *string) {
 }
 
 - (NSString *)stringByURLEncoding {
-    NSCharacterSet *urlAllowedCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@" \"#%/:<>?@[\\]^`{|}&:/=+"] invertedSet];
-    return [self stringByAddingPercentEncodingWithAllowedCharacters:urlAllowedCharacterSet];
+    NSCharacterSet *urlAllowedCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"\n\r \"#%/:<>?@[\\]^`{|}&:/=+"] invertedSet];
+    NSString* result = [self stringByAddingPercentEncodingWithAllowedCharacters:urlAllowedCharacterSet];
+    return result;
 }
 
 - (NSString *)stringByStrippingHTML {

@@ -56,7 +56,8 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
     command.spCodeChallenge = codeChallengeString;
     command.spAppScopes = [self encodeScopes:session.oauthRequest.scopes];
     command.spUserHint = session.oauthRequest.userHint;
-    command.spLoginHost = session.oauthCoordinator.credentials.domain;
+    if (!session.oauthRequest.idpInitiatedAuth)
+        command.spLoginHost = session.oauthCoordinator.credentials.domain;
     command.spRedirectURI = session.oauthCoordinator.credentials.redirectUri;
     command.spAppName = session.oauthRequest.appDisplayName;
     
@@ -99,10 +100,10 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
     NSURL *url = [responseCommand requestURL];
    
     dispatch_async(dispatch_get_main_queue(), ^{
-        SFSDKWindowContainer *authWindow = [SFSDKWindowManager sharedManager].authWindow;
+        SFSDKWindowContainer *authWindow = [[SFSDKWindowManager sharedManager] authWindow:nil];
         [authWindow.viewController.presentedViewController dismissViewControllerAnimated:YES  completion:^{
-           [authWindow dismissWindow];
-           [[SFSDKWindowManager sharedManager].mainWindow presentWindow];
+            [authWindow dismissWindow];
+            [[[SFSDKWindowManager sharedManager] mainWindow:nil] presentWindow];
         }];
         BOOL launched  = [SFApplicationHelper openURL:url];
         completionBlock(launched);
@@ -116,10 +117,10 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
     NSURL *spAppUrl = [NSURL URLWithString:spAppUrlStr];
     NSURL *url = [self appURLWithError:error reason:reason app:spAppUrl.scheme];
     dispatch_async(dispatch_get_main_queue(), ^{
-        SFSDKWindowContainer *authWindow = [SFSDKWindowManager sharedManager].authWindow;
+        SFSDKWindowContainer *authWindow = [[SFSDKWindowManager sharedManager] authWindow:nil];
         [authWindow.viewController.presentedViewController dismissViewControllerAnimated:YES  completion:^{
             [authWindow dismissWindow];
-            [[SFSDKWindowManager sharedManager].mainWindow presentWindow];
+            [[[SFSDKWindowManager sharedManager] mainWindow:nil] presentWindow];
         }];
         BOOL launched  = [SFApplicationHelper openURL:url];
         if (!launched) {
@@ -130,7 +131,6 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
         }];
     });
 }
-
 
 + (NSURL *)appURLWithError:(NSError *)error reason:(NSString *)reason app:(NSString *)appScheme {
 

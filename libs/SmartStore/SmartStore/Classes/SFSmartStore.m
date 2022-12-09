@@ -28,7 +28,6 @@
 #import "FMDatabase.h"
 #import "FMDatabaseAdditions.h"
 #import "FMDatabaseQueue.h"
-#import <SalesforceSDKCommon/SFJsonUtils.h>
 #import "SFSmartStore+Internal.h"
 #import "SFSmartStoreUpgrade.h"
 #import "SFSmartStoreUtils.h"
@@ -38,26 +37,31 @@
 #import "SFQuerySpec.h"
 #import "SFSoupSpec.h"
 #import "SFSoupSpec+Internal.h"
-#import <SalesforceSDKCore/SFPasscodeManager.h>
+#import "NSData+SFAdditions.h"
+#import "SFAlterSoupLongOperation.h"
+#import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 #import <SalesforceSDKCore/SFKeyStoreManager.h>
 #import <SalesforceSDKCore/SFEncryptionKey.h>
 #import <SalesforceSDKCore/SFSDKCryptoUtils.h>
-#import <SalesforceSDKCore/SFEncryptStream.h>
 #import <SalesforceSDKCore/SFDecryptStream.h>
-#import "SFAlterSoupLongOperation.h"
 #import <SalesforceSDKCore/SFUserAccountManager.h>
 #import <SalesforceSDKCore/SFDirectoryManager.h>
 #import <SalesforceSDKCore/SalesforceSDKManager.h>
 #import <SalesforceSDKCore/SFSDKEventBuilderHelper.h>
 #import <SalesforceSDKCore/SFSDKAppFeatureMarkers.h>
-#import <SalesforceSDKCore/NSData+SFAdditions.h>
 #import <SalesforceSDKCore/SFSDKCryptoUtils.h>
-#import <SalesforceSDKCore/SFKeychainItemWrapper.h>
+#import <SalesforceSDKCore/NSData+SFAdditions.h>
+#import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
 #import <SalesforceSDKCommon/SFSDKDataSharingHelper.h>
+#import <SalesforceSDKCommon/SFJsonUtils.h>
 
 static NSMutableDictionary *_allSharedStores;
 static NSMutableDictionary *_allGlobalSharedStores;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 static SFSmartStoreEncryptionKeyBlock _encryptionKeyBlock = NULL;
+#pragma clang diagnostic pop
+static SFSmartStoreEncryptionKeyGenerator _encryptionKeyGenerator = NULL;
 static SFSmartStoreEncryptionSaltBlock _encryptionSaltBlock = NULL;
 static BOOL _storeUpgradeHasRun = NO;
 static BOOL _jsonSerializationCheckEnabled = NO;
@@ -73,15 +77,17 @@ NSString * const kSFSmartStoreJSONSerializationErrorNotification = @"SFSmartStor
 
 // NSError constants  (TODO: We should move this stuff into a framework where errors can be configurable
 // in a plist, once we start delivering a bundle.
-NSString *        const kSFSmartStoreErrorDomain                = @"com.salesforce.smartstore.error";
-static NSInteger  const kSFSmartStoreTooManyEntriesCode         = 1;
-static NSString * const kSFSmartStoreTooManyEntriesDescription  = @"Cannot update entry: the value '%@' for path '%@' does not represent a unique entry!";
-static NSInteger  const kSFSmartStoreIndexNotDefinedCode        = 2;
-static NSString * const kSFSmartStoreIndexNotDefinedDescription = @"No index column defined for field '%@'.";
-static NSInteger  const kSFSmartStoreExternalIdNilCode          = 3;
-static NSString * const kSFSmartStoreExternalIdNilDescription   = @"For upsert with external ID path '%@', value cannot be empty for any entries.";
-static NSString * const kSFSmartStoreExtIdLookupError           = @"There was an error retrieving the soup entry ID for path '%@' and value '%@': %@";
-static NSInteger  const kSFSmartStoreOtherErrorCode             = 999;
+NSString *        const kSFSmartStoreErrorDomain                 = @"com.salesforce.smartstore.error";
+static NSInteger  const kSFSmartStoreTooManyEntriesCode          = 1;
+static NSString * const kSFSmartStoreTooManyEntriesDescription   = @"Cannot update entry: the value '%@' for path '%@' does not represent a unique entry!";
+static NSInteger  const kSFSmartStoreIndexNotDefinedCode         = 2;
+static NSString * const kSFSmartStoreIndexNotDefinedDescription  = @"No index column defined for field '%@'.";
+static NSInteger  const kSFSmartStoreExternalIdNilCode           = 3;
+static NSString * const kSFSmartStoreExternalIdNilDescription    = @"For upsert with external ID path '%@', value cannot be empty for any entries.";
+static NSString * const kSFSmartStoreExtIdLookupError = @"There was an error retrieving the soup entry ID for path '%@' and value '%@': %@";
+static NSInteger  const kSFSmartStoreWhereArgsNotSupportedCode   = 5;
+static NSString * const kSFSmartStoreWhereArgsNotSupportedDescription = @"whereArgs can only be provided for smart queries";
+static NSInteger  const kSFSmartStoreOtherErrorCode              = 999;
 
 NSString *const kSFSmartStoreErrorLoadExternalSoup =  @"com.salesforce.smartstore.LoadExternalSoupError";
 
@@ -90,36 +96,19 @@ NSString * const kSFSmartStoreEncryptionKeyLabel = @"com.salesforce.smartstore.e
 
 // Encryption constants
 NSString * const kSFSmartStoreEncryptionSaltLabel = @"com.salesforce.smartstore.encryption.saltLabel";
+NSUInteger const kSFSmartStoreEncryptionSaltLength = 16;
 
 // Table to keep track of soup attributes
-NSString *const SOUP_ATTRS_TABLE = @"soup_attrs";
 static NSString *const SOUP_NAMES_TABLE = @"soup_names"; //legacy soup attrs, still around for backward compatibility. Do not use it.
 
-// Table to keep track of soup's index specs
-NSString *const SOUP_INDEX_MAP_TABLE = @"soup_index_map";
-
 // Columns of the soup index map table
-NSString *const SOUP_NAME_COL = @"soupName";
-NSString *const PATH_COL = @"path";
 NSString *const COLUMN_NAME_COL = @"columnName";
-NSString *const COLUMN_TYPE_COL = @"columnType";
 
 // Columns of a soup table
 NSString *const ID_COL = @"id";
 NSString *const CREATED_COL = @"created";
 NSString *const LAST_MODIFIED_COL = @"lastModified";
 NSString *const SOUP_COL = @"soup";
-
-// Columns of a soup fts table
-NSString *const ROWID_COL = @"rowid";
-
-// Table to keep track of status of long operations in flight
-NSString *const LONG_OPERATIONS_STATUS_TABLE = @"long_operations_status";
-
-// Columns of long operations status table
-NSString *const TYPE_COL = @"type";
-NSString *const DETAILS_COL = @"details";
-NSString *const STATUS_COL = @"status";
 
 // JSON fields added to soup element on insert/update
 NSString *const SOUP_ENTRY_ID = @"_soupEntryId";
@@ -128,7 +117,6 @@ NSString *const SOUP_LAST_MODIFIED_DATE = @"_soupLastModifiedDate";
 // Explain support
 NSString *const EXPLAIN_SQL = @"sql";
 NSString *const EXPLAIN_ARGS = @"args";
-NSString *const EXPLAIN_ROWS = @"rows";
 
 // Caches count limit
 NSUInteger CACHES_COUNT_LIMIT = 1024;
@@ -137,23 +125,47 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
 
 + (void)initialize
 {
-    if (!_encryptionKeyBlock) {
-        _encryptionKeyBlock = ^SFEncryptionKey *{
-            SFEncryptionKey *key = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kSFSmartStoreEncryptionKeyLabel autoCreate:YES];
+    if (!_encryptionKeyGenerator) {
+        _encryptionKeyGenerator = ^NSData *{
+            NSError *error = nil;
+            NSData *key = [SFSDKKeyGenerator encryptionKeyFor:kSFSmartStoreEncryptionKeyLabel error:&error];
+            if (error) {
+                [SFSDKSmartStoreLogger e:[self class] format:@"Error getting encryption key: %@", error.localizedDescription];
+            }
             return key;
         };
     }
     
     if (!_encryptionSaltBlock) {
         _encryptionSaltBlock = ^ {
-            NSString* salt = nil;
-            if ([[SFKeyStoreManager sharedInstance] keyWithLabelExists:kSFSmartStoreEncryptionSaltLabel] || [[SFSDKDatasharingHelper sharedInstance] appGroupEnabled]) {
-                SFEncryptionKey *saltKey = [[SFKeyStoreManager sharedInstance]   retrieveKeyWithLabel:kSFSmartStoreEncryptionSaltLabel autoCreate:YES];
-                salt = [[saltKey key] digest];
+            NSString *salt = nil;
+ 
+            NSData *existingSalt = [SFSDKKeychainHelper readWithService:kSFSmartStoreEncryptionSaltLabel account:nil].data;
+            if (existingSalt) {
+                salt = [existingSalt newHexStringFromBytes];
+            } else if ([[SFSDKDatasharingHelper sharedInstance] appGroupEnabled]) {
+                NSData *newSalt = [[NSMutableData dataWithLength:kSFSmartStoreEncryptionSaltLength] randomDataOfLength:kSFSmartStoreEncryptionSaltLength];
+                SFSDKKeychainResult *result = [SFSDKKeychainHelper writeWithService:kSFSmartStoreEncryptionSaltLabel data:newSalt account:nil];
+                if (result.success) {
+                    salt = [newSalt newHexStringFromBytes];
+                } else {
+                    [SFSDKSmartStoreLogger e:[self class] format:@"Error writing salt to keychain: %@", result.error.localizedDescription];
+                }
             }
             return salt;
         };
     }
+
+    // Used for upgrade steps
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    if (!_encryptionKeyBlock) {
+        _encryptionKeyBlock = ^SFEncryptionKey *{
+            SFEncryptionKey *key = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kSFSmartStoreEncryptionKeyLabel autoCreate:YES];
+            return key;
+        };
+    }
+    #pragma clang diagnostic pop
 }
 
 - (id)initWithName:(NSString *)name user:(SFUserAccount *)user {
@@ -172,11 +184,9 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
         }
         [SFSDKSmartStoreLogger d:[self class] format:@"%@ %@, user: %@, isGlobal: %d", NSStringFromSelector(_cmd), name, [SFSmartStoreUtils userKeyForUser:user], isGlobal];
         @synchronized ([SFSmartStore class]) {
-            if ([SFUserAccountManager sharedInstance].currentUser != nil && !_storeUpgradeHasRun) {
+            if (!_storeUpgradeHasRun) {
+                [SFSmartStoreUpgrade upgrade];
                 _storeUpgradeHasRun = YES;
-                [SFSmartStoreUpgrade updateStoreLocations];
-                [SFSmartStoreUpgrade updateEncryption];
-                [SFSmartStoreUpgrade updateEncryptionSalt];
             }
         }
         _storeName = name;
@@ -286,9 +296,6 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
         [SFSDKSmartStoreLogger e:[self class] format:@"Deleting store dir since we can't set it up properly: %@", self.storeName];
         [self.dbMgr removeStoreDir:self.storeName];
     }
-    if (self.user != nil) {
-        [SFSmartStoreUpgrade setUsesKeyStoreEncryption:result forUser:self.user store:self.storeName];
-    }
     return result;
 }
 
@@ -323,7 +330,7 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
 
 - (BOOL) openStoreDatabase {
     NSError *openDbError = nil;
-    NSString *salt =  [[self class]encryptionSaltBlock] ? [[self class] encryptionSaltBlock]() :nil;
+    NSString *salt = [[self class]encryptionSaltBlock] ? [[self class] encryptionSaltBlock]() : nil;
     self.storeQueue = [self.dbMgr openStoreQueueWithName:self.storeName key:[[self class] encKey] salt:salt error:&openDbError];
     if (self.storeQueue == nil) {
         [SFSDKSmartStoreLogger e:[self class] format:@"Error opening store '%@': %@", self.storeName, [openDbError localizedDescription]];
@@ -416,7 +423,6 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
             [existingStore.storeQueue close];
             [_allSharedStores[userKey] removeObjectForKey:storeName];
         }
-        [SFSmartStoreUpgrade setUsesKeyStoreEncryption:NO forUser:user store:storeName];
         [[SFSmartStoreDatabaseManager sharedManagerForUser:user] removeStoreDir:storeName];
     }
 }
@@ -524,6 +530,7 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     [self createLongOperationsStatusTableWithDb:db];
     [self executeUpdateThrows:createSoupNamesIndexSql withDb:db];
 }
+
 
 - (void)registerNewSoupAttribute:(NSString *)attrColName
 {
@@ -745,17 +752,15 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     return soupNames;
 }
 
-+ (NSString *)encKey
-{
-    if (_encryptionKeyBlock) {
-        SFEncryptionKey *key = _encryptionKeyBlock();
-        return key.keyAsString;
++ (NSString *)encKey {
+    if (_encryptionKeyGenerator) {
+        NSData *key = _encryptionKeyGenerator();
+        return [key base64EncodedStringWithOptions:0];
     }
     return nil;
 }
 
-+ (NSString *)salt
-{
++ (NSString *)salt {
     if (_encryptionSaltBlock) {
         return  _encryptionSaltBlock();
     }
@@ -772,13 +777,13 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     }
 }
 
-+ (SFSmartStoreEncryptionKeyBlock)encryptionKeyBlock {
-    return _encryptionKeyBlock;
++ (SFSmartStoreEncryptionKeyGenerator)encryptionKeyGenerator {
+    return _encryptionKeyGenerator;
 }
 
-+ (void)setEncryptionKeyBlock:(SFSmartStoreEncryptionKeyBlock)newEncryptionKeyBlock {
-    if (newEncryptionKeyBlock != _encryptionKeyBlock) {
-        _encryptionKeyBlock = newEncryptionKeyBlock;
++ (void)setEncryptionKeyGenerator:(SFSmartStoreEncryptionKeyGenerator)newEncryptionKeyGenerator {
+    if (newEncryptionKeyGenerator != _encryptionKeyGenerator) {
+        _encryptionKeyGenerator = newEncryptionKeyGenerator;
     }
 }
 
@@ -853,11 +858,11 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     
     // Setting up output stream
     NSOutputStream *outputStream = nil;
-    SFSmartStoreEncryptionKeyBlock keyBlock = [SFSmartStore encryptionKeyBlock];
+    SFSmartStoreEncryptionKeyGenerator keyBlock = [SFSmartStore encryptionKeyGenerator];
     if (keyBlock) {
-        SFEncryptStream *encryptStream = [[SFEncryptStream alloc] initToFileAtPath:tmpFilePath append:NO];
-        SFEncryptionKey *encKey = keyBlock();
-        [encryptStream setupWithEncryptionKey:encKey];
+        SFSDKEncryptStream *encryptStream = [[SFSDKEncryptStream alloc] initToFileAtPath:tmpFilePath append:NO];
+        NSData *encKey = keyBlock();
+        [encryptStream setupEncryptionKey:encKey];
         outputStream = encryptStream;
     } else {
         outputStream = [[NSOutputStream alloc] initToFileAtPath:tmpFilePath append:NO];
@@ -955,50 +960,43 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
 }
 
 - (NSString*)loadExternalSoupEntryAsString:(NSNumber *)soupEntryId
-                             soupTableName:(NSString *)soupTableName
-{
+                             soupTableName:(NSString *)soupTableName {
     NSString *filePath = [self externalStorageSoupFilePath:soupEntryId
                                              soupTableName:soupTableName];
     
-    SFSmartStoreEncryptionKeyBlock keyBlock = [SFSmartStore encryptionKeyBlock];
-    SFEncryptionKey* encKey;
-    if (keyBlock) {
-        encKey = keyBlock();
+    SFSmartStoreEncryptionKeyGenerator keyGenerator = [SFSmartStore encryptionKeyGenerator];
+    NSData *encKey;
+    if (keyGenerator) {
+        encKey = keyGenerator();
     }
     
-    NSString* entryAsString = [self readFromEncryptedFile:filePath
-                                                   encKey:encKey];
+    NSString *entryAsString = [self readFromEncryptedFile:filePath
+                                            encryptionKey:encKey];
     
-    // Before 6.2, we were using nill IV when encrypting.
-    // Starting in 6.2, we are using a non-nil IV when encrypting.
-    // If it doesn't look like proper json, it means the entry was encrypted with pre 6.2 SDK.
-    // It needs to be stored back with a non-nil IV encryption.
-    if (![entryAsString hasPrefix:@"{"]) {
-        NSDictionary* entry = [SFJsonUtils objectFromJSONString:entryAsString];
+    // If it doesn't look like proper json, it means the entry was encrypted with an older key/IV.
+    // It needs to be stored back with the current encryption.
+    if (![entryAsString hasPrefix:@"{"] && ![SFJsonUtils objectFromJSONString:entryAsString]) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        SFSmartStoreEncryptionKeyBlock keyBlock = [SFSmartStore encryptionKeyBlock];
+        SFEncryptionKey *legacyEncKey = keyBlock();
+        #pragma clang diagnostic pop
         
-        if(!entry) {
-            if (encKey.initializationVector) {
-                entryAsString = [self readFromEncryptedFile:filePath encKey:encKey useNilIV:YES];
-                if ([entryAsString length] > 0) {
-                    [self writeToEncryptedFile:filePath
-                                       content:entryAsString
-                                        encKey:encKey];
-                } else {
-                    [SFSDKSmartStoreLogger e:[self class] format:@"Attempt to migrate an encrypted externally saved soup '%@' with a null IV  failed.", soupTableName];
-                }
+        // Try for 9.2 upgrade case -- pre 9.2/post 6.2 used SFEncryptionKey with a non-nil IV
+        entryAsString = [self readFromEncryptedFile:filePath encKey:legacyEncKey useNilIV:NO];
+        if ([entryAsString hasPrefix:@"{"] && [SFJsonUtils objectFromJSONString:entryAsString]) {
+            [self writeToEncryptedFile:filePath
+                               content:entryAsString
+                         encryptionKey:encKey];
+        } else {
+            // Try 6.2 upgrade case -- pre 6.2 used SFEncryptionKey with a nil IV
+            entryAsString = [self readFromEncryptedFile:filePath encKey:legacyEncKey useNilIV:YES];
+            if ([entryAsString hasPrefix:@"{"] && [SFJsonUtils objectFromJSONString:entryAsString]) {
+                [self writeToEncryptedFile:filePath
+                                   content:entryAsString
+                             encryptionKey:encKey];
             } else {
-                NSError* error = [SFJsonUtils lastError];
-                NSString *errorMessage = [NSString stringWithFormat:@"Loading external soup from file failed! encrypted: %@, soupEntryId: %@, soupTableName: %@, filePath: '%@', error: %@.",
-                                          encKey ? @"YES" : @"NO",
-                                          soupEntryId,
-                                          soupTableName,
-                                          filePath,
-                                          error];
-                [SFSDKSmartStoreLogger e:[self class] format:errorMessage];
-                @throw [NSException exceptionWithName:kSFSmartStoreErrorLoadExternalSoup
-                                               reason:errorMessage
-                                             userInfo:nil];
-                
+                [SFSDKSmartStoreLogger e:[self class] format:@"Attempt to migrate an encrypted externally saved soup '%@' with failed.", soupTableName];
             }
         }
     }
@@ -1011,23 +1009,12 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     }
 }
 
-- (NSString*) readFromEncryptedFile:(NSString*)filePath
-                             encKey:(SFEncryptionKey*)encKey
-{
-    return [self readFromEncryptedFile:filePath encKey:encKey useNilIV:NO];
-}
-
-- (NSString*) readFromEncryptedFile:(NSString*)filePath
-                             encKey:(SFEncryptionKey*)encKey
-                           useNilIV:(BOOL)useNilIV
-{
+- (NSString *)readFromEncryptedFile:(NSString *)filePath
+                      encryptionKey:(NSData *)encKey {
     NSInputStream *inputStream = nil;
     if (encKey) {
-        SFDecryptStream *decryptStream = [[SFDecryptStream alloc] initWithFileAtPath:filePath];
-        if (useNilIV) {
-            encKey = [[SFEncryptionKey alloc] initWithData:encKey.key initializationVector:nil];
-        }
-        [decryptStream setupWithDecryptionKey:encKey];
+        SFSDKDecryptStream *decryptStream = [[SFSDKDecryptStream alloc] initWithFileAtPath:filePath];
+        [decryptStream setupEncryptionKey:encKey];
         inputStream = decryptStream;
     } else {
         inputStream = [[NSInputStream alloc] initWithFileAtPath:filePath];
@@ -1053,14 +1040,14 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     return [[NSString alloc] initWithData:content encoding:NSUTF8StringEncoding];
 }
 
-- (void) writeToEncryptedFile:(NSString*)filePath
+- (void)writeToEncryptedFile:(NSString *)filePath
                        content:(NSString *)content
-                       encKey:(SFEncryptionKey*)encKey
+                       encryptionKey:(NSData *)encKey
 {
     NSOutputStream *outputStream = nil;
     if (encKey) {
-        SFEncryptStream *encryptStream = [[SFEncryptStream alloc] initToFileAtPath:filePath append:NO];
-        [encryptStream setupWithEncryptionKey:encKey];
+        SFSDKEncryptStream *encryptStream = [[SFSDKEncryptStream alloc] initToFileAtPath:filePath append:NO];
+        [encryptStream setupEncryptionKey:encKey];
         outputStream = encryptStream;
     } else {
         outputStream = [[NSOutputStream alloc] initToFileAtPath:filePath append:NO];
@@ -1150,27 +1137,28 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
 }
 
 - (NSString*)columnNameForPath:(NSString*)path inSoup:(NSString*)soupName withDb:(FMDatabase*) db {
-    //TODO cache these with soupName:path ? if slow...
     NSString *result = nil;
-    if (nil == path) {
-        return result;
+    NSArray* indexSpecs = [self indicesForSoup:soupName withDb:db];
+    for (SFSoupIndex* indexSpec in indexSpecs) {
+        if ([indexSpec.path isEqualToString:path]) {
+            result = indexSpec.columnName;
+        }
     }
     
-    NSString *querySql = [NSString stringWithFormat:@"SELECT %@ FROM %@ WHERE %@ = ? AND %@ = ?",
-                          COLUMN_NAME_COL,SOUP_INDEX_MAP_TABLE,
-                          SOUP_NAME_COL,
-                          PATH_COL
-                          ];
-    FMResultSet *frs = [self executeQueryThrows:querySql withArgumentsInArray:@[soupName, path] withDb:db];
-    if ([frs next]) {
-        result = [frs stringForColumnIndex:0];
-    }
-    [frs close];
     if (nil == result) {
         [SFSDKSmartStoreLogger d:[self class] format:@"Unknown index path '%@' in soup '%@' ", path, soupName];
     }
     return result;
-    
+}
+
+- (BOOL) hasIndexForPath:(NSString*)path inSoup:(NSString*)soupName withDb:(FMDatabase*) db {
+    NSArray* indexSpecs = [self indicesForSoup:soupName withDb:db];
+    for (SFSoupIndex* indexSpec in indexSpecs) {
+        if ([indexSpec.path isEqualToString:path]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (NSString*) convertSmartSql:(NSString*)smartSql
@@ -1330,7 +1318,6 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     NSMutableArray *result = [_indexSpecsBySoup objectForKey:soupName];
     if (nil == result) {
         result = [NSMutableArray array];
-        
         //no cached indices ...reload from SOUP_INDEX_MAP_TABLE
         NSString *querySql = [NSString stringWithFormat:@"SELECT %@,%@,%@ FROM %@ WHERE %@ = ?",
                               PATH_COL, COLUMN_NAME_COL, COLUMN_TYPE_COL,
@@ -1392,7 +1379,6 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
         }
     }
     [self insertIntoTable:SOUP_ATTRS_TABLE values:soupMapValues withDb:db];
-
     // Get a safe table name for the soupName
     NSString *soupTableName = [self tableNameBySoupId:[db lastInsertRowId]];
     if (nil == soupTableName) {
@@ -1415,10 +1401,6 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     
     NSNumber *soupId = [self soupIdFromTableName:soupTableName];
     [self updateTable:SOUP_ATTRS_TABLE values:featuresMapValues entryId:soupId idCol:ID_COL withDb:db];
-}
-
-- (BOOL)registerSoup:(NSString*)soupName withIndexSpecs:(NSArray*)indexSpecs {
-    return [self registerSoup:soupName withIndexSpecs:indexSpecs error:nil];
 }
 
 - (BOOL)registerSoup:(NSString*)soupName withIndexSpecs:(NSArray*)indexSpecs error:(NSError**)error {
@@ -1519,7 +1501,7 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
         }
         
         // for inserting into meta mapping table
-        NSMutableDictionary *values = [[NSMutableDictionary alloc] init ];
+        NSMutableDictionary *values = [[NSMutableDictionary alloc] init];
         values[SOUP_NAME_COL] = soupSpec.soupName;
         values[PATH_COL] = indexSpec.path;
         values[COLUMN_NAME_COL] = columnName;
@@ -1602,7 +1584,7 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
         NSString *dropFtsSql = [NSString stringWithFormat:@"DROP TABLE IF EXISTS %@_fts",soupTableName];
         [self executeUpdateThrows:dropFtsSql withDb:db];
     }
-    
+
     NSString *deleteIndexSql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@=\"%@\"",
                                 SOUP_INDEX_MAP_TABLE, SOUP_NAME_COL, soupName];
     [self executeUpdateThrows:deleteIndexSql withDb:db];
@@ -1752,9 +1734,21 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
 
 - (NSArray *)queryWithQuerySpec:(SFQuerySpec *)querySpec pageIndex:(NSUInteger)pageIndex error:(NSError **)error;
 {
+    return [self queryWithQuerySpec:querySpec pageIndex:pageIndex whereArgs:nil error:error];
+}
+
+- (NSArray *)queryWithQuerySpec:(SFQuerySpec *)querySpec pageIndex:(NSUInteger)pageIndex whereArgs:(NSArray*)whereArgs error:(NSError **)error
+{
+    if (whereArgs != nil && querySpec.queryType != kSFSoupQueryTypeSmart) {
+        *error = [NSError errorWithDomain:kSFSmartStoreErrorDomain
+                                     code:kSFSmartStoreWhereArgsNotSupportedCode
+                                 userInfo:@{NSLocalizedDescriptionKey: kSFSmartStoreWhereArgsNotSupportedDescription}];
+        return nil;
+    }
+    
     __block NSMutableArray* resultArray = [NSMutableArray new];
     BOOL succ = [self inDatabase:^(FMDatabase* db) {
-        [self runQuery:resultArray resultString:nil querySpec:querySpec pageIndex:pageIndex withDb:db];
+        [self runQuery:resultArray resultString:nil querySpec:querySpec pageIndex:pageIndex whereArgs:whereArgs withDb:db];
     } error:error];
     if (succ) {
         return resultArray;
@@ -1766,11 +1760,11 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
 - (BOOL) queryAsString:(NSMutableString*)resultString querySpec:(SFQuerySpec *)querySpec pageIndex:(NSUInteger)pageIndex error:(NSError **)error NS_SWIFT_NAME(query(result:querySpec:pageIndex:))
 {
     return [self inDatabase:^(FMDatabase* db) {
-        [self runQuery:nil resultString:resultString querySpec:querySpec pageIndex:pageIndex withDb:db];
+        [self runQuery:nil resultString:resultString querySpec:querySpec pageIndex:pageIndex whereArgs:nil withDb:db];
     } error:error];
 }
 
-- (void)runQuery:(NSMutableArray*)resultArray resultString:(NSMutableString*)resultString querySpec:(SFQuerySpec *)querySpec pageIndex:(NSUInteger)pageIndex withDb:(FMDatabase*)db
+- (void)runQuery:(NSMutableArray*)resultArray resultString:(NSMutableString*)resultString querySpec:(SFQuerySpec *)querySpec pageIndex:(NSUInteger)pageIndex whereArgs:(NSArray*)whereArgs withDb:(FMDatabase*)db
 {
     NSAssert(resultArray != nil ^ resultString != nil, @"resultArray or resultString must be non-nil, but not both at the same times.");
     BOOL computeResultAsString = resultString != nil;
@@ -1785,7 +1779,7 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
     NSString* limitSql = [@[@"SELECT * FROM (", sql, @") LIMIT ", limit] componentsJoinedByString:@""];
     
     // Args
-    NSArray* args = [querySpec bindsForQuerySpec];
+    NSArray* args = querySpec.queryType != kSFSoupQueryTypeSmart ? [querySpec bindsForQuerySpec] : whereArgs;
     
     // Executing query
     FMResultSet *frs = [self executeQueryThrows:limitSql withArgumentsInArray:args withDb:db];
@@ -2623,5 +2617,55 @@ NSUInteger CACHES_COUNT_LIMIT = 1024;
 
     return result;
 }
+
+#pragma mark - Legacy used for upgrade steps
+
++ (SFSmartStoreEncryptionKeyBlock)encryptionKeyBlock {
+    return _encryptionKeyBlock;
+}
+
++ (void)setEncryptionKeyBlock:(SFSmartStoreEncryptionKeyBlock)newEncryptionKeyBlock {
+    if (newEncryptionKeyBlock != _encryptionKeyBlock) {
+        _encryptionKeyBlock = newEncryptionKeyBlock;
+    }
+}
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
++ (NSString *)legacyEncKey {
+    if (_encryptionKeyBlock) {
+        SFEncryptionKey *key = _encryptionKeyBlock();
+        return key.keyAsString;
+    }
+    return nil;
+}
+
++ (NSString *)legacySalt {
+    NSString *salt = nil;
+    if ([[SFKeyStoreManager sharedInstance] keyWithLabelExists:kSFSmartStoreEncryptionSaltLabel] || [[SFSDKDatasharingHelper sharedInstance] appGroupEnabled]) {
+        SFEncryptionKey *saltKey = [[SFKeyStoreManager sharedInstance] retrieveKeyWithLabel:kSFSmartStoreEncryptionSaltLabel autoCreate:YES];
+        salt = [[saltKey key] digest];
+    }
+    return salt;
+}
+
+- (NSString *)readFromEncryptedFile:(NSString *)filePath
+                             encKey:(SFEncryptionKey *)encKey
+                           useNilIV:(BOOL)useNilIV {
+    NSInputStream *inputStream = nil;
+    if (encKey) {
+        SFDecryptStream *decryptStream = [[SFDecryptStream alloc] initWithFileAtPath:filePath];
+        if (useNilIV) {
+            encKey = [[SFEncryptionKey alloc] initWithData:encKey.key initializationVector:nil];
+        }
+        [decryptStream setupWithDecryptionKey:encKey];
+        inputStream = decryptStream;
+    } else {
+        inputStream = [[NSInputStream alloc] initWithFileAtPath:filePath];
+    }
+    
+    return [SFSmartStore stringFromInputStream:inputStream];
+}
+#pragma clang diagnostic pop
 
 @end

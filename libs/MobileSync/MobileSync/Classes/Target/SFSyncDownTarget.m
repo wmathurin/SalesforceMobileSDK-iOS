@@ -22,6 +22,7 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#import <MobileSync/MobileSync-Swift.h>
 #import <SmartStore/SFSmartStore.h>
 #import <SmartStore/SFSoupIndex.h>
 #import "SFSyncTarget+Internal.h"
@@ -40,10 +41,11 @@ NSString * const kSFSyncTargetQueryTypeMru = @"mru";
 NSString * const kSFSyncTargetQueryTypeSoql = @"soql";
 NSString * const kSFSyncTargetQueryTypeSosl = @"sosl";
 NSString * const kSFSyncTargetQueryTypeRefresh = @"refresh";
-NSString * const kSFSyncTargetQueryTypeParentChidlren = @"parentChildren";
+NSString * const kSFSyncTargetQueryTypeParentChildren = @"parent_children";
 NSString * const kSFSyncTargetQueryTypeCustom = @"custom";
 NSString * const kSFSyncTargetQueryTypeMetadata = @"metadata";
 NSString * const kSFSyncTargetQueryTypeLayout = @"layout";
+NSString * const kSFSyncTargetQueryTypeBriefcase = @"briefcase";
 
 @implementation SFSyncDownTarget
 
@@ -78,6 +80,8 @@ NSString * const kSFSyncTargetQueryTypeLayout = @"layout";
                 return [[SFMetadataSyncDownTarget alloc] initWithDict:dict];
             case SFSyncDownTargetQueryTypeLayout:
                 return [[SFLayoutSyncDownTarget alloc] initWithDict:dict];
+            case SFSyncDownTargetQueryTypeBriefcase:
+                return [[SFBriefcaseSyncDownTarget alloc] initWithDict:dict];
             case SFSyncDownTargetQueryTypeCustom:
                 [SFSDKMobileSyncLogger e:[self class] format:@"%@ Custom class name not specified.", NSStringFromSelector(_cmd)];
                 return nil;
@@ -124,6 +128,11 @@ ABSTRACT_METHOD
     // Fetches list of IDs present in local soup that have not been modified locally.
     NSMutableOrderedSet *localIds = [NSMutableOrderedSet orderedSetWithOrderedSet:[self getNonDirtyRecordIds:syncManager soupName:soupName idField:self.idFieldName additionalPredicate:[self buildSyncIdPredicateIfIndexed:syncManager soupName:soupName syncId:syncId]]];
 
+    if (localIds.count == 0) {
+        completeBlock(@[]);
+        return;
+    }
+
     // Fetches list of IDs still present on the server from the list of local IDs
     // and removes the list of IDs that are still present on the server.
     NSArray *localIdsArr = [localIds array];
@@ -168,7 +177,7 @@ ABSTRACT_METHOD
     if ([queryType isEqualToString:kSFSyncTargetQueryTypeRefresh]) {
         return SFSyncDownTargetQueryTypeRefresh;
     }
-    if ([queryType isEqualToString:kSFSyncTargetQueryTypeParentChidlren]) {
+    if ([queryType isEqualToString:kSFSyncTargetQueryTypeParentChildren]) {
         return SFSyncDownTargetQueryTypeParentChildren;
     }
     if ([queryType isEqualToString:kSFSyncTargetQueryTypeMetadata]) {
@@ -176,6 +185,9 @@ ABSTRACT_METHOD
     }
     if ([queryType isEqualToString:kSFSyncTargetQueryTypeLayout]) {
         return SFSyncDownTargetQueryTypeLayout;
+    }
+    if ([queryType isEqualToString:kSFSyncTargetQueryTypeBriefcase]) {
+        return SFSyncDownTargetQueryTypeBriefcase;
     }
 
     // Must be custom
@@ -188,10 +200,11 @@ ABSTRACT_METHOD
         case SFSyncDownTargetQueryTypeSosl: return kSFSyncTargetQueryTypeSosl;
         case SFSyncDownTargetQueryTypeSoql: return kSFSyncTargetQueryTypeSoql;
         case SFSyncDownTargetQueryTypeRefresh: return kSFSyncTargetQueryTypeRefresh;
-        case SFSyncDownTargetQueryTypeParentChildren: return kSFSyncTargetQueryTypeParentChidlren;
+        case SFSyncDownTargetQueryTypeParentChildren: return kSFSyncTargetQueryTypeParentChildren;
         case SFSyncDownTargetQueryTypeCustom: return kSFSyncTargetQueryTypeCustom;
         case SFSyncDownTargetQueryTypeMetadata: return kSFSyncTargetQueryTypeMetadata;
         case SFSyncDownTargetQueryTypeLayout: return kSFSyncTargetQueryTypeLayout;
+        case SFSyncDownTargetQueryTypeBriefcase: return kSFSyncTargetQueryTypeBriefcase;
     }
 }
 

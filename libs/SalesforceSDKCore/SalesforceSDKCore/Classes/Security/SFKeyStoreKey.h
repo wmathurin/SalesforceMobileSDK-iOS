@@ -23,10 +23,14 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "SFEncryptionKey.h"
+#import <SalesforceSDKCore/SFEncryptionKey.h>
+#import <SalesforceSDKCore/SalesforceSDKConstants.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
+// TODO: Remove class in Mobile SDK 11.0
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 /**
  Data object representing the encryption key used for encrypting/decrypting the key store.
  */
@@ -78,5 +82,5 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) SFEncryptionKey *encryptionKey;
 
 @end
-
+#pragma clang diagnostic pop
 NS_ASSUME_NONNULL_END

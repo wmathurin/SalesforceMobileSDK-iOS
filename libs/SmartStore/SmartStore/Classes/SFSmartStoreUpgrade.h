@@ -24,41 +24,19 @@
 
 #import <Foundation/Foundation.h>
 #import <SalesforceSDKCore/SFUserAccount.h>
+#import <SalesforceSDKCore/SalesforceSDKConstants.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+extern NSString * _Nonnull const kKeyStoreHasExternalSalt;
+extern NSString * _Nonnull const kSmartStoreVersionKey;
 
 /**
  Used internally for upgrading SmartStore.
  */
 @interface SFSmartStoreUpgrade : NSObject
 
-/**
- Updates any existing stores from their legacy location to their new user-specific location.
- */
-+ (void)updateStoreLocations;
-
-/**
- Updates the encryption scheme of each SmartStore database to the currently supported scheme.
- */
-+ (void)updateEncryption;
-
-+ (void)updateEncryptionSalt;
-
-/**
- Whether or not a given store for the given user is encrypted based on the key store key.
- @param user The user associated with the store.
- @param storeName The store to query.
- @return YES if the store is encrypted with the key store, NO otherwise.
- */
-+ (BOOL)usesKeyStoreEncryptionForUser:(SFUserAccount *)user store:(NSString *)storeName;
-
-/**
- Sets a flag denoting whether or not the store for the given user uses encryption based the key store key.
- @param usesKeyStoreEncryption YES if it does, NO if it doesn't.
- @param user The user associated with the store.
- @param storeName The store to which the flag applies.
- */
-+ (void)setUsesKeyStoreEncryption:(BOOL)usesKeyStoreEncryption forUser:(SFUserAccount *)user store:(NSString *)storeName;
++ (void)upgrade;
 
 @end
 

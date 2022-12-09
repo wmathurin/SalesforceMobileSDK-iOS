@@ -28,10 +28,12 @@
 #import "SFSDKLogoutBlocker.h"
 #import "SFSDKAuthViewHandler.h"
 #import "SFUserAccountManager+Internal.h"
+#import "SFUserAccount+Internal.h"
 #import "SFDefaultUserAccountPersister.h"
 #import "SFOAuthCredentials+Internal.h"
 #import "TestSetupUtils.h"
 #import "SFSDKAuthRequest.h"
+#import "SFUserAccountConstants.h"
 #import "SFOAuthCoordinator+Internal.h"
 static NSString * const kUserIdFormatString = @"005R0000000Dsl%lu";
 static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
@@ -91,6 +93,7 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
 @property (nonatomic, strong) SFSDKAuthViewHandler *authViewHandler;
 @property (nonatomic, strong) SFSDKLoginViewControllerConfig *config;
 @property (nonatomic, strong) NSString *origLoginHost;
+@property (nonatomic, strong) SFUserAccount *origAccount;
 
 - (SFUserAccount *)createNewUserWithIndex:(NSUInteger)index;
 - (NSArray *)createAndVerifyUserAccounts:(NSUInteger)numAccounts;
@@ -109,15 +112,16 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
     [super setUp];
     // Delete the content of the global library directory
     NSString *globalLibraryDirectory = [[SFDirectoryManager sharedManager] directoryForUser:nil type:NSLibraryDirectory components:nil];
-    [[[NSFileManager alloc] init] removeItemAtPath:globalLibraryDirectory error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:globalLibraryDirectory error:nil];
     // Set the oauth client ID after deleting the content of the global library directory
     // to ensure the SFUserAccountManager sharedInstance loads from an empty directory
     self.uam = [SFUserAccountManager sharedInstance];
     _origLoginHost = self.uam.loginHost;
+    _origAccount = [SFUserAccountManager sharedInstance].currentUser;
     // Ensure the user account manager doesn't contain any account
     NSArray *userAccounts = [[SFUserAccountManager sharedInstance] allUserAccounts];
     for (SFUserAccount *account in userAccounts) {
-        if (account != [SFUserAccountManager sharedInstance].currentUser) {
+        if (account != _origAccount) {
             NSError *error = nil;
             [self.uam deleteAccountForUser:account error:&error];
         }
@@ -133,6 +137,8 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
     [SFUserAccountManager sharedInstance].authViewHandler = self.authViewHandler;
     self.uam.loginViewControllerConfig = self.config;
     self.uam.loginHost = _origLoginHost;
+    [[SFUserAccountManager sharedInstance] setCurrentUser:_origAccount];
+    [[SFUserAccountManager sharedInstance] setCurrentUserInternal:_origAccount];
     [super tearDown];
 }
 
@@ -214,7 +220,7 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
     NSString *expectedLocation = [[SFDirectoryManager sharedManager] directoryForOrg:user.credentials.organizationId user:user.credentials.userId community:nil type:NSLibraryDirectory components:nil];
     expectedLocation = [expectedLocation stringByAppendingPathComponent:@"UserAccount.plist"];
     XCTAssertEqualObjects(expectedLocation, [SFDefaultUserAccountPersister userAccountPlistFileForUser:user], @"Mismatching user account paths");
-    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSFileManager *fm = [NSFileManager defaultManager];
     XCTAssertTrue([fm fileExistsAtPath:expectedLocation], @"Unable to find new UserAccount.plist");
 
     NSString *userId = [NSString stringWithFormat:kUserIdFormatString, (unsigned long)0];
@@ -228,7 +234,7 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
 
     // Create 10 users
     [self createAndVerifyUserAccounts:10];
-    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSFileManager *fm = [NSFileManager defaultManager];
 
     // Ensure all directories have been correctly created
     {
@@ -322,39 +328,6 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
     XCTAssertEqual(self.uam.loginHost, newUser.credentials.domain, @"Switch user should set current login host to users domain.");
 }
 
-- (void)testIdentityDataModification {
-    NSArray *accounts = [self createAndVerifyUserAccounts:1];
-    [[SFUserAccountManager sharedInstance] setCurrentUserInternal:accounts[0]];
-    SFIdentityData *idData = [self sampleIdentityData];
-    [self.uam applyIdData:idData forUser:self.uam.currentUser];
-    int origMobileAppPinLength = self.uam.currentUser.idData.mobileAppPinLength;
-    int origMobileAppScreenLockTimeout = self.uam.currentUser.idData.mobileAppScreenLockTimeout;
-    
-    // Verify selective custom settings updates do not interfere with other previous identity data.
-    NSDictionary *origCustomAttributes = self.uam.currentUser.idData.customAttributes;
-    NSDictionary *origCustomPermissions = self.uam.currentUser.idData.customPermissions;
-    NSMutableDictionary *mutableCustomAttributes = [origCustomAttributes mutableCopy];
-    NSMutableDictionary *mutableCustomPermissions = [origCustomPermissions mutableCopy];
-    mutableCustomAttributes[@"ANewCustomAttribute"] = @"ANewCustomAttributeValue";
-    mutableCustomPermissions[@"ANewCustomPermission"] = @"ANewCustomPermissionValue";
-    [self.uam applyIdDataCustomAttributes:mutableCustomAttributes forUser:self.uam.currentUser];
-    [self.uam applyIdDataCustomPermissions:mutableCustomPermissions forUser:self.uam.currentUser];
-    XCTAssertTrue([self.uam.currentUser.idData.customAttributes isEqualToDictionary:mutableCustomAttributes], @"Attributes dictionaries are not equal.");
-    XCTAssertFalse([self.uam.currentUser.idData.customAttributes isEqualToDictionary:origCustomAttributes], @"Attributes dictionaries should not be equal.");
-    XCTAssertTrue([self.uam.currentUser.idData.customPermissions isEqualToDictionary:mutableCustomPermissions], @"Permissions dictionaries are not equal.");
-    XCTAssertFalse([self.uam.currentUser.idData.customPermissions isEqualToDictionary:origCustomPermissions], @"Permissions dictionaries should not be equal.");
-    XCTAssertEqual(origMobileAppPinLength, self.uam.currentUser.idData.mobileAppPinLength, @"Mobile app pin length should not have changed.");
-    XCTAssertEqual(origMobileAppScreenLockTimeout, self.uam.currentUser.idData.mobileAppScreenLockTimeout, @"Mobile app screen lock timeout should not have changed.");
-    
-    // Verify that re-applying the whole of the identity data, overwrites changes.
-    idData = [self sampleIdentityData];
-    [self.uam applyIdData:idData forUser:self.uam.currentUser];
-    XCTAssertTrue([self.uam.currentUser.idData.customAttributes isEqualToDictionary:origCustomAttributes], @"Custom atttribute changes should have been overwritten with whole identity write.");
-    XCTAssertFalse([self.uam.currentUser.idData.customAttributes isEqualToDictionary:mutableCustomAttributes], @"Attributes dictionaries should not be equal.");
-    XCTAssertTrue([self.uam.currentUser.idData.customPermissions isEqualToDictionary:origCustomPermissions], @"Custom permission changes should have been overwritten with whole identity write.");
-    XCTAssertFalse([self.uam.currentUser.idData.customAttributes isEqualToDictionary:mutableCustomPermissions], @"Permissions dictionaries should not be equal.");
-}
-
 - (void)testUserAccountManagerPersistentProperties {
     NSArray *oldAdditionalOAuthParameterKeys = [SFUserAccountManager sharedInstance].additionalOAuthParameterKeys;
     NSArray *addlKeys = @[@"A", @"__B", @"123", @""];
@@ -416,14 +389,14 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
     
 }
 
-- (void)testEntityId15 {
+- (void)testEntityId {
     NSString *userId = @"ABCDE12345ABCDE".entityId18;
     SFUserAccountIdentity *identity = [[SFUserAccountIdentity alloc] initWithUserId:userId  orgId:@"ABCDE12345ABCDE"];
     XCTAssertNotNil(identity);
     XCTAssertTrue(userId.length == 18,@"EntityId18 should not be nil");
     XCTAssertNotNil(identity.userId,@"userId should not be nil");
     XCTAssertNotNil(identity.orgId,@"orgId should not be nil");
-    XCTAssertTrue(identity.userId.length == 15 ,@"userId should be set to EntityId 15 format");
+    XCTAssertTrue(identity.userId.length == 18, @"userId should be set to EntityId 18 format");
 }
 
 - (void)testAuthHandler {
@@ -537,7 +510,7 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
     NSError *deleteAccountError = nil;
     [self.uam deleteAccountForUser:user error:&deleteAccountError];
     XCTAssertNil(deleteAccountError, @"Error deleting account with User ID '%@' and Org ID '%@': %@", identity.userId, identity.orgId, [deleteAccountError localizedDescription]);
-    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSFileManager *fm = [NSFileManager defaultManager];
     XCTAssertFalse([fm fileExistsAtPath:userDir], @"User directory for User ID '%@' and Org ID '%@' should be removed.", identity.userId, identity.orgId);
     SFUserAccount *inMemoryAccount = [self.uam userAccountForUserIdentity:identity];
     XCTAssertNil(inMemoryAccount, @"deleteUser should have removed user account with User ID '%@' and OrgID '%@' from the list of users.", identity.userId, identity.orgId);
@@ -615,7 +588,7 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
 {
     NSString *tokenPath = [[NSBundle bundleForClass:testClass] pathForResource:@"test_credentials" ofType:@"json"];
     NSAssert(nil != tokenPath, @"Test config file not found!");
-    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSFileManager *fm = [NSFileManager defaultManager];
     NSData *tokenJson = [fm contentsAtPath:tokenPath];
     id jsonResponse = [SFJsonUtils objectFromJSONData:tokenJson];
     NSAssert(jsonResponse != nil, @"Error parsing JSON from config file: %@", [SFJsonUtils lastError]);
@@ -649,5 +622,44 @@ static NSString * const kOrgIdFormatString = @"00D000000000062EA%lu";
     return credentials;
 }
 
+- (void)testUserAccountEncoding {
+    NSData *data;
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initRequiringSecureCoding:NO];
+
+    // Setup credentials
+    SFOAuthCredentials *credentials = [[SFOAuthCredentials alloc] initWithIdentifier:[NSString stringWithFormat:@"identifier-%lu", (unsigned long)index] clientId:@"fakeClientIdForTesting" encrypted:YES];
+    [credentials setIdentityUrl: [NSURL URLWithString:@"https://test.salesforce.com/id/00DS0000000IDdtWAH/005S0000004y9JkCAF"]];
+    
+    // Setup user
+    SFUserAccount *userIn = [[SFUserAccount alloc] initWithCredentials:credentials];
+    userIn.accessScopes = [NSSet setWithObjects:@"scope1", @"scope2", nil];
+    userIn.idData = [self sampleIdentityData];
+    [userIn setAccessRestrictions:SFUserAccountAccessRestrictionChatter];
+    NSDictionary *customData = @{
+        @"string": @"myString",
+        @"number": @5,
+        @"date": [NSDate now],
+        @"null": [NSNull null],
+        @"array": @[@"one", @"two"]
+    };
+    [userIn setCustomDataObject:customData forKey:@"allTheThings"];
+
+    // Archive/unarchive
+    [archiver encodeObject:userIn forKey:@"account"];
+    [archiver finishEncoding];
+    data = archiver.encodedData;
+    
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:data error:nil];
+    unarchiver.requiresSecureCoding = YES;
+    SFUserAccount *userOut = [unarchiver decodeObjectOfClass:[SFUserAccount class] forKey:@"account"];
+    
+    XCTAssertNotNil(userOut, @"couldn't unarchive user account");
+    XCTAssertNotNil(userOut.credentials, @"couldn't unarchive credentials");
+    XCTAssertNotNil(userOut.idData, @"couldn't unarchive idData");
+   
+    XCTAssertEqualObjects(userIn.customData, userOut.customData, @"customData mismatch");
+    XCTAssertEqualObjects(userIn.accessScopes, userOut.accessScopes, @"accessScopes mismatch");
+    XCTAssertEqual(userIn.accessRestrictions, userOut.accessRestrictions, @"accessRestrictions mismatch");
+}
 
 @end

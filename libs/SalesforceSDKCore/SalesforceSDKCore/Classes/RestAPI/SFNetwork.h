@@ -28,7 +28,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "SalesforceSDKConstants.h"
+#import <SalesforceSDKCore/SalesforceSDKConstants.h>
 
 extern NSString * __nonnull const kSFNetworkEphemeralInstanceIdentifier NS_SWIFT_NAME(NetworkEphemeralInstanceIdentifier);
 extern NSString * __nonnull const kSFNetworkBackgroundInstanceIdentifier NS_SWIFT_NAME(NetworkBackgroundInstanceIdentifier);
@@ -38,7 +38,14 @@ NS_SWIFT_NAME(Network)
 
 typedef void (^SFDataResponseBlock) (NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) NS_SWIFT_NAME(DataResponseBlock);
 
+typedef void (^SFSDKMetricsCollectedBlock)(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLSessionTaskMetrics * _Nonnull metrics);
+
 @property (nonatomic, readonly, strong, nonnull) NSURLSession *activeSession;
+
+/**
+ The block to execute to execeute when metrics are collected on URL session task, if provided.
+ */
+@property (class, nonatomic, copy, nullable) SFSDKMetricsCollectedBlock metricsCollectedAction;
 
 /**
  * Returns an instance of this class with the default ephemeral session configuration.

@@ -37,6 +37,31 @@ typedef NS_ENUM(NSUInteger, SFSmartStoreFtsExtension) {
 // Buffer size when reading/writing bytes in memory
 static NSUInteger kBufferSize = 4096;
 
+// Columns of a soup fts table
+static NSString *const ROWID_COL = @"rowid";
+static NSString *const PATH_COL = @"path";
+
+// Columns of the soup index map table
+static NSString *const SOUP_NAME_COL = @"soupName";
+static NSString *const COLUMN_TYPE_COL = @"columnType";
+
+// Table to keep track of soup attributes
+static NSString *const SOUP_ATTRS_TABLE = @"soup_attrs";
+
+// Table to keep track of soup's index specs
+static NSString *const SOUP_INDEX_MAP_TABLE = @"soup_index_map";
+
+// Columns of long operations status table
+static NSString *const TYPE_COL = @"type";
+static NSString *const DETAILS_COL = @"details";
+static NSString *const STATUS_COL = @"status";
+
+// Table to keep track of status of long operations in flight
+static NSString *const LONG_OPERATIONS_STATUS_TABLE = @"long_operations_status";
+
+// Explain support
+static NSString *const EXPLAIN_ROWS = @"rows";
+
 @interface SFSmartStore ()
 
 @property (nonatomic, strong) FMDatabaseQueue *storeQueue;
@@ -195,10 +220,21 @@ static NSUInteger kBufferSize = 4096;
 
 
 /**
+ @param path Path of interest
+ @param soupName name of the soup
  @param db This method is expected to be called from [fmdbqueue inDatabase:^(){ ... }]
- @return The map of an indexSpec path to a column name from SOUP_INDEX_MAP_TABLE.
+ @return The column name for the given path if indexed or nil otherwise.
  */
 - (NSString *)columnNameForPath:(NSString *)path inSoup:(NSString *)soupName withDb:(FMDatabase*)db;
+
+
+/**
+ @param path Path of interest
+ @param soupName name of the soup
+ @param db This method is expected to be called from [fmdbqueue inDatabase:^(){ ... }]
+ @return YES if the given path is indexed or NO otherwise.
+ */
+- (BOOL) hasIndexForPath:(NSString*)path inSoup:(NSString*)soupName withDb:(FMDatabase*) db;
 
 /**
  Similar to System.currentTimeMillis: time in ms since Jan 1 1970
@@ -208,9 +244,19 @@ static NSUInteger kBufferSize = 4096;
 - (NSNumber*)currentTimeInMilliseconds;
 
 /**
+ @return The legacy key used to encrypt the store.
+ */
++ (NSString *)legacyEncKey;
+
+/**
  @return The key used to encrypt the store.
  */
 + (NSString *)encKey;
+
+/**
+ @return The legacy salt used to encrypt the store for shared mode. Sqlite headers are maintained in plain text for database.
+ */
++ (NSString *)legacySalt;
 
 /**
  @return The key used to encrypt the store for shared mode. Sqlite headers are maintained in plain text for database.

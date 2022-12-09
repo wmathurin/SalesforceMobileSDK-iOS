@@ -85,10 +85,10 @@ static NSString * const kSFSyncTargetObjectType = @"sobjectType";
          errorBlock:(SFSyncDownTargetFetchErrorBlock)errorBlock
       completeBlock:(SFSyncDownTargetFetchCompleteBlock)completeBlock {
     __weak typeof(self) weakSelf = self;
-    SFRestRequest *request = [[SFRestAPI sharedInstance] requestForDescribeWithObjectType:objectType apiVersion:kSFRestDefaultAPIVersion];
-    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+    SFRestRequest *request = [[SFRestAPI sharedInstance] requestForDescribeWithObjectType:objectType apiVersion:nil];
+    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
         errorBlock(e);
-    } completeBlock:^(NSDictionary *d, NSURLResponse *rawResponse) {
+    } successBlock:^(NSDictionary *d, NSURLResponse *rawResponse) {
         weakSelf.totalSize = 1;
         NSMutableDictionary *record = [[NSMutableDictionary alloc] initWithDictionary:d];
         record[kId] = weakSelf.objectType;

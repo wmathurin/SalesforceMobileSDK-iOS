@@ -53,7 +53,7 @@ NSString * const kSyncTargetLastError = @"__last_error__";
 #pragma mark - From/to dictionary
 
 - (instancetype)initWithDict:(NSDictionary *)dict {
-    if (dict == nil) return nil;
+    if (dict == nil) dict = @{};
     
     self = [super init];
     if (self) {
@@ -120,6 +120,10 @@ NSString * const kSyncTargetLastError = @"__last_error__";
 
 - (NSDictionary*) getFromLocalStore:(SFMobileSyncSyncManager *)syncManager soupName:(NSString*)soupName storeId:(NSNumber*)storeId {
     return [syncManager.store retrieveEntries:@[storeId] fromSoup:soupName][0];
+}
+
+- (NSArray<NSDictionary*>*) getFromLocalStore:(SFMobileSyncSyncManager *)syncManager soupName:(NSString*)soupName storeIds:(NSArray<NSNumber*>*)storeIds {
+    return [syncManager.store retrieveEntries:storeIds fromSoup:soupName];
 }
 
 - (void) deleteFromLocalStore:(SFMobileSyncSyncManager *)syncManager soupName:(NSString*)soupName record:(NSDictionary*)record {
@@ -204,6 +208,14 @@ NSString * const kSyncTargetLastError = @"__last_error__";
         [flatArray addObjectsFromArray:row];
     }
     return flatArray;
+}
+
++ (NSString*) createLocalId {
+    return [NSString stringWithFormat:@"local_%09d", arc4random_uniform(1000000000)];
+}
+
++ (BOOL) isLocalId:(NSString*)recordId {
+    return [recordId hasPrefix:@"local_"];
 }
 
 @end

@@ -1,5 +1,3 @@
-import Foundation
-
 /*
  RestClient.swift
  SalesforceSDKCore
@@ -28,25 +26,26 @@ import Foundation
  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+import Foundation
 import Combine
+
 /// Errors that can be thrown while using RestClient
 public enum RestClientError: Error {
     case apiResponseIsEmpty
-    case apiInvocationFailed(underlyingError: Error, urlResponse: URLResponse?)
+    case apiFailed(response: Any?, underlyingError: Error, urlResponse: URLResponse?)
     case decodingFailed(underlyingError: Error)
     case jsonSerialization(underlyingError: Error)
 }
 
 public struct RestResponse {
-    private static let emptyJsonDictionaryArrayResponse = [String: Any]()
-    private static let emptyJsonArrayResponse = [[String: Any]]()
     private static let emptyStringResponse = ""
-    private (set) var data: Data
-    private (set) var urlResponse: URLResponse
+    private(set) var data: Data
+    public private(set) var urlResponse: URLResponse
     
-    /// Initializes the RestResponse with a Data object and URLResponse
-    /// - Parameter data: Response as raw Data
-    /// - Parameter urlResponse: URlResponse from endpoint
+    /// Initializes the RestResponse with a Data object and URLResponse.
+    /// - Parameter data: Raw response as Data.
+    /// - Parameter urlResponse: URlResponse from endpoint.
     public init(data: Data, urlResponse: URLResponse) {
         self.data = data
         self.urlResponse = urlResponse
@@ -62,21 +61,23 @@ public struct RestResponse {
         }
     }
     
-    /// Get response as Data object. Use this for retrieving  binary objects
+    /// Get response as Data object. Use this for retrieving  binary objects.
+    /// - Returns:
+    /// Data object containing the response.
     public func asData() -> Data {
         return self.data
     }
     
-    /// Parse response as String
+    /// Parse response as String.
+    /// - Returns: `String` containing the response.
     public func asString() -> String {
         let stringData = String(data: data, encoding: String.Encoding.utf8)
         return stringData ?? RestResponse.emptyStringResponse
     }
     
-    /// Decode the response as  a codable
+    /// Decode the response as  a codable.
     /// - Parameter type: The type to use for decoding.
-    public func asDecodable<T: Decodable>(type: T.Type) throws -> Decodable? {
-        let decoder = JSONDecoder()
+    public func asDecodable<T: Decodable>(type: T.Type, decoder: JSONDecoder = .init()) throws -> T {
         do {
             let object = try decoder.decode(type, from: data)
             return object
@@ -86,17 +87,40 @@ public struct RestResponse {
     }
 }
 
+extension RestRequest {
+  
+  /// Calculated property to determine if this request is a data retrieval request with a SOQL or SOSL query.
+  /// All such queries will return a JSON decodable QueryResponseWrapper.
+  /// Implied contract is that all requests matching both properties here will be decodable via QueryResponseWrapper<Record>
+  public var isQueryRequest: Bool {
+    get {
+      return self.method == .GET && (self.path.lowercased().hasSuffix("query") || self.path.lowercased().hasSuffix("search"))
+    }
+  }
+  
+}
+
 extension RestClient {
+  
+    /// Struct represents the JSON Structure of a Salesforce Response.
+    /// This struct requires a Model Object that conforms to Decodable
+    /// This model object's properties need to match the Salesforce Schema
+    ///   at least in part.
+    public struct QueryResponse<Record: Decodable>: Decodable {
+      var totalSize: Int?
+      var done: Bool?
+      var records: [Record]?
+    }
     
-    /// Execute a request.
-    /// - Parameter request: RestRequest object
-    /// - Parameter completionBlock: The completion block to invoke.
+    /// Execute a prebuilt request.
+    /// - Parameter request: `RestRequest` object.
+    /// - Parameter completionBlock: `Result` block that handles the server's response.
     public func send(request: RestRequest, _ completionBlock: @escaping (Result<RestResponse, RestClientError>) -> Void) {
         request.parseResponse = false
-        __send(request, fail: { (error, urlResponse) in
-            let apiError = RestClientError.apiInvocationFailed(underlyingError: error ?? RestClientError.apiResponseIsEmpty, urlResponse: urlResponse)
+        __send(request, failureBlock: { (rawResponse, error, urlResponse) in
+            let apiError = RestClientError.apiFailed(response: rawResponse, underlyingError: error ?? RestClientError.apiResponseIsEmpty, urlResponse: urlResponse)
             completionBlock(Result.failure(apiError))
-        }, complete: { (rawResponse, urlResponse) in
+        }, successBlock: { (rawResponse, urlResponse) in
             if let data = rawResponse as? Data,
                 let urlResponse = urlResponse {
                 let result = RestResponse(data: data, urlResponse: urlResponse)
@@ -107,35 +131,102 @@ extension RestClient {
         })
     }
     
-    /// Execute a request.
-    /// - Parameter request: Composite Request object
-    /// - Parameter completionBlock: The completion block to invoke.
+    /// Execute a prebuilt composite request.
+    /// - Parameter compositeRequest: `CompositeRequest` object containing the array of subrequests to execute.
+    /// - Parameter completionBlock: `Result` block that handles the server's response.
+    /// - See   [Composite](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_composite.htm).
     public func send(compositeRequest: CompositeRequest, _ completionBlock: @escaping (Result<CompositeResponse, RestClientError>) -> Void) {
         compositeRequest.parseResponse = false
-        __sendCompositeRESTRequest(compositeRequest, fail: { (error, urlResponse) in
-            let apiError = RestClientError.apiInvocationFailed(underlyingError: error ?? RestClientError.apiResponseIsEmpty, urlResponse: urlResponse)
+        __send(compositeRequest, failureBlock: { (response, error, urlResponse) in
+            let apiError = RestClientError.apiFailed(response: response, underlyingError: error ?? RestClientError.apiResponseIsEmpty, urlResponse: urlResponse)
             completionBlock(Result.failure(apiError))
-        }, complete: { (response, _) in
+        }, successBlock: { (response, _) in
             completionBlock(Result.success(response))
         })
     }
     
-    /// Execute a request.
-    /// - Parameter request: Batch Request object
-    /// - Parameter completionBlock: The completion block to invoke.
+    /// Execute a prebuilt batch of requests.
+    /// - Parameter batchRequest: `BatchRequest` object containing the array of subrequests to execute.
+    /// - Parameter completionBlock: `Result` block that handles the server's response.
+    /// - See   [Batch](https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/resources_composite_batch.htm).
     public func send(batchRequest: BatchRequest, _ completionBlock: @escaping (Result<BatchResponse, RestClientError>) -> Void ) {
         batchRequest.parseResponse = false
-        __sendBatchRESTRequest(batchRequest, fail: { (error, urlResponse) in
-            let apiError = RestClientError.apiInvocationFailed(underlyingError: error ?? RestClientError.apiResponseIsEmpty, urlResponse: urlResponse)
+        __send(batchRequest, failureBlock: { (response, error, urlResponse) in
+            let apiError = RestClientError.apiFailed(response: response, underlyingError: error ?? RestClientError.apiResponseIsEmpty, urlResponse: urlResponse)
             completionBlock(Result.failure(apiError))
-        }, complete: { (response, _) in
+        }, successBlock: { (response, _) in
             completionBlock(Result.success(response))
         })
     }
   
+    // MARK: Record Convience API - Pure Swift 4+
+    
+    /// This method provides a reusuable, generic pipeline for retrieving records
+    ///   from Salesforce. It relys on Swift Generics, and type inference to determine what
+    ///  models to create.
+    ///
+    /// Given a model object - Contact, you can use this method like this:
+    ///   RestClient.shared.fetchRecords(ofModelType: ModelName.self, forRequest: request) { result in
+    ///       switch result {
+    ///       case .success(let records):
+    ///           do something with your array of model objects
+    ///       case .failure(let error):
+    ///           print(error)
+    ///       }
+    ///     }
+    ///
+    /// This method relies on the passed parameter ofModelType to infer the generic Record's
+    /// concrete type.
+    public func fetchRecords<Record: Decodable>(ofModelType modelType: Record.Type,
+                                         forRequest request: RestRequest,
+                                         withDecoder decoder: JSONDecoder = .init(),
+                                       _ completionBlock: @escaping (Result<QueryResponse<Record>, RestClientError>) -> Void) {
+      guard request.isQueryRequest else { return }
+      RestClient.shared.send(request: request) { result in
+          switch result {
+              case .success(let response):
+                do {
+                  let wrapper = try response.asDecodable(type: QueryResponse<Record>.self, decoder: decoder)
+                  completionBlock(.success(wrapper))
+                } catch {
+                  completionBlock(.success(QueryResponse<Record>(totalSize: 0, done: true, records: [])))
+              }
+              case .failure(let err):
+                  completionBlock(.failure(err))
+          }
+        }
+    }
+  
+    /// This method provides a reusuable, generic pipeline for retrieving records
+    ///   from Salesforce. It relys on Swift Generics, and type inference to determine what
+    ///  models to create.
+    ///
+    /// Given a model object - Account, you can use this method like this:
+    ///   RestClient.shared.fetchRecords(ofModelType: Account.self,
+    ///                                  forQuery: "select id from account"
+    ///                                  withApiVersion: "v48.0") { result in
+    ///       switch result {
+    ///       case .success(let records):
+    ///           do something with your array of model objects
+    ///       case .failure(let error):
+    ///           print(error)
+    ///       }
+    ///     }
+    ///
+    /// This method relies on the passed parameter ofModelType to infer the generic Record's
+    /// concrete type.
+    public func fetchRecords<Record: Decodable>(ofModelType modelType: Record.Type,
+                                         forQuery query: String,
+                                         withApiVersion version: String = SFRestDefaultAPIVersion,
+                                         withDecoder decoder: JSONDecoder = .init(),
+                                         _ completionBlock: @escaping (Result<QueryResponse<Record>, RestClientError>) -> Void) {
+        let request = RestClient.shared.request(forQuery: query, apiVersion: version)
+        guard request.isQueryRequest else { return }
+        return self.fetchRecords(ofModelType: modelType, forRequest: request, withDecoder: decoder, completionBlock)
+    }
+  
 }
 
-@available(iOS 13.0, watchOS 6.0, *)
 extension RestClient {
     
     public func publisher(for request: RestRequest) -> Future<RestResponse, RestClientError> {
@@ -175,5 +266,44 @@ extension RestClient {
                 }
             }
         }
+    }
+  
+    // MARK: Record Convience API - Swift & Combine
+
+  
+    /// This method provides a reusuable, generic Combine pipeline for retrieving records
+    ///   from Salesforce. It relys on Swift Generics, and type inference to determine what
+    ///  models to create.
+    ///
+    /// Given a model object - Contact, you can use this pipeline like this:
+    /// contactsForCancellable = RestClient.shared.records(forRequest: request)
+    ///   .receive(on: RunLoop.main)
+    ///   .assign(to: \.contacts, on: self)
+    ///
+    /// This pipeline infers it's return type from the variable in the assign subscriber.
+    public func records<Record: Decodable>(forRequest request: RestRequest,
+                                    withDecoder decoder: JSONDecoder = .init()) -> AnyPublisher<QueryResponse<Record>, Never> {
+      guard request.isQueryRequest else {
+        return Empty(completeImmediately: true).eraseToAnyPublisher()
+      }
+      return RestClient.shared.publisher(for: request)
+        .tryMap({ (response) -> Data in
+          response.asData()
+        })
+        .decode(type: QueryResponse<Record>.self, decoder: decoder)
+        .catch({ _ in
+          Just(QueryResponse<Record>(totalSize: 0, done: true, records: []))
+        })
+        .eraseToAnyPublisher()
+    }
+  
+    /// Reusable, generic Combine Pipeline returning an array of records of a local
+    /// model object that conforms to Decodable. This method accepts a query string and defers
+    /// to records<Record:Decodable>(forRequest request: RestRequest) -> AnyPublisher<[Record], Never>
+    public func records<Record: Decodable>(forQuery query: String,
+                                    withApiVersion version: String = SFRestDefaultAPIVersion,
+                                    withDecoder decoder: JSONDecoder = .init()) -> AnyPublisher<QueryResponse<Record>, Never> {
+        let request = RestClient.shared.request(forQuery: query, apiVersion: version)
+        return self.records(forRequest: request, withDecoder: decoder)
     }
 }

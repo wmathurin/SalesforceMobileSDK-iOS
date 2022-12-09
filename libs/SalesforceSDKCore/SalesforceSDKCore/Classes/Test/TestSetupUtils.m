@@ -40,7 +40,7 @@ static SFOAuthCredentials *credentials = nil;
 {
     NSString *tokenPath = [[NSBundle bundleForClass:testClass] pathForResource:@"ui_test_credentials" ofType:@"json"];
     NSAssert(nil != tokenPath, @"UI test config file not found!");
-    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSFileManager *fm = [NSFileManager defaultManager];
     NSData *jsonData = [fm contentsAtPath:tokenPath];
     NSArray *jsonDataArray = [[NSArray alloc] initWithArray:[SFJsonUtils objectFromJSONData:jsonData]];
     NSAssert(jsonDataArray != nil, @"Error parsing JSON from config file: %@", [SFJsonUtils lastError]);
@@ -51,7 +51,7 @@ static SFOAuthCredentials *credentials = nil;
 {
     NSString *tokenPath = [[NSBundle bundleForClass:testClass] pathForResource:@"test_credentials" ofType:@"json"];
     NSAssert(nil != tokenPath, @"Test config file not found!");
-    NSFileManager *fm = [[NSFileManager alloc] init];
+    NSFileManager *fm = [NSFileManager defaultManager];
     NSData *tokenJson = [fm contentsAtPath:tokenPath];
     id jsonResponse = [SFJsonUtils objectFromJSONData:tokenJson];
     NSAssert(jsonResponse != nil, @"Error parsing JSON from config file: %@", [SFJsonUtils lastError]);
@@ -89,6 +89,7 @@ static SFOAuthCredentials *credentials = nil;
     }
     credentials.accessToken = credsData.accessToken;
     credentials.refreshToken = credsData.refreshToken;
+    [[SFUserAccountManager sharedInstance] currentUser].credentials = credentials;
     return credsData;
 }
 
@@ -104,6 +105,10 @@ static SFOAuthCredentials *credentials = nil;
      completion:^(SFOAuthInfo *authInfo, SFUserAccount *userAccount) {
          authListener.returnStatus = kTestRequestStatusDidLoad;
          user = userAccount;
+         // Ensure tests don't change/corrupt the current user credentials.  
+         if(user.credentials.refreshToken == nil) {
+             user.credentials = credentials;
+         }
      } failure:^(SFOAuthInfo *authInfo, NSError *error) {
          authListener.lastError = error;
          authListener.returnStatus = kTestRequestStatusDidFail;
@@ -116,7 +121,8 @@ static SFOAuthCredentials *credentials = nil;
 }
 
 + (SFOAuthCredentials *)newClientCredentials {
-    NSString *identifier = [SFUserAccountManager sharedInstance].oauthClientId;
+    
+    NSString *identifier = [[SFUserAccountManager sharedInstance]  uniqueUserAccountIdentifier:[SFUserAccountManager sharedInstance].oauthClientId];
     SFOAuthCredentials *creds = [[SFOAuthCredentials alloc] initWithIdentifier:identifier clientId:[SFUserAccountManager sharedInstance].oauthClientId encrypted:YES];
     creds.clientId = [SFUserAccountManager sharedInstance].oauthClientId;
     creds.redirectUri = [SFUserAccountManager sharedInstance].oauthCompletionUrl;

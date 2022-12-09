@@ -22,10 +22,10 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFParentInfo.h"
-#import "SFChildrenInfo.h"
-#import "SFMobileSyncSyncManager.h"
-#import "SFSyncTarget.h"
+#import <MobileSync/SFParentInfo.h>
+#import <MobileSync/SFChildrenInfo.h>
+#import <MobileSync/SFMobileSyncSyncManager.h>
+#import <MobileSync/SFSyncTarget.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -39,8 +39,6 @@ extern NSString * const kSFParentChildrenSyncTargetParent;
 extern NSString * const kSFParentChildrenSyncTargetChildren;
 extern NSString * const kSFParentChildrenSyncTargetRelationshipType;
 extern NSString * const kSFParentChildrenSyncTargetParentFieldlist;
-extern NSString * const kSFParentChildrenSyncTargetParentCreateFieldlist;
-extern NSString * const kSFParentChildrenSyncTargetParentUpdateFieldlist;
 extern NSString * const kSFParentChildrenSyncTargetParentSoqlFilter;
 extern NSString * const kSFParentChildrenSyncTargetChildrenFieldlist;
 extern NSString * const kSFParentChildrenSyncTargetChildrenCreateFieldlist;

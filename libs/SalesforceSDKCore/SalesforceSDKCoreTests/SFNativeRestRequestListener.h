@@ -26,10 +26,11 @@
 #import "SFRestRequest.h"
 #import <SalesforceSDKCore/SFSDKTestRequestListener.h>
 
-@interface SFNativeRestRequestListener : SFSDKTestRequestListener <SFRestDelegate>
+@interface SFNativeRestRequestListener : SFSDKTestRequestListener <SFRestRequestDelegate>
 
 @property (nonatomic, strong) SFRestRequest *request;
 @property (nonatomic, assign) NSTimeInterval sleepDuringLoad;
+@property (nonatomic, strong) NSURLResponse *rawResponse;
 
 - (id)initWithRequest:(SFRestRequest *)request;
 

@@ -23,7 +23,7 @@
  */
 
 #import "SFSyncUpTarget+Internal.h"
-#import "SFBatchSyncUpTarget.h"
+#import <MobileSync/MobileSync-Swift.h>
 #import "SFMobileSyncConstants.h"
 #import "SFMobileSyncNetworkUtils.h"
 #import "SFMobileSyncSyncManager.h"
@@ -35,6 +35,8 @@
 //
 NSString * const kSFSyncUpTargetCreateFieldlist = @"createFieldlist";
 NSString * const kSFSyncUpTargetUpdateFieldlist = @"updateFieldlist";
+NSString * const kSFSyncUpTargetExternalIdFieldName = @"externalIdFieldName";
+
 
 // target types
 static NSString *const kSFSyncUpTargetTypeRestStandard = @"rest";
@@ -63,7 +65,13 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
 #pragma mark - Initialization and serialization methods
 
 - (instancetype)initWithDict:(NSDictionary *)dict {
-    return [self initWithCreateFieldlist:dict[kSFSyncUpTargetCreateFieldlist] updateFieldlist:dict[kSFSyncUpTargetUpdateFieldlist]];
+    self = [super initWithDict:dict];
+    if (self) {
+        self.createFieldlist = dict[kSFSyncUpTargetCreateFieldlist];
+        self.updateFieldlist = dict[kSFSyncUpTargetUpdateFieldlist];
+        self.externalIdFieldName = dict[kSFSyncUpTargetExternalIdFieldName];
+    }
+    return self;
 }
 
 - (instancetype)init {
@@ -80,7 +88,6 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
     }
     return self;
 }
-
 
 + (instancetype)newFromDict:(NSDictionary*)dict {
     // We should have an implementation class or a target type
@@ -100,8 +107,8 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
         NSString *targetTypeString = (dict == nil || dict[kSFSyncTargetTypeKey] == nil ? kSFSyncUpTargetTypeRestStandard : dict[kSFSyncTargetTypeKey]);
         switch ([self targetTypeFromString:targetTypeString]) {
             case SFSyncUpTargetTypeRestStandard:
-                // Default sync up target (it's SFBatchSyncUpTarget starting in Mobile SDK 7.1)
-                return [[SFBatchSyncUpTarget alloc] initWithDict:dict];
+                // Default sync up target (it's SFCollectionSyncUpTarget starting in Mobile SDK 10.1)
+                return [[SFCollectionSyncUpTarget alloc] initWithDict:dict];
             case SFSyncUpTargetTypeCustom:
                 [SFSDKMobileSyncLogger e:[self class] format:@"%@ Custom class name not specified.", NSStringFromSelector(_cmd)];
                 return nil;
@@ -114,6 +121,7 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
     dict[kSFSyncTargetTypeKey] = [[self class] targetTypeToString:self.targetType];
     if (self.createFieldlist) dict[kSFSyncUpTargetCreateFieldlist] = self.createFieldlist;
     if (self.updateFieldlist) dict[kSFSyncUpTargetUpdateFieldlist] = self.updateFieldlist;
+    if (self.externalIdFieldName) dict[kSFSyncUpTargetExternalIdFieldName] = self.externalIdFieldName;
     return dict;
 }
 
@@ -137,6 +145,41 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
     }
 }
 
+- (void)areNewerThanServer:(SFMobileSyncSyncManager *)syncManager
+                   records:(NSArray<NSDictionary*>*)records
+              resultBlock:(SFSyncUpRecordsNewerThanServerBlock)resultBlock
+{
+    [self isNewerThanServer:syncManager
+                    records:records
+                      index:0
+                     result:[NSMutableDictionary new]
+                resultBlock:resultBlock];
+}
+
+- (void)isNewerThanServer:(SFMobileSyncSyncManager *)syncManager
+                   records:(NSArray<NSDictionary*>*)records
+                     index:(NSUInteger)i
+                    result:(NSMutableDictionary*)result
+              resultBlock:(SFSyncUpRecordsNewerThanServerBlock)resultBlock
+{
+    NSDictionary* record = records[i];
+    NSNumber* storeId = record[SOUP_ENTRY_ID];
+    __weak typeof(self) weakSelf = self;
+    [self isNewerThanServer:syncManager record:record resultBlock:^(BOOL isNewerThanServer) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        result[storeId] = [NSNumber numberWithBool:isNewerThanServer];
+        if (i < records.count-1) {
+            [strongSelf isNewerThanServer:syncManager
+                                  records:records
+                                    index:i+1
+                                   result:result
+                              resultBlock:resultBlock];
+        } else {
+            resultBlock(result);
+        }
+    }];
+}
+
 
 - (void)createOnServer:(SFMobileSyncSyncManager *)syncManager
                 record:(NSDictionary*)record
@@ -147,7 +190,16 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
     fieldlist = self.createFieldlist ? self.createFieldlist : fieldlist;
     NSString* objectType = [SFJsonUtils projectIntoJson:record path:kObjectTypeField];
     NSDictionary * fields = [self buildFieldsMap:record fieldlist:fieldlist];
-    [self createOnServer:objectType fields:fields completionBlock:completionBlock failBlock:failBlock];
+    NSString* externalId = self.externalIdFieldName ? record[self.externalIdFieldName] : nil;
+    if (externalId
+        // the following check is there for the case
+        // where the the external id field is the id field
+        // and the field is populated by a local id
+        && ![SFSyncTarget isLocalId:externalId]) {
+        [self upsertOnServer:objectType fields:fields externalId:externalId completionBlock:completionBlock failBlock:failBlock];
+    } else {
+        [self createOnServer:objectType fields:fields completionBlock:completionBlock failBlock:failBlock];
+    }
 }
 
 - (void)updateOnServer:(SFMobileSyncSyncManager *)syncManager
@@ -226,13 +278,18 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
        completionBlock:(SFSyncUpTargetCompleteBlock)completionBlock
              failBlock:(SFSyncUpTargetErrorBlock)failBlock
 {
-    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForCreateWithObjectType:objectType fields:fields apiVersion:kSFRestDefaultAPIVersion];
-    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
-        self.lastError = e.description;
-        failBlock(e);
-    } completeBlock:^(NSDictionary* d, NSURLResponse *rawResponse) {
-        completionBlock(d);
-    }];
+    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForCreateWithObjectType:objectType fields:fields apiVersion:nil];
+    [self sendRequest:request completionBlock:completionBlock failBlock:failBlock];
+}
+
+- (void)upsertOnServer:(NSString*)objectType
+                fields:(NSDictionary*)fields
+            externalId:(NSString*)externalId
+       completionBlock:(SFSyncUpTargetCompleteBlock)completionBlock
+             failBlock:(SFSyncUpTargetErrorBlock)failBlock
+{
+    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForUpsertWithObjectType:objectType externalIdField:self.externalIdFieldName externalId:externalId fields:fields apiVersion:nil];
+    [self sendRequest:request completionBlock:completionBlock failBlock:failBlock];
 }
 
 - (void)updateOnServer:(NSString*)objectType
@@ -241,13 +298,8 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
        completionBlock:(SFSyncUpTargetCompleteBlock)completionBlock
              failBlock:(SFSyncUpTargetErrorBlock)failBlock
 {
-    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:objectType objectId:objectId fields:fields apiVersion:kSFRestDefaultAPIVersion];
-    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
-        self.lastError = e.description;
-        failBlock(e);
-    } completeBlock:^(NSDictionary* d, NSURLResponse *rawResponse) {
-        completionBlock(d);
-    }];
+    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForUpdateWithObjectType:objectType objectId:objectId fields:fields apiVersion:nil];
+    [self sendRequest:request completionBlock:completionBlock failBlock:failBlock];
 }
 
 - (void)deleteOnServer:(NSString*)objectType
@@ -255,14 +307,22 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
        completionBlock:(SFSyncUpTargetCompleteBlock)completionBlock
              failBlock:(SFSyncUpTargetErrorBlock)failBlock
 {
-    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForDeleteWithObjectType:objectType objectId:objectId apiVersion:kSFRestDefaultAPIVersion];
-    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
-        self.lastError = e.description;
+    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForDeleteWithObjectType:objectType objectId:objectId apiVersion:nil];
+    [self sendRequest:request completionBlock:completionBlock failBlock:failBlock];
+}
+
+- (void)sendRequest:(SFRestRequest*)request
+       completionBlock:(SFSyncUpTargetCompleteBlock)completionBlock
+             failBlock:(SFSyncUpTargetErrorBlock)failBlock
+{
+    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
+        self.lastError = [SFJsonUtils JSONRepresentation:response];
         failBlock(e);
-    } completeBlock:^(NSDictionary* d, NSURLResponse *rawResponse) {
+    } successBlock:^(NSDictionary* d, NSURLResponse *rawResponse) {
         completionBlock(d);
     }];
 }
+
 
 - (void)fetchLastModifiedDate:(NSDictionary *)record
                 completeBlock:(SFSyncUpRecordModDateBlock)completeBlock {
@@ -273,22 +333,18 @@ typedef void (^SFSyncUpRecordModDateBlock)(SFRecordModDate *remoteModDate);
             requestForRetrieveWithObjectType:objectType
                                     objectId:objectId
                                    fieldList:self.modificationDateFieldName
-                                  apiVersion:kSFRestDefaultAPIVersion];
+                                  apiVersion:nil];
 
-    [SFMobileSyncNetworkUtils
-            sendRequestWithMobileSyncUserAgent:request
-                                    failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request
+                                    failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
                                         completeBlock([[SFRecordModDate alloc] initWithTimestamp:nil isDeleted:e.code == 404]);
                                     }
-                                completeBlock:^(id response, NSURLResponse *rawResponse) {
+                                successBlock:^(id response, NSURLResponse *rawResponse) {
                                     completeBlock([[SFRecordModDate alloc] initWithTimestamp:response[self.modificationDateFieldName] isDeleted:FALSE]);
                                 }
     ];
 }
-/**
- Return true if local mod date is greater than remote mod date
- NB: also return true if both were deleted or if local mod date is missing
-*/
+
 - (BOOL)isNewerThanServer:(SFRecordModDate*)localModDate
         remoteModDate:(SFRecordModDate*)remoteModDate
 {

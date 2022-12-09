@@ -259,17 +259,16 @@ static NSUInteger const kSFSyncTargetRefreshDefaultCountIdsPerSoql = 500;
             maxTimeStamp:(long long)maxTimeStamp
               errorBlock:(SFSyncDownTargetFetchErrorBlock)errorBlock
            completeBlock:(SFSyncDownTargetFetchCompleteBlock)completeBlock {
-
     NSString* maxTimeStampStr = [SFMobileSyncObjectUtils getIsoStringFromMillis:maxTimeStamp];
     NSString* andClause = (maxTimeStamp > 0
                            ? [NSString stringWithFormat:@" AND %@ > %@", self.modificationDateFieldName, maxTimeStampStr]
                            : @"");
     NSString* whereClause = [NSString stringWithFormat:@"%@ IN ('%@')%@", self.idFieldName, [ids componentsJoinedByString:@"','"], andClause];
     NSString* soql = [[[[SFSDKSoqlBuilder withFieldsArray:fieldlist] from:self.objectType] whereClause:whereClause] build];
-    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForQuery:soql apiVersion:kSFRestDefaultAPIVersion];
-    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failBlock:^(NSError *e, NSURLResponse *rawResponse) {
+    SFRestRequest* request = [[SFRestAPI sharedInstance] requestForQuery:soql apiVersion:nil];
+    [SFMobileSyncNetworkUtils sendRequestWithMobileSyncUserAgent:request failureBlock:^(id response, NSError *e, NSURLResponse *rawResponse) {
         errorBlock(e);
-    } completeBlock:^(NSDictionary *d, NSURLResponse *rawResponse) {
+    } successBlock:^(NSDictionary *d, NSURLResponse *rawResponse) {
         completeBlock(d[kResponseRecords]);
     }];
 }

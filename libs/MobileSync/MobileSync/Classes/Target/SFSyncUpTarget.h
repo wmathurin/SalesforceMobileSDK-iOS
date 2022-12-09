@@ -23,10 +23,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "SFSyncTarget.h"
+#import <MobileSync/SFSyncTarget.h>
 
 extern NSString * _Nonnull const kSFSyncUpTargetCreateFieldlist;
 extern NSString * _Nonnull const kSFSyncUpTargetUpdateFieldlist;
+extern NSString * _Nonnull const kSFSyncUpTargetExternalIdFieldName;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -74,9 +75,14 @@ typedef NS_ENUM(NSUInteger, SFSyncUpTargetAction) {
 } NS_SWIFT_NAME(SyncUpTarget.Action);
 
 /**
- Block definition for returning whether a records changed on server.
+ Block definition for returning whether a record changed on server.
  */
 typedef void (^SFSyncUpRecordNewerThanServerBlock)(BOOL isNewerThanServer) NS_SWIFT_NAME(RecordNewerThanServerBlock);
+
+/**
+ Block definition for returning whether records changed on server.
+ */
+typedef void (^SFSyncUpRecordsNewerThanServerBlock)(NSDictionary* areNewerThanServer) NS_SWIFT_NAME(RecordsNewerThanServerBlock);
 
 /**
  Block definition for calling a sync up completion block.
@@ -91,6 +97,7 @@ typedef void (^SFSyncUpTargetErrorBlock)(NSError *error) NS_SWIFT_NAME(SyncUpErr
 /**
  Helper class for isNewerThanServer
  */
+NS_SWIFT_NAME(RecordModDate)
 @interface SFRecordModDate : NSObject
 
 @property (nonatomic, strong) NSDate*  timestamp;   // time stamp - can be nil if unknown
@@ -120,6 +127,11 @@ NS_SWIFT_NAME(SyncUpTarget)
  Update field list (optional)
  */
 @property (nonatomic, strong, readonly) NSArray<NSString*>*  updateFieldlist;
+
+/**
+ External id field name (optional)
+ */
+@property (nonatomic, copy) NSString *externalIdFieldName;
 
 /**
  Creates a new instance of a server target from a serialized dictionary.
@@ -157,6 +169,25 @@ NS_SWIFT_NAME(SyncUpTarget)
 - (void)isNewerThanServer:(SFMobileSyncSyncManager *)syncManager
                    record:(NSDictionary*)record
              resultBlock:(SFSyncUpRecordNewerThanServerBlock)resultBlock;
+
+
+/**
+ Return true if local mod date is greater than remote mod date
+ NB: also return true if both were deleted or if local mod date is missing
+*/
+- (BOOL)isNewerThanServer:(nullable SFRecordModDate*)localModDate
+            remoteModDate:(nullable SFRecordModDate*)remoteModDate;
+
+
+/**
+Same as isNewerThanServer but operating over a list of records
+Return dictionary from record store id to boolean
+ @param records The records
+ @param resultBlock The block to execute
+*/
+ - (void)areNewerThanServer:(SFMobileSyncSyncManager *)syncManager
+                   records:(NSArray<NSDictionary*>*)records
+                resultBlock:(SFSyncUpRecordsNewerThanServerBlock)resultBlock;
 
 /**
  Save locally created record back to server

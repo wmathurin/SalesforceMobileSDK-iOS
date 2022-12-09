@@ -23,6 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <SalesforceSDKCore/SalesforceSDKConstants.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -63,9 +64,14 @@ extern NSString * const kSFSmartStoreEncryptionKeyLabel NS_SWIFT_NAME(SmartStore
 extern NSString * const kSFSmartStoreEncryptionSaltLabel NS_SWIFT_NAME(SmartStore.encryptionSaltLabel);
 
 /**
+ Block typedef for generating legacy encryption key.
+ */
+typedef SFEncryptionKey* _Nullable (^SFSmartStoreEncryptionKeyBlock)(void) NS_SWIFT_NAME(EncryptionKeyBlock) __attribute__ ((deprecated("Deprecated in Salesforce Mobile SDK 9.2 and only used for upgrade")));
+
+/**
  Block typedef for generating an encryption key.
  */
-typedef SFEncryptionKey*  _Nullable (^SFSmartStoreEncryptionKeyBlock)(void) NS_SWIFT_NAME(EncryptionKeyBlock);
+typedef NSData* _Nullable (^SFSmartStoreEncryptionKeyGenerator)(void) NS_SWIFT_NAME(EncryptionKeyGenerator);
 
 /**
  Block typedef for generating a 16 byte hash for sharing data betwween multiple apps.
@@ -80,53 +86,11 @@ extern NSString *const CREATED_COL NS_SWIFT_NAME(SmartStore.createdColumn);
 extern NSString *const LAST_MODIFIED_COL NS_SWIFT_NAME(SmartStore.lastModifiedColumn);
 extern NSString *const SOUP_COL NS_SWIFT_NAME(SmartStore.soupColumn);
 
-/**
- The columns of a soup fts table
- */
-extern NSString *const ROWID_COL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-
-/**
- Soup index map table
- */
-extern NSString *const SOUP_INDEX_MAP_TABLE NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-
-/**
- Soup attributes table
- */
-extern NSString *const SOUP_ATTRS_TABLE NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-
-/**
- Table to keep track of status of long operations in flight
-*/
-extern NSString *const LONG_OPERATIONS_STATUS_TABLE NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-
-/*
- Columns of the soup index map table
- */
-extern NSString *const SOUP_NAME_COL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-extern NSString *const PATH_COL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-extern NSString *const COLUMN_NAME_COL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-extern NSString *const COLUMN_TYPE_COL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-
-/*
- Columns of the long operations status table
- */
-extern NSString *const TYPE_COL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-extern NSString *const DETAILS_COL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-extern NSString *const STATUS_COL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-
 /*
  JSON fields added to soup element on insert/update
 */
 extern NSString *const SOUP_ENTRY_ID NS_SWIFT_NAME(SmartStore.soupEntryId);
 extern NSString *const SOUP_LAST_MODIFIED_DATE NS_SWIFT_NAME(SmartStore.lastModifiedDate);
-
-/*
- Support for explain query plan
- */
-extern NSString *const EXPLAIN_SQL NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-extern NSString *const EXPLAIN_ARGS NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
-extern NSString *const EXPLAIN_ROWS NS_SWIFT_UNAVAILABLE("Internal to SmartStore");
 
 @class FMDatabaseQueue;
 @class SFQuerySpec;
@@ -186,10 +150,16 @@ NS_SWIFT_NAME(SmartStore)
 @property (nonatomic, class, readonly) NSArray<NSString*> *allGlobalStoreNames;
 
 /**
+ Block used to generate the legacy encryption key.
+ */
+@property (nonatomic, class, readonly) SFSmartStoreEncryptionKeyBlock encryptionKeyBlock __attribute__ ((deprecated("Deprecated in Salesforce Mobile SDK 9.2 and only used for upgrade")));
+
+/**
  Block used to generate the encryption key.
  Salesforce recommends using the default encryption key derivation.
  */
-@property (nonatomic, class, readonly)  SFSmartStoreEncryptionKeyBlock encryptionKeyBlock;
+@property (nonatomic, class, readonly) SFSmartStoreEncryptionKeyGenerator encryptionKeyGenerator;
+
 
 /**
  Block used to generate the salt. The salt is maintained in the keychain. Used only when database needs to be shared between apps.
@@ -257,7 +227,9 @@ NS_SWIFT_NAME(SmartStore)
 + (void)removeAllGlobalStores NS_SWIFT_NAME(removeAllGlobal());
 
 /**
- Sets a custom block for deriving the encryption key used to encrypt stores.
+ Sets a custom block for deriving the encryption key used to encrypt stores. This uses a legacy encryption key
+ and is only used for upgrade scenarios. This should only be set if an app was already using it
+ before Mobile SDK 9.2.
  
  ** WARNING: **
  If you choose to override the encryption key derivation, you must set
@@ -268,7 +240,21 @@ NS_SWIFT_NAME(SmartStore)
  
  @param newEncryptionKeyBlock The new encryption key derivation block to use with SmartStore.
  */
-+ (void)setEncryptionKeyBlock:(SFSmartStoreEncryptionKeyBlock)newEncryptionKeyBlock;
++ (void)setEncryptionKeyBlock:(SFSmartStoreEncryptionKeyBlock)newEncryptionKeyBlock __attribute__ ((deprecated("Deprecated in Salesforce Mobile SDK 9.2 and should only be used for upgrade")));
+
+/**
+ Sets a custom block for deriving the encryption key used to encrypt stores.
+ 
+ ** WARNING: **
+ If you choose to override the encryption key derivation, you must set
+ this value before opening any stores.  Setting the value after stores have been opened
+ will result in the corruption and loss of existing data.
+ Also, SmartStore does not use initialization vectors.
+ ** WARNING **
+ 
+ @param newEncryptionKeyGenerator The new encryption key derivation block to use with SmartStore.
+ */
++ (void)setEncryptionKeyGenerator:(SFSmartStoreEncryptionKeyGenerator)newEncryptionKeyGenerator;
 
 #pragma mark - Soup manipulation methods
 
@@ -276,7 +262,7 @@ NS_SWIFT_NAME(SmartStore)
  *  @param soupName Name of the soup.
  *  @return Specs of the soup if it exists.
  */
-- (SFSoupSpec*)attributesForSoup:(NSString*)soupName NS_SWIFT_NAME(specification(forSoupNamed:));
+- (nullable SFSoupSpec*)attributesForSoup:(NSString*)soupName NS_SWIFT_NAME(specification(forSoupNamed:)) SFSDK_DEPRECATED(10.0, 11.0, "External storage and soup spec will be removed");
 
 /**
  @param soupName Name of the soup.
@@ -301,17 +287,6 @@ NS_SWIFT_NAME(SmartStore)
 
 /**
  Creates a new soup or confirms the existence of an existing soup.
- @warning Deprecated. Use registerSoup:withIndexSpecs:error: instead.
-
- @param soupName The name of the soup to register.
- @param indexSpecs Array of one or more SFSoupIndex objects.
- @return YES if the soup is registered or already exists.
- */
-- (BOOL)registerSoup:(NSString*)soupName withIndexSpecs:(NSArray<SFSoupIndex*>*)indexSpecs
-    __attribute__((deprecated("Use -registerSoup:withIndexSpecs:error:")));
-
-/**
- Creates a new soup or confirms the existence of an existing soup.
  
  @param soupSpec Soup specs of the soup to register.
  @param indexSpecs Array of one or more SFSoupIndex objects.
@@ -319,7 +294,7 @@ NS_SWIFT_NAME(SmartStore)
  @return YES if the soup is registered or already exists.
 
  */
-- (BOOL)registerSoupWithSpec:(SFSoupSpec*)soupSpec withIndexSpecs:(NSArray<SFSoupIndex*>*)indexSpecs error:(NSError**)error NS_SWIFT_NAME(registerSoup(withSpecification:withIndices:));
+- (BOOL)registerSoupWithSpec:(SFSoupSpec*)soupSpec withIndexSpecs:(NSArray<SFSoupIndex*>*)indexSpecs error:(NSError**)error NS_SWIFT_NAME(registerSoup(withSpecification:withIndices:)) SFSDK_DEPRECATED(10.0, 11.0, "External storage and soup spec will be removed - use registerSoup with soupName instead");
 
 /**
  Get the number of entries that would be returned with the given query spec
@@ -339,6 +314,20 @@ NS_SWIFT_NAME(SmartStore)
  @return A set of entries given the pageSize provided in the querySpec.
  */
 - (NSArray * __nullable)queryWithQuerySpec:(SFQuerySpec *)querySpec pageIndex:(NSUInteger)pageIndex error:(NSError **)error NS_SWIFT_NAME(query(using:startingFromPageIndex:));
+
+/**
+ Search for entries matching the given query spec with optional "where args" (i.e. bind args)
+ Provided bind args will be substituted to the ? found in the query
+ NB: Bind args are only supported for smart queries
+
+ @param querySpec A native query spec.
+ @param pageIndex The page index to start the entries at (this supports paging).
+ @param whereArgs The bind args (optional - only supported for smart queries).
+ @param error Sets/returns any error generated as part of the process.
+ 
+ @return A set of entries given the pageSize provided in the querySpec.
+ */
+- (NSArray * __nullable)queryWithQuerySpec:(SFQuerySpec *)querySpec pageIndex:(NSUInteger)pageIndex whereArgs:(NSArray* __nullable)whereArgs error:(NSError **)error NS_SWIFT_NAME(query(using:startingFromPageIndex:whereArgs:));
 
 /**
  Search for entries matching the given query spec without deserializing any JSON
@@ -484,7 +473,7 @@ NS_SWIFT_NAME(SmartStore)
  @param soupName Name of the soup.
  @return External file storage size, in bytes.
  */
-- (unsigned long long)getExternalFileStorageSizeForSoup:(NSString*)soupName NS_SWIFT_NAME(externalFileStorageSize(forSoupNamed:));
+- (unsigned long long)getExternalFileStorageSizeForSoup:(NSString*)soupName NS_SWIFT_NAME(externalFileStorageSize(forSoupNamed:)) SFSDK_DEPRECATED(10.0, 11.0, "External storage and soup spec will be removed");
 
 /**
  Return the number of external storage files for a given soup.
@@ -492,7 +481,7 @@ NS_SWIFT_NAME(SmartStore)
  @param soupName The name of the soup.
  @return Number of external files.
  */
-- (NSUInteger)getExternalFilesCountForSoup:(NSString*)soupName NS_SWIFT_NAME(externalFilesCount(forSoupNamed:));
+- (NSUInteger)getExternalFilesCountForSoup:(NSString*)soupName NS_SWIFT_NAME(externalFilesCount(forSoupNamed:)) SFSDK_DEPRECATED(10.0, 11.0, "External storage and soup spec will be removed");
 
 /**
  Alter soup indexes.
@@ -513,7 +502,7 @@ NS_SWIFT_NAME(SmartStore)
  @param reIndexData Pass YES if you want existing records to be re-indexed for new index specs.
  @return YES if the soup was altered successfully.
  */
-- (BOOL) alterSoup:(NSString*)soupName withSoupSpec:(SFSoupSpec*)soupSpec withIndexSpecs:(NSArray<SFSoupIndex*>*)indexSpecs reIndexData:(BOOL)reIndexData NS_SWIFT_NAME(alterSoup(named:soupSpec:indexSpecs:reIndexData:));
+- (BOOL) alterSoup:(NSString*)soupName withSoupSpec:(SFSoupSpec*)soupSpec withIndexSpecs:(NSArray<SFSoupIndex*>*)indexSpecs reIndexData:(BOOL)reIndexData NS_SWIFT_NAME(alterSoup(named:soupSpec:indexSpecs:reIndexData:)) SFSDK_DEPRECATED(10.0, 11.0, "External storage and soup spec will be removed - use other alterSoup method instead");
 
 
 /**

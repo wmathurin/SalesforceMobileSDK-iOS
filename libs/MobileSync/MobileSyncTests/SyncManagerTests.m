@@ -74,7 +74,7 @@
 @interface SFSoqlSyncDownTarget ()
 
 + (NSString*) addFilterForReSync:(NSString*)query modDateFieldName:(NSString *)modDateFieldName maxTimeStamp:(long long)maxTimeStamp;
-
+- (SFRestRequest*) buildRequest:(NSString *)queryToRun;
 @end
 
 @implementation SlowSoqlSyncDownTarget
@@ -136,6 +136,36 @@
     SFSoqlSyncDownTarget* target = [SFSoqlSyncDownTarget newSyncTarget:soqlQueryWithoutSpecialFields];
     NSString *targetSoqlQuery = [target query];
     XCTAssertEqualObjects(soqlQueryWithSpecialFields, targetSoqlQuery, @"SOQL query should contain Id and LastModifiedDate fields.");
+}
+
+/**
+ * Tests that request does not include batchSize header when no batch size was specified
+ */
+- (void) testNoBatchSizeHeaderPresentByDefault
+{
+    SFSoqlSyncDownTarget* target = [SFSoqlSyncDownTarget newSyncTarget:@"SELECT Name FROM Account WHERE Name = 'James Bond'"];
+    SFRestRequest* request = [target buildRequest:target.query];
+    XCTAssertNil(request.customHeaders);
+}
+
+/**
+ * Tests that request does not include batchSize header when default batch size was specified
+ */
+- (void) testNoBatchSizeHeaderPresentWithDefaultBatchSize
+{
+    SFSoqlSyncDownTarget* target = [SFSoqlSyncDownTarget newSyncTarget:@"SELECT Name FROM Account WHERE Name = 'James Bond'" maxBatchSize:2000];
+    SFRestRequest* request = [target buildRequest:target.query];
+    XCTAssertNil(request.customHeaders);
+}
+
+/**
+ * Tests that request does include batchSize header when non-default batch size was specified
+ */
+- (void) testBatchSizeHeaderPresentWithNonDefaultBatchSize
+{
+    SFSoqlSyncDownTarget* target = [SFSoqlSyncDownTarget newSyncTarget:@"SELECT Name FROM Account WHERE Name = 'James Bond'" maxBatchSize:200];
+    SFRestRequest* request = [target buildRequest:target.query];
+    XCTAssertEqualObjects(@"batchSize=200", request.customHeaders[@"Sforce-Query-Options"]);
 }
 
 /**
@@ -416,7 +446,7 @@
                             [[SFSoupIndex alloc] initWithPath:@"Id" indexType:kSoupIndexTypeString columnName:nil]
                             ];
     [self.store registerSoup:ACCOUNTS_SOUP withIndexSpecs:indexSpecs error:nil];
-    [self trySyncDown:SFSyncStateMergeModeOverwrite target:[SFLayoutSyncDownTarget newSyncTarget:ACCOUNT_TYPE layoutType:@"Compact"] soupName:ACCOUNTS_SOUP totalSize:1 numberFetches:1];
+    [self trySyncDown:SFSyncStateMergeModeOverwrite target:[SFLayoutSyncDownTarget newSyncTarget:ACCOUNT_TYPE formFactor:@"Medium" layoutType:@"Compact" mode:@"Edit" recordTypeId:nil] soupName:ACCOUNTS_SOUP totalSize:1 numberFetches:1];
     NSString* smartSql = @"SELECT {accounts:_soup} FROM {accounts}";
     SFQuerySpec* querySpec = [SFQuerySpec newSmartQuerySpec:smartSql withPageSize:1];
     NSArray *rows = [self.store queryWithQuerySpec:querySpec pageIndex:0 error:nil];
@@ -425,6 +455,8 @@
     XCTAssertNotNil(layout, @"Layout should not be nil");
     NSString *layoutType = layout[@"layoutType"];
     XCTAssertEqualObjects(layoutType, @"Compact", @"Layout type should be Compact");
+    NSString *mode = layout[@"mode"];
+    XCTAssertEqualObjects(mode, @"Edit", @"Mode should be Edit");
 }
 
 /**

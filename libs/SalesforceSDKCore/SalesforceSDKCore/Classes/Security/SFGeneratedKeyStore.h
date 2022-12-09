@@ -23,6 +23,7 @@
  */
 
 #import "SFKeyStore.h"
+#import <SalesforceSDKCore/SalesforceSDKConstants.h>
 
 extern NSString * const kGeneratedKeyLabelSuffix;
 

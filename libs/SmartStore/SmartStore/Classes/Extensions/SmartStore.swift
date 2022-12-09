@@ -1,5 +1,3 @@
-import Foundation
-
 /*
  SmartStore.swift
  SmartStore Swift Extensions
@@ -27,7 +25,7 @@ import Foundation
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
+import Foundation
 import Combine
 
 struct Constants {
@@ -56,7 +54,7 @@ extension SmartStore {
         }
     }
     
-    /// Runs a query. Returns a Resul<>.
+    /// Runs a query. Returns a Result<>.
     /// - Parameter smartSql: smart sql query to run
     /// - Returns: a Result<[Any], SmartStoreError>
     public func query(_ smartSql: String) -> Result<[Any], SmartStoreError> {
@@ -71,7 +69,6 @@ extension SmartStore {
     }
 }
 
-@available(iOS 13.0, watchOS 6.0, *)
 extension SmartStore {
     
     /// Runs a query. Returns a Combine Publisher.

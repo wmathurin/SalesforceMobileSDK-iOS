@@ -22,7 +22,7 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SFOAuthCredentials.h"
+#import <SalesforceSDKCore/SFOAuthCredentials.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,11 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SFOAuthKeychainCredentials : SFOAuthCredentials
 
-- (NSData *)keyMacForService:(NSString *)service;
-- (NSData *)keyVendorIdForService:(NSString *)service;
-- (NSData *)keyBaseAppIdForService:(NSString*)service;
 - (SFEncryptionKey *)keyStoreKeyForService:(NSString *)service;
-- (NSData *)keyWithSeed:(NSString *)seed service:(NSString *)service;
 - (nullable NSString *)refreshTokenWithSFEncryptionKey:(SFEncryptionKey *)encryptionKey;
 - (void)setRefreshToken:(nullable NSString *)token withSFEncryptionKey:(SFEncryptionKey *)key;
 - (nullable NSString *)accessTokenWithSFEncryptionKey:(SFEncryptionKey *)encryptionKey;

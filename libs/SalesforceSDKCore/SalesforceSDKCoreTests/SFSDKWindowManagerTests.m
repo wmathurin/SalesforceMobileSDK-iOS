@@ -25,6 +25,7 @@
 
 #import <XCTest/XCTest.h>
 #import "SFSDKWindowManager.h"
+#import "SFApplicationHelper.h"
 
 @interface SFSDKWindowManagerTests: XCTestCase{
     UIWindow *_origApplicationWindow;
@@ -99,79 +100,106 @@
 - (void)testSetMainWindow {
     XCTAssert(_origApplicationWindow!=nil);
     [[SFSDKWindowManager sharedManager] setMainUIWindow:_origApplicationWindow];
-    XCTAssertTrue([SFSDKWindowManager sharedManager].mainWindow.window==_origApplicationWindow);
+    XCTAssert([[SFSDKWindowManager sharedManager] mainWindow: nil].window == _origApplicationWindow);
+    XCTAssert([[SFSDKWindowManager sharedManager] mainWindow:nil].window == _origApplicationWindow);
+    UIScene *scene = [SFApplicationHelper sharedApplication].connectedScenes.allObjects.firstObject;
+    XCTAssert([[SFSDKWindowManager sharedManager] mainWindow:scene].window == _origApplicationWindow);
 }
 
 - (void)testLoginWindow {
-    SFSDKWindowContainer *authWindow = [SFSDKWindowManager sharedManager].authWindow;
-    XCTAssert(authWindow.window!=nil);
-    XCTAssert(authWindow.windowType == SFSDKWindowTypeAuth);
+    SFSDKWindowContainer *authWindowNilScene = [[SFSDKWindowManager sharedManager] authWindow:nil];
+    XCTAssert(authWindowNilScene.window != nil);
+    XCTAssert(authWindowNilScene.windowType == SFSDKWindowTypeAuth);
+    
+    UIScene *scene = [SFApplicationHelper sharedApplication].connectedScenes.allObjects.firstObject;
+    SFSDKWindowContainer *authWindowScene = [[SFSDKWindowManager sharedManager] authWindow:scene];
+    XCTAssert(authWindowScene.window != nil);
+    XCTAssert(authWindowScene.windowType == SFSDKWindowTypeAuth);
+    XCTAssertEqualObjects(authWindowNilScene, authWindowScene);
 }
 
-- (void)testPasscodeWindow {
-    SFSDKWindowContainer *passcodeWindow = [SFSDKWindowManager sharedManager].passcodeWindow;
-    XCTAssert(passcodeWindow.window!=nil);
-    XCTAssert(passcodeWindow.windowType == SFSDKWindowTypePasscode);
+- (void)testScreenLockWindow {
+    SFSDKWindowContainer *screenLockWindow = [SFSDKWindowManager sharedManager].screenLockWindow;
+    XCTAssert(screenLockWindow.window!=nil);
+    XCTAssert(screenLockWindow.windowType == SFSDKWindowTypeScreenLock);
 }
 
 - (void)testSnapshotWindow {
-    SFSDKWindowContainer *snapshotWindow = [SFSDKWindowManager sharedManager].snapshotWindow;
-    XCTAssert(snapshotWindow.window!=nil);
-    XCTAssert(snapshotWindow.windowType == SFSDKWindowTypeSnapshot);
+    SFSDKWindowContainer *snapshotWindowNilScene = [[SFSDKWindowManager sharedManager] snapshotWindow:nil];
+    XCTAssert(snapshotWindowNilScene.window != nil);
+    XCTAssert(snapshotWindowNilScene.windowType == SFSDKWindowTypeSnapshot);
+    
+    UIScene *scene = [SFApplicationHelper sharedApplication].connectedScenes.allObjects.firstObject;
+    SFSDKWindowContainer *snapshowWindowScene = [[SFSDKWindowManager sharedManager] snapshotWindow:scene];
+    XCTAssert(snapshowWindowScene.window != nil);
+    XCTAssert(snapshowWindowScene.windowType == SFSDKWindowTypeSnapshot);
+    XCTAssertEqualObjects(snapshotWindowNilScene, snapshowWindowScene);
 }
 
 - (void)testEnable {
-    SFSDKWindowContainer *passcodeWindow = [SFSDKWindowManager sharedManager].passcodeWindow;
-    [passcodeWindow presentWindow];
-    XCTAssert(passcodeWindow.window!=nil);
-    XCTAssertTrue([passcodeWindow.window isKeyWindow]);
+    SFSDKWindowContainer *screenLockWindow = [SFSDKWindowManager sharedManager].screenLockWindow;
+    [screenLockWindow presentWindow];
+    XCTAssert(screenLockWindow.window!=nil);
+    XCTAssertTrue([screenLockWindow.window isKeyWindow]);
+    XCTAssertTrue(screenLockWindow.isEnabled);
 }
 
-
 - (void)testDisable {
-    SFSDKWindowContainer *passcodeWindow = [SFSDKWindowManager sharedManager].passcodeWindow;
-    [passcodeWindow presentWindow];
-    XCTAssert(passcodeWindow.window!=nil);
-    XCTAssertTrue([passcodeWindow.window isKeyWindow]);
-    [passcodeWindow dismissWindowAnimated:NO  withCompletion:^{
-        XCTAssertFalse(passcodeWindow.window.isKeyWindow);
+    SFSDKWindowContainer *screenLockWindow = [SFSDKWindowManager sharedManager].screenLockWindow;
+    [screenLockWindow presentWindow];
+    XCTAssert(screenLockWindow.window!=nil);
+    XCTAssertTrue([screenLockWindow.window isKeyWindow]);
+    [screenLockWindow dismissWindowAnimated:NO  withCompletion:^{
+        XCTAssertFalse(screenLockWindow.window.isKeyWindow);
+        XCTAssertFalse(screenLockWindow.isEnabled);
     }];
-    
+}
+
+- (void)testStyleOverride {
+    SFSDKWindowContainer *snapshotWindow = [[SFSDKWindowManager sharedManager] snapshotWindow:nil];
+    SFSDKWindowContainer *screenLockWindow = [[SFSDKWindowManager sharedManager] screenLockWindow];
+
+    // Check default
+    XCTAssertEqual(snapshotWindow.window.overrideUserInterfaceStyle, UIUserInterfaceStyleUnspecified);
+    XCTAssertEqual(screenLockWindow.window.overrideUserInterfaceStyle, UIUserInterfaceStyleUnspecified);
+
+    // Set it directly
+    [SFSDKWindowManager sharedManager].userInterfaceStyle = UIUserInterfaceStyleDark;
+    XCTAssertEqual(snapshotWindow.window.overrideUserInterfaceStyle, UIUserInterfaceStyleDark);
+    XCTAssertEqual(screenLockWindow.window.overrideUserInterfaceStyle, UIUserInterfaceStyleDark);
 }
 
 - (void)testActive {
     XCTestExpectation *expectation = [self expectationWithDescription:@"ActiveWindow"];
     
-    SFSDKWindowContainer *passcodeWindow = [SFSDKWindowManager sharedManager].passcodeWindow;
-    [passcodeWindow presentWindow];
-    SFSDKWindowContainer *activeWindow = [SFSDKWindowManager sharedManager].activeWindow;
-    XCTAssert(passcodeWindow==activeWindow);
-    [passcodeWindow dismissWindowAnimated:NO withCompletion:^{
-        XCTAssertFalse(passcodeWindow.window.isKeyWindow);
+    SFSDKWindowContainer *screenLockWindow = [SFSDKWindowManager sharedManager].screenLockWindow;
+    [screenLockWindow presentWindow];
+    SFSDKWindowContainer *activeWindow = [[SFSDKWindowManager sharedManager] activeWindow:nil];
+    XCTAssert(screenLockWindow==activeWindow);
+    [screenLockWindow dismissWindowAnimated:NO withCompletion:^{
+        XCTAssertFalse(screenLockWindow.window.isKeyWindow);
         [expectation fulfill];
     }];
     [self waitForExpectations:@[expectation] timeout:10];
-    activeWindow = [SFSDKWindowManager sharedManager].activeWindow;
-    XCTAssert(passcodeWindow!=activeWindow);
-    
+    activeWindow = [[SFSDKWindowManager sharedManager] activeWindow:nil];
+    XCTAssert(screenLockWindow!=activeWindow);
+
 }
 
 - (void)testLevels {
     // these 3 statements should not make any difference
-    [SFSDKWindowManager sharedManager].snapshotWindow.window.windowLevel = 1;
-    [SFSDKWindowManager sharedManager].passcodeWindow.window.windowLevel = 4;
-    [SFSDKWindowManager sharedManager].authWindow.window.windowLevel = 3;
-    XCTAssertTrue(
-                  [SFSDKWindowManager sharedManager].snapshotWindow.windowLevel !=1  );
-    XCTAssertTrue([SFSDKWindowManager sharedManager].passcodeWindow.windowLevel != 4);
-    XCTAssertTrue([SFSDKWindowManager sharedManager].authWindow.windowLevel != 3);
+    [[SFSDKWindowManager sharedManager] snapshotWindow:nil].window.windowLevel = 1;
+    [[SFSDKWindowManager sharedManager] screenLockWindow].window.windowLevel = 4;
+    [[SFSDKWindowManager sharedManager] authWindow:nil].window.windowLevel = 3;
+    XCTAssertTrue([[SFSDKWindowManager sharedManager] snapshotWindow:nil].windowLevel != 1);
+    XCTAssertTrue([[SFSDKWindowManager sharedManager] screenLockWindow].windowLevel != 4);
+    XCTAssertTrue([[SFSDKWindowManager sharedManager] authWindow:nil].windowLevel != 3);
    
 }
 
 - (void)testCompletionBlockForEnable {
-    
     XCTestExpectation *completionBlock  = [[XCTestExpectation alloc] initWithDescription:@"CompletionBlockCalled"];
-    [[SFSDKWindowManager sharedManager].authWindow presentWindowAnimated:NO withCompletion:^{
+    [[[SFSDKWindowManager sharedManager] authWindow:nil] presentWindowAnimated:NO withCompletion:^{
         [completionBlock fulfill];
     }];
     [self waitForExpectations:@[completionBlock] timeout:2];
@@ -180,9 +208,9 @@
 
 - (void)testCompletionBlockForDisable {
     
-    XCTestExpectation *completionBlock  = [[XCTestExpectation alloc] initWithDescription:@"CompletionBlockCalled"];
-    [[SFSDKWindowManager sharedManager].authWindow presentWindow];
-    [[SFSDKWindowManager sharedManager].authWindow dismissWindowAnimated:NO withCompletion:^{
+    XCTestExpectation *completionBlock = [[XCTestExpectation alloc] initWithDescription:@"CompletionBlockCalled"];
+    [[[SFSDKWindowManager sharedManager] authWindow:nil] presentWindow];
+    [[[SFSDKWindowManager sharedManager] authWindow:nil] dismissWindowAnimated:NO withCompletion:^{
         [completionBlock fulfill];
     }];
     [self waitForExpectations:@[completionBlock] timeout:2];
@@ -196,17 +224,30 @@
     delegate.after = [[XCTestExpectation alloc] initWithDescription:@"AfterEnablement"];
     
     [[SFSDKWindowManager sharedManager] addDelegate:delegate];
-    [[SFSDKWindowManager sharedManager].authWindow presentWindow];
+    [[[SFSDKWindowManager sharedManager] authWindow:nil] presentWindow];
     
     [self waitForExpectations:@[delegate.before,delegate.after] timeout:2];
     
     delegate.before = [[XCTestExpectation alloc] initWithDescription:@"BeforeDisablement"];
     delegate.after = [[XCTestExpectation alloc] initWithDescription:@"AfterDisablement"];
     
-    [[SFSDKWindowManager sharedManager].authWindow dismissWindow];
+    [[[SFSDKWindowManager sharedManager] authWindow:nil] dismissWindow];
     [self waitForExpectations:@[delegate.before,delegate.after] timeout:2];
     
     XCTAssertTrue(delegate.notificationWindow.isAuthWindow);
-    
 }
+
+- (void)testDealloc {
+    __weak SFSDKWindowContainer *container;
+    @autoreleasepool {
+        container = [[SFSDKWindowManager sharedManager] createNewNamedWindow:@"customWindow"];
+        [container presentWindow];
+        [[SFSDKWindowManager sharedManager] removeNamedWindow:@"customWindow"];
+    }
+
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"window == nil"];
+    XCTNSPredicateExpectation *expectation = [[XCTNSPredicateExpectation alloc] initWithPredicate:predicate object:container];
+    [self waitForExpectations:@[expectation] timeout:10];
+}
+
 @end

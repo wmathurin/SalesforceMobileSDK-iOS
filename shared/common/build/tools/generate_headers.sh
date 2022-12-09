@@ -60,6 +60,11 @@ wrapper_directory=$(dirname $OPT_OUTPUT)
 
 [[ -d $wrapper_directory ]] || mkdir -p $wrapper_directory
 
+# Resolve directory path if it's a symlink
+if [[ -L "$wrapper_directory" ]]; then
+    wrapper_directory="$(dirname $wrapper_directory)/$(readlink $wrapper_directory)"
+fi
+
 # Records the import of the original umbrella header file, if it exists.
 # This will be used later to update the original file if needed.
 orig_imports=""
@@ -125,6 +130,10 @@ EOF
 for file in $(find $wrapper_directory -type f); do
     filename=$(basename $file)
     if [[ $filename == $wrapper_filename ]]; then
+        continue;
+    fi
+    # The Swift header imports the umbrella header, skip the Swift header here to avoid circular dependency
+    if [[ $filename == "$OPT_NAME-Swift.h" ]]; then
         continue;
     fi
     import_line=`echo "#import <$OPT_NAME/$filename>"`

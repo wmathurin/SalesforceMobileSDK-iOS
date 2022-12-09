@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Handles push notification registration and unregistration, both for Salesforce notifications and remote notifications.
  */
+NS_SWIFT_NAME(PushNotificationManager)
 @interface SFPushNotificationManager : NSObject
 
 /** Device token returned when registering with APNS.
@@ -44,12 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** Custom push notification for additional HTTP POST body.
  */
 @property (nullable, nonatomic, strong) NSDictionary* customPushRegistrationBody;
-
-/**
- * Use this flag to indicate if the notifications should be encrypted. NO by default.
- * This should always be be set to NO for Apex push notifications.
- */
-@property (nonatomic, assign) BOOL encryptionEnabled;
 
 /** The share instance of this class.
  */
@@ -74,7 +69,26 @@ NS_ASSUME_NONNULL_BEGIN
  * @param failBlock fail block.
  * @return YES for successful registration call being made.
  */
-- (BOOL)registerSalesforceNotificationsWithCompletionBlock:(nullable void (^)(void))completionBlock failBlock:(nullable void (^)(void))failBlock;
+- (BOOL)registerSalesforceNotificationsWithCompletionBlock:(nullable void (^)(void))completionBlock failBlock:(nullable void (^)(void))failBlock NS_REFINED_FOR_SWIFT;
+
+
+/**
+ * Register for notifications with Salesforce.
+ * Call this method after authenticating with Salesforce and registering with APNS.
+ * @param user SFUserAccount to use.
+ * @param completionBlock Completion block.
+ * @param failBlock fail block.
+ * @return YES for successful registration call being made.
+ */
+- (BOOL)registerSalesforceNotificationsWithCompletionBlock:(SFUserAccount*)user completionBlock:(nullable void (^)(void))completionBlock failBlock:(nullable void (^)(void))failBlock NS_REFINED_FOR_SWIFT;
+
+
+/**
+ * Unregister from notifications with Salesforce for a specific user. This method is called at logout.
+ * @param completionBlock Completion block.
+ * @return YES for successful unregistration call being made.
+ */
+- (BOOL)unregisterSalesforceNotificationsWithCompletionBlock:(nullable void (^)(void))completionBlock NS_REFINED_FOR_SWIFT;
 
 /**
  * Unregister from notifications with Salesforce for a specific user. This method is called at logout.
@@ -82,7 +96,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param completionBlock Completion block.
  * @return YES for successful unregistration call being made.
  */
-- (BOOL)unregisterSalesforceNotificationsWithCompletionBlock:(SFUserAccount*)user completionBlock:(nullable void (^)(void))completionBlock;
+- (BOOL)unregisterSalesforceNotificationsWithCompletionBlock:(SFUserAccount*)user completionBlock:(nullable void (^)(void))completionBlock NS_REFINED_FOR_SWIFT;
 
 @end
 

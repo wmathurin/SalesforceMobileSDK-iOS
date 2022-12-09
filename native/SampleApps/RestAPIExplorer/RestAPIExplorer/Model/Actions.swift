@@ -52,11 +52,14 @@ enum ActionType {
     case fileShares
     case addFileShare
     case deleteFileShare
+    case primingRecords
     case currentUserInfo
-    case enableBiometric
     case logout
     case switchUser
     case exportCredentials
+    case overrideStyleLight
+    case overrideStyleDark
+    case overrideStyleUnspecified
 }
 
 struct Action {

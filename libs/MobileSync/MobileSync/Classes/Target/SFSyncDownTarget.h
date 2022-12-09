@@ -23,7 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "SFSyncTarget.h"
+#import <MobileSync/SFSyncTarget.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -40,7 +40,8 @@ typedef NS_ENUM(NSInteger, SFSyncDownTargetQueryType) {
   SFSyncDownTargetQueryTypeParentChildren,
   SFSyncDownTargetQueryTypeCustom,
   SFSyncDownTargetQueryTypeMetadata,
-  SFSyncDownTargetQueryTypeLayout
+  SFSyncDownTargetQueryTypeLayout,
+  SFSyncDownTargetQueryTypeBriefcase
 } NS_SWIFT_NAME(SyncDownTarget.QueryType);
 
 NS_SWIFT_NAME(SyncDownTarget)

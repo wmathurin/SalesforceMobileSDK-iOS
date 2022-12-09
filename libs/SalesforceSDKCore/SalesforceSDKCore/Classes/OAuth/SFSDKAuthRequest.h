@@ -24,7 +24,6 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-@class SFSDKAppLockViewConfig;
 @class SFSDKLoginViewControllerConfig;
 @class UIViewController;
 @protocol SFSDKLoginFlowSelectionView;
@@ -42,16 +41,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) NSString *brandLoginPath;
 @property (nonatomic, copy) NSSet<NSString*> *scopes;
 @property (nonatomic,strong) SFSDKLoginViewControllerConfig *loginViewControllerConfig;
-@property (nonatomic,strong) SFSDKAppLockViewConfig *appLockViewControllerConfig;
+@property (nullable, nonatomic, strong) UIScene *scene;
 @property (nonatomic, copy) NSString *jwtToken;
 @property (nonatomic, copy, nullable) NSString *userAgentForAuth;
 
 //IDP flow related properties (SPApp related properties)
-@property (nonatomic, readonly, assign) BOOL ipdEnabled;
+@property (nonatomic, readonly, assign) BOOL idpEnabled;
 @property (nonatomic, copy) NSString *idpAppURIScheme;
-@property (nonatomic, copy) NSString *userHint;
+@property (nonatomic, copy, nullable) NSString *userHint;
 @property (nonatomic, copy, nullable) UIViewController<SFSDKLoginFlowSelectionView> * (^spAppLoginFlowSelectionAction)(void);
 @property (nonatomic, copy) NSString *appDisplayName;
+@property (nonatomic, assign) BOOL idpInitiatedAuth;
 
 //IDP flow related properties (IDP App related properties)
 @property (nonatomic, copy, nullable) UIViewController<SFSDKUserSelectionView>* (^idpAppUserSelectionAction)(void);

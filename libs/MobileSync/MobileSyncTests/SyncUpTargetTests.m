@@ -24,6 +24,7 @@
 
 #import "SyncManagerTestCase.h"
 #import "SFSyncUpdateCallbackQueue.h"
+#import <SalesforceSDKCommon/SFJsonUtils.h>
 
 #define COUNT_TEST_ACCOUNTS 10
 
@@ -89,9 +90,11 @@
         NSString* lastError = fields[kSyncTargetLastError];
         if ([name isEqualToString:nameTooLong]) {
             XCTAssertTrue([lastError containsString:@"Account Name: data value too large"], @"Name too large error expected");
+            XCTAssertNotNil([SFJsonUtils objectFromJSONString:lastError], "Unable to parse error");
         }
         else if ([name isEqualToString:@""]) {
             XCTAssertTrue([lastError containsString:@"Required fields are missing: [Name]"], @"Missing name error expected");
+            XCTAssertNotNil([SFJsonUtils objectFromJSONString:lastError], "Unable to parse error");
         }
         else {
             XCTFail(@"Unexpected record found: %@", name);
@@ -104,6 +107,22 @@
     // Adding to idToFields so that they get deleted in tearDown
     [idToFields addEntriesFromDictionary:idToFieldsGoodNames];
 }
+
+/**
+ * Sync up records missing sobject type
+ */
+- (void) testSyncUpWithNoType {
+    [self trySyncUpBadTypeOrNoType:YES];
+}
+
+
+/**
+  * Sync up records using bad sobject type
+ */
+- (void) testSyncUpWithBadType {
+    [self trySyncUpBadTypeOrNoType:NO];
+}
+
 
 /**
  * Sync down the test accounts, modify none, sync up, check smartstore and server afterwards
@@ -571,26 +590,157 @@
     [self checkServer:idToFieldsRemotelyUpdated];
 }
 
+/**
+ * Create accounts locally but with external id field populated, sync up with external id field name provided, check smartstore and server afterwards
+ */
+-(void) testSyncUpWithExternalId {
+    NSString* externalIdFieldName = @"Id";
+
+    // Create test data
+    [self createTestData];
+    
+    // Creating 3 new names
+    NSString* name1 = [self createAccountName];
+    NSString* name2 = [self createAccountName];
+    NSString* name3 = [self createAccountName];
+
+    // Get id of two records on the server
+    NSArray* allIds = [idToFields allKeys];
+    NSString* id1 = allIds[0];
+    NSString* id2 = allIds[1];
+
+    // Create accounts locally
+    NSArray* localAccounts = [self createAccountsLocally:@[ name1, name2, name3 ]];
+    NSMutableDictionary* localRecord1 = [NSMutableDictionary dictionaryWithDictionary:localAccounts[0]];
+    NSMutableDictionary* localRecord2 = [NSMutableDictionary dictionaryWithDictionary:localAccounts[1]];
+    NSMutableDictionary* localRecord3 = [NSMutableDictionary dictionaryWithDictionary:localAccounts[2]];
+
+    // Update Id field to match and existing id for record 1 and 2
+    localRecord1[externalIdFieldName] = id1;
+    localRecord2[externalIdFieldName] = id2;
+    localRecord3[externalIdFieldName] = nil;
+    [self.store upsertEntries:@[localRecord1, localRecord2, localRecord3] toSoup:ACCOUNTS_SOUP];
+
+    // Sync up with external id field name - NB: only syncing up name field not description
+    SFSyncOptions* options = [SFSyncOptions newSyncOptionsForSyncUp:@[NAME]];
+    [self trySyncUp:3 options:options externalIdFieldName:externalIdFieldName];
+    
+    // Getting id for third record upserted - the one without an valid external id
+    NSString* id3 = [[self getIdToFieldsByName:ACCOUNTS_SOUP fieldNames:@[] nameField:NAME names:@[name3]] allKeys][0];
+     
+    // Expected records locally
+    NSMutableDictionary* expectedDbIdFields = [NSMutableDictionary new];
+    expectedDbIdFields[id1] = @{NAME: name1, DESCRIPTION:localRecord1[DESCRIPTION]};
+    expectedDbIdFields[id2] = @{NAME: name2, DESCRIPTION:localRecord2[DESCRIPTION]};
+    expectedDbIdFields[id3] = @{NAME: name3, DESCRIPTION:localRecord3[DESCRIPTION]};
+
+    // Check db
+    [self checkDbStateFlags:[expectedDbIdFields allKeys] soupName:ACCOUNTS_SOUP expectedLocallyCreated:NO expectedLocallyUpdated:NO expectedLocallyDeleted:NO];
+    [self checkDb:expectedDbIdFields soupName:ACCOUNTS_SOUP];
+
+    // Expected records on server
+    NSMutableDictionary* expectedServerIdToFields = [NSMutableDictionary new];
+    expectedServerIdToFields[id1] = @{NAME: name1, DESCRIPTION:idToFields[id1][DESCRIPTION]};
+    expectedServerIdToFields[id2] = @{NAME: name2, DESCRIPTION:idToFields[id2][DESCRIPTION]};
+    expectedServerIdToFields[id3] = @{NAME: name3, DESCRIPTION:[NSNull null]};
+
+    // Check server
+    [self checkServer:expectedServerIdToFields];
+
+    // Adding to idToFields so that they get deleted in tearDown
+    [idToFields addEntriesFromDictionary:expectedServerIdToFields];
+}
+
+-(void) testSyncUpManyLocallyCreatedRecords {
+    [self trySyncUpWithLocallyCreatedRecords:SFSyncStateMergeModeOverwrite countRecords:500];
+}
+
+
 #pragma mark - helper methods
 
--(void) trySyncUpWithLocallyCreatedRecords:(SFSyncStateMergeMode)syncUpMergeMode
+-(void) trySyncUpBadTypeOrNoType:(BOOL) noType
+{
+    // Setup soup
+    [self createAccountsSoup];
+    idToFields = [NSMutableDictionary new];
+    
+    // Create a few entries locally
+    NSArray* namesGoodRecords = @[ [self createAccountName], [self createAccountName], [self createAccountName]];
+    NSArray* namesBadRecords = @[ [self createAccountName], [self createAccountName] ];
+    
+    [self createAccountsLocally:namesGoodRecords];
+    [self createAccountsLocally:namesBadRecords mutateBlock:^NSMutableDictionary *(NSMutableDictionary *record) {
+        if (noType) {
+            [record removeObjectForKey:ATTRIBUTES];
+        } else {
+            NSMutableDictionary* attributes = [NSMutableDictionary new];
+            attributes[TYPE] = @"badType";
+            record[ATTRIBUTES] = attributes;
+        }
+        return record;
+    }];
+    
+    // Sync up
+    [self trySyncUp:5 mergeMode:SFSyncStateMergeModeOverwrite];
+    
+    // Check db for records with good names
+    NSDictionary* idToFieldsGoodNames = [self getIdToFieldsByName:ACCOUNTS_SOUP fieldNames:@[NAME, DESCRIPTION] nameField:NAME names:namesGoodRecords];
+    [self checkDbStateFlags:[idToFieldsGoodNames allKeys] soupName:ACCOUNTS_SOUP expectedLocallyCreated:NO expectedLocallyUpdated:NO expectedLocallyDeleted:NO];
+    
+    // Check db for records with bad names
+    NSDictionary* idToFieldsBadNames = [self getIdToFieldsByName:ACCOUNTS_SOUP fieldNames:@[NAME, DESCRIPTION, kSyncTargetLastError] nameField:NAME names:namesBadRecords];
+    [self checkDbStateFlags:[idToFieldsBadNames allKeys] soupName:ACCOUNTS_SOUP expectedLocallyCreated:YES expectedLocallyUpdated:NO expectedLocallyDeleted:NO];
+    
+    XCTAssertEqual(idToFieldsBadNames.count, namesBadRecords.count);
+    for (NSDictionary * fields in [idToFieldsBadNames allValues]) {
+        NSString* name = fields[NAME];
+        NSString* lastError = fields[kSyncTargetLastError];
+        if ([namesBadRecords containsObject:name]) {
+            
+            BOOL hasExpectedError = [lastError containsString:@"The requested resource does not exist"] // older end point error
+            || [lastError containsString:@"sObject type 'badType' is not supported"] // sobject collection error with bad type
+            || [lastError containsString:@"sObject type 'null' is not supported"] // sobject collection error with no type
+            || [lastError containsString:@"Nested object for polymorphic foreign key must have an attributes field before any other fields"]; // sobject collection error with invalid type that appears after other fields
+
+            XCTAssertTrue(hasExpectedError, @"Wrong error: %@", lastError);
+        }
+        else {
+            XCTFail(@"Unexpected record found: %@", name);
+        }
+    }
+            
+    // Check server for records with good names
+    [self checkServer:idToFieldsGoodNames];
+    
+    // Adding to idToFields so that they get deleted in tearDown
+    [idToFields addEntriesFromDictionary:idToFieldsGoodNames];
+}
+
+-(void) trySyncUpWithLocallyCreatedRecords:(SFSyncStateMergeMode)syncUpMergeMode {
+    [self trySyncUpWithLocallyCreatedRecords:syncUpMergeMode countRecords:3];
+}
+
+-(void) trySyncUpWithLocallyCreatedRecords:(SFSyncStateMergeMode)syncUpMergeMode countRecords:(NSUInteger)countRecords
 {
     // Create test data
     [self createTestData];
     
     // Create a few entries locally
-    NSArray* names = @[ [self createAccountName], [self createAccountName], [self createAccountName]];
+    NSMutableArray* names = [NSMutableArray new];
+    for (int i=0; i<countRecords; i++) {
+        [names addObject:[self createAccountName]];
+    }
     [self createAccountsLocally:names];
     
     // Sync up
-    [self trySyncUp:3 mergeMode:syncUpMergeMode];
+    [self trySyncUp:countRecords mergeMode:syncUpMergeMode];
     
     // Check that db doesn't show entries as locally created anymore and that they use sfdc id
     NSDictionary* idToFieldsCreated = [self getIdToFieldsByName:ACCOUNTS_SOUP fieldNames:@[NAME, DESCRIPTION] nameField:NAME names:names];
     [self checkDbStateFlags:[idToFieldsCreated allKeys] soupName:ACCOUNTS_SOUP expectedLocallyCreated:NO expectedLocallyUpdated:NO expectedLocallyDeleted:NO];
     
     // Check server
-    [self checkServer:idToFieldsCreated byNames:names];
+    [self checkServer:idToFieldsCreated];
     
     // Adding to idToFields so that they get deleted in tearDown
     [idToFields addEntriesFromDictionary:idToFieldsCreated];
@@ -602,9 +752,13 @@
     [self trySyncUp:numberChanges options:defaultOptions];
 }
 
-- (void)trySyncUp:(NSInteger)numberChanges
-          options:(SFSyncOptions *) options {
+- (void)trySyncUp:(NSInteger)numberChanges options:(SFSyncOptions *)options {
+    [self trySyncUp:numberChanges options:options externalIdFieldName:nil];
+}
+
+- (void)trySyncUp:(NSInteger)numberChanges options:(SFSyncOptions *)options externalIdFieldName:(NSString*)externalIdFieldName {
     SFSyncUpTarget *defaultTarget = [self buildSyncUpTarget];
+    defaultTarget.externalIdFieldName = externalIdFieldName;
     [self trySyncUp:numberChanges
       actualChanges:numberChanges
              target:defaultTarget

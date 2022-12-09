@@ -47,6 +47,7 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
         _credentials = (creds == nil) ? [self newClientCredentials] : creds;
         _credentials.jwt = request.jwtToken;
         _spAppCredentials = spAppCredentials;
+        _sceneId = request.scene.session.persistentIdentifier; // Pass through for convenience
         [self initCoordinator];
     }
     return self;
@@ -66,27 +67,14 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
     }
 }
 
-- (SFOAuthCredentials *)newClientCredentials{
-    NSString *identifier = [self uniqueUserAccountIdentifier:self.oauthRequest.oauthClientId];
+- (SFOAuthCredentials *)newClientCredentials {
+    NSString *identifier = [[SFUserAccountManager sharedInstance]  uniqueUserAccountIdentifier:self.oauthRequest.oauthClientId];
     SFOAuthCredentials *creds = [[SFOAuthCredentials alloc] initWithIdentifier:identifier clientId:self.oauthRequest.oauthClientId encrypted:YES];
     creds.clientId = self.oauthRequest.oauthClientId;
     creds.redirectUri = self.oauthRequest.oauthCompletionUrl;
     creds.domain = self.oauthRequest.loginHost;
     creds.accessToken = nil;
     return creds;
-}
-
-- (NSString*)uniqueUserAccountIdentifier:(NSString *)clientId {
-    NSSet *existingAccountNames = [[SFUserAccountManager sharedInstance] allExistingAccountNames];
-
-    // Make sure to build a unique identifier
-    NSString *identifier = nil;
-    while (nil == identifier || [existingAccountNames containsObject:identifier]) {
-        u_int32_t randomNumber = arc4random();
-        identifier = [NSString stringWithFormat:@"%@-%u", clientId, randomNumber];
-    }
-
-    return identifier;
 }
 
 @end

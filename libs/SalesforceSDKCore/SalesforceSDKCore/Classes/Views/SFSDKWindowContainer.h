@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, SFSDKWindowType) {
     SFSDKWindowTypeMain,
     SFSDKWindowTypeAuth,
-    SFSDKWindowTypePasscode,
+    SFSDKWindowTypeScreenLock,
     SFSDKWindowTypeSnapshot,
     SFSDKWindowTypeOther
 };
@@ -133,10 +133,10 @@ typedef NS_ENUM(NSInteger, SFSDKWindowType) {
  */
 - (BOOL)isSnapshotWindow;
 
-/** Convenience API returns true if the SFSDKWindowType is passcode
- * @return YES if this is the passcode Window
+/** Convenience API returns true if the SFSDKWindowType is screen lock
+ * @return YES if this is the screen lock Window
  */
-- (BOOL)isPasscodeWindow;
+- (BOOL)isScreenLockWindow;
 
 /**
  * Tries to return top view controller of this window
