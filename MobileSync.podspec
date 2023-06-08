@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "MobileSync"
-  s.version      = "10.2.0"
+  s.version      = "11.0.0"
   s.summary      = "Salesforce Mobile SDK for iOS - MobileSync"
   s.homepage     = "https://github.com/forcedotcom/SalesforceMobileSDK-iOS"
 
@@ -12,8 +12,7 @@ Pod::Spec.new do |s|
   s.swift_versions = ['5.0']
 
   s.source       = { :git => "https://github.com/forcedotcom/SalesforceMobileSDK-iOS.git",
-                     :tag => "v#{s.version}",
-                     :submodules => true }
+                     :tag => "v#{s.version}" }
   
   s.requires_arc = true
   s.default_subspec  = 'MobileSync'
