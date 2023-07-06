@@ -43,6 +43,5 @@ do
     header "Cleaning up intermediate files for $lib"
     rm -rf ./archives/$lib-iOS.xcarchive
     rm -rf ./archives/$lib-Sim.xcarchive
-    rm -rf ./archives/$lib.xcframework
 
 done
