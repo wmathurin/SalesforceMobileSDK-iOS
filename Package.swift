@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "SalesforceMobileSDK",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v15),
         .watchOS(.v8)
@@ -36,24 +37,20 @@ let package = Package(
              name: "SalesforceAnalytics",
              path: "archives/SalesforceAnalytics.xcframework"
          ),
-        .target(
+        .binaryTarget(
             name: "SalesforceSDKCommon",
-            dependencies: ["SalesforceAnalytics"],
             path: "archives/SalesforceSDKCommon.xcframework"
         ),
-        .target(
+        .binaryTarget(
             name: "SalesforceSDKCore",
-            dependencies: ["SalesforceSDKCommon"],
             path: "archives/SalesforceSDKCore.xcframework"
         ),
-        .target(
+        .binaryTarget(
             name: "SmartStore",
-            dependencies: ["SalesforceSDKCore"],
             path: "archives/SmartStore.xcframework"
         ),
-        .target(
+        .binaryTarget(
             name: "MobileSync",
-            dependencies: ["SmartStore"],
             path: "archives/MobileSync.xcframework"	    
         )
     ],
