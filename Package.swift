@@ -36,27 +36,27 @@ let package = Package(
         .binaryTarget(
              name: "SalesforceAnalytics",
              url: "http://localhost:8080/SalesforceAnalytics.xcframework.zip",
-	     checksum: "97f2e87a70d431f4a99e429f65a4b3508373e7717b0fc4a18701dd534d7e5934",
+	     checksum: "1b848bafd193e9e6f9f0017d216008131c5ff500a2355fc9424dff90918c0f7e" // SalesforceAnalytics
          ),
         .binaryTarget(
             name: "SalesforceSDKCommon",
 	    url: "http://localhost:8080/SalesforceSDKCommon.xcframework.zip",
-	    checksum: "e2bc28f56984e1b6dde9a0f9dbf00fc27fd39346000b3cddb3b9485d65f897b1",
+	    checksum: "e728920bf163e06b69c1ef4ad98401611384ca3f8c6bbb2d082e46f94e046353" // SalesforceSDKCommon
         ),
         .binaryTarget(
             name: "SalesforceSDKCore",
 	    url: "http://localhost:8080/SalesforceSDKCore.xcframework.zip",
-	    checksum: "65c70e0008d9c762915a88eeb3faa917c9c0d1d544b9645bc606a06083420f0f",
+	    checksum: "8fd8804fcb8c7d46665a8be53fce96d46f3d51dcd95a80e477b82d3b741b55a3" // SalesforceSDKCore
         ),
         .binaryTarget(
             name: "SmartStore",
 	    url: "http://localhost:8080/SmartStore.xcframework.zip",
-	    checksum: "a91a0a6df73d333da5bc7e8757213f3907adee4cf42117f9ac91f8ea727d2160",
+	    checksum: "957f3f0844678c8a239ceec44c91ffb40d8fa8e9c7ba569fca08823d746292ea" // SmartStore
         ),
         .binaryTarget(
             name: "MobileSync",
 	    url: "http://localhost:8080/MobileSync.xcframework.zip",
-	    checksum: "9212dc012f9895ba64096cd89bdf14d3f992e512ebee3bf7f16d8b09b3e9dc3f",
+	    checksum: "2236ef909938874f3ac1c30177eab17b7bfa486d1493d5819eaa81750b3477a8" // MobileSync
         )
     ],
     swiftLanguageVersions: [.v5]

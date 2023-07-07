@@ -7,10 +7,9 @@ function header() {
     echo -e "\n\n$SPACER\n    $1\n$SPACER\n"
 }
 
-
-
-for lib in 'SalesforceSDKCommon' 'SalesforceAnalytics' 'SalesforceSDKCore' 'SmartStore' 'MobileSync'
-do
+function processLib() {
+    local lib=$1
+    
     header "Building iOS archive for $lib"
     xcodebuild archive \
         -workspace SalesforceMobileSDK.xcworkspace \
@@ -45,4 +44,14 @@ do
     rm -rf ./archives/$lib-Sim.xcarchive
     rm -rf ./archives/$lib.xcframework
 
+    header "Updating checksum in Package.swift"
+    local checksum=`swift package compute-checksum ./archives/$lib.xcframework.zip`
+    echo "checksum for $lib ==> $checksum"
+    gsed -i "s/checksum: \"[^\"]*\" \/\/ ${lib}/checksum: \"${checksum}\" \/\/ ${lib}/g" ./Package.swift
+}
+
+
+for lib in 'SalesforceSDKCommon' 'SalesforceAnalytics' 'SalesforceSDKCore' 'SmartStore' 'MobileSync'
+do
+    processLib $lib
 done
