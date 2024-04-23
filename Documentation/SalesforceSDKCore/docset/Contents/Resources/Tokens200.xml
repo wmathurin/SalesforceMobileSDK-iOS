@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Constants/SFAppLockControllerMode.html">
+	<File path="Constants/SFUserAccountLoginState.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/c/tdef/SFAppLockControllerMode</TokenIdentifier>
-			<Abstract type="html">Mode constants indicating whether to create/verify an passcode or use biometric.</Abstract>
-			<DeclaredIn>SFAppLockViewControllerTypes.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFUserAccountLoginState</TokenIdentifier>
+			<Abstract type="html">Enumeration of the potential login states of the user account.</Abstract>
+			<DeclaredIn>SFUserAccount.h</DeclaredIn>
             
 			
 			<NodeRef refid="200"/>
@@ -14,51 +14,34 @@
 		
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFAppLockControllerModeCreatePasscode</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>SFAppLockControllerModeCreatePasscode</Declaration>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountLoginStateNotLoggedIn</TokenIdentifier>
+            <Abstract type="html">     User account is not logged in.
+     </Abstract>
+            <Declaration>SFUserAccountLoginStateNotLoggedIn</Declaration>
             
-            <DeclaredIn>SFAppLockViewControllerTypes.h</DeclaredIn>
-            
-            <NodeRef refid="200"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFAppLockControllerModeVerifyPasscode</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>SFAppLockControllerModeVerifyPasscode</Declaration>
-            
-            <DeclaredIn>SFAppLockViewControllerTypes.h</DeclaredIn>
+            <DeclaredIn>SFUserAccount.h</DeclaredIn>
             
             <NodeRef refid="200"/>
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFAppLockControllerModeChangePasscode</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>SFAppLockControllerModeChangePasscode</Declaration>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountLoginStateLoggedIn</TokenIdentifier>
+            <Abstract type="html">     User account is logged in.
+     </Abstract>
+            <Declaration>SFUserAccountLoginStateLoggedIn</Declaration>
             
-            <DeclaredIn>SFAppLockViewControllerTypes.h</DeclaredIn>
-            
-            <NodeRef refid="200"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFAppLockControllerModeEnableBiometric</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>SFAppLockControllerModeEnableBiometric</Declaration>
-            
-            <DeclaredIn>SFAppLockViewControllerTypes.h</DeclaredIn>
+            <DeclaredIn>SFUserAccount.h</DeclaredIn>
             
             <NodeRef refid="200"/>
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/SFAppLockControllerModeVerifyBiometric</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>SFAppLockControllerModeVerifyBiometric</Declaration>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountLoginStateLoggingOut</TokenIdentifier>
+            <Abstract type="html">     User account is in the process of logging out.
+     </Abstract>
+            <Declaration>SFUserAccountLoginStateLoggingOut</Declaration>
             
-            <DeclaredIn>SFAppLockViewControllerTypes.h</DeclaredIn>
+            <DeclaredIn>SFUserAccount.h</DeclaredIn>
             
             <NodeRef refid="200"/>
         </Token>

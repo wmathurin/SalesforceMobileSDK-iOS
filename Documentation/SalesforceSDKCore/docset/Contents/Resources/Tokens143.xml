@@ -65,6 +65,18 @@ to refresh authentication.</Abstract>
             <NodeRef refid="143"/>
 		</Token>
 		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/TestSetupUtils/newClientCredentials</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TestSetupUtils.h</DeclaredIn>
+			
+			<Declaration>+ (SFOAuthCredentials *)newClientCredentials</Declaration>
+			
+			
+			<Anchor>//api/name/newClientCredentials</Anchor>
+            <NodeRef refid="143"/>
+		</Token>
+		
         
         
 	</File>

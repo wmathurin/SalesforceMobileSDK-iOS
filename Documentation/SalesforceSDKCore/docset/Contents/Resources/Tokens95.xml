@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKMutableOAuthClientContext.html">
+	<File path="Classes/SFSDKOAuthTokenEndpointErrorResponse.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKMutableOAuthClientContext</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKOAuthTokenEndpointErrorResponse</TokenIdentifier>
+			<Abstract type="html">@enum SFOAuthErrorDomain related error codes
+Constants used by SFOAuthCoordinator to indicate errors in the SFOAuth domain</Abstract>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
             
 			
 			<NodeRef refid="95"/>
@@ -13,182 +14,110 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/setCredentials:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthTokenEndpointErrorResponse/setTokenEndpointErrorCode:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readwrite, nullable) SFOAuthCredentials *credentials</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *tokenEndpointErrorCode</Declaration>
 			
 			
-			<Anchor>//api/name/credentials</Anchor>
+			<Anchor>//api/name/tokenEndpointErrorCode</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/credentials</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthTokenEndpointErrorResponse/tokenEndpointErrorCode</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readwrite, nullable) SFOAuthCredentials *credentials</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *tokenEndpointErrorCode</Declaration>
 			
 			
-			<Anchor>//api/name/credentials</Anchor>
+			<Anchor>//api/name/tokenEndpointErrorCode</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKMutableOAuthClientContext/credentials</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKOAuthTokenEndpointErrorResponse/tokenEndpointErrorCode</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readwrite, nullable) SFOAuthCredentials *credentials</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *tokenEndpointErrorCode</Declaration>
 			
 			
-			<Anchor>//api/name/credentials</Anchor>
+			<Anchor>//api/name/tokenEndpointErrorCode</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/setAuthInfo:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthTokenEndpointErrorResponse/setTokenEndpointErrorDescription:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readwrite, nullable) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *tokenEndpointErrorDescription</Declaration>
 			
 			
-			<Anchor>//api/name/authInfo</Anchor>
+			<Anchor>//api/name/tokenEndpointErrorDescription</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/authInfo</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthTokenEndpointErrorResponse/tokenEndpointErrorDescription</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readwrite, nullable) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *tokenEndpointErrorDescription</Declaration>
 			
 			
-			<Anchor>//api/name/authInfo</Anchor>
+			<Anchor>//api/name/tokenEndpointErrorDescription</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKMutableOAuthClientContext/authInfo</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKOAuthTokenEndpointErrorResponse/tokenEndpointErrorDescription</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readwrite, nullable) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *tokenEndpointErrorDescription</Declaration>
 			
 			
-			<Anchor>//api/name/authInfo</Anchor>
+			<Anchor>//api/name/tokenEndpointErrorDescription</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/setAuthError:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthTokenEndpointErrorResponse/setError:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readwrite, nullable) NSError *authError</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSError *error</Declaration>
 			
 			
-			<Anchor>//api/name/authError</Anchor>
+			<Anchor>//api/name/error</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/authError</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthTokenEndpointErrorResponse/error</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readwrite, nullable) NSError *authError</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSError *error</Declaration>
 			
 			
-			<Anchor>//api/name/authError</Anchor>
+			<Anchor>//api/name/error</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKMutableOAuthClientContext/authError</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKOAuthTokenEndpointErrorResponse/error</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readwrite, nullable) NSError *authError</Declaration>
-			
-			
-			<Anchor>//api/name/authError</Anchor>
-            <NodeRef refid="95"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/setUserHint:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) NSString *userHint</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSError *error</Declaration>
 			
 			
-			<Anchor>//api/name/userHint</Anchor>
-            <NodeRef refid="95"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/userHint</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) NSString *userHint</Declaration>
-			
-			
-			<Anchor>//api/name/userHint</Anchor>
-            <NodeRef refid="95"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKMutableOAuthClientContext/userHint</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) NSString *userHint</Declaration>
-			
-			
-			<Anchor>//api/name/userHint</Anchor>
-            <NodeRef refid="95"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/setCallingAppOptions:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readwrite, nonnull) NSDictionary *callingAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/callingAppOptions</Anchor>
-            <NodeRef refid="95"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKMutableOAuthClientContext/callingAppOptions</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readwrite, nonnull) NSDictionary *callingAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/callingAppOptions</Anchor>
-            <NodeRef refid="95"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKMutableOAuthClientContext/callingAppOptions</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readwrite, nonnull) NSDictionary *callingAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/callingAppOptions</Anchor>
+			<Anchor>//api/name/error</Anchor>
             <NodeRef refid="95"/>
 		</Token>
 		

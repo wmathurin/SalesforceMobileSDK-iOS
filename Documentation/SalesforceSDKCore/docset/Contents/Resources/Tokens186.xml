@@ -1,29 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKPasscodeDeleteProtocol.html">
+	<File path="Constants/SFOAuthTokenEndpointFlow.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKPasscodeDeleteProtocol</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/c/tdef/SFOAuthTokenEndpointFlow</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeTextField.h</DeclaredIn>
+			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
             
 			
 			<NodeRef refid="186"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKPasscodeDeleteProtocol/deleteBackward</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeTextField.h</DeclaredIn>
-			
-			<Declaration>- (void)deleteBackward</Declaration>
-			
-			
-			<Anchor>//api/name/deleteBackward</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowNone</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowNone</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
             <NodeRef refid="186"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowRefresh</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowRefresh</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
+            <NodeRef refid="186"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowAdvancedBrowser</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowAdvancedBrowser</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
+            <NodeRef refid="186"/>
+        </Token>
         
         
 	</File>

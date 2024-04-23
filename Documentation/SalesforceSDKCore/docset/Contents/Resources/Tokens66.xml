@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKAuthErrorCommand.html">
+	<File path="Classes/SFSDKCompositeSubResponse.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAuthErrorCommand</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKCompositeSubResponse</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
             
 			
 			<NodeRef refid="66"/>
@@ -13,146 +13,194 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/setErrorCode:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/setDict:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorCode</Declaration>
+			<Declaration>@property (nonatomic, readonly) id dict</Declaration>
 			
 			
-			<Anchor>//api/name/errorCode</Anchor>
+			<Anchor>//api/name/dict</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/errorCode</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/dict</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorCode</Declaration>
+			<Declaration>@property (nonatomic, readonly) id dict</Declaration>
 			
 			
-			<Anchor>//api/name/errorCode</Anchor>
+			<Anchor>//api/name/dict</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthErrorCommand/errorCode</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKCompositeSubResponse/dict</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorCode</Declaration>
+			<Declaration>@property (nonatomic, readonly) id dict</Declaration>
 			
 			
-			<Anchor>//api/name/errorCode</Anchor>
+			<Anchor>//api/name/dict</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/setErrorReason:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/setBody:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorReason</Declaration>
+			<Declaration>@property (nonatomic, readonly) id body</Declaration>
 			
 			
-			<Anchor>//api/name/errorReason</Anchor>
+			<Anchor>//api/name/body</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/errorReason</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/body</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorReason</Declaration>
+			<Declaration>@property (nonatomic, readonly) id body</Declaration>
 			
 			
-			<Anchor>//api/name/errorReason</Anchor>
+			<Anchor>//api/name/body</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthErrorCommand/errorReason</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKCompositeSubResponse/body</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorReason</Declaration>
+			<Declaration>@property (nonatomic, readonly) id body</Declaration>
 			
 			
-			<Anchor>//api/name/errorReason</Anchor>
+			<Anchor>//api/name/body</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/setErrorDescription:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/setHttpHeaders:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSDictionary&lt;NSString*NSString*&gt; *httpHeaders</Declaration>
 			
 			
-			<Anchor>//api/name/errorDescription</Anchor>
+			<Anchor>//api/name/httpHeaders</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/errorDescription</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/httpHeaders</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSDictionary&lt;NSString*NSString*&gt; *httpHeaders</Declaration>
 			
 			
-			<Anchor>//api/name/errorDescription</Anchor>
+			<Anchor>//api/name/httpHeaders</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthErrorCommand/errorDescription</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKCompositeSubResponse/httpHeaders</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *errorDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSDictionary&lt;NSString*NSString*&gt; *httpHeaders</Declaration>
 			
 			
-			<Anchor>//api/name/errorDescription</Anchor>
+			<Anchor>//api/name/httpHeaders</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/setState:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/setHttpStatusCode:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSInteger httpStatusCode</Declaration>
 			
 			
-			<Anchor>//api/name/state</Anchor>
+			<Anchor>//api/name/httpStatusCode</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthErrorCommand/state</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/httpStatusCode</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSInteger httpStatusCode</Declaration>
 			
 			
-			<Anchor>//api/name/state</Anchor>
+			<Anchor>//api/name/httpStatusCode</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthErrorCommand/state</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKCompositeSubResponse/httpStatusCode</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthErrorCommand.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSInteger httpStatusCode</Declaration>
 			
 			
-			<Anchor>//api/name/state</Anchor>
+			<Anchor>//api/name/httpStatusCode</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/setReferenceId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *referenceId</Declaration>
+			
+			
+			<Anchor>//api/name/referenceId</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/referenceId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *referenceId</Declaration>
+			
+			
+			<Anchor>//api/name/referenceId</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKCompositeSubResponse/referenceId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeResponse.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *referenceId</Declaration>
+			
+			
+			<Anchor>//api/name/referenceId</Anchor>
+            <NodeRef refid="66"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubResponse/initWith:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeResponse+Internal.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWith:(NSDictionary *)dict</Declaration>
+			
+			
+			<Anchor>//api/name/initWith:</Anchor>
             <NodeRef refid="66"/>
 		</Token>
 		

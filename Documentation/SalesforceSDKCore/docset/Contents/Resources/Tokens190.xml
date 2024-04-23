@@ -1,89 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKUserSelectionView.html">
+	<File path="Constants/SFSDKNetworkServiceType.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKUserSelectionView</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFSDKNetworkServiceType</TokenIdentifier>
+			<Abstract type="html">HTTP methods for requests.</Abstract>
+			<DeclaredIn>SFRestRequest.h</DeclaredIn>
             
 			
 			<NodeRef refid="190"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKUserSelectionView/setUserSelectionDelegate:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKUserSelectionViewDelegate&gt; userSelectionDelegate</Declaration>
-			
-			
-			<Anchor>//api/name/userSelectionDelegate</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFNetworkServiceTypeDefault</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFNetworkServiceTypeDefault</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
             <NodeRef refid="190"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKUserSelectionView/userSelectionDelegate</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKUserSelectionViewDelegate&gt; userSelectionDelegate</Declaration>
-			
-			
-			<Anchor>//api/name/userSelectionDelegate</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFNetworkServiceTypeResponsiveData</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFNetworkServiceTypeResponsiveData</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
             <NodeRef refid="190"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfp/SFSDKUserSelectionView/userSelectionDelegate</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKUserSelectionViewDelegate&gt; userSelectionDelegate</Declaration>
-			
-			
-			<Anchor>//api/name/userSelectionDelegate</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFNetworkServiceTypeBackground</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFNetworkServiceTypeBackground</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
             <NodeRef refid="190"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKUserSelectionView/setSpAppOptions:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) NSDictionary *spAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/spAppOptions</Anchor>
-            <NodeRef refid="190"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKUserSelectionView/spAppOptions</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) NSDictionary *spAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/spAppOptions</Anchor>
-            <NodeRef refid="190"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfp/SFSDKUserSelectionView/spAppOptions</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) NSDictionary *spAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/spAppOptions</Anchor>
-            <NodeRef refid="190"/>
-		</Token>
-		
+        </Token>
         
         
 	</File>

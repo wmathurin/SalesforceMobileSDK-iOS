@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFEncryptionKey.html">
+	<File path="Classes/SFLoginViewController.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFEncryptionKey</TokenIdentifier>
-			<Abstract type="html">Data object representing an symmetric encryption key, with a key value and initialization vector.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFLoginViewController</TokenIdentifier>
+			<Abstract type="html">The Salesforce login screen view.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
             
 			
 			<NodeRef refid="19"/>
@@ -13,212 +13,356 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/initWithData:initializationVector:</TokenIdentifier>
-			<Abstract type="html">Designated initializer.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
 			
-			<Declaration>- (id)initWithData:(NSData *)keyData initializationVector:(nullable NSData *)iv</Declaration>
+			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setOauthView:</TokenIdentifier>
+			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
+			
+			
+			<Anchor>//api/name/oauthView</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/oauthView</TokenIdentifier>
+			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
+			
+			
+			<Anchor>//api/name/oauthView</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/oauthView</TokenIdentifier>
+			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
+			
+			
+			<Anchor>//api/name/oauthView</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/set:</TokenIdentifier>
+			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
+			
+			
+			<Anchor>//api/name/)</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/)</TokenIdentifier>
+			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
+			
+			
+			<Anchor>//api/name/)</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/)</TokenIdentifier>
+			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
+			
+			
+			<Anchor>//api/name/)</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setConfig:</TokenIdentifier>
+			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
+a config object</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
+			
+			
+			<Anchor>//api/name/config</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/config</TokenIdentifier>
+			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
+a config object</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
+			
+			
+			<Anchor>//api/name/config</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/config</TokenIdentifier>
+			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
+a config object</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
+			
+			
+			<Anchor>//api/name/config</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setNavBar:</TokenIdentifier>
+			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
+			
+			
+			<Anchor>//api/name/navBar</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/navBar</TokenIdentifier>
+			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
+			
+			
+			<Anchor>//api/name/navBar</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/navBar</TokenIdentifier>
+			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
+			
+			
+			<Anchor>//api/name/navBar</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setLoginHostListViewController:</TokenIdentifier>
+			<Abstract type="html">Get the refrence  to the SFSDKLoginHostListViewController</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) SFSDKLoginHostListViewController *loginHostListViewController</Declaration>
+			
+			
+			<Anchor>//api/name/loginHostListViewController</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/loginHostListViewController</TokenIdentifier>
+			<Abstract type="html">Get the refrence  to the SFSDKLoginHostListViewController</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) SFSDKLoginHostListViewController *loginHostListViewController</Declaration>
+			
+			
+			<Anchor>//api/name/loginHostListViewController</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/loginHostListViewController</TokenIdentifier>
+			<Abstract type="html">Get the refrence  to the SFSDKLoginHostListViewController</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) SFSDKLoginHostListViewController *loginHostListViewController</Declaration>
+			
+			
+			<Anchor>//api/name/loginHostListViewController</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/styleNavigationBar:</TokenIdentifier>
+			<Abstract type="html">Applies the view&apos;s style attributes to the given navigation bar.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>- (void)styleNavigationBar:(nullable UINavigationBar *)navigationBar</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>keyData</Name>
-					<Abstract type="html">The key component, represented as NSData.</Abstract>
-				</Parameter><Parameter>
-					<Name>iv</Name>
-					<Abstract type="html">The initialization vector, represented as NSData.</Abstract>
+					<Name>navigationBar</Name>
+					<Abstract type="html">The navigation bar that the style is applied to.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/initWithData:initializationVector:</Anchor>
+			<Anchor>//api/name/styleNavigationBar:</Anchor>
             <NodeRef refid="19"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFEncryptionKey/createKey</TokenIdentifier>
-			<Abstract type="html">Generate an encryption key</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/showHostListView</TokenIdentifier>
+			<Abstract type="html">Present the Host List View.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
 			
-			<Declaration>+ (SFEncryptionKey *)createKey</Declaration>
+			<Declaration>- (void)showHostListView</Declaration>
 			
 			
-			<Anchor>//api/name/createKey</Anchor>
+			<Anchor>//api/name/showHostListView</Anchor>
             <NodeRef refid="19"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/encryptData:</TokenIdentifier>
-			<Abstract type="html">Encrypt given data</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/hideHostListView:</TokenIdentifier>
+			<Abstract type="html">Hide the Host List View.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)encryptData:(NSData *)dataToEncrypt</Declaration>
+			<Declaration>- (void)hideHostListView:(BOOL)animated</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>dataToEncrypt</Name>
-					<Abstract type="html">The data to encrypt</Abstract>
+					<Name>animated</Name>
+					<Abstract type="html">Indicates whether or not the hiding should be animated.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/encryptData:</Anchor>
+			<Anchor>//api/name/hideHostListView:</Anchor>
             <NodeRef refid="19"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/decryptData:</TokenIdentifier>
-			<Abstract type="html">Decrypt given data</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createBackButton</TokenIdentifier>
+			<Abstract type="html">Factory Method to create the back button.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)decryptData:(NSData *)dataToDecrypt</Declaration>
+			<Declaration>- (nonnull UIBarButtonItem *)createBackButton</Declaration>
+			
+			
+			<Anchor>//api/name/createBackButton</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createSettingsButton</TokenIdentifier>
+			<Abstract type="html">Factory Method to create the settings button.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>- (nonnull UIBarButtonItem *)createSettingsButton</Declaration>
+			
+			
+			<Anchor>//api/name/createSettingsButton</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createTitleItem</TokenIdentifier>
+			<Abstract type="html">Factory Method to create the navigation title.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>- (nonnull UIView *)createTitleItem</Declaration>
+			
+			
+			<Anchor>//api/name/createTitleItem</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createLoginHostListViewController</TokenIdentifier>
+			<Abstract type="html">Factory Method to create the hostListView Controller.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>- (nonnull SFSDKLoginHostListViewController *)createLoginHostListViewController</Declaration>
+			
+			
+			<Anchor>//api/name/createLoginHostListViewController</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/shouldShowBackButton</TokenIdentifier>
+			<Abstract type="html">Logic to show back button.</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)shouldShowBackButton</Declaration>
+			
+			
+			<Anchor>//api/name/shouldShowBackButton</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/handleBackButtonAction</TokenIdentifier>
+			<Abstract type="html">Back Button was pressed by user</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>- (void)handleBackButtonAction</Declaration>
+			
+			
+			<Anchor>//api/name/handleBackButtonAction</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/handleLoginHostSelectedAction:</TokenIdentifier>
+			<Abstract type="html">User Selected a host from the host list</Abstract>
+			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			
+			<Declaration>- (void)handleLoginHostSelectedAction:(nonnull SFSDKLoginHost *)host</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>dataToDecrypt</Name>
-					<Abstract type="html">The data to decrypt</Abstract>
+					<Name>host</Name>
+					<Abstract type="html">SFSDKLoginHost</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/decryptData:</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/setKey:</TokenIdentifier>
-			<Abstract type="html">The key component of the object.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, nullable) NSData *key</Declaration>
-			
-			
-			<Anchor>//api/name/key</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/key</TokenIdentifier>
-			<Abstract type="html">The key component of the object.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, nullable) NSData *key</Declaration>
-			
-			
-			<Anchor>//api/name/key</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFEncryptionKey/key</TokenIdentifier>
-			<Abstract type="html">The key component of the object.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, nullable) NSData *key</Declaration>
-			
-			
-			<Anchor>//api/name/key</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/setInitializationVector:</TokenIdentifier>
-			<Abstract type="html">The initialization vector component of the object.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSData *initializationVector</Declaration>
-			
-			
-			<Anchor>//api/name/initializationVector</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/initializationVector</TokenIdentifier>
-			<Abstract type="html">The initialization vector component of the object.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSData *initializationVector</Declaration>
-			
-			
-			<Anchor>//api/name/initializationVector</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFEncryptionKey/initializationVector</TokenIdentifier>
-			<Abstract type="html">The initialization vector component of the object.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSData *initializationVector</Declaration>
-			
-			
-			<Anchor>//api/name/initializationVector</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/setKeyAsString:</TokenIdentifier>
-			<Abstract type="html">The base64 representation of the key data.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, nullable) NSString *keyAsString</Declaration>
-			
-			
-			<Anchor>//api/name/keyAsString</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/keyAsString</TokenIdentifier>
-			<Abstract type="html">The base64 representation of the key data.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, nullable) NSString *keyAsString</Declaration>
-			
-			
-			<Anchor>//api/name/keyAsString</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFEncryptionKey/keyAsString</TokenIdentifier>
-			<Abstract type="html">The base64 representation of the key data.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, nullable) NSString *keyAsString</Declaration>
-			
-			
-			<Anchor>//api/name/keyAsString</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/setInitializationVectorAsString:</TokenIdentifier>
-			<Abstract type="html">The base64 representation of the initialization vector data.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, nullable) NSString *initializationVectorAsString</Declaration>
-			
-			
-			<Anchor>//api/name/initializationVectorAsString</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFEncryptionKey/initializationVectorAsString</TokenIdentifier>
-			<Abstract type="html">The base64 representation of the initialization vector data.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, nullable) NSString *initializationVectorAsString</Declaration>
-			
-			
-			<Anchor>//api/name/initializationVectorAsString</Anchor>
-            <NodeRef refid="19"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFEncryptionKey/initializationVectorAsString</TokenIdentifier>
-			<Abstract type="html">The base64 representation of the initialization vector data.</Abstract>
-			<DeclaredIn>SFEncryptionKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, nullable) NSString *initializationVectorAsString</Declaration>
-			
-			
-			<Anchor>//api/name/initializationVectorAsString</Anchor>
+			<Anchor>//api/name/handleLoginHostSelectedAction:</Anchor>
             <NodeRef refid="19"/>
 		</Token>
 		

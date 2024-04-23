@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSecureEncryptionKey.html">
+	<File path="Classes/SFSDKWebViewStateManager.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSecureEncryptionKey</TokenIdentifier>
-			<Abstract type="html">A secure encryption key.
-The key bits are not exposed.
-The key lives in the key chain / Secure Enclave (if available).
-NB: Might not be appropriate for encrypting/decrypting large amounts of data.</Abstract>
-			<DeclaredIn>SFSecureEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKWebViewStateManager</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
             
 			
 			<NodeRef refid="128"/>
@@ -16,53 +13,101 @@ NB: Might not be appropriate for encrypting/decrypting large amounts of data.</A
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSecureEncryptionKey/createKey:</TokenIdentifier>
-			<Abstract type="html">Create a new SFSecureEncryptionKey with given label</Abstract>
-			<DeclaredIn>SFSecureEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKWebViewStateManager/removeSession</TokenIdentifier>
+			<Abstract type="html">  Remove all associated state with WKWebView e.g. Remove Cookies, reset WKProcessPool unless session cookie removal  has been disabled.</Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
 			
-			<Declaration>+ (instancetype)createKey:(NSString *)label</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>label</Name>
-					<Abstract type="html">the key label</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>+ (void)removeSession</Declaration>
 			
-			<Anchor>//api/name/createKey:</Anchor>
+			
+			<Anchor>//api/name/removeSession</Anchor>
             <NodeRef refid="128"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSecureEncryptionKey/retrieveKey:</TokenIdentifier>
-			<Abstract type="html">Retrieve key with given label from keychain</Abstract>
-			<DeclaredIn>SFSecureEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKWebViewStateManager/setSessionCookieManagementDisabled:</TokenIdentifier>
+			<Abstract type="html">Disables the crreation/removal of session Cookies. The application can call the respective methods</Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
 			
-			<Declaration>+ (nullable instancetype)retrieveKey:(NSString *)label</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>label</Name>
-					<Abstract type="html">the key label</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">nil if not found</Abstract></ReturnValue>
-			<Anchor>//api/name/retrieveKey:</Anchor>
+			<Declaration>@property (class, nonatomic, assign, getter=isSessionCookieManagementDisabled) BOOL sessionCookieManagementDisabled</Declaration>
+			
+			
+			<Anchor>//api/name/sessionCookieManagementDisabled</Anchor>
             <NodeRef refid="128"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSecureEncryptionKey/deleteKey:</TokenIdentifier>
-			<Abstract type="html">Delete key with given label from keychain</Abstract>
-			<DeclaredIn>SFSecureEncryptionKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKWebViewStateManager/isSessionCookieManagementDisabled</TokenIdentifier>
+			<Abstract type="html">Disables the crreation/removal of session Cookies. The application can call the respective methods</Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
 			
-			<Declaration>+ (void)deleteKey:(NSString *)label</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>label</Name>
-					<Abstract type="html">the key label</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (class, nonatomic, assign, getter=isSessionCookieManagementDisabled) BOOL sessionCookieManagementDisabled</Declaration>
 			
-			<Anchor>//api/name/deleteKey:</Anchor>
+			
+			<Anchor>//api/name/sessionCookieManagementDisabled</Anchor>
+            <NodeRef refid="128"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKWebViewStateManager/sessionCookieManagementDisabled</TokenIdentifier>
+			<Abstract type="html">Disables the crreation/removal of session Cookies. The application can call the respective methods</Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
+			
+			<Declaration>@property (class, nonatomic, assign, getter=isSessionCookieManagementDisabled) BOOL sessionCookieManagementDisabled</Declaration>
+			
+			
+			<Anchor>//api/name/sessionCookieManagementDisabled</Anchor>
+            <NodeRef refid="128"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKWebViewStateManager/setSharedProcessPool:</TokenIdentifier>
+			<Abstract type="html">Gets or sets an instance of WKProcessPool that will be used during instantiation of any WKWebView instances @discussion
+  Use the default instance or provide an instance to share state between WKWebView instances</Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
+			
+			<Declaration>@property (class, strong, nonatomic, nullable) WKProcessPool *sharedProcessPool</Declaration>
+			
+			
+			<Anchor>//api/name/sharedProcessPool</Anchor>
+            <NodeRef refid="128"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKWebViewStateManager/sharedProcessPool</TokenIdentifier>
+			<Abstract type="html">Gets or sets an instance of WKProcessPool that will be used during instantiation of any WKWebView instances @discussion
+  Use the default instance or provide an instance to share state between WKWebView instances</Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
+			
+			<Declaration>@property (class, strong, nonatomic, nullable) WKProcessPool *sharedProcessPool</Declaration>
+			
+			
+			<Anchor>//api/name/sharedProcessPool</Anchor>
+            <NodeRef refid="128"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKWebViewStateManager/sharedProcessPool</TokenIdentifier>
+			<Abstract type="html">Gets or sets an instance of WKProcessPool that will be used during instantiation of any WKWebView instances @discussion
+  Use the default instance or provide an instance to share state between WKWebView instances</Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
+			
+			<Declaration>@property (class, strong, nonatomic, nullable) WKProcessPool *sharedProcessPool</Declaration>
+			
+			
+			<Anchor>//api/name/sharedProcessPool</Anchor>
+            <NodeRef refid="128"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKWebViewStateManager/resetSessionCookie</TokenIdentifier>
+			<Abstract type="html">Clears session cookie data from the cookie store unless session cookie removal  has been disabled.</Abstract>
+			<DeclaredIn>SFSDKWebViewStateManager.h</DeclaredIn>
+			
+			<Declaration>+ (void)resetSessionCookie</Declaration>
+			
+			
+			<Anchor>//api/name/resetSessionCookie</Anchor>
             <NodeRef refid="128"/>
 		</Token>
 		

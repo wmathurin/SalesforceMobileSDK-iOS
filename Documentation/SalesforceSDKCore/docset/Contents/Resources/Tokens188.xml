@@ -1,41 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKURLHandler.html">
+	<File path="Constants/SFRestMethod.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKURLHandler</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKURLHandler.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFRestMethod</TokenIdentifier>
+			<Abstract type="html">HTTP methods for requests.</Abstract>
+			<DeclaredIn>SFRestRequest.h</DeclaredIn>
             
 			
 			<NodeRef refid="188"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKURLHandler/canHandleRequest:options:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKURLHandler.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)canHandleRequest:(NSURL *)url options:(NSDictionary *)options</Declaration>
-			
-			
-			<Anchor>//api/name/canHandleRequest:options:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodGET</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFRestMethodGET</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
             <NodeRef refid="188"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKURLHandler/processRequest:options:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKURLHandler.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)processRequest:(NSURL *)url options:(NSDictionary *)options</Declaration>
-			
-			
-			<Anchor>//api/name/processRequest:options:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodPOST</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFRestMethodPOST</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
             <NodeRef refid="188"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodPUT</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFRestMethodPUT</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
+            <NodeRef refid="188"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodDELETE</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFRestMethodDELETE</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
+            <NodeRef refid="188"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodHEAD</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFRestMethodHEAD</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
+            <NodeRef refid="188"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFRestMethodPATCH</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFRestMethodPATCH</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
+            <NodeRef refid="188"/>
+        </Token>
         
         
 	</File>

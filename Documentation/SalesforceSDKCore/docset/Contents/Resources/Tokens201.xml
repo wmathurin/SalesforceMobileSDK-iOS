@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Constants/SFAppType.html">
+	<File path="Constants/SFUserAccountScope.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/c/tdef/SFAppType</TokenIdentifier>
-			<Abstract type="html">Block typedef for creating a custom snapshot view controller.</Abstract>
-			<DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFUserAccountScope</TokenIdentifier>
+			<Abstract type="html">The various scopes related to a user account</Abstract>
+			<DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
             
 			
 			<NodeRef refid="201"/>
@@ -14,41 +14,45 @@
 		
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/kSFAppTypeNative</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>kSFAppTypeNative</Declaration>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountScopeGlobal</TokenIdentifier>
+            <Abstract type="html">Global scope (one per application)
+     </Abstract>
+            <Declaration>SFUserAccountScopeGlobal</Declaration>
             
-            <DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
-            
-            <NodeRef refid="201"/>
-        </Token>
-        
-        <Token>
-            <TokenIdentifier>//apple_ref/c/econst/kSFAppTypeHybrid</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>kSFAppTypeHybrid</Declaration>
-            
-            <DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
             
             <NodeRef refid="201"/>
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/kSFAppTypeReactNative</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>kSFAppTypeReactNative</Declaration>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountScopeOrg</TokenIdentifier>
+            <Abstract type="html">Scope by organization
+     </Abstract>
+            <Declaration>SFUserAccountScopeOrg</Declaration>
             
-            <DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
             
             <NodeRef refid="201"/>
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/kSFAppTypeNativeSwift</TokenIdentifier>
-            <Abstract type="html"></Abstract>
-            <Declaration>kSFAppTypeNativeSwift</Declaration>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountScopeUser</TokenIdentifier>
+            <Abstract type="html">Scope by user
+     </Abstract>
+            <Declaration>SFUserAccountScopeUser</Declaration>
             
-            <DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
+            <NodeRef refid="201"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountScopeCommunity</TokenIdentifier>
+            <Abstract type="html">Scope by community
+     </Abstract>
+            <Declaration>SFUserAccountScopeCommunity</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
             
             <NodeRef refid="201"/>
         </Token>

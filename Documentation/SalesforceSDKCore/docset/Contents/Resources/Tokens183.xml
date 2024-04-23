@@ -1,58 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKOAuthClientSafariViewDelegate.html">
+	<File path="Constants/SFOAuthCredentialsStorageType.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKOAuthClientSafariViewDelegate</TokenIdentifier>
-			<Abstract type="html">Delegate that will be used to notify of all the OAuth Client Browser Events.</Abstract>
-			<DeclaredIn>SFSDKOAuthClient.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFOAuthCredentialsStorageType</TokenIdentifier>
+			<Abstract type="html">@enum OAuth credential storage type</Abstract>
+			<DeclaredIn>SFOAuthCredentials.h</DeclaredIn>
             
 			
 			<NodeRef refid="183"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKOAuthClientSafariViewDelegate/authClient:willBeginBrowserAuthentication:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClient.h</DeclaredIn>
-			
-			<Declaration>- (void)authClient:(SFSDKOAuthClient *)client willBeginBrowserAuthentication:(SFOAuthBrowserFlowCallbackBlock)callbackBlock</Declaration>
-			
-			
-			<Anchor>//api/name/authClient:willBeginBrowserAuthentication:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthCredentialsStorageTypeNone</TokenIdentifier>
+            <Abstract type="html">     No storage or persistence of OAuth credentials will be attempted
+     </Abstract>
+            <Declaration>SFOAuthCredentialsStorageTypeNone</Declaration>
+            
+            <DeclaredIn>SFOAuthCredentials.h</DeclaredIn>
+            
             <NodeRef refid="183"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKOAuthClientSafariViewDelegate/authClient:didBeginAuthenticationWithSession:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClient.h</DeclaredIn>
-			
-			<Declaration>- (void)authClient:(SFSDKOAuthClient *)client didBeginAuthenticationWithSession:(SFAuthenticationSession *)session</Declaration>
-			
-			
-			<Anchor>//api/name/authClient:didBeginAuthenticationWithSession:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthCredentialsStorageTypeKeychain</TokenIdentifier>
+            <Abstract type="html">     OAuth credentials will be stored securely within the keychain.
+     </Abstract>
+            <Declaration>SFOAuthCredentialsStorageTypeKeychain</Declaration>
+            
+            <DeclaredIn>SFOAuthCredentials.h</DeclaredIn>
+            
             <NodeRef refid="183"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKOAuthClientSafariViewDelegate/authClientDidCancelBrowserFlow:</TokenIdentifier>
-			<Abstract type="html">Called when a browser flow authentication is cancelled.</Abstract>
-			<DeclaredIn>SFSDKOAuthClient.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)authClientDidCancelBrowserFlow:(SFSDKOAuthClient *)client</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>client</Name>
-					<Abstract type="html">The instance of SFSDKOAuthClient making the call.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/authClientDidCancelBrowserFlow:</Anchor>
-            <NodeRef refid="183"/>
-		</Token>
-		
+        </Token>
         
         
 	</File>

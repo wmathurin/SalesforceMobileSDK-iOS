@@ -1,53 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKUserSelectionViewDelegate.html">
+	<File path="Constants/SFSDKRestServiceHostType.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKUserSelectionViewDelegate</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFSDKRestServiceHostType</TokenIdentifier>
+			<Abstract type="html">The type of service host to use for Rest requests.</Abstract>
+			<DeclaredIn>SFRestRequest.h</DeclaredIn>
             
 			
 			<NodeRef refid="191"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKUserSelectionViewDelegate/createNewUser:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>- (void)createNewUser:(NSDictionary *)spAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/createNewUser:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKRestServiceHostTypeLogin</TokenIdentifier>
+            <Abstract type="html">Request uses the login endpoint.
+     </Abstract>
+            <Declaration>SFSDKRestServiceHostTypeLogin</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
             <NodeRef refid="191"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKUserSelectionViewDelegate/selectedUser:spAppContext:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>- (void)selectedUser:(SFUserAccount *)user spAppContext:(NSDictionary *)spAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/selectedUser:spAppContext:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKRestServiceHostTypeInstance</TokenIdentifier>
+            <Abstract type="html">Request uses the instance endpoint.
+     </Abstract>
+            <Declaration>SFSDKRestServiceHostTypeInstance</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
             <NodeRef refid="191"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKUserSelectionViewDelegate/cancel:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKUserSelectionView.h</DeclaredIn>
-			
-			<Declaration>- (void)cancel:(NSDictionary *)spAppOptions</Declaration>
-			
-			
-			<Anchor>//api/name/cancel:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKRestServiceHostTypeCustom</TokenIdentifier>
+            <Abstract type="html">Request uses a custom endpoint.
+     </Abstract>
+            <Declaration>SFSDKRestServiceHostTypeCustom</Declaration>
+            
+            <DeclaredIn>SFRestRequest.h</DeclaredIn>
+            
             <NodeRef refid="191"/>
-		</Token>
-		
+        </Token>
         
         
 	</File>
