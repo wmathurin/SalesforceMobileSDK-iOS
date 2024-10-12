@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFLoginViewController.html">
+	<File path="Classes/SFOAuthOrgAuthConfiguration.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFLoginViewController</TokenIdentifier>
-			<Abstract type="html">The Salesforce login screen view.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthOrgAuthConfiguration</TokenIdentifier>
+			<Abstract type="html">Data class representing the org authentication configuration.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
             
 			
 			<NodeRef refid="29"/>
@@ -13,308 +13,199 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setDelegate:</TokenIdentifier>
-			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setUseNativeBrowserForAuth:</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK whether to use the native browser for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/useNativeBrowserForAuth</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK whether to use the native browser for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/useNativeBrowserForAuth</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK whether to use the native browser for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setOauthView:</TokenIdentifier>
-			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setShareBrowserSession:</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK  to share the native browser session for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL shareBrowserSession</Declaration>
 			
 			
-			<Anchor>//api/name/oauthView</Anchor>
+			<Anchor>//api/name/shareBrowserSession</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/oauthView</TokenIdentifier>
-			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/shareBrowserSession</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK  to share the native browser session for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL shareBrowserSession</Declaration>
 			
 			
-			<Anchor>//api/name/oauthView</Anchor>
+			<Anchor>//api/name/shareBrowserSession</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/oauthView</TokenIdentifier>
-			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/shareBrowserSession</TokenIdentifier>
+			<Abstract type="html">Tells Mobile SDK  to share the native browser session for authentication.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL shareBrowserSession</Declaration>
 			
 			
-			<Anchor>//api/name/oauthView</Anchor>
+			<Anchor>//api/name/shareBrowserSession</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/set:</TokenIdentifier>
-			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setSsoUrls:</TokenIdentifier>
+			<Abstract type="html">List of configured SSO URLs.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
 			
 			
-			<Anchor>//api/name/)</Anchor>
+			<Anchor>//api/name/ssoUrls</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/)</TokenIdentifier>
-			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/ssoUrls</TokenIdentifier>
+			<Abstract type="html">List of configured SSO URLs.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
 			
 			
-			<Anchor>//api/name/)</Anchor>
+			<Anchor>//api/name/ssoUrls</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/)</TokenIdentifier>
-			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/ssoUrls</TokenIdentifier>
+			<Abstract type="html">List of configured SSO URLs.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
 			
 			
-			<Anchor>//api/name/)</Anchor>
+			<Anchor>//api/name/ssoUrls</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setConfig:</TokenIdentifier>
-			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
-a config object</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setLoginPageUrl:</TokenIdentifier>
+			<Abstract type="html">Configured login page URL.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
 			
 			
-			<Anchor>//api/name/config</Anchor>
+			<Anchor>//api/name/loginPageUrl</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/config</TokenIdentifier>
-			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
-a config object</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/loginPageUrl</TokenIdentifier>
+			<Abstract type="html">Configured login page URL.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
 			
 			
-			<Anchor>//api/name/config</Anchor>
+			<Anchor>//api/name/loginPageUrl</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/config</TokenIdentifier>
-			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
-a config object</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/loginPageUrl</TokenIdentifier>
+			<Abstract type="html">Configured login page URL.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
 			
 			
-			<Anchor>//api/name/config</Anchor>
+			<Anchor>//api/name/loginPageUrl</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setNavBar:</TokenIdentifier>
-			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setAuthConfigDict:</TokenIdentifier>
+			<Abstract type="html">Raw dictionary data representing the org auth configuration.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
 			
 			
-			<Anchor>//api/name/navBar</Anchor>
+			<Anchor>//api/name/authConfigDict</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/navBar</TokenIdentifier>
-			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/authConfigDict</TokenIdentifier>
+			<Abstract type="html">Raw dictionary data representing the org auth configuration.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
 			
 			
-			<Anchor>//api/name/navBar</Anchor>
+			<Anchor>//api/name/authConfigDict</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/navBar</TokenIdentifier>
-			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/authConfigDict</TokenIdentifier>
+			<Abstract type="html">Raw dictionary data representing the org auth configuration.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
+			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
 			
 			
-			<Anchor>//api/name/navBar</Anchor>
+			<Anchor>//api/name/authConfigDict</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/styleNavigationBar:</TokenIdentifier>
-			<Abstract type="html">Applies the view&apos;s style attributes to the given navigation bar.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/initWithConfigDict:</TokenIdentifier>
+			<Abstract type="html">Designated initializer.</Abstract>
+			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
 			
-			<Declaration>- (void)styleNavigationBar:(nullable UINavigationBar *)navigationBar</Declaration>
+			<Declaration>- (nonnull id)initWithConfigDict:(nullable NSDictionary *)authConfigDict</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>navigationBar</Name>
-					<Abstract type="html">The navigation bar that the style is applied to.</Abstract>
+					<Name>authConfigDict</Name>
+					<Abstract type="html">NSDictionary containing the org auth configuration.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/styleNavigationBar:</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/showHostListView</TokenIdentifier>
-			<Abstract type="html">Present the Host List View.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (void)showHostListView</Declaration>
-			
-			
-			<Anchor>//api/name/showHostListView</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/hideHostListView:</TokenIdentifier>
-			<Abstract type="html">Hide the Host List View.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (void)hideHostListView:(BOOL)animated</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>animated</Name>
-					<Abstract type="html">Indicates whether or not the hiding should be animated.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/hideHostListView:</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createBackButton</TokenIdentifier>
-			<Abstract type="html">Factory Method to create the back button.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (nonnull UIBarButtonItem *)createBackButton</Declaration>
-			
-			
-			<Anchor>//api/name/createBackButton</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createSettingsButton</TokenIdentifier>
-			<Abstract type="html">Factory Method to create the settings button.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (nonnull UIBarButtonItem *)createSettingsButton</Declaration>
-			
-			
-			<Anchor>//api/name/createSettingsButton</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createTitleItem</TokenIdentifier>
-			<Abstract type="html">Factory Method to create the navigation title.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (nonnull UIView *)createTitleItem</Declaration>
-			
-			
-			<Anchor>//api/name/createTitleItem</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/shouldShowBackButton</TokenIdentifier>
-			<Abstract type="html">Logic to show back button.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)shouldShowBackButton</Declaration>
-			
-			
-			<Anchor>//api/name/shouldShowBackButton</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/handleBackButtonAction</TokenIdentifier>
-			<Abstract type="html">Back Button was pressed by user</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (void)handleBackButtonAction</Declaration>
-			
-			
-			<Anchor>//api/name/handleBackButtonAction</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/handleLoginHostSelectedAction:</TokenIdentifier>
-			<Abstract type="html">User Selected a host from the host list</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (void)handleLoginHostSelectedAction:(nonnull SFSDKLoginHost *)host</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>host</Name>
-					<Abstract type="html">SFSDKLoginHost</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/handleLoginHostSelectedAction:</Anchor>
+			<Anchor>//api/name/initWithConfigDict:</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		

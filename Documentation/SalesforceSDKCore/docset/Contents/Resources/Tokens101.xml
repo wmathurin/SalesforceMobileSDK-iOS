@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKOAuthClientContext.html">
+	<File path="Classes/SFSDKPrimingStats.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKOAuthClientContext</TokenIdentifier>
-			<Abstract type="html">Object representing state of a current authentication context. Provides a means to isolate individual authentication requests</Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKPrimingStats</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
             
 			
 			<NodeRef refid="101"/>
@@ -13,194 +13,194 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/setCredentials:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/setDict:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) SFOAuthCredentials *credentials</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSDictionary *dict</Declaration>
 			
 			
-			<Anchor>//api/name/credentials</Anchor>
+			<Anchor>//api/name/dict</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/credentials</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/dict</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) SFOAuthCredentials *credentials</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSDictionary *dict</Declaration>
 			
 			
-			<Anchor>//api/name/credentials</Anchor>
+			<Anchor>//api/name/dict</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKOAuthClientContext/credentials</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPrimingStats/dict</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) SFOAuthCredentials *credentials</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSDictionary *dict</Declaration>
 			
 			
-			<Anchor>//api/name/credentials</Anchor>
+			<Anchor>//api/name/dict</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/setAuthInfo:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/setRuleCountTotal:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger ruleCountTotal</Declaration>
 			
 			
-			<Anchor>//api/name/authInfo</Anchor>
+			<Anchor>//api/name/ruleCountTotal</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/authInfo</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/ruleCountTotal</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger ruleCountTotal</Declaration>
 			
 			
-			<Anchor>//api/name/authInfo</Anchor>
+			<Anchor>//api/name/ruleCountTotal</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKOAuthClientContext/authInfo</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPrimingStats/ruleCountTotal</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) SFOAuthInfo *authInfo</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger ruleCountTotal</Declaration>
 			
 			
-			<Anchor>//api/name/authInfo</Anchor>
+			<Anchor>//api/name/ruleCountTotal</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/setAuthError:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/setRecordCountTotal:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSError *authError</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger recordCountTotal</Declaration>
 			
 			
-			<Anchor>//api/name/authError</Anchor>
+			<Anchor>//api/name/recordCountTotal</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/authError</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/recordCountTotal</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSError *authError</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger recordCountTotal</Declaration>
 			
 			
-			<Anchor>//api/name/authError</Anchor>
+			<Anchor>//api/name/recordCountTotal</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKOAuthClientContext/authError</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPrimingStats/recordCountTotal</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSError *authError</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger recordCountTotal</Declaration>
 			
 			
-			<Anchor>//api/name/authError</Anchor>
+			<Anchor>//api/name/recordCountTotal</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/setUserHint:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/setRuleCountServed:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *userHint</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger ruleCountServed</Declaration>
 			
 			
-			<Anchor>//api/name/userHint</Anchor>
+			<Anchor>//api/name/ruleCountServed</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/userHint</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/ruleCountServed</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *userHint</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger ruleCountServed</Declaration>
 			
 			
-			<Anchor>//api/name/userHint</Anchor>
+			<Anchor>//api/name/ruleCountServed</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKOAuthClientContext/userHint</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPrimingStats/ruleCountServed</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *userHint</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger ruleCountServed</Declaration>
 			
 			
-			<Anchor>//api/name/userHint</Anchor>
+			<Anchor>//api/name/ruleCountServed</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/setCallingAppOptions:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/setRecordCountServed:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSDictionary *callingAppOptions</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger recordCountServed</Declaration>
 			
 			
-			<Anchor>//api/name/callingAppOptions</Anchor>
+			<Anchor>//api/name/recordCountServed</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/callingAppOptions</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/recordCountServed</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSDictionary *callingAppOptions</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger recordCountServed</Declaration>
 			
 			
-			<Anchor>//api/name/callingAppOptions</Anchor>
+			<Anchor>//api/name/recordCountServed</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKOAuthClientContext/callingAppOptions</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPrimingStats/recordCountServed</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) NSDictionary *callingAppOptions</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSUInteger recordCountServed</Declaration>
 			
 			
-			<Anchor>//api/name/callingAppOptions</Anchor>
+			<Anchor>//api/name/recordCountServed</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuthClientContext/initWithAuthType:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPrimingStats/initWith:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClientContext.h</DeclaredIn>
+			<DeclaredIn>SFSDKPrimingRecordsResponse.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)initWithAuthType:(SFOAuthType)oauthType</Declaration>
+			<Declaration>- (instancetype)initWith:(NSDictionary *)dict</Declaration>
 			
 			
-			<Anchor>//api/name/initWithAuthType:</Anchor>
+			<Anchor>//api/name/initWith:</Anchor>
             <NodeRef refid="101"/>
 		</Token>
 		

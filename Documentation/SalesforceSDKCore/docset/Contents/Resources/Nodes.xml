@@ -179,10 +179,6 @@
 						<NodeRef refid="157"/>
 						<NodeRef refid="158"/>
 						<NodeRef refid="159"/>
-						<NodeRef refid="160"/>
-						<NodeRef refid="161"/>
-						<NodeRef refid="162"/>
-						<NodeRef refid="163"/>
 						
 					</Subnodes>
 				</Node>
@@ -192,6 +188,10 @@
 					<Name>Protocols</Name>
 					<Path>index.html</Path>
 					<Subnodes>
+						<NodeRef refid="160"/>
+						<NodeRef refid="161"/>
+						<NodeRef refid="162"/>
+						<NodeRef refid="163"/>
 						<NodeRef refid="164"/>
 						<NodeRef refid="165"/>
 						<NodeRef refid="166"/>
@@ -208,6 +208,15 @@
 						<NodeRef refid="177"/>
 						<NodeRef refid="178"/>
 						<NodeRef refid="179"/>
+						
+					</Subnodes>
+				</Node>
+				
+                
+				<Node>
+					<Name>Constants</Name>
+					<Path>index.html</Path>
+					<Subnodes>
 						<NodeRef refid="180"/>
 						<NodeRef refid="181"/>
 						<NodeRef refid="182"/>
@@ -227,15 +236,6 @@
 						<NodeRef refid="196"/>
 						<NodeRef refid="197"/>
 						<NodeRef refid="198"/>
-						
-					</Subnodes>
-				</Node>
-				
-                
-				<Node>
-					<Name>Constants</Name>
-					<Path>index.html</Path>
-					<Subnodes>
 						<NodeRef refid="199"/>
 						<NodeRef refid="200"/>
 						<NodeRef refid="201"/>
@@ -243,30 +243,6 @@
 						<NodeRef refid="203"/>
 						<NodeRef refid="204"/>
 						<NodeRef refid="205"/>
-						<NodeRef refid="206"/>
-						<NodeRef refid="207"/>
-						<NodeRef refid="208"/>
-						<NodeRef refid="209"/>
-						<NodeRef refid="210"/>
-						<NodeRef refid="211"/>
-						<NodeRef refid="212"/>
-						<NodeRef refid="213"/>
-						<NodeRef refid="214"/>
-						<NodeRef refid="215"/>
-						<NodeRef refid="216"/>
-						<NodeRef refid="217"/>
-						<NodeRef refid="218"/>
-						<NodeRef refid="219"/>
-						<NodeRef refid="220"/>
-						<NodeRef refid="221"/>
-						<NodeRef refid="222"/>
-						<NodeRef refid="223"/>
-						<NodeRef refid="224"/>
-						<NodeRef refid="225"/>
-						<NodeRef refid="226"/>
-						<NodeRef refid="227"/>
-						<NodeRef refid="228"/>
-						<NodeRef refid="229"/>
 						
 					</Subnodes>
 				</Node>
@@ -276,42 +252,30 @@
                     <Name>Blocks</Name>
                     <Path>index.html</Path>
                     <Subnodes>
-                        <NodeRef refid="230"/>
-                        <NodeRef refid="231"/>
-                        <NodeRef refid="232"/>
-                        <NodeRef refid="233"/>
-                        <NodeRef refid="234"/>
-                        <NodeRef refid="235"/>
-                        <NodeRef refid="236"/>
-                        <NodeRef refid="237"/>
-                        <NodeRef refid="238"/>
-                        <NodeRef refid="239"/>
-                        <NodeRef refid="240"/>
-                        <NodeRef refid="241"/>
-                        <NodeRef refid="242"/>
-                        <NodeRef refid="243"/>
-                        <NodeRef refid="244"/>
-                        <NodeRef refid="245"/>
-                        <NodeRef refid="246"/>
-                        <NodeRef refid="247"/>
-                        <NodeRef refid="248"/>
-                        <NodeRef refid="249"/>
-                        <NodeRef refid="250"/>
-                        <NodeRef refid="251"/>
-                        <NodeRef refid="252"/>
-                        <NodeRef refid="253"/>
-                        <NodeRef refid="254"/>
-                        <NodeRef refid="255"/>
-                        <NodeRef refid="256"/>
-                        <NodeRef refid="257"/>
-                        <NodeRef refid="258"/>
-                        <NodeRef refid="259"/>
-                        <NodeRef refid="260"/>
-                        <NodeRef refid="261"/>
-                        <NodeRef refid="262"/>
-                        <NodeRef refid="263"/>
-                        <NodeRef refid="264"/>
-                        <NodeRef refid="265"/>
+                        <NodeRef refid="206"/>
+                        <NodeRef refid="207"/>
+                        <NodeRef refid="208"/>
+                        <NodeRef refid="209"/>
+                        <NodeRef refid="210"/>
+                        <NodeRef refid="211"/>
+                        <NodeRef refid="212"/>
+                        <NodeRef refid="213"/>
+                        <NodeRef refid="214"/>
+                        <NodeRef refid="215"/>
+                        <NodeRef refid="216"/>
+                        <NodeRef refid="217"/>
+                        <NodeRef refid="218"/>
+                        <NodeRef refid="219"/>
+                        <NodeRef refid="220"/>
+                        <NodeRef refid="221"/>
+                        <NodeRef refid="222"/>
+                        <NodeRef refid="223"/>
+                        <NodeRef refid="224"/>
+                        <NodeRef refid="225"/>
+                        <NodeRef refid="226"/>
+                        <NodeRef refid="227"/>
+                        <NodeRef refid="228"/>
+                        <NodeRef refid="229"/>
                         
                     </Subnodes>
                 </Node>
@@ -359,33 +323,6 @@
             
         </Node>
 		<Node id="4" type="file" documentType="reference">
-            <Name>SFApplication</Name>
-            <Path>Classes/SFApplication.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFApplication.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFApplication.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFApplication.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="5" type="file" documentType="reference">
             <Name>SFApplicationHelper</Name>
             <Path>Classes/SFApplicationHelper.html</Path>
             
@@ -412,7 +349,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="6" type="file" documentType="reference">
+		<Node id="5" type="file" documentType="reference">
             <Name>SFAuthErrorHandler</Name>
             <Path>Classes/SFAuthErrorHandler.html</Path>
             
@@ -445,7 +382,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="7" type="file" documentType="reference">
+		<Node id="6" type="file" documentType="reference">
             <Name>SFAuthErrorHandlerList</Name>
             <Path>Classes/SFAuthErrorHandlerList.html</Path>
             
@@ -478,67 +415,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="8" type="file" documentType="reference">
-            <Name>SFCommunityData</Name>
-            <Path>Classes/SFCommunityData.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFCommunityData.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFCommunityData.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFCommunityData.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="9" type="file" documentType="reference">
-            <Name>SFCryptChunks</Name>
-            <Path>Classes/SFCryptChunks.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFCryptChunks.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFCryptChunks.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFCryptChunks.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFCryptChunks.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="10" type="file" documentType="reference">
+		<Node id="7" type="file" documentType="reference">
             <Name>SFCrypto</Name>
             <Path>Classes/SFCrypto.html</Path>
             
@@ -554,12 +431,6 @@
                     <Anchor>tasks</Anchor>
                 </Node>
                 
-                <Node type="section">
-                    <Path>Classes/SFCrypto.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
                 
                 <Node type="section">
                     <Path>Classes/SFCrypto.html</Path>
@@ -568,16 +439,10 @@
                 </Node>
                 
                 
-                <Node type="section">
-                    <Path>Classes/SFCrypto.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
             </Subnodes>
             
         </Node>
-		<Node id="11" type="file" documentType="reference">
+		<Node id="8" type="file" documentType="reference">
             <Name>SFCryptoStreamTestUtils</Name>
             <Path>Classes/SFCryptoStreamTestUtils.html</Path>
             
@@ -604,34 +469,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="12" type="file" documentType="reference">
-            <Name>SFDecryptStream</Name>
-            <Path>Classes/SFDecryptStream.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFDecryptStream.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFDecryptStream.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFDecryptStream.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="13" type="file" documentType="reference">
+		<Node id="9" type="file" documentType="reference">
             <Name>SFDefaultUserAccountPersister</Name>
             <Path>Classes/SFDefaultUserAccountPersister.html</Path>
             
@@ -664,7 +502,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="14" type="file" documentType="reference">
+		<Node id="10" type="file" documentType="reference">
             <Name>SFDefaultUserManagementDetailViewController</Name>
             <Path>Classes/SFDefaultUserManagementDetailViewController.html</Path>
             
@@ -691,12 +529,12 @@
             </Subnodes>
             
         </Node>
-		<Node id="15" type="file" documentType="reference">
+		<Node id="11" type="file" documentType="reference">
             <Name>SFDefaultUserManagementListViewController</Name>
             <Path>Classes/SFDefaultUserManagementListViewController.html</Path>
             
         </Node>
-		<Node id="16" type="file" documentType="reference">
+		<Node id="12" type="file" documentType="reference">
             <Name>SFDefaultUserManagementViewController</Name>
             <Path>Classes/SFDefaultUserManagementViewController.html</Path>
             
@@ -729,7 +567,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="17" type="file" documentType="reference">
+		<Node id="13" type="file" documentType="reference">
             <Name>SFDirectoryManager</Name>
             <Path>Classes/SFDirectoryManager.html</Path>
             
@@ -762,34 +600,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="18" type="file" documentType="reference">
-            <Name>SFEncryptStream</Name>
-            <Path>Classes/SFEncryptStream.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFEncryptStream.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFEncryptStream.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFEncryptStream.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="19" type="file" documentType="reference">
+		<Node id="14" type="file" documentType="reference">
             <Name>SFEncryptionKey</Name>
             <Path>Classes/SFEncryptionKey.html</Path>
             
@@ -812,12 +623,6 @@
                 </Node>
                 
                 
-                <Node type="section">
-                    <Path>Classes/SFEncryptionKey.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
                 
                 <Node type="section">
                     <Path>Classes/SFEncryptionKey.html</Path>
@@ -828,12 +633,34 @@
             </Subnodes>
             
         </Node>
-		<Node id="20" type="file" documentType="reference">
-            <Name>SFGeneratedKeyStore</Name>
-            <Path>Classes/SFGeneratedKeyStore.html</Path>
+		<Node id="15" type="file" documentType="reference">
+            <Name>SFFormatUtils</Name>
+            <Path>Classes/SFFormatUtils.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFFormatUtils.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFFormatUtils.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFFormatUtils.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+            </Subnodes>
             
         </Node>
-		<Node id="21" type="file" documentType="reference">
+		<Node id="16" type="file" documentType="reference">
             <Name>SFIdentityCoordinator</Name>
             <Path>Classes/SFIdentityCoordinator.html</Path>
             
@@ -866,7 +693,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="22" type="file" documentType="reference">
+		<Node id="17" type="file" documentType="reference">
             <Name>SFIdentityData</Name>
             <Path>Classes/SFIdentityData.html</Path>
             
@@ -905,34 +732,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="23" type="file" documentType="reference">
-            <Name>SFInactivityTimerCenter</Name>
-            <Path>Classes/SFInactivityTimerCenter.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFInactivityTimerCenter.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFInactivityTimerCenter.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFInactivityTimerCenter.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="24" type="file" documentType="reference">
+		<Node id="18" type="file" documentType="reference">
             <Name>SFInstrumentation</Name>
             <Path>Classes/SFInstrumentation.html</Path>
             
@@ -971,157 +771,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="25" type="file" documentType="reference">
-            <Name>SFKeyStore</Name>
-            <Path>Classes/SFKeyStore.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFKeyStore.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFKeyStore.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFKeyStore.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFKeyStore.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="26" type="file" documentType="reference">
-            <Name>SFKeyStoreKey</Name>
-            <Path>Classes/SFKeyStoreKey.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreKey.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreKey.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreKey.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreKey.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreKey.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="27" type="file" documentType="reference">
-            <Name>SFKeyStoreManager</Name>
-            <Path>Classes/SFKeyStoreManager.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreManager.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreManager.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreManager.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreManager.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFKeyStoreManager.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="28" type="file" documentType="reference">
-            <Name>SFKeychainItemWrapper</Name>
-            <Path>Classes/SFKeychainItemWrapper.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFKeychainItemWrapper.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFKeychainItemWrapper.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFKeychainItemWrapper.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFKeychainItemWrapper.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFKeychainItemWrapper.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="29" type="file" documentType="reference">
+		<Node id="19" type="file" documentType="reference">
             <Name>SFLoginViewController</Name>
             <Path>Classes/SFLoginViewController.html</Path>
             
@@ -1154,7 +804,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="30" type="file" documentType="reference">
+		<Node id="20" type="file" documentType="reference">
             <Name>SFManagedPreferences</Name>
             <Path>Classes/SFManagedPreferences.html</Path>
             
@@ -1187,7 +837,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="31" type="file" documentType="reference">
+		<Node id="21" type="file" documentType="reference">
             <Name>SFMethodInterceptor</Name>
             <Path>Classes/SFMethodInterceptor.html</Path>
             
@@ -1214,7 +864,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="32" type="file" documentType="reference">
+		<Node id="22" type="file" documentType="reference">
             <Name>SFNativeRestRequestListener</Name>
             <Path>Classes/SFNativeRestRequestListener.html</Path>
             
@@ -1247,7 +897,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="33" type="file" documentType="reference">
+		<Node id="23" type="file" documentType="reference">
             <Name>SFNetwork</Name>
             <Path>Classes/SFNetwork.html</Path>
             
@@ -1286,7 +936,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="34" type="file" documentType="reference">
+		<Node id="24" type="file" documentType="reference">
             <Name>SFNotificationUserInfo</Name>
             <Path>Classes/SFNotificationUserInfo.html</Path>
             
@@ -1313,7 +963,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="35" type="file" documentType="reference">
+		<Node id="25" type="file" documentType="reference">
             <Name>SFOAuthCoordinator</Name>
             <Path>Classes/SFOAuthCoordinator.html</Path>
             
@@ -1336,12 +986,6 @@
                 </Node>
                 
                 
-                <Node type="section">
-                    <Path>Classes/SFOAuthCoordinator.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
                 
                 <Node type="section">
                     <Path>Classes/SFOAuthCoordinator.html</Path>
@@ -1352,7 +996,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="36" type="file" documentType="reference">
+		<Node id="26" type="file" documentType="reference">
             <Name>SFOAuthCredentials</Name>
             <Path>Classes/SFOAuthCredentials.html</Path>
             
@@ -1385,34 +1029,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="37" type="file" documentType="reference">
-            <Name>SFOAuthCrypto</Name>
-            <Path>Classes/SFOAuthCrypto.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFOAuthCrypto.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFOAuthCrypto.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFOAuthCrypto.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="38" type="file" documentType="reference">
+		<Node id="27" type="file" documentType="reference">
             <Name>SFOAuthInfo</Name>
             <Path>Classes/SFOAuthInfo.html</Path>
             
@@ -1445,34 +1062,12 @@
             </Subnodes>
             
         </Node>
-		<Node id="39" type="file" documentType="reference">
+		<Node id="28" type="file" documentType="reference">
             <Name>SFOAuthKeychainCredentials</Name>
             <Path>Classes/SFOAuthKeychainCredentials.html</Path>
             
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFOAuthKeychainCredentials.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFOAuthKeychainCredentials.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFOAuthKeychainCredentials.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
         </Node>
-		<Node id="40" type="file" documentType="reference">
+		<Node id="29" type="file" documentType="reference">
             <Name>SFOAuthOrgAuthConfiguration</Name>
             <Path>Classes/SFOAuthOrgAuthConfiguration.html</Path>
             
@@ -1505,7 +1100,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="41" type="file" documentType="reference">
+		<Node id="30" type="file" documentType="reference">
             <Name>SFOAuthSessionRefresher</Name>
             <Path>Classes/SFOAuthSessionRefresher.html</Path>
             
@@ -1538,40 +1133,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="42" type="file" documentType="reference">
-            <Name>SFOAuthTestFlow</Name>
-            <Path>Classes/SFOAuthTestFlow.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFOAuthTestFlow.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFOAuthTestFlow.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFOAuthTestFlow.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFOAuthTestFlow.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="43" type="file" documentType="reference">
+		<Node id="31" type="file" documentType="reference">
             <Name>SFOAuthTestFlowCoordinatorDelegate</Name>
             <Path>Classes/SFOAuthTestFlowCoordinatorDelegate.html</Path>
             
@@ -1598,138 +1160,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="44" type="file" documentType="reference">
-            <Name>SFPBKDF2PasscodeProvider</Name>
-            <Path>Classes/SFPBKDF2PasscodeProvider.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFPBKDF2PasscodeProvider.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFPBKDF2PasscodeProvider.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFPBKDF2PasscodeProvider.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="45" type="file" documentType="reference">
-            <Name>SFPBKDFData</Name>
-            <Path>Classes/SFPBKDFData.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFPBKDFData.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFPBKDFData.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFPBKDFData.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFPBKDFData.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="46" type="file" documentType="reference">
-            <Name>SFPasscodeKeyStore</Name>
-            <Path>Classes/SFPasscodeKeyStore.html</Path>
-            
-        </Node>
-		<Node id="47" type="file" documentType="reference">
-            <Name>SFPasscodeManager</Name>
-            <Path>Classes/SFPasscodeManager.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFPasscodeManager.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFPasscodeManager.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFPasscodeManager.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFPasscodeManager.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFPasscodeManager.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="48" type="file" documentType="reference">
-            <Name>SFPasscodeProviderManager</Name>
-            <Path>Classes/SFPasscodeProviderManager.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFPasscodeProviderManager.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFPasscodeProviderManager.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFPasscodeProviderManager.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="49" type="file" documentType="reference">
+		<Node id="32" type="file" documentType="reference">
             <Name>SFPreferences</Name>
             <Path>Classes/SFPreferences.html</Path>
             
@@ -1768,7 +1199,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="50" type="file" documentType="reference">
+		<Node id="33" type="file" documentType="reference">
             <Name>SFPushNotificationManager</Name>
             <Path>Classes/SFPushNotificationManager.html</Path>
             
@@ -1807,7 +1238,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="51" type="file" documentType="reference">
+		<Node id="34" type="file" documentType="reference">
             <Name>SFRestAPI</Name>
             <Path>Classes/SFRestAPI.html</Path>
             
@@ -1846,7 +1277,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="52" type="file" documentType="reference">
+		<Node id="35" type="file" documentType="reference">
             <Name>SFRestRequest</Name>
             <Path>Classes/SFRestRequest.html</Path>
             
@@ -1885,17 +1316,17 @@
             </Subnodes>
             
         </Node>
-		<Node id="53" type="file" documentType="reference">
+		<Node id="36" type="file" documentType="reference">
             <Name>SFSDKAILTNPublisher</Name>
             <Path>Classes/SFSDKAILTNPublisher.html</Path>
             
         </Node>
-		<Node id="54" type="file" documentType="reference">
+		<Node id="37" type="file" documentType="reference">
             <Name>SFSDKAdvancedAuthURLHandler</Name>
             <Path>Classes/SFSDKAdvancedAuthURLHandler.html</Path>
             
         </Node>
-		<Node id="55" type="file" documentType="reference">
+		<Node id="38" type="file" documentType="reference">
             <Name>SFSDKAlertMessage</Name>
             <Path>Classes/SFSDKAlertMessage.html</Path>
             
@@ -1934,7 +1365,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="56" type="file" documentType="reference">
+		<Node id="39" type="file" documentType="reference">
             <Name>SFSDKAlertMessageBuilder</Name>
             <Path>Classes/SFSDKAlertMessageBuilder.html</Path>
             
@@ -1967,7 +1398,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="57" type="file" documentType="reference">
+		<Node id="40" type="file" documentType="reference">
             <Name>SFSDKAlertView</Name>
             <Path>Classes/SFSDKAlertView.html</Path>
             
@@ -2000,7 +1431,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="58" type="file" documentType="reference">
+		<Node id="41" type="file" documentType="reference">
             <Name>SFSDKAnalyticsTransformPublisherPair</Name>
             <Path>Classes/SFSDKAnalyticsTransformPublisherPair.html</Path>
             
@@ -2033,7 +1464,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="59" type="file" documentType="reference">
+		<Node id="42" type="file" documentType="reference">
             <Name>SFSDKAppConfig</Name>
             <Path>Classes/SFSDKAppConfig.html</Path>
             
@@ -2072,7 +1503,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="60" type="file" documentType="reference">
+		<Node id="43" type="file" documentType="reference">
             <Name>SFSDKAppFeatureMarkers</Name>
             <Path>Classes/SFSDKAppFeatureMarkers.html</Path>
             
@@ -2099,67 +1530,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="61" type="file" documentType="reference">
-            <Name>SFSDKAppLockViewConfig</Name>
-            <Path>Classes/SFSDKAppLockViewConfig.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFSDKAppLockViewConfig.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFSDKAppLockViewConfig.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFSDKAppLockViewConfig.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFSDKAppLockViewConfig.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="62" type="file" documentType="reference">
-            <Name>SFSDKAppLockViewController</Name>
-            <Path>Classes/SFSDKAppLockViewController.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFSDKAppLockViewController.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFSDKAppLockViewController.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFSDKAppLockViewController.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="63" type="file" documentType="reference">
+		<Node id="44" type="file" documentType="reference">
             <Name>SFSDKAsyncProcessListener</Name>
             <Path>Classes/SFSDKAsyncProcessListener.html</Path>
             
@@ -2186,7 +1557,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="64" type="file" documentType="reference">
+		<Node id="45" type="file" documentType="reference">
             <Name>SFSDKAuthCommand</Name>
             <Path>Classes/SFSDKAuthCommand.html</Path>
             
@@ -2219,7 +1590,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="65" type="file" documentType="reference">
+		<Node id="46" type="file" documentType="reference">
             <Name>SFSDKAuthConfigUtil</Name>
             <Path>Classes/SFSDKAuthConfigUtil.html</Path>
             
@@ -2246,7 +1617,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="66" type="file" documentType="reference">
+		<Node id="47" type="file" documentType="reference">
             <Name>SFSDKAuthErrorCommand</Name>
             <Path>Classes/SFSDKAuthErrorCommand.html</Path>
             
@@ -2273,7 +1644,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="67" type="file" documentType="reference">
+		<Node id="48" type="file" documentType="reference">
             <Name>SFSDKAuthErrorManager</Name>
             <Path>Classes/SFSDKAuthErrorManager.html</Path>
             
@@ -2312,7 +1683,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="68" type="file" documentType="reference">
+		<Node id="49" type="file" documentType="reference">
             <Name>SFSDKAuthHelper</Name>
             <Path>Classes/SFSDKAuthHelper.html</Path>
             
@@ -2339,7 +1710,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="69" type="file" documentType="reference">
+		<Node id="50" type="file" documentType="reference">
             <Name>SFSDKAuthPreferences</Name>
             <Path>Classes/SFSDKAuthPreferences.html</Path>
             
@@ -2366,24 +1737,24 @@
             </Subnodes>
             
         </Node>
-		<Node id="70" type="file" documentType="reference">
-            <Name>SFSDKAuthRequestCommand</Name>
-            <Path>Classes/SFSDKAuthRequestCommand.html</Path>
+		<Node id="51" type="file" documentType="reference">
+            <Name>SFSDKAuthRequest</Name>
+            <Path>Classes/SFSDKAuthRequest.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKAuthRequestCommand.html</Path>
+                    <Path>Classes/SFSDKAuthRequest.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKAuthRequestCommand.html</Path>
+                    <Path>Classes/SFSDKAuthRequest.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKAuthRequestCommand.html</Path>
+                    <Path>Classes/SFSDKAuthRequest.html</Path>
                     <Name>Properties</Name>
                     <Anchor>properties</Anchor>
                 </Node>
@@ -2393,34 +1764,45 @@
             </Subnodes>
             
         </Node>
-		<Node id="71" type="file" documentType="reference">
-            <Name>SFSDKAuthResponseCommand</Name>
-            <Path>Classes/SFSDKAuthResponseCommand.html</Path>
+		<Node id="52" type="file" documentType="reference">
+            <Name>SFSDKAuthRootController</Name>
+            <Path>Classes/SFSDKAuthRootController.html</Path>
+            
+        </Node>
+		<Node id="53" type="file" documentType="reference">
+            <Name>SFSDKAuthSession</Name>
+            <Path>Classes/SFSDKAuthSession.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKAuthResponseCommand.html</Path>
+                    <Path>Classes/SFSDKAuthSession.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKAuthResponseCommand.html</Path>
+                    <Path>Classes/SFSDKAuthSession.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKAuthResponseCommand.html</Path>
+                    <Path>Classes/SFSDKAuthSession.html</Path>
                     <Name>Properties</Name>
                     <Anchor>properties</Anchor>
                 </Node>
                 
                 
                 
+                <Node type="section">
+                    <Path>Classes/SFSDKAuthSession.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
             </Subnodes>
             
         </Node>
-		<Node id="72" type="file" documentType="reference">
+		<Node id="54" type="file" documentType="reference">
             <Name>SFSDKAuthViewHandler</Name>
             <Path>Classes/SFSDKAuthViewHandler.html</Path>
             
@@ -2453,7 +1835,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="73" type="file" documentType="reference">
+		<Node id="55" type="file" documentType="reference">
             <Name>SFSDKAuthViewHolder</Name>
             <Path>Classes/SFSDKAuthViewHolder.html</Path>
             
@@ -2480,32 +1862,53 @@
             </Subnodes>
             
         </Node>
-		<Node id="74" type="file" documentType="reference">
-            <Name>SFSDKBiometricViewController</Name>
-            <Path>Classes/SFSDKBiometricViewController.html</Path>
+		<Node id="56" type="file" documentType="reference">
+            <Name>SFSDKBatchRequest</Name>
+            <Path>Classes/SFSDKBatchRequest.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKBiometricViewController.html</Path>
+                    <Path>Classes/SFSDKBatchRequest.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKBiometricViewController.html</Path>
+                    <Path>Classes/SFSDKBatchRequest.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKBiometricViewController.html</Path>
+                    <Path>Classes/SFSDKBatchRequest.html</Path>
                     <Name>Properties</Name>
                     <Anchor>properties</Anchor>
                 </Node>
                 
                 
                 
+            </Subnodes>
+            
+        </Node>
+		<Node id="57" type="file" documentType="reference">
+            <Name>SFSDKBatchRequestBuilder</Name>
+            <Path>Classes/SFSDKBatchRequestBuilder.html</Path>
+            
+                <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKBiometricViewController.html</Path>
+                    <Path>Classes/SFSDKBatchRequestBuilder.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKBatchRequestBuilder.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKBatchRequestBuilder.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -2513,12 +1916,303 @@
             </Subnodes>
             
         </Node>
-		<Node id="75" type="file" documentType="reference">
+		<Node id="58" type="file" documentType="reference">
+            <Name>SFSDKBatchResponse</Name>
+            <Path>Classes/SFSDKBatchResponse.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKBatchResponse.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKBatchResponse.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKBatchResponse.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKBatchResponse.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="59" type="file" documentType="reference">
+            <Name>SFSDKCollectionErrorResponse</Name>
+            <Path>Classes/SFSDKCollectionErrorResponse.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionErrorResponse.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionErrorResponse.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionErrorResponse.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionErrorResponse.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="60" type="file" documentType="reference">
+            <Name>SFSDKCollectionResponse</Name>
+            <Path>Classes/SFSDKCollectionResponse.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionResponse.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionResponse.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionResponse.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionResponse.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="61" type="file" documentType="reference">
+            <Name>SFSDKCollectionSubResponse</Name>
+            <Path>Classes/SFSDKCollectionSubResponse.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionSubResponse.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionSubResponse.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionSubResponse.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCollectionSubResponse.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="62" type="file" documentType="reference">
+            <Name>SFSDKCompositeRequest</Name>
+            <Path>Classes/SFSDKCompositeRequest.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeRequest.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeRequest.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeRequest.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeRequest.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="63" type="file" documentType="reference">
+            <Name>SFSDKCompositeRequestBuilder</Name>
+            <Path>Classes/SFSDKCompositeRequestBuilder.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeRequestBuilder.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeRequestBuilder.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeRequestBuilder.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="64" type="file" documentType="reference">
+            <Name>SFSDKCompositeResponse</Name>
+            <Path>Classes/SFSDKCompositeResponse.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeResponse.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeResponse.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeResponse.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeResponse.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="65" type="file" documentType="reference">
+            <Name>SFSDKCompositeSubRequest</Name>
+            <Path>Classes/SFSDKCompositeSubRequest.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeSubRequest.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeSubRequest.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeSubRequest.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeSubRequest.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="66" type="file" documentType="reference">
+            <Name>SFSDKCompositeSubResponse</Name>
+            <Path>Classes/SFSDKCompositeSubResponse.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeSubResponse.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeSubResponse.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeSubResponse.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKCompositeSubResponse.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="67" type="file" documentType="reference">
             <Name>SFSDKCoreLogger</Name>
             <Path>Classes/SFSDKCoreLogger.html</Path>
             
         </Node>
-		<Node id="76" type="file" documentType="reference">
+		<Node id="68" type="file" documentType="reference">
             <Name>SFSDKCryptoUtils</Name>
             <Path>Classes/SFSDKCryptoUtils.html</Path>
             
@@ -2545,7 +2239,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="77" type="file" documentType="reference">
+		<Node id="69" type="file" documentType="reference">
             <Name>SFSDKDevAction</Name>
             <Path>Classes/SFSDKDevAction.html</Path>
             
@@ -2578,12 +2272,17 @@
             </Subnodes>
             
         </Node>
-		<Node id="78" type="file" documentType="reference">
+		<Node id="70" type="file" documentType="reference">
             <Name>SFSDKDevInfoViewController</Name>
             <Path>Classes/SFSDKDevInfoViewController.html</Path>
             
         </Node>
-		<Node id="79" type="file" documentType="reference">
+		<Node id="71" type="file" documentType="reference">
+            <Name>SFSDKEncryptedURLCache</Name>
+            <Path>Classes/SFSDKEncryptedURLCache.html</Path>
+            
+        </Node>
+		<Node id="72" type="file" documentType="reference">
             <Name>SFSDKEventBuilderHelper</Name>
             <Path>Classes/SFSDKEventBuilderHelper.html</Path>
             
@@ -2610,32 +2309,26 @@
             </Subnodes>
             
         </Node>
-		<Node id="80" type="file" documentType="reference">
-            <Name>SFSDKIDPAuthClient</Name>
-            <Path>Classes/SFSDKIDPAuthClient.html</Path>
+		<Node id="73" type="file" documentType="reference">
+            <Name>SFSDKFetchNotificationsRequestBuilder</Name>
+            <Path>Classes/SFSDKFetchNotificationsRequestBuilder.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKIDPAuthClient.html</Path>
+                    <Path>Classes/SFSDKFetchNotificationsRequestBuilder.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKIDPAuthClient.html</Path>
+                    <Path>Classes/SFSDKFetchNotificationsRequestBuilder.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
-                <Node type="section">
-                    <Path>Classes/SFSDKIDPAuthClient.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
                 
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKIDPAuthClient.html</Path>
+                    <Path>Classes/SFSDKFetchNotificationsRequestBuilder.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -2643,34 +2336,24 @@
             </Subnodes>
             
         </Node>
-		<Node id="81" type="file" documentType="reference">
-            <Name>SFSDKIDPConstants</Name>
-            <Path>Classes/SFSDKIDPConstants.html</Path>
-            
-        </Node>
-		<Node id="82" type="file" documentType="reference">
-            <Name>SFSDKIDPErrorHandler</Name>
-            <Path>Classes/SFSDKIDPErrorHandler.html</Path>
-            
-        </Node>
-		<Node id="83" type="file" documentType="reference">
-            <Name>SFSDKIDPInitCommand</Name>
-            <Path>Classes/SFSDKIDPInitCommand.html</Path>
+		<Node id="74" type="file" documentType="reference">
+            <Name>SFSDKIDPAuthCodeLoginRequestCommand</Name>
+            <Path>Classes/SFSDKIDPAuthCodeLoginRequestCommand.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKIDPInitCommand.html</Path>
+                    <Path>Classes/SFSDKIDPAuthCodeLoginRequestCommand.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKIDPInitCommand.html</Path>
+                    <Path>Classes/SFSDKIDPAuthCodeLoginRequestCommand.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKIDPInitCommand.html</Path>
+                    <Path>Classes/SFSDKIDPAuthCodeLoginRequestCommand.html</Path>
                     <Name>Properties</Name>
                     <Anchor>properties</Anchor>
                 </Node>
@@ -2680,22 +2363,86 @@
             </Subnodes>
             
         </Node>
-		<Node id="84" type="file" documentType="reference">
-            <Name>SFSDKIDPInitiatedAuthRequestHandler</Name>
-            <Path>Classes/SFSDKIDPInitiatedAuthRequestHandler.html</Path>
+		<Node id="75" type="file" documentType="reference">
+            <Name>SFSDKIDPAuthCodeLoginRequestHandler</Name>
+            <Path>Classes/SFSDKIDPAuthCodeLoginRequestHandler.html</Path>
             
         </Node>
-		<Node id="85" type="file" documentType="reference">
+		<Node id="76" type="file" documentType="reference">
+            <Name>SFSDKIDPAuthHelper</Name>
+            <Path>Classes/SFSDKIDPAuthHelper.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKIDPAuthHelper.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKIDPAuthHelper.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKIDPAuthHelper.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="77" type="file" documentType="reference">
+            <Name>SFSDKIDPConstants</Name>
+            <Path>Classes/SFSDKIDPConstants.html</Path>
+            
+        </Node>
+		<Node id="78" type="file" documentType="reference">
+            <Name>SFSDKIDPErrorHandler</Name>
+            <Path>Classes/SFSDKIDPErrorHandler.html</Path>
+            
+        </Node>
+		<Node id="79" type="file" documentType="reference">
+            <Name>SFSDKIDPLoginRequestCommand</Name>
+            <Path>Classes/SFSDKIDPLoginRequestCommand.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKIDPLoginRequestCommand.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKIDPLoginRequestCommand.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKIDPLoginRequestCommand.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="80" type="file" documentType="reference">
+            <Name>SFSDKIDPLoginRequestHandler</Name>
+            <Path>Classes/SFSDKIDPLoginRequestHandler.html</Path>
+            
+        </Node>
+		<Node id="81" type="file" documentType="reference">
             <Name>SFSDKIDPRequestHandler</Name>
             <Path>Classes/SFSDKIDPRequestHandler.html</Path>
             
         </Node>
-		<Node id="86" type="file" documentType="reference">
-            <Name>SFSDKIDPResponseHandler</Name>
-            <Path>Classes/SFSDKIDPResponseHandler.html</Path>
-            
-        </Node>
-		<Node id="87" type="file" documentType="reference">
+		<Node id="82" type="file" documentType="reference">
             <Name>SFSDKInstrumentationHelper</Name>
             <Path>Classes/SFSDKInstrumentationHelper.html</Path>
             
@@ -2728,7 +2475,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="88" type="file" documentType="reference">
+		<Node id="83" type="file" documentType="reference">
             <Name>SFSDKInstrumentationPostExecutionData</Name>
             <Path>Classes/SFSDKInstrumentationPostExecutionData.html</Path>
             
@@ -2755,7 +2502,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="89" type="file" documentType="reference">
+		<Node id="84" type="file" documentType="reference">
             <Name>SFSDKLoginFlowSelectionViewController</Name>
             <Path>Classes/SFSDKLoginFlowSelectionViewController.html</Path>
             
@@ -2782,7 +2529,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="90" type="file" documentType="reference">
+		<Node id="85" type="file" documentType="reference">
             <Name>SFSDKLoginHost</Name>
             <Path>Classes/SFSDKLoginHost.html</Path>
             
@@ -2815,7 +2562,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="91" type="file" documentType="reference">
+		<Node id="86" type="file" documentType="reference">
             <Name>SFSDKLoginHostListViewController</Name>
             <Path>Classes/SFSDKLoginHostListViewController.html</Path>
             
@@ -2848,7 +2595,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="92" type="file" documentType="reference">
+		<Node id="87" type="file" documentType="reference">
             <Name>SFSDKLoginHostStorage</Name>
             <Path>Classes/SFSDKLoginHostStorage.html</Path>
             
@@ -2881,7 +2628,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="93" type="file" documentType="reference">
+		<Node id="88" type="file" documentType="reference">
             <Name>SFSDKLoginViewControllerConfig</Name>
             <Path>Classes/SFSDKLoginViewControllerConfig.html</Path>
             
@@ -2908,7 +2655,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="94" type="file" documentType="reference">
+		<Node id="89" type="file" documentType="reference">
             <Name>SFSDKLogoutBlocker</Name>
             <Path>Classes/SFSDKLogoutBlocker.html</Path>
             
@@ -2935,39 +2682,39 @@
             </Subnodes>
             
         </Node>
-		<Node id="95" type="file" documentType="reference">
-            <Name>SFSDKMutableOAuthClientContext</Name>
-            <Path>Classes/SFSDKMutableOAuthClientContext.html</Path>
+		<Node id="90" type="file" documentType="reference">
+            <Name>SFSDKMacDetectUtil</Name>
+            <Path>Classes/SFSDKMacDetectUtil.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKMutableOAuthClientContext.html</Path>
+                    <Path>Classes/SFSDKMacDetectUtil.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKMutableOAuthClientContext.html</Path>
+                    <Path>Classes/SFSDKMacDetectUtil.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
-                <Node type="section">
-                    <Path>Classes/SFSDKMutableOAuthClientContext.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
                 
+                <Node type="section">
+                    <Path>Classes/SFSDKMacDetectUtil.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
                 
                 
             </Subnodes>
             
         </Node>
-		<Node id="96" type="file" documentType="reference">
+		<Node id="91" type="file" documentType="reference">
             <Name>SFSDKNavigationController</Name>
             <Path>Classes/SFSDKNavigationController.html</Path>
             
         </Node>
-		<Node id="97" type="file" documentType="reference">
+		<Node id="92" type="file" documentType="reference">
             <Name>SFSDKNewLoginHostViewController</Name>
             <Path>Classes/SFSDKNewLoginHostViewController.html</Path>
             
@@ -2994,24 +2741,116 @@
             </Subnodes>
             
         </Node>
-		<Node id="98" type="file" documentType="reference">
-            <Name>SFSDKOAuthClient</Name>
-            <Path>Classes/SFSDKOAuthClient.html</Path>
+		<Node id="93" type="file" documentType="reference">
+            <Name>SFSDKNullURLCache</Name>
+            <Path>Classes/SFSDKNullURLCache.html</Path>
+            
+        </Node>
+		<Node id="94" type="file" documentType="reference">
+            <Name>SFSDKOAuth2</Name>
+            <Path>Classes/SFSDKOAuth2.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClient.html</Path>
+                    <Path>Classes/SFSDKOAuth2.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClient.html</Path>
+                    <Path>Classes/SFSDKOAuth2.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuth2.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuth2.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="95" type="file" documentType="reference">
+            <Name>SFSDKOAuthTokenEndpointErrorResponse</Name>
+            <Path>Classes/SFSDKOAuthTokenEndpointErrorResponse.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuthTokenEndpointErrorResponse.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuthTokenEndpointErrorResponse.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClient.html</Path>
+                    <Path>Classes/SFSDKOAuthTokenEndpointErrorResponse.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="96" type="file" documentType="reference">
+            <Name>SFSDKOAuthTokenEndpointRequest</Name>
+            <Path>Classes/SFSDKOAuthTokenEndpointRequest.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuthTokenEndpointRequest.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuthTokenEndpointRequest.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuthTokenEndpointRequest.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="97" type="file" documentType="reference">
+            <Name>SFSDKOAuthTokenEndpointResponse</Name>
+            <Path>Classes/SFSDKOAuthTokenEndpointResponse.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuthTokenEndpointResponse.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuthTokenEndpointResponse.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKOAuthTokenEndpointResponse.html</Path>
                     <Name>Properties</Name>
                     <Anchor>properties</Anchor>
                 </Node>
@@ -3019,7 +2858,40 @@
                 
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClient.html</Path>
+                    <Path>Classes/SFSDKOAuthTokenEndpointResponse.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="98" type="file" documentType="reference">
+            <Name>SFSDKPrimingRecord</Name>
+            <Path>Classes/SFSDKPrimingRecord.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKPrimingRecord.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKPrimingRecord.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKPrimingRecord.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKPrimingRecord.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -3028,31 +2900,31 @@
             
         </Node>
 		<Node id="99" type="file" documentType="reference">
-            <Name>SFSDKOAuthClientCache</Name>
-            <Path>Classes/SFSDKOAuthClientCache.html</Path>
+            <Name>SFSDKPrimingRecordsResponse</Name>
+            <Path>Classes/SFSDKPrimingRecordsResponse.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientCache.html</Path>
+                    <Path>Classes/SFSDKPrimingRecordsResponse.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientCache.html</Path>
+                    <Path>Classes/SFSDKPrimingRecordsResponse.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
-                
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientCache.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
+                    <Path>Classes/SFSDKPrimingRecordsResponse.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
                 </Node>
                 
                 
+                
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientCache.html</Path>
+                    <Path>Classes/SFSDKPrimingRecordsResponse.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -3061,50 +2933,56 @@
             
         </Node>
 		<Node id="100" type="file" documentType="reference">
-            <Name>SFSDKOAuthClientConfig</Name>
-            <Path>Classes/SFSDKOAuthClientConfig.html</Path>
+            <Name>SFSDKPrimingRuleError</Name>
+            <Path>Classes/SFSDKPrimingRuleError.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientConfig.html</Path>
+                    <Path>Classes/SFSDKPrimingRuleError.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientConfig.html</Path>
+                    <Path>Classes/SFSDKPrimingRuleError.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientConfig.html</Path>
+                    <Path>Classes/SFSDKPrimingRuleError.html</Path>
                     <Name>Properties</Name>
                     <Anchor>properties</Anchor>
                 </Node>
                 
                 
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKPrimingRuleError.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
                 
             </Subnodes>
             
         </Node>
 		<Node id="101" type="file" documentType="reference">
-            <Name>SFSDKOAuthClientContext</Name>
-            <Path>Classes/SFSDKOAuthClientContext.html</Path>
+            <Name>SFSDKPrimingStats</Name>
+            <Path>Classes/SFSDKPrimingStats.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientContext.html</Path>
+                    <Path>Classes/SFSDKPrimingStats.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientContext.html</Path>
+                    <Path>Classes/SFSDKPrimingStats.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientContext.html</Path>
+                    <Path>Classes/SFSDKPrimingStats.html</Path>
                     <Name>Properties</Name>
                     <Anchor>properties</Anchor>
                 </Node>
@@ -3112,7 +2990,7 @@
                 
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKOAuthClientContext.html</Path>
+                    <Path>Classes/SFSDKPrimingStats.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -3121,23 +2999,23 @@
             
         </Node>
 		<Node id="102" type="file" documentType="reference">
-            <Name>SFSDKPasscodeCreateController</Name>
-            <Path>Classes/SFSDKPasscodeCreateController.html</Path>
+            <Name>SFSDKPushNotificationDataProvider</Name>
+            <Path>Classes/SFSDKPushNotificationDataProvider.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKPasscodeCreateController.html</Path>
+                    <Path>Classes/SFSDKPushNotificationDataProvider.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKPasscodeCreateController.html</Path>
+                    <Path>Classes/SFSDKPushNotificationDataProvider.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKPasscodeCreateController.html</Path>
+                    <Path>Classes/SFSDKPushNotificationDataProvider.html</Path>
                     <Name>Properties</Name>
                     <Anchor>properties</Anchor>
                 </Node>
@@ -3145,7 +3023,7 @@
                 
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKPasscodeCreateController.html</Path>
+                    <Path>Classes/SFSDKPushNotificationDataProvider.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -3154,72 +3032,33 @@
             
         </Node>
 		<Node id="103" type="file" documentType="reference">
-            <Name>SFSDKPasscodeTextField</Name>
-            <Path>Classes/SFSDKPasscodeTextField.html</Path>
+            <Name>SFSDKPushNotificationDecryption</Name>
+            <Path>Classes/SFSDKPushNotificationDecryption.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Classes/SFSDKPasscodeTextField.html</Path>
+                    <Path>Classes/SFSDKPushNotificationDecryption.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Classes/SFSDKPasscodeTextField.html</Path>
+                    <Path>Classes/SFSDKPushNotificationDecryption.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
-                <Node type="section">
-                    <Path>Classes/SFSDKPasscodeTextField.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
                 
                 <Node type="section">
-                    <Path>Classes/SFSDKPasscodeTextField.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
+                    <Path>Classes/SFSDKPushNotificationDecryption.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
                 </Node>
+                
                 
             </Subnodes>
             
         </Node>
 		<Node id="104" type="file" documentType="reference">
-            <Name>SFSDKPasscodeVerifyController</Name>
-            <Path>Classes/SFSDKPasscodeVerifyController.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFSDKPasscodeVerifyController.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFSDKPasscodeVerifyController.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFSDKPasscodeVerifyController.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFSDKPasscodeVerifyController.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="105" type="file" documentType="reference">
             <Name>SFSDKResourceUtils</Name>
             <Path>Classes/SFSDKResourceUtils.html</Path>
             
@@ -3246,12 +3085,71 @@
             </Subnodes>
             
         </Node>
-		<Node id="106" type="file" documentType="reference">
+		<Node id="105" type="file" documentType="reference">
             <Name>SFSDKRootController</Name>
             <Path>Classes/SFSDKRootController.html</Path>
             
         </Node>
+		<Node id="106" type="file" documentType="reference">
+            <Name>SFSDKSPLoginRequestCommand</Name>
+            <Path>Classes/SFSDKSPLoginRequestCommand.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKSPLoginRequestCommand.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKSPLoginRequestCommand.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKSPLoginRequestCommand.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+            </Subnodes>
+            
+        </Node>
 		<Node id="107" type="file" documentType="reference">
+            <Name>SFSDKSPLoginResponseCommand</Name>
+            <Path>Classes/SFSDKSPLoginResponseCommand.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKSPLoginResponseCommand.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKSPLoginResponseCommand.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKSPLoginResponseCommand.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="108" type="file" documentType="reference">
+            <Name>SFSDKSPLoginResponseHandler</Name>
+            <Path>Classes/SFSDKSPLoginResponseHandler.html</Path>
+            
+        </Node>
+		<Node id="109" type="file" documentType="reference">
             <Name>SFSDKSalesforceAnalyticsManager</Name>
             <Path>Classes/SFSDKSalesforceAnalyticsManager.html</Path>
             
@@ -3290,7 +3188,34 @@
             </Subnodes>
             
         </Node>
-		<Node id="108" type="file" documentType="reference">
+		<Node id="110" type="file" documentType="reference">
+            <Name>SFSDKSalesforceSDKUpgradeManager</Name>
+            <Path>Classes/SFSDKSalesforceSDKUpgradeManager.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKSalesforceSDKUpgradeManager.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKSalesforceSDKUpgradeManager.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKSalesforceSDKUpgradeManager.html</Path>
+                    <Name>Class Methods</Name>
+                    <Anchor>class_methods</Anchor>
+                </Node>
+                
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="111" type="file" documentType="reference">
             <Name>SFSDKSoqlBuilder</Name>
             <Path>Classes/SFSDKSoqlBuilder.html</Path>
             
@@ -3323,7 +3248,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="109" type="file" documentType="reference">
+		<Node id="112" type="file" documentType="reference">
             <Name>SFSDKSoslBuilder</Name>
             <Path>Classes/SFSDKSoslBuilder.html</Path>
             
@@ -3356,7 +3281,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="110" type="file" documentType="reference">
+		<Node id="113" type="file" documentType="reference">
             <Name>SFSDKSoslReturningBuilder</Name>
             <Path>Classes/SFSDKSoslReturningBuilder.html</Path>
             
@@ -3395,12 +3320,12 @@
             </Subnodes>
             
         </Node>
-		<Node id="111" type="file" documentType="reference">
+		<Node id="114" type="file" documentType="reference">
             <Name>SFSDKStartURLHandler</Name>
             <Path>Classes/SFSDKStartURLHandler.html</Path>
             
         </Node>
-		<Node id="112" type="file" documentType="reference">
+		<Node id="115" type="file" documentType="reference">
             <Name>SFSDKTestCredentialsData</Name>
             <Path>Classes/SFSDKTestCredentialsData.html</Path>
             
@@ -3433,7 +3358,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="113" type="file" documentType="reference">
+		<Node id="116" type="file" documentType="reference">
             <Name>SFSDKTestRequestListener</Name>
             <Path>Classes/SFSDKTestRequestListener.html</Path>
             
@@ -3466,7 +3391,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="114" type="file" documentType="reference">
+		<Node id="117" type="file" documentType="reference">
             <Name>SFSDKTextFieldTableViewCell</Name>
             <Path>Classes/SFSDKTextFieldTableViewCell.html</Path>
             
@@ -3493,7 +3418,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="115" type="file" documentType="reference">
+		<Node id="118" type="file" documentType="reference">
             <Name>SFSDKUITableViewCell</Name>
             <Path>Classes/SFSDKUITableViewCell.html</Path>
             
@@ -3520,7 +3445,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="116" type="file" documentType="reference">
+		<Node id="119" type="file" documentType="reference">
             <Name>SFSDKUIWindow</Name>
             <Path>Classes/SFSDKUIWindow.html</Path>
             
@@ -3553,7 +3478,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="117" type="file" documentType="reference">
+		<Node id="120" type="file" documentType="reference">
             <Name>SFSDKURLHandlerManager</Name>
             <Path>Classes/SFSDKURLHandlerManager.html</Path>
             
@@ -3586,7 +3511,34 @@
             </Subnodes>
             
         </Node>
-		<Node id="118" type="file" documentType="reference">
+		<Node id="121" type="file" documentType="reference">
+            <Name>SFSDKUpdateNotificationsRequestBuilder</Name>
+            <Path>Classes/SFSDKUpdateNotificationsRequestBuilder.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKUpdateNotificationsRequestBuilder.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKUpdateNotificationsRequestBuilder.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKUpdateNotificationsRequestBuilder.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="122" type="file" documentType="reference">
             <Name>SFSDKUserSelectionNavViewController</Name>
             <Path>Classes/SFSDKUserSelectionNavViewController.html</Path>
             
@@ -3619,7 +3571,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="119" type="file" documentType="reference">
+		<Node id="123" type="file" documentType="reference">
             <Name>SFSDKUserSelectionTableViewController</Name>
             <Path>Classes/SFSDKUserSelectionTableViewController.html</Path>
             
@@ -3652,7 +3604,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="120" type="file" documentType="reference">
+		<Node id="124" type="file" documentType="reference">
             <Name>SFSDKViewController</Name>
             <Path>Classes/SFSDKViewController.html</Path>
             
@@ -3679,7 +3631,34 @@
             </Subnodes>
             
         </Node>
-		<Node id="121" type="file" documentType="reference">
+		<Node id="125" type="file" documentType="reference">
+            <Name>SFSDKViewControllerConfig</Name>
+            <Path>Classes/SFSDKViewControllerConfig.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Classes/SFSDKViewControllerConfig.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Classes/SFSDKViewControllerConfig.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                <Node type="section">
+                    <Path>Classes/SFSDKViewControllerConfig.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
+                
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="126" type="file" documentType="reference">
             <Name>SFSDKViewUtils</Name>
             <Path>Classes/SFSDKViewUtils.html</Path>
             
@@ -3706,7 +3685,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="122" type="file" documentType="reference">
+		<Node id="127" type="file" documentType="reference">
             <Name>SFSDKWebUtils</Name>
             <Path>Classes/SFSDKWebUtils.html</Path>
             
@@ -3733,7 +3712,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="123" type="file" documentType="reference">
+		<Node id="128" type="file" documentType="reference">
             <Name>SFSDKWebViewStateManager</Name>
             <Path>Classes/SFSDKWebViewStateManager.html</Path>
             
@@ -3766,7 +3745,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="124" type="file" documentType="reference">
+		<Node id="129" type="file" documentType="reference">
             <Name>SFSDKWindowContainer</Name>
             <Path>Classes/SFSDKWindowContainer.html</Path>
             
@@ -3805,7 +3784,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="125" type="file" documentType="reference">
+		<Node id="130" type="file" documentType="reference">
             <Name>SFSDKWindowManager</Name>
             <Path>Classes/SFSDKWindowManager.html</Path>
             
@@ -3844,12 +3823,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="126" type="file" documentType="reference">
-            <Name>SFSHA256PasscodeProvider</Name>
-            <Path>Classes/SFSHA256PasscodeProvider.html</Path>
-            
-        </Node>
-		<Node id="127" type="file" documentType="reference">
+		<Node id="131" type="file" documentType="reference">
             <Name>SFSObjectTree</Name>
             <Path>Classes/SFSObjectTree.html</Path>
             
@@ -3876,72 +3850,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="128" type="file" documentType="reference">
-            <Name>SFSecureEncryptionKey</Name>
-            <Path>Classes/SFSecureEncryptionKey.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFSecureEncryptionKey.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFSecureEncryptionKey.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFSecureEncryptionKey.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="129" type="file" documentType="reference">
-            <Name>SFSecurityLockout</Name>
-            <Path>Classes/SFSecurityLockout.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFSecurityLockout.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFSecurityLockout.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Classes/SFSecurityLockout.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFSecurityLockout.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="130" type="file" documentType="reference">
-            <Name>SFSecurityLockoutTests</Name>
-            <Path>Classes/SFSecurityLockoutTests.html</Path>
-            
-        </Node>
-		<Node id="131" type="file" documentType="reference">
+		<Node id="132" type="file" documentType="reference">
             <Name>SFTestSDKManagerFlow</Name>
             <Path>Classes/SFTestSDKManagerFlow.html</Path>
             
@@ -3957,12 +3866,6 @@
                     <Anchor>tasks</Anchor>
                 </Node>
                 
-                <Node type="section">
-                    <Path>Classes/SFTestSDKManagerFlow.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
                 
                 
                 <Node type="section">
@@ -3974,7 +3877,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="132" type="file" documentType="reference">
+		<Node id="133" type="file" documentType="reference">
             <Name>SFUserAccount</Name>
             <Path>Classes/SFUserAccount.html</Path>
             
@@ -4007,7 +3910,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="133" type="file" documentType="reference">
+		<Node id="134" type="file" documentType="reference">
             <Name>SFUserAccountIdentity</Name>
             <Path>Classes/SFUserAccountIdentity.html</Path>
             
@@ -4046,7 +3949,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="134" type="file" documentType="reference">
+		<Node id="135" type="file" documentType="reference">
             <Name>SFUserAccountManager</Name>
             <Path>Classes/SFUserAccountManager.html</Path>
             
@@ -4069,12 +3972,6 @@
                 </Node>
                 
                 
-                <Node type="section">
-                    <Path>Classes/SFUserAccountManager.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
                 
                 <Node type="section">
                     <Path>Classes/SFUserAccountManager.html</Path>
@@ -4083,44 +3980,11 @@
                 </Node>
                 
             </Subnodes>
-            
-        </Node>
-		<Node id="135" type="file" documentType="reference">
-            <Name>SFUserAccountPersisterEphemeral</Name>
-            <Path>Classes/SFUserAccountPersisterEphemeral.html</Path>
             
         </Node>
 		<Node id="136" type="file" documentType="reference">
-            <Name>SFUserActivityMonitor</Name>
-            <Path>Classes/SFUserActivityMonitor.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Classes/SFUserActivityMonitor.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Classes/SFUserActivityMonitor.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFUserActivityMonitor.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Classes/SFUserActivityMonitor.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
+            <Name>SFUserAccountPersisterEphemeral</Name>
+            <Path>Classes/SFUserAccountPersisterEphemeral.html</Path>
             
         </Node>
 		<Node id="137" type="file" documentType="reference">
@@ -4221,33 +4085,6 @@
         </Node>
 		
 		<Node id="145" type="file" documentType="reference">
-            <Name>NSArray(SFAdditions)</Name>
-            <Path>Categories/NSArray+SFAdditions.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Categories/NSArray+SFAdditions.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Categories/NSArray+SFAdditions.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Categories/NSArray+SFAdditions.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="146" type="file" documentType="reference">
             <Name>NSData(SFBase64)</Name>
             <Path>Categories/NSData+SFBase64.html</Path>
             
@@ -4264,12 +4101,6 @@
                 </Node>
                 
                 
-                <Node type="section">
-                    <Path>Categories/NSData+SFBase64.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
                 
                 <Node type="section">
                     <Path>Categories/NSData+SFBase64.html</Path>
@@ -4280,7 +4111,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="147" type="file" documentType="reference">
+		<Node id="146" type="file" documentType="reference">
             <Name>NSData(SFHexSupport)</Name>
             <Path>Categories/NSData+SFHexSupport.html</Path>
             
@@ -4307,34 +4138,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="148" type="file" documentType="reference">
-            <Name>NSData(SFMD5)</Name>
-            <Path>Categories/NSData+SFMD5.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Categories/NSData+SFMD5.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Categories/NSData+SFMD5.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Categories/NSData+SFMD5.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="149" type="file" documentType="reference">
+		<Node id="147" type="file" documentType="reference">
             <Name>NSData(SFSDKUtils)</Name>
             <Path>Categories/NSData+SFSDKUtils.html</Path>
             
@@ -4361,7 +4165,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="150" type="file" documentType="reference">
+		<Node id="148" type="file" documentType="reference">
             <Name>NSData(SFSDKUtilsInternal)</Name>
             <Path>Categories/NSData+SFSDKUtilsInternal.html</Path>
             
@@ -4388,7 +4192,34 @@
             </Subnodes>
             
         </Node>
-		<Node id="151" type="file" documentType="reference">
+		<Node id="149" type="file" documentType="reference">
+            <Name>NSData(SFSHA)</Name>
+            <Path>Categories/NSData+SFSHA.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Categories/NSData+SFSHA.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Categories/NSData+SFSHA.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Categories/NSData+SFSHA.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="150" type="file" documentType="reference">
             <Name>NSData(SFzlib)</Name>
             <Path>Categories/NSData+SFzlib.html</Path>
             
@@ -4415,7 +4246,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="152" type="file" documentType="reference">
+		<Node id="151" type="file" documentType="reference">
             <Name>NSDictionary(SFAdditions)</Name>
             <Path>Categories/NSDictionary+SFAdditions.html</Path>
             
@@ -4442,67 +4273,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="153" type="file" documentType="reference">
-            <Name>NSNotificationCenter(SFAdditions)</Name>
-            <Path>Categories/NSNotificationCenter+SFAdditions.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Categories/NSNotificationCenter+SFAdditions.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Categories/NSNotificationCenter+SFAdditions.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Categories/NSNotificationCenter+SFAdditions.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Categories/NSNotificationCenter+SFAdditions.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="154" type="file" documentType="reference">
-            <Name>NSObject(SFBlocks)</Name>
-            <Path>Categories/NSObject+SFBlocks.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Categories/NSObject+SFBlocks.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Categories/NSObject+SFBlocks.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Categories/NSObject+SFBlocks.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="155" type="file" documentType="reference">
+		<Node id="152" type="file" documentType="reference">
             <Name>NSString(SFAdditions)</Name>
             <Path>Categories/NSString+SFAdditions.html</Path>
             
@@ -4535,7 +4306,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="156" type="file" documentType="reference">
+		<Node id="153" type="file" documentType="reference">
             <Name>NSURL(SFAdditions)</Name>
             <Path>Categories/NSURL+SFAdditions.html</Path>
             
@@ -4562,7 +4333,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="157" type="file" documentType="reference">
+		<Node id="154" type="file" documentType="reference">
             <Name>NSURL(SFStringUtils)</Name>
             <Path>Categories/NSURL+SFStringUtils.html</Path>
             
@@ -4579,12 +4350,6 @@
                 </Node>
                 
                 
-                <Node type="section">
-                    <Path>Categories/NSURL+SFStringUtils.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
                 
                 <Node type="section">
                     <Path>Categories/NSURL+SFStringUtils.html</Path>
@@ -4595,7 +4360,34 @@
             </Subnodes>
             
         </Node>
-		<Node id="158" type="file" documentType="reference">
+		<Node id="155" type="file" documentType="reference">
+            <Name>NSURLResponse(SFAdditions)</Name>
+            <Path>Categories/NSURLResponse+SFAdditions.html</Path>
+            
+                <Subnodes>
+                <Node type="section">
+                    <Path>Categories/NSURLResponse+SFAdditions.html</Path>
+                    <Name>Overview</Name>
+                    <Anchor>overview</Anchor>
+                </Node>
+                <Node type="section">
+                    <Path>Categories/NSURLResponse+SFAdditions.html</Path>
+                    <Name>Tasks</Name>
+                    <Anchor>tasks</Anchor>
+                </Node>
+                
+                
+                
+                <Node type="section">
+                    <Path>Categories/NSURLResponse+SFAdditions.html</Path>
+                    <Name>Instance Methods</Name>
+                    <Anchor>instance_methods</Anchor>
+                </Node>
+                
+            </Subnodes>
+            
+        </Node>
+		<Node id="156" type="file" documentType="reference">
             <Name>UIColor(SFColors)</Name>
             <Path>Categories/UIColor+SFColors.html</Path>
             
@@ -4611,6 +4403,12 @@
                     <Anchor>tasks</Anchor>
                 </Node>
                 
+                <Node type="section">
+                    <Path>Categories/UIColor+SFColors.html</Path>
+                    <Name>Properties</Name>
+                    <Anchor>properties</Anchor>
+                </Node>
+                
                 
                 <Node type="section">
                     <Path>Categories/UIColor+SFColors.html</Path>
@@ -4628,61 +4426,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="159" type="file" documentType="reference">
-            <Name>UIColor(SFSDKIDP)</Name>
-            <Path>Categories/UIColor+SFSDKIDP.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Categories/UIColor+SFSDKIDP.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Categories/UIColor+SFSDKIDP.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Categories/UIColor+SFSDKIDP.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="160" type="file" documentType="reference">
-            <Name>UIColor(SFSDKPasscodeView)</Name>
-            <Path>Categories/UIColor+SFSDKPasscodeView.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Categories/UIColor+SFSDKPasscodeView.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Categories/UIColor+SFSDKPasscodeView.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Categories/UIColor+SFSDKPasscodeView.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="161" type="file" documentType="reference">
+		<Node id="157" type="file" documentType="reference">
             <Name>UIDevice(SFHardware)</Name>
             <Path>Categories/UIDevice+SFHardware.html</Path>
             
@@ -4715,7 +4459,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="162" type="file" documentType="reference">
+		<Node id="158" type="file" documentType="reference">
             <Name>UIFont(SFSDKIDP)</Name>
             <Path>Categories/UIFont+SFSDKIDP.html</Path>
             
@@ -4742,7 +4486,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="163" type="file" documentType="reference">
+		<Node id="159" type="file" documentType="reference">
             <Name>UIScreen(SFAdditions)</Name>
             <Path>Categories/UIScreen+SFAdditions.html</Path>
             
@@ -4770,34 +4514,7 @@
             
         </Node>
 		
-        <Node id="164" type="file" documentType="reference">
-            <Name>SFCryptChunksDelegate</Name>
-            <Path>Protocols/SFCryptChunksDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFCryptChunksDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFCryptChunksDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFCryptChunksDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="165" type="file" documentType="reference">
+        <Node id="160" type="file" documentType="reference">
             <Name>SFIdentityCoordinatorDelegate</Name>
             <Path>Protocols/SFIdentityCoordinatorDelegate.html</Path>
             
@@ -4824,7 +4541,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="166" type="file" documentType="reference">
+		<Node id="161" type="file" documentType="reference">
             <Name>SFLoginViewControllerDelegate</Name>
             <Path>Protocols/SFLoginViewControllerDelegate.html</Path>
             
@@ -4851,34 +4568,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="167" type="file" documentType="reference">
-            <Name>SFNetworkSessionManaging</Name>
-            <Path>Protocols/SFNetworkSessionManaging.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFNetworkSessionManaging.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFNetworkSessionManaging.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFNetworkSessionManaging.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="168" type="file" documentType="reference">
+		<Node id="162" type="file" documentType="reference">
             <Name>SFOAuthCoordinatorDelegate</Name>
             <Path>Protocols/SFOAuthCoordinatorDelegate.html</Path>
             
@@ -4905,18 +4595,18 @@
             </Subnodes>
             
         </Node>
-		<Node id="169" type="file" documentType="reference">
-            <Name>SFOAuthCoordinatorFlow</Name>
-            <Path>Protocols/SFOAuthCoordinatorFlow.html</Path>
+		<Node id="163" type="file" documentType="reference">
+            <Name>SFRestRequestDelegate</Name>
+            <Path>Protocols/SFRestRequestDelegate.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Protocols/SFOAuthCoordinatorFlow.html</Path>
+                    <Path>Protocols/SFRestRequestDelegate.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Protocols/SFOAuthCoordinatorFlow.html</Path>
+                    <Path>Protocols/SFRestRequestDelegate.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
@@ -4924,7 +4614,7 @@
                 
                 
                 <Node type="section">
-                    <Path>Protocols/SFOAuthCoordinatorFlow.html</Path>
+                    <Path>Protocols/SFRestRequestDelegate.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -4932,94 +4622,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="170" type="file" documentType="reference">
-            <Name>SFPasscodeManagerDelegate</Name>
-            <Path>Protocols/SFPasscodeManagerDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFPasscodeManagerDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFPasscodeManagerDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFPasscodeManagerDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="171" type="file" documentType="reference">
-            <Name>SFPasscodeProvider</Name>
-            <Path>Protocols/SFPasscodeProvider.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFPasscodeProvider.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFPasscodeProvider.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                <Node type="section">
-                    <Path>Protocols/SFPasscodeProvider.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFPasscodeProvider.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="172" type="file" documentType="reference">
-            <Name>SFRestDelegate</Name>
-            <Path>Protocols/SFRestDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFRestDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFRestDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFRestDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="173" type="file" documentType="reference">
+		<Node id="164" type="file" documentType="reference">
             <Name>SFSDKAnalyticsPublisher</Name>
             <Path>Protocols/SFSDKAnalyticsPublisher.html</Path>
             
@@ -5046,7 +4649,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="174" type="file" documentType="reference">
+		<Node id="165" type="file" documentType="reference">
             <Name>SFSDKAppDelegate</Name>
             <Path>Protocols/SFSDKAppDelegate.html</Path>
             
@@ -5079,61 +4682,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="175" type="file" documentType="reference">
-            <Name>SFSDKBiometricViewDelegate</Name>
-            <Path>Protocols/SFSDKBiometricViewDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSDKBiometricViewDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSDKBiometricViewDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKBiometricViewDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="176" type="file" documentType="reference">
-            <Name>SFSDKIDPAuthClientDelegate</Name>
-            <Path>Protocols/SFSDKIDPAuthClientDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSDKIDPAuthClientDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSDKIDPAuthClientDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKIDPAuthClientDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="177" type="file" documentType="reference">
+		<Node id="166" type="file" documentType="reference">
             <Name>SFSDKLoginFlowSelectionView</Name>
             <Path>Protocols/SFSDKLoginFlowSelectionView.html</Path>
             
@@ -5160,7 +4709,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="178" type="file" documentType="reference">
+		<Node id="167" type="file" documentType="reference">
             <Name>SFSDKLoginFlowSelectionViewDelegate</Name>
             <Path>Protocols/SFSDKLoginFlowSelectionViewDelegate.html</Path>
             
@@ -5187,7 +4736,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="179" type="file" documentType="reference">
+		<Node id="168" type="file" documentType="reference">
             <Name>SFSDKLoginHostDelegate</Name>
             <Path>Protocols/SFSDKLoginHostDelegate.html</Path>
             
@@ -5214,38 +4763,26 @@
             </Subnodes>
             
         </Node>
-		<Node id="180" type="file" documentType="reference">
-            <Name>SFSDKOAuthClient</Name>
-            <Path>Protocols/SFSDKOAuthClient.html</Path>
+		<Node id="169" type="file" documentType="reference">
+            <Name>SFSDKOAuthProtocol</Name>
+            <Path>Protocols/SFSDKOAuthProtocol.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClient.html</Path>
+                    <Path>Protocols/SFSDKOAuthProtocol.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClient.html</Path>
+                    <Path>Protocols/SFSDKOAuthProtocol.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
                 
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClient.html</Path>
-                    <Name>Properties</Name>
-                    <Anchor>properties</Anchor>
-                </Node>
                 
                 
                 <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClient.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClient.html</Path>
+                    <Path>Protocols/SFSDKOAuthProtocol.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -5253,18 +4790,18 @@
             </Subnodes>
             
         </Node>
-		<Node id="181" type="file" documentType="reference">
-            <Name>SFSDKOAuthClientDelegate</Name>
-            <Path>Protocols/SFSDKOAuthClientDelegate.html</Path>
+		<Node id="170" type="file" documentType="reference">
+            <Name>SFSDKOAuthSessionManaging</Name>
+            <Path>Protocols/SFSDKOAuthSessionManaging.html</Path>
             
                 <Subnodes>
                 <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientDelegate.html</Path>
+                    <Path>Protocols/SFSDKOAuthSessionManaging.html</Path>
                     <Name>Overview</Name>
                     <Anchor>overview</Anchor>
                 </Node>
                 <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientDelegate.html</Path>
+                    <Path>Protocols/SFSDKOAuthSessionManaging.html</Path>
                     <Name>Tasks</Name>
                     <Anchor>tasks</Anchor>
                 </Node>
@@ -5272,7 +4809,7 @@
                 
                 
                 <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientDelegate.html</Path>
+                    <Path>Protocols/SFSDKOAuthSessionManaging.html</Path>
                     <Name>Instance Methods</Name>
                     <Anchor>instance_methods</Anchor>
                 </Node>
@@ -5280,169 +4817,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="182" type="file" documentType="reference">
-            <Name>SFSDKOAuthClientProvider</Name>
-            <Path>Protocols/SFSDKOAuthClientProvider.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientProvider.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientProvider.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientProvider.html</Path>
-                    <Name>Class Methods</Name>
-                    <Anchor>class_methods</Anchor>
-                </Node>
-                
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="183" type="file" documentType="reference">
-            <Name>SFSDKOAuthClientSafariViewDelegate</Name>
-            <Path>Protocols/SFSDKOAuthClientSafariViewDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientSafariViewDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientSafariViewDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientSafariViewDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="184" type="file" documentType="reference">
-            <Name>SFSDKOAuthClientWebViewDelegate</Name>
-            <Path>Protocols/SFSDKOAuthClientWebViewDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientWebViewDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientWebViewDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKOAuthClientWebViewDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="185" type="file" documentType="reference">
-            <Name>SFSDKPasscodeCreateDelegate</Name>
-            <Path>Protocols/SFSDKPasscodeCreateDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeCreateDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeCreateDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeCreateDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="186" type="file" documentType="reference">
-            <Name>SFSDKPasscodeDeleteProtocol</Name>
-            <Path>Protocols/SFSDKPasscodeDeleteProtocol.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeDeleteProtocol.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeDeleteProtocol.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeDeleteProtocol.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="187" type="file" documentType="reference">
-            <Name>SFSDKPasscodeVerifyDelegate</Name>
-            <Path>Protocols/SFSDKPasscodeVerifyDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeVerifyDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeVerifyDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSDKPasscodeVerifyDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="188" type="file" documentType="reference">
+		<Node id="171" type="file" documentType="reference">
             <Name>SFSDKURLHandler</Name>
             <Path>Protocols/SFSDKURLHandler.html</Path>
             
@@ -5469,7 +4844,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="189" type="file" documentType="reference">
+		<Node id="172" type="file" documentType="reference">
             <Name>SFSDKUserSelectionTableViewControllerDelegate</Name>
             <Path>Protocols/SFSDKUserSelectionTableViewControllerDelegate.html</Path>
             
@@ -5496,7 +4871,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="190" type="file" documentType="reference">
+		<Node id="173" type="file" documentType="reference">
             <Name>SFSDKUserSelectionView</Name>
             <Path>Protocols/SFSDKUserSelectionView.html</Path>
             
@@ -5523,7 +4898,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="191" type="file" documentType="reference">
+		<Node id="174" type="file" documentType="reference">
             <Name>SFSDKUserSelectionViewDelegate</Name>
             <Path>Protocols/SFSDKUserSelectionViewDelegate.html</Path>
             
@@ -5550,7 +4925,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="192" type="file" documentType="reference">
+		<Node id="175" type="file" documentType="reference">
             <Name>SFSDKWindowContainerDelegate</Name>
             <Path>Protocols/SFSDKWindowContainerDelegate.html</Path>
             
@@ -5577,7 +4952,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="193" type="file" documentType="reference">
+		<Node id="176" type="file" documentType="reference">
             <Name>SFSDKWindowManagerDelegate</Name>
             <Path>Protocols/SFSDKWindowManagerDelegate.html</Path>
             
@@ -5604,34 +4979,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="194" type="file" documentType="reference">
-            <Name>SFSecurityLockoutDelegate</Name>
-            <Path>Protocols/SFSecurityLockoutDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SFSecurityLockoutDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SFSecurityLockoutDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SFSecurityLockoutDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="195" type="file" documentType="reference">
+		<Node id="177" type="file" documentType="reference">
             <Name>SFUserAccountManagerDelegate</Name>
             <Path>Protocols/SFUserAccountManagerDelegate.html</Path>
             
@@ -5658,7 +5006,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="196" type="file" documentType="reference">
+		<Node id="178" type="file" documentType="reference">
             <Name>SFUserAccountPersister</Name>
             <Path>Protocols/SFUserAccountPersister.html</Path>
             
@@ -5685,34 +5033,7 @@
             </Subnodes>
             
         </Node>
-		<Node id="197" type="file" documentType="reference">
-            <Name>SalesforceSDKManagerDelegate</Name>
-            <Path>Protocols/SalesforceSDKManagerDelegate.html</Path>
-            
-                <Subnodes>
-                <Node type="section">
-                    <Path>Protocols/SalesforceSDKManagerDelegate.html</Path>
-                    <Name>Overview</Name>
-                    <Anchor>overview</Anchor>
-                </Node>
-                <Node type="section">
-                    <Path>Protocols/SalesforceSDKManagerDelegate.html</Path>
-                    <Name>Tasks</Name>
-                    <Anchor>tasks</Anchor>
-                </Node>
-                
-                
-                
-                <Node type="section">
-                    <Path>Protocols/SalesforceSDKManagerDelegate.html</Path>
-                    <Name>Instance Methods</Name>
-                    <Anchor>instance_methods</Anchor>
-                </Node>
-                
-            </Subnodes>
-            
-        </Node>
-		<Node id="198" type="file" documentType="reference">
+		<Node id="179" type="file" documentType="reference">
             <Name>SalesforceSDKManagerFlow</Name>
             <Path>Protocols/SalesforceSDKManagerFlow.html</Path>
             
@@ -5740,338 +5061,253 @@
             
         </Node>
 		
-        <Node id="199" type="file" documentType="reference">
+        <Node id="180" type="file" documentType="reference">
             <Name>SFAccountManagerServiceType</Name>
             <Path>Constants/SFAccountManagerServiceType.html</Path>
             
         </Node>
-		<Node id="200" type="file" documentType="reference">
-            <Name>SFAppLockControllerMode</Name>
-            <Path>Constants/SFAppLockControllerMode.html</Path>
-            
-        </Node>
-		<Node id="201" type="file" documentType="reference">
+		<Node id="181" type="file" documentType="reference">
             <Name>SFAppType</Name>
             <Path>Constants/SFAppType.html</Path>
             
         </Node>
-		<Node id="202" type="file" documentType="reference">
-            <Name>SFBiometricUnlockState</Name>
-            <Path>Constants/SFBiometricUnlockState.html</Path>
-            
-        </Node>
-		<Node id="203" type="file" documentType="reference">
-            <Name>SFCryptoMode</Name>
-            <Path>Constants/SFCryptoMode.html</Path>
-            
-        </Node>
-		<Node id="204" type="file" documentType="reference">
-            <Name>SFCryptoOperation</Name>
-            <Path>Constants/SFCryptoOperation.html</Path>
-            
-        </Node>
-		<Node id="205" type="file" documentType="reference">
+		<Node id="182" type="file" documentType="reference">
             <Name>SFEntityIdLength</Name>
             <Path>Constants/SFEntityIdLength.html</Path>
             
         </Node>
-		<Node id="206" type="file" documentType="reference">
-            <Name>SFKeychainItemExceptionErrorCode</Name>
-            <Path>Constants/SFKeychainItemExceptionErrorCode.html</Path>
+		<Node id="183" type="file" documentType="reference">
+            <Name>SFLogoutReason</Name>
+            <Path>Constants/SFLogoutReason.html</Path>
             
         </Node>
-		<Node id="207" type="file" documentType="reference">
-            <Name>SFOAuthAdvancedAuthState</Name>
-            <Path>Constants/SFOAuthAdvancedAuthState.html</Path>
-            
-        </Node>
-		<Node id="208" type="file" documentType="reference">
-            <Name>SFOAuthClientKeyType</Name>
-            <Path>Constants/SFOAuthClientKeyType.html</Path>
-            
-        </Node>
-		<Node id="209" type="file" documentType="reference">
+		<Node id="184" type="file" documentType="reference">
             <Name>SFOAuthCredentialsStorageType</Name>
             <Path>Constants/SFOAuthCredentialsStorageType.html</Path>
             
         </Node>
-		<Node id="210" type="file" documentType="reference">
+		<Node id="185" type="file" documentType="reference">
             <Name>SFOAuthCredsEncryptionType</Name>
             <Path>Constants/SFOAuthCredsEncryptionType.html</Path>
             
         </Node>
-		<Node id="211" type="file" documentType="reference">
-            <Name>SFOAuthCryptoOperation</Name>
-            <Path>Constants/SFOAuthCryptoOperation.html</Path>
-            
-        </Node>
-		<Node id="212" type="file" documentType="reference">
+		<Node id="186" type="file" documentType="reference">
             <Name>SFOAuthSessionRefreshErrorCode</Name>
             <Path>Constants/SFOAuthSessionRefreshErrorCode.html</Path>
             
         </Node>
-		<Node id="213" type="file" documentType="reference">
+		<Node id="187" type="file" documentType="reference">
             <Name>SFOAuthTokenEndpointFlow</Name>
             <Path>Constants/SFOAuthTokenEndpointFlow.html</Path>
             
         </Node>
-		<Node id="214" type="file" documentType="reference">
+		<Node id="188" type="file" documentType="reference">
             <Name>SFOAuthType</Name>
             <Path>Constants/SFOAuthType.html</Path>
             
         </Node>
-		<Node id="215" type="file" documentType="reference">
+		<Node id="189" type="file" documentType="reference">
             <Name>SFRestMethod</Name>
             <Path>Constants/SFRestMethod.html</Path>
             
         </Node>
-		<Node id="216" type="file" documentType="reference">
+		<Node id="190" type="file" documentType="reference">
             <Name>SFSDKAppConfigErrorCode</Name>
             <Path>Constants/SFSDKAppConfigErrorCode.html</Path>
             
         </Node>
-		<Node id="217" type="file" documentType="reference">
-            <Name>SFSDKLaunchAction</Name>
-            <Path>Constants/SFSDKLaunchAction.html</Path>
-            
-        </Node>
-		<Node id="218" type="file" documentType="reference">
+		<Node id="191" type="file" documentType="reference">
             <Name>SFSDKNetworkServiceType</Name>
             <Path>Constants/SFSDKNetworkServiceType.html</Path>
             
         </Node>
-		<Node id="219" type="file" documentType="reference">
+		<Node id="192" type="file" documentType="reference">
             <Name>SFSDKRestServiceHostType</Name>
             <Path>Constants/SFSDKRestServiceHostType.html</Path>
             
         </Node>
-		<Node id="220" type="file" documentType="reference">
+		<Node id="193" type="file" documentType="reference">
+            <Name>SFSDKUserAccountManagerErrorCode</Name>
+            <Path>Constants/SFSDKUserAccountManagerErrorCode.html</Path>
+            
+        </Node>
+		<Node id="194" type="file" documentType="reference">
             <Name>SFSDKWindowType</Name>
             <Path>Constants/SFSDKWindowType.html</Path>
             
         </Node>
-		<Node id="221" type="file" documentType="reference">
-            <Name>SFSecurityLockoutAction</Name>
-            <Path>Constants/SFSecurityLockoutAction.html</Path>
+		<Node id="195" type="file" documentType="reference">
+            <Name>SFSPLoginError</Name>
+            <Path>Constants/SFSPLoginError.html</Path>
             
         </Node>
-		<Node id="222" type="file" documentType="reference">
+		<Node id="196" type="file" documentType="reference">
+            <Name>SFSPLoginStatus</Name>
+            <Path>Constants/SFSPLoginStatus.html</Path>
+            
+        </Node>
+		<Node id="197" type="file" documentType="reference">
+            <Name>SFURLCacheType</Name>
+            <Path>Constants/SFURLCacheType.html</Path>
+            
+        </Node>
+		<Node id="198" type="file" documentType="reference">
             <Name>SFUserAccountAccessRestriction</Name>
             <Path>Constants/SFUserAccountAccessRestriction.html</Path>
             
         </Node>
-		<Node id="223" type="file" documentType="reference">
+		<Node id="199" type="file" documentType="reference">
             <Name>SFUserAccountChange</Name>
             <Path>Constants/SFUserAccountChange.html</Path>
             
         </Node>
-		<Node id="224" type="file" documentType="reference">
+		<Node id="200" type="file" documentType="reference">
             <Name>SFUserAccountDataChange</Name>
             <Path>Constants/SFUserAccountDataChange.html</Path>
             
         </Node>
-		<Node id="225" type="file" documentType="reference">
+		<Node id="201" type="file" documentType="reference">
             <Name>SFUserAccountLoginState</Name>
             <Path>Constants/SFUserAccountLoginState.html</Path>
             
         </Node>
-		<Node id="226" type="file" documentType="reference">
+		<Node id="202" type="file" documentType="reference">
             <Name>SFUserAccountScope</Name>
             <Path>Constants/SFUserAccountScope.html</Path>
             
         </Node>
-		<Node id="227" type="file" documentType="reference">
+		<Node id="203" type="file" documentType="reference">
             <Name>SFUserManagementAction</Name>
             <Path>Constants/SFUserManagementAction.html</Path>
             
         </Node>
-		<Node id="228" type="file" documentType="reference">
+		<Node id="204" type="file" documentType="reference">
             <Name>UIDeviceFamily</Name>
             <Path>Constants/UIDeviceFamily.html</Path>
             
         </Node>
-		<Node id="229" type="file" documentType="reference">
+		<Node id="205" type="file" documentType="reference">
             <Name>UIDevicePlatform</Name>
             <Path>Constants/UIDevicePlatform.html</Path>
             
         </Node>
 		
-        <Node id="230" type="file" documentType="reference">
-            <Name>SFAuthErrorHandlerEvalBlock</Name>
-            <Path>Blocks/SFAuthErrorHandlerEvalBlock.html</Path>
+        <Node id="206" type="file" documentType="reference">
+            <Name>SFAuthErrorHandlerContextEvalBlock</Name>
+            <Path>Blocks/SFAuthErrorHandlerContextEvalBlock.html</Path>
             
         </Node>
-        <Node id="231" type="file" documentType="reference">
-            <Name>SFAuthErrorHandlerOptionsEvalBlock</Name>
-            <Path>Blocks/SFAuthErrorHandlerOptionsEvalBlock.html</Path>
-            
-        </Node>
-        <Node id="232" type="file" documentType="reference">
-            <Name>SFAuthenticationFailureCallbackBlock</Name>
-            <Path>Blocks/SFAuthenticationFailureCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="233" type="file" documentType="reference">
-            <Name>SFAuthenticationSuccessCallbackBlock</Name>
-            <Path>Blocks/SFAuthenticationSuccessCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="234" type="file" documentType="reference">
+        <Node id="207" type="file" documentType="reference">
             <Name>SFDataResponseBlock</Name>
             <Path>Blocks/SFDataResponseBlock.html</Path>
             
         </Node>
-        <Node id="235" type="file" documentType="reference">
-            <Name>SFIdentityFailureCallbackBlock</Name>
-            <Path>Blocks/SFIdentityFailureCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="236" type="file" documentType="reference">
-            <Name>SFIdentitySuccessCallbackBlock</Name>
-            <Path>Blocks/SFIdentitySuccessCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="237" type="file" documentType="reference">
+        <Node id="208" type="file" documentType="reference">
             <Name>SFInstrumentationSelectorFilter</Name>
             <Path>Blocks/SFInstrumentationSelectorFilter.html</Path>
             
         </Node>
-        <Node id="238" type="file" documentType="reference">
-            <Name>SFLockScreenFailureCallbackBlock</Name>
-            <Path>Blocks/SFLockScreenFailureCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="239" type="file" documentType="reference">
-            <Name>SFLockScreenSuccessCallbackBlock</Name>
-            <Path>Blocks/SFLockScreenSuccessCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="240" type="file" documentType="reference">
+        <Node id="209" type="file" documentType="reference">
             <Name>SFMethodInterceptorInvocationAfterCallback</Name>
             <Path>Blocks/SFMethodInterceptorInvocationAfterCallback.html</Path>
             
         </Node>
-        <Node id="241" type="file" documentType="reference">
+        <Node id="210" type="file" documentType="reference">
             <Name>SFMethodInterceptorInvocationCallback</Name>
             <Path>Blocks/SFMethodInterceptorInvocationCallback.html</Path>
             
         </Node>
-        <Node id="242" type="file" documentType="reference">
+        <Node id="211" type="file" documentType="reference">
             <Name>SFOAuthBrowserFlowCallbackBlock</Name>
             <Path>Blocks/SFOAuthBrowserFlowCallbackBlock.html</Path>
             
         </Node>
-        <Node id="243" type="file" documentType="reference">
-            <Name>SFPasscodeViewControllerDismissBlock</Name>
-            <Path>Blocks/SFPasscodeViewControllerDismissBlock.html</Path>
-            
-        </Node>
-        <Node id="244" type="file" documentType="reference">
-            <Name>SFPasscodeViewControllerPresentationBlock</Name>
-            <Path>Blocks/SFPasscodeViewControllerPresentationBlock.html</Path>
-            
-        </Node>
-        <Node id="245" type="file" documentType="reference">
+        <Node id="212" type="file" documentType="reference">
             <Name>SFRestArrayResponseBlock</Name>
             <Path>Blocks/SFRestArrayResponseBlock.html</Path>
             
         </Node>
-        <Node id="246" type="file" documentType="reference">
+        <Node id="213" type="file" documentType="reference">
+            <Name>SFRestBatchResponseBlock</Name>
+            <Path>Blocks/SFRestBatchResponseBlock.html</Path>
+            
+        </Node>
+        <Node id="214" type="file" documentType="reference">
+            <Name>SFRestCompositeResponseBlock</Name>
+            <Path>Blocks/SFRestCompositeResponseBlock.html</Path>
+            
+        </Node>
+        <Node id="215" type="file" documentType="reference">
             <Name>SFRestDataResponseBlock</Name>
             <Path>Blocks/SFRestDataResponseBlock.html</Path>
             
         </Node>
-        <Node id="247" type="file" documentType="reference">
+        <Node id="216" type="file" documentType="reference">
             <Name>SFRestDictionaryResponseBlock</Name>
             <Path>Blocks/SFRestDictionaryResponseBlock.html</Path>
             
         </Node>
-        <Node id="248" type="file" documentType="reference">
-            <Name>SFRestFailBlock</Name>
-            <Path>Blocks/SFRestFailBlock.html</Path>
+        <Node id="217" type="file" documentType="reference">
+            <Name>SFRestRequestFailBlock</Name>
+            <Path>Blocks/SFRestRequestFailBlock.html</Path>
             
         </Node>
-        <Node id="249" type="file" documentType="reference">
+        <Node id="218" type="file" documentType="reference">
             <Name>SFRestResponseBlock</Name>
             <Path>Blocks/SFRestResponseBlock.html</Path>
             
         </Node>
-        <Node id="250" type="file" documentType="reference">
-            <Name>SFSDKAppForegroundCallbackBlock</Name>
-            <Path>Blocks/SFSDKAppForegroundCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="251" type="file" documentType="reference">
+        <Node id="219" type="file" documentType="reference">
             <Name>SFSDKAuthViewDismissBlock</Name>
             <Path>Blocks/SFSDKAuthViewDismissBlock.html</Path>
             
         </Node>
-        <Node id="252" type="file" documentType="reference">
+        <Node id="220" type="file" documentType="reference">
             <Name>SFSDKAuthViewDisplayBlock</Name>
             <Path>Blocks/SFSDKAuthViewDisplayBlock.html</Path>
             
         </Node>
-        <Node id="253" type="file" documentType="reference">
+        <Node id="221" type="file" documentType="reference">
             <Name>SFSDKErrorHandlerBlock</Name>
             <Path>Blocks/SFSDKErrorHandlerBlock.html</Path>
             
         </Node>
-        <Node id="254" type="file" documentType="reference">
+        <Node id="222" type="file" documentType="reference">
             <Name>SFSDKFailureNotificationBlock</Name>
             <Path>Blocks/SFSDKFailureNotificationBlock.html</Path>
             
         </Node>
-        <Node id="255" type="file" documentType="reference">
-            <Name>SFSDKLaunchErrorCallbackBlock</Name>
-            <Path>Blocks/SFSDKLaunchErrorCallbackBlock.html</Path>
+        <Node id="223" type="file" documentType="reference">
+            <Name>SFSDKMetricsCollectedBlock</Name>
+            <Path>Blocks/SFSDKMetricsCollectedBlock.html</Path>
             
         </Node>
-        <Node id="256" type="file" documentType="reference">
-            <Name>SFSDKLogoutCallbackBlock</Name>
-            <Path>Blocks/SFSDKLogoutCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="257" type="file" documentType="reference">
-            <Name>SFSDKPostLaunchCallbackBlock</Name>
-            <Path>Blocks/SFSDKPostLaunchCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="258" type="file" documentType="reference">
-            <Name>SFSDKSwitchUserCallbackBlock</Name>
-            <Path>Blocks/SFSDKSwitchUserCallbackBlock.html</Path>
-            
-        </Node>
-        <Node id="259" type="file" documentType="reference">
+        <Node id="224" type="file" documentType="reference">
             <Name>SFSnapshotViewControllerDismissalBlock</Name>
             <Path>Blocks/SFSnapshotViewControllerDismissalBlock.html</Path>
             
         </Node>
-        <Node id="260" type="file" documentType="reference">
+        <Node id="225" type="file" documentType="reference">
             <Name>SFSnapshotViewControllerPresentationBlock</Name>
             <Path>Blocks/SFSnapshotViewControllerPresentationBlock.html</Path>
             
         </Node>
-        <Node id="261" type="file" documentType="reference">
-            <Name>SFThreadBlock</Name>
-            <Path>Blocks/SFThreadBlock.html</Path>
-            
-        </Node>
-        <Node id="262" type="file" documentType="reference">
+        <Node id="226" type="file" documentType="reference">
             <Name>SFUserAccountManagerFailureCallbackBlock</Name>
             <Path>Blocks/SFUserAccountManagerFailureCallbackBlock.html</Path>
             
         </Node>
-        <Node id="263" type="file" documentType="reference">
+        <Node id="227" type="file" documentType="reference">
             <Name>SFUserAccountManagerSuccessCallbackBlock</Name>
             <Path>Blocks/SFUserAccountManagerSuccessCallbackBlock.html</Path>
             
         </Node>
-        <Node id="264" type="file" documentType="reference">
+        <Node id="228" type="file" documentType="reference">
             <Name>SFUserManagementCompletionBlock</Name>
             <Path>Blocks/SFUserManagementCompletionBlock.html</Path>
             
         </Node>
-        <Node id="265" type="file" documentType="reference">
+        <Node id="229" type="file" documentType="reference">
             <Name>_Nonnull</Name>
             <Path>Blocks/_Nonnull.html</Path>
             

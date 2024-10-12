@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKPasscodeVerifyDelegate.html">
+	<File path="Constants/SFOAuthTokenEndpointFlow.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKPasscodeVerifyDelegate</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/c/tdef/SFOAuthTokenEndpointFlow</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
+			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
             
 			
 			<NodeRef refid="187"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKPasscodeVerifyDelegate/passcodeVerified</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>- (void)passcodeVerified</Declaration>
-			
-			
-			<Anchor>//api/name/passcodeVerified</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowNone</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowNone</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
             <NodeRef refid="187"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKPasscodeVerifyDelegate/passcodeFailed</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>- (void)passcodeFailed</Declaration>
-			
-			
-			<Anchor>//api/name/passcodeFailed</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowRefresh</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowRefresh</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
             <NodeRef refid="187"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowAdvancedBrowser</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowAdvancedBrowser</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
+            <NodeRef refid="187"/>
+        </Token>
         
         
 	</File>

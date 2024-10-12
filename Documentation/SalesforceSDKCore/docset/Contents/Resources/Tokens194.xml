@@ -1,52 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSecurityLockoutDelegate.html">
+	<File path="Constants/SFSDKWindowType.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSecurityLockoutDelegate</TokenIdentifier>
-			<Abstract type="html">Delegate protocol for SFSecurityLockout events and callbacks.</Abstract>
-			<DeclaredIn>SFSecurityLockout.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFSDKWindowType</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKWindowContainer.h</DeclaredIn>
             
 			
 			<NodeRef refid="194"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSecurityLockoutDelegate/passcodeFlowWillBegin:</TokenIdentifier>
-			<Abstract type="html">Called just before the passcode flow begins and the view is displayed.</Abstract>
-			<DeclaredIn>SFSecurityLockout.h</DeclaredIn>
-			
-			<Declaration>- (void)passcodeFlowWillBegin:(SFAppLockControllerMode)mode</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>mode</Name>
-					<Abstract type="html">The mode of the passcode or biometric flow, i.e. passcode/biometric creation or verification.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/passcodeFlowWillBegin:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKWindowTypeMain</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFSDKWindowTypeMain</Declaration>
+            
+            <DeclaredIn>SFSDKWindowContainer.h</DeclaredIn>
+            
             <NodeRef refid="194"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSecurityLockoutDelegate/passcodeFlowDidComplete:</TokenIdentifier>
-			<Abstract type="html">Called after the passcode flow has completed.</Abstract>
-			<DeclaredIn>SFSecurityLockout.h</DeclaredIn>
-			
-			<Declaration>- (void)passcodeFlowDidComplete:(BOOL)success</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>success</Name>
-					<Abstract type="html">Whether or not the passcode or biometric flow was successful, i.e. the passcode/biometric
-was successfully created or verified.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/passcodeFlowDidComplete:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKWindowTypeAuth</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFSDKWindowTypeAuth</Declaration>
+            
+            <DeclaredIn>SFSDKWindowContainer.h</DeclaredIn>
+            
             <NodeRef refid="194"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKWindowTypeScreenLock</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFSDKWindowTypeScreenLock</Declaration>
+            
+            <DeclaredIn>SFSDKWindowContainer.h</DeclaredIn>
+            
+            <NodeRef refid="194"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKWindowTypeSnapshot</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFSDKWindowTypeSnapshot</Declaration>
+            
+            <DeclaredIn>SFSDKWindowContainer.h</DeclaredIn>
+            
+            <NodeRef refid="194"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKWindowTypeOther</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFSDKWindowTypeOther</Declaration>
+            
+            <DeclaredIn>SFSDKWindowContainer.h</DeclaredIn>
+            
+            <NodeRef refid="194"/>
+        </Token>
         
         
 	</File>

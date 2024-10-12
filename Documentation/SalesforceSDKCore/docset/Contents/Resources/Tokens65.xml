@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKAuthConfigUtil.html">
+	<File path="Classes/SFSDKCompositeSubRequest.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAuthConfigUtil</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKCompositeSubRequest</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthConfigUtil.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
             
 			
 			<NodeRef refid="65"/>
@@ -13,26 +13,50 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAuthConfigUtil/getMyDomainAuthConfig:loginDomain:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubRequest/setReferenceId:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthConfigUtil.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
 			
-			<Declaration>+ (void)getMyDomainAuthConfig:(nonnull MyDomainAuthConfigBlock)authConfigBlock loginDomain:(nonnull NSString *)loginDomain</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *referenceId</Declaration>
 			
 			
-			<Anchor>//api/name/getMyDomainAuthConfig:loginDomain:</Anchor>
+			<Anchor>//api/name/referenceId</Anchor>
             <NodeRef refid="65"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAuthConfigUtil/getMyDomainAuthConfig:oauthCredentials:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubRequest/referenceId</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthConfigUtil.h</DeclaredIn>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
 			
-			<Declaration>+ (void)getMyDomainAuthConfig:(nonnull MyDomainAuthConfigBlock)authConfigBlock oauthCredentials:(nonnull SFOAuthCredentials *)oauthCredentials</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *referenceId</Declaration>
 			
 			
-			<Anchor>//api/name/getMyDomainAuthConfig:oauthCredentials:</Anchor>
+			<Anchor>//api/name/referenceId</Anchor>
+            <NodeRef refid="65"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKCompositeSubRequest/referenceId</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *referenceId</Declaration>
+			
+			
+			<Anchor>//api/name/referenceId</Anchor>
+            <NodeRef refid="65"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeSubRequest/initWithReferenceId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithReferenceId:(NSString *)referenceId</Declaration>
+			
+			
+			<Anchor>//api/name/initWithReferenceId:</Anchor>
             <NodeRef refid="65"/>
 		</Token>
 		

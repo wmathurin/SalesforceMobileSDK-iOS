@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFOAuthKeychainCredentials.html">
+	<File path="Classes/SFSDKAlertMessageBuilder.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthKeychainCredentials</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAlertMessageBuilder</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
             
 			
 			<NodeRef refid="39"/>
@@ -13,170 +13,230 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyMacForService:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/setAlertTitle:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)keyMacForService:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *alertTitle</Declaration>
 			
 			
-			<Anchor>//api/name/keyMacForService:</Anchor>
+			<Anchor>//api/name/alertTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyVendorIdForService:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/alertTitle</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)keyVendorIdForService:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *alertTitle</Declaration>
 			
 			
-			<Anchor>//api/name/keyVendorIdForService:</Anchor>
+			<Anchor>//api/name/alertTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyBaseAppIdForService:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessageBuilder/alertTitle</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)keyBaseAppIdForService:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *alertTitle</Declaration>
 			
 			
-			<Anchor>//api/name/keyBaseAppIdForService:</Anchor>
+			<Anchor>//api/name/alertTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyStoreKeyForService:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/setAlertMessage:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (SFEncryptionKey *)keyStoreKeyForService:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *alertMessage</Declaration>
 			
 			
-			<Anchor>//api/name/keyStoreKeyForService:</Anchor>
+			<Anchor>//api/name/alertMessage</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/keyWithSeed:service:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/alertMessage</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (NSData *)keyWithSeed:(NSString *)seed service:(NSString *)service</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *alertMessage</Declaration>
 			
 			
-			<Anchor>//api/name/keyWithSeed:service:</Anchor>
+			<Anchor>//api/name/alertMessage</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/refreshTokenWithKey:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessageBuilder/alertMessage</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)refreshTokenWithKey:(NSData *)key</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *alertMessage</Declaration>
 			
 			
-			<Anchor>//api/name/refreshTokenWithKey:</Anchor>
+			<Anchor>//api/name/alertMessage</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/refreshTokenWithSFEncryptionKey:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/setActionOneTitle:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)refreshTokenWithSFEncryptionKey:(SFEncryptionKey *)encryptionKey</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *actionOneTitle</Declaration>
 			
 			
-			<Anchor>//api/name/refreshTokenWithSFEncryptionKey:</Anchor>
+			<Anchor>//api/name/actionOneTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/setRefreshToken:withSFEncryptionKey:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/actionOneTitle</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (void)setRefreshToken:(nullable NSString *)token withSFEncryptionKey:(SFEncryptionKey *)key</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *actionOneTitle</Declaration>
 			
 			
-			<Anchor>//api/name/setRefreshToken:withSFEncryptionKey:</Anchor>
+			<Anchor>//api/name/actionOneTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/accessTokenWithKey:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessageBuilder/actionOneTitle</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)accessTokenWithKey:(NSData *)key</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *actionOneTitle</Declaration>
 			
 			
-			<Anchor>//api/name/accessTokenWithKey:</Anchor>
+			<Anchor>//api/name/actionOneTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/accessTokenWithSFEncryptionKey:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/setActionTwoTitle:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)accessTokenWithSFEncryptionKey:(SFEncryptionKey *)encryptionKey</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *actionTwoTitle</Declaration>
 			
 			
-			<Anchor>//api/name/accessTokenWithSFEncryptionKey:</Anchor>
+			<Anchor>//api/name/actionTwoTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/setAccessToken:withSFEncryptionKey:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/actionTwoTitle</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (void)setAccessToken:(nullable NSString *)token withSFEncryptionKey:(SFEncryptionKey *)key</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *actionTwoTitle</Declaration>
 			
 			
-			<Anchor>//api/name/setAccessToken:withSFEncryptionKey:</Anchor>
+			<Anchor>//api/name/actionTwoTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/updateTokenEncryption</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessageBuilder/actionTwoTitle</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (void)updateTokenEncryption</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *actionTwoTitle</Declaration>
 			
 			
-			<Anchor>//api/name/updateTokenEncryption</Anchor>
+			<Anchor>//api/name/actionTwoTitle</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/setAccessToken:withKey:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/setActionOneCompletion:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (void)setAccessToken:(NSString *)token withKey:(NSData *)key</Declaration>
+			<Declaration>@property (nonatomic, copy, nonnull) void ( ^ ) ( void ) actionOneCompletion</Declaration>
 			
 			
-			<Anchor>//api/name/setAccessToken:withKey:</Anchor>
+			<Anchor>//api/name/actionOneCompletion</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthKeychainCredentials/setRefreshToken:withKey:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/actionOneCompletion</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFOAuthKeychainCredentials.h</DeclaredIn>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
 			
-			<Declaration>- (void)setRefreshToken:(NSString *)token withKey:(NSData *)key</Declaration>
+			<Declaration>@property (nonatomic, copy, nonnull) void ( ^ ) ( void ) actionOneCompletion</Declaration>
 			
 			
-			<Anchor>//api/name/setRefreshToken:withKey:</Anchor>
+			<Anchor>//api/name/actionOneCompletion</Anchor>
+            <NodeRef refid="39"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessageBuilder/actionOneCompletion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, nonnull) void ( ^ ) ( void ) actionOneCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionOneCompletion</Anchor>
+            <NodeRef refid="39"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/setActionTwoCompletion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, nonnull) void ( ^ ) ( void ) actionTwoCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoCompletion</Anchor>
+            <NodeRef refid="39"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/actionTwoCompletion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, nonnull) void ( ^ ) ( void ) actionTwoCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoCompletion</Anchor>
+            <NodeRef refid="39"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessageBuilder/actionTwoCompletion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, nonnull) void ( ^ ) ( void ) actionTwoCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoCompletion</Anchor>
+            <NodeRef refid="39"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessageBuilder/build</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessageBuilder.h</DeclaredIn>
+			
+			<Declaration>- (SFSDKAlertMessage *)build</Declaration>
+			
+			
+			<Anchor>//api/name/build</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		

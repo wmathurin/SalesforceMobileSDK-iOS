@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFOAuthInfo.html">
+	<File path="Classes/SFSDKAlertMessage.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthInfo</TokenIdentifier>
-			<Abstract type="html">Data class containing members denoting state information for an OAuth coordinator authentication
-cycle.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAlertMessage</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
             
 			
 			<NodeRef refid="38"/>
@@ -14,91 +13,242 @@ cycle.</Abstract>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/setAuthType:</TokenIdentifier>
-			<Abstract type="html">The type of authentication being performed.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/setAlertTitle:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *alertTitle</Declaration>
 			
 			
-			<Anchor>//api/name/authType</Anchor>
+			<Anchor>//api/name/alertTitle</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/authType</TokenIdentifier>
-			<Abstract type="html">The type of authentication being performed.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/alertTitle</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *alertTitle</Declaration>
 			
 			
-			<Anchor>//api/name/authType</Anchor>
+			<Anchor>//api/name/alertTitle</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthInfo/authType</TokenIdentifier>
-			<Abstract type="html">The type of authentication being performed.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessage/alertTitle</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *alertTitle</Declaration>
 			
 			
-			<Anchor>//api/name/authType</Anchor>
+			<Anchor>//api/name/alertTitle</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/setAuthTypeDescription:</TokenIdentifier>
-			<Abstract type="html">The string description of the auth type.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/setAlertMessage:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *alertMessage</Declaration>
 			
 			
-			<Anchor>//api/name/authTypeDescription</Anchor>
+			<Anchor>//api/name/alertMessage</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/authTypeDescription</TokenIdentifier>
-			<Abstract type="html">The string description of the auth type.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/alertMessage</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *alertMessage</Declaration>
 			
 			
-			<Anchor>//api/name/authTypeDescription</Anchor>
+			<Anchor>//api/name/alertMessage</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthInfo/authTypeDescription</TokenIdentifier>
-			<Abstract type="html">The string description of the auth type.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessage/alertMessage</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *alertMessage</Declaration>
 			
 			
-			<Anchor>//api/name/authTypeDescription</Anchor>
+			<Anchor>//api/name/alertMessage</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/initWithAuthType:</TokenIdentifier>
-			<Abstract type="html">Creates a new instance with the given auth type.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/setActionOneTitle:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
 			
-			<Declaration>- (id)initWithAuthType:(SFOAuthType)authType</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>authType</Name>
-					<Abstract type="html">The type of authentication being performed.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, readonly) NSString *actionOneTitle</Declaration>
 			
-			<Anchor>//api/name/initWithAuthType:</Anchor>
+			
+			<Anchor>//api/name/actionOneTitle</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/actionOneTitle</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *actionOneTitle</Declaration>
+			
+			
+			<Anchor>//api/name/actionOneTitle</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessage/actionOneTitle</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *actionOneTitle</Declaration>
+			
+			
+			<Anchor>//api/name/actionOneTitle</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/setActionTwoTitle:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *actionTwoTitle</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoTitle</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/actionTwoTitle</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *actionTwoTitle</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoTitle</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessage/actionTwoTitle</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *actionTwoTitle</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoTitle</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/setActionOneCompletion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) void ( ^ ) ( void ) actionOneCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionOneCompletion</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/actionOneCompletion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) void ( ^ ) ( void ) actionOneCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionOneCompletion</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessage/actionOneCompletion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) void ( ^ ) ( void ) actionOneCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionOneCompletion</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/setActionTwoCompletion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) void ( ^ ) ( void ) actionTwoCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoCompletion</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/actionTwoCompletion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) void ( ^ ) ( void ) actionTwoCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoCompletion</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertMessage/actionTwoCompletion</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) void ( ^ ) ( void ) actionTwoCompletion</Declaration>
+			
+			
+			<Anchor>//api/name/actionTwoCompletion</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertMessage/initWithBuilder:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithBuilder:(SFSDKAlertMessageBuilder *)builder</Declaration>
+			
+			
+			<Anchor>//api/name/initWithBuilder:</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAlertMessage/messageWithBlock:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertMessage.h</DeclaredIn>
+			
+			<Declaration>+ (SFSDKAlertMessage *)messageWithBlock:(void ( ^ ) ( SFSDKAlertMessageBuilder *))builderBlock</Declaration>
+			
+			
+			<Anchor>//api/name/messageWithBlock:</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		

@@ -60,11 +60,9 @@
 		
 		<option value="//api/name/customHeaders">customHeaders</option>
 		
-		<option value="//api/name/delegate">delegate</option>
-		
 		<option value="//api/name/endpoint">endpoint</option>
 		
-		<option value="//api/name/instrDelegateInternal">instrDelegateInternal</option>
+		<option value="//api/name/instrumentationDelegateInternal">instrumentationDelegateInternal</option>
 		
 		<option value="//api/name/method">method</option>
 		
@@ -84,13 +82,15 @@
 		
 		<option value="//api/name/requestContentType">requestContentType</option>
 		
+		<option value="//api/name/requestDelegate">requestDelegate</option>
+		
 		<option value="//api/name/requiresAuthentication">requiresAuthentication</option>
 		
 		<option value="//api/name/serviceHostType">serviceHostType</option>
 		
 		<option value="//api/name/sessionDataTask">sessionDataTask</option>
 		
-		<option value="//api/name/shouldRefreshOn403">shouldRefreshOn403</option>
+		<option value="//api/name/timeoutInterval">timeoutInterval</option>
 		
 	</optgroup>
 	
@@ -116,13 +116,15 @@
 		
 		<option value="//api/name/sfRestMethodFromHTTPMethod:">+ sfRestMethodFromHTTPMethod:</option>
 		
+		<option value="//api/name/toQueryString:">+ toQueryString:</option>
+		
 	</optgroup>
 	
 
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/addPostFileData:paramName:description:fileName:mimeType:">- addPostFileData:paramName:description:fileName:mimeType:</option>
+		<option value="//api/name/addPostFileData:paramName:fileName:mimeType:params:">- addPostFileData:paramName:fileName:mimeType:params:</option>
 		
 		<option value="//api/name/cancel">- cancel</option>
 		
@@ -569,8 +571,8 @@ Note that URL encoding of the parameters will automatically happen when the <a h
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/delegate" title="delegate"></a>
-	<h3 class="method-title"><code><a href="#//api/name/delegate">&nbsp;&nbsp;delegate</a></code>
+	<a name="//api/name/requestDelegate" title="requestDelegate"></a>
+	<h3 class="method-title"><code><a href="#//api/name/requestDelegate">&nbsp;&nbsp;requestDelegate</a></code>
 </h3>
 
 	<div class="method-info">
@@ -585,7 +587,7 @@ Note that URL encoding of the parameters will automatically happen when the <a h
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nullable, nonatomic, weak) id&lt;SFRestDelegate&gt; delegate</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nullable, nonatomic, weak) id&lt;SFRestRequestDelegate&gt; requestDelegate</code></div>
 
 		    
 			
@@ -693,8 +695,8 @@ the <a href="#//api/name/request">request</a> headers before sending the <a href
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/shouldRefreshOn403" title="shouldRefreshOn403"></a>
-	<h3 class="method-title"><code><a href="#//api/name/shouldRefreshOn403">&nbsp;&nbsp;shouldRefreshOn403</a></code>
+	<a name="//api/name/timeoutInterval" title="timeoutInterval"></a>
+	<h3 class="method-title"><code><a href="#//api/name/timeoutInterval">&nbsp;&nbsp;timeoutInterval</a></code>
 </h3>
 
 	<div class="method-info">
@@ -704,13 +706,12 @@ the <a href="#//api/name/request">request</a> headers before sending the <a href
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Used to specify if the SDK should attempt to refresh tokens on HTTP 403. If YES, the SDK will
-attempt to refresh on HTTP 403. If NO, refresh will not be attempted.</p>
+				<p>Assigns the timeout interval allowed for this <a href="#//api/name/request">request</a>.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL shouldRefreshOn403</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readwrite) NSTimeInterval timeoutInterval</code></div>
 
 		    
 			
@@ -893,8 +894,8 @@ from the collection of headers.</p></td>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/addPostFileData:paramName:description:fileName:mimeType:" title="addPostFileData:paramName:description:fileName:mimeType:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/addPostFileData:paramName:description:fileName:mimeType:">&ndash;&nbsp;addPostFileData:paramName:description:fileName:mimeType:</a></code>
+	<a name="//api/name/addPostFileData:paramName:fileName:mimeType:params:" title="addPostFileData:paramName:fileName:mimeType:params:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addPostFileData:paramName:fileName:mimeType:params:">&ndash;&nbsp;addPostFileData:paramName:fileName:mimeType:params:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -904,12 +905,12 @@ from the collection of headers.</p></td>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Add file to upload.</p>
+				<p>Add file to upload</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)addPostFileData:(NSData *)<em>fileData</em> paramName:(NSString *)<em>paramName</em> description:(nullable NSString *)<em>description</em> fileName:(NSString *)<em>fileName</em> mimeType:(NSString *)<em>mimeType</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)addPostFileData:(NSData *)<em>fileData</em> paramName:(NSString *)<em>paramName</em> fileName:(NSString *)<em>fileName</em> mimeType:(NSString *)<em>mimeType</em> params:(nullable NSDictionary *)<em>params</em></code></div>
 
 		    
 			
@@ -928,11 +929,6 @@ from the collection of headers.</p></td>
 					</tr>
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>description</code></th>
-						<td><p>Description of the file</p></td>
-					</tr>
-				
-					<tr>
 						<th scope="row" class="argument-name"><code>fileName</code></th>
 						<td><p>Name of the file</p></td>
 					</tr>
@@ -940,6 +936,11 @@ from the collection of headers.</p></td>
 					<tr>
 						<th scope="row" class="argument-name"><code>mimeType</code></th>
 						<td><p>MIME type of the file</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>params</code></th>
+						<td><p>File properties (e.g. title, desc, contentSize)</p></td>
 					</tr>
 				
 				</table>
@@ -1517,7 +1518,7 @@ from the collection of headers.</p></td>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Creates an <code>SFRestRequest</code> object. See <a href="../Constants/SFRestMethod.html">SFRestMethod</a>. If you need to set body on the <a href="#//api/name/request">request</a>, use one of the &lsquo;setCustomRequestBody&hellip;&rsquo; methods to do so with the instance returned by this <a href="#//api/name/method">method</a>.</p>
+				<p>Creates an <code>SFRestRequest</code> object. To set the body of the <a href="#//api/name/request">request</a>, use one of the <code>setCustomRequestBody...</code> methods on the returned instance.</p>
 			</div>
 			
 		    
@@ -1532,22 +1533,22 @@ from the collection of headers.</p></td>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>method</code></th>
-						<td><p>the HTTP <a href="#//api/name/method">method</a></p></td>
+						<td><p>HTTP <a href="#//api/name/method">method</a></p></td>
 					</tr>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>baseURL</code></th>
-						<td><p>the <a href="#//api/name/request">request</a> URL</p></td>
+						<td><p>Request URL</p></td>
 					</tr>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>path</code></th>
-						<td><p>the <a href="#//api/name/request">request</a> <a href="#//api/name/path">path</a></p></td>
+						<td><p>Request <a href="#//api/name/path">path</a></p></td>
 					</tr>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>queryParams</code></th>
-						<td><p>the parameters of the <a href="#//api/name/request">request</a> (could be nil)</p></td>
+						<td><p>Parameters of the <a href="#//api/name/request">request</a> (can be nil)</p></td>
 					</tr>
 				
 				</table>
@@ -1562,6 +1563,15 @@ from the collection of headers.</p></td>
 
 			
 
+			
+			<div class="method-subsection see-also-section">
+				<h4 class="method-subtitle">See Also</h4>
+				<ul>
+					
+					<li><code><p><a href="../Constants/SFRestMethod.html">SFRestMethod</a>.</p></code></li>
+					
+				</ul>
+			</div>
 			
 
 			
@@ -1585,7 +1595,7 @@ from the collection of headers.</p></td>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Creates an <code>SFRestRequest</code> object to be used with non-Salesforce endpoints. See <a href="../Constants/SFRestMethod.html">SFRestMethod</a>. If you need to set body on the <a href="#//api/name/request">request</a>, use one of the &lsquo;setCustomRequestBody&hellip;&rsquo; methods to do so with the instance returned by this <a href="#//api/name/method">method</a>.</p>
+				<p>Creates an <code>SFRestRequest</code> object to be used with non-Salesforce endpoints. To set body on the <a href="#//api/name/request">request</a>, use one of the &lsquo;setCustomRequestBody&hellip;&rsquo; methods on the returned instance.</p>
 			</div>
 			
 		    
@@ -1630,6 +1640,15 @@ from the collection of headers.</p></td>
 
 			
 
+			
+			<div class="method-subsection see-also-section">
+				<h4 class="method-subtitle">See Also</h4>
+				<ul>
+					
+					<li><code><p><a href="../Constants/SFRestMethod.html">SFRestMethod</a>.</p></code></li>
+					
+				</ul>
+			</div>
 			
 
 			
@@ -1777,8 +1796,8 @@ from the collection of headers.</p></td>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/instrDelegateInternal" title="instrDelegateInternal"></a>
-	<h3 class="method-title"><code><a href="#//api/name/instrDelegateInternal">&nbsp;&nbsp;instrDelegateInternal</a></code>
+	<a name="//api/name/instrumentationDelegateInternal" title="instrumentationDelegateInternal"></a>
+	<h3 class="method-title"><code><a href="#//api/name/instrumentationDelegateInternal">&nbsp;&nbsp;instrumentationDelegateInternal</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1787,7 +1806,7 @@ from the collection of headers.</p></td>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nullable, nonatomic, strong) id&lt;SFRestDelegate&gt; instrDelegateInternal</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nullable, nonatomic, strong) id&lt;SFRestRequestDelegate&gt; instrumentationDelegateInternal</code></div>
 
 		    
 		</div>
@@ -1808,6 +1827,22 @@ from the collection of headers.</p></td>
 		    
 		</div>
 	</div>
+</div><div class="section-method">
+	<a name="//api/name/toQueryString:" title="toQueryString:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/toQueryString:">+&nbsp;toQueryString:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>+ (NSString *)toQueryString:(nullable NSDictionary *)<em>components</em></code></div>
+
+		    
+		</div>
+	</div>
 </div>
 						</div>
 						
@@ -1823,7 +1858,7 @@ from the collection of headers.</p></td>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2019 Salesforce.com. All rights reserved. Updated: 2019-05-22</p>
+						<p class="copyright">Copyright &copy; 2024 Salesforce.com. All rights reserved. Updated: 2024-10-11</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
