@@ -467,7 +467,7 @@ SFNativeLoginManagerInternal *nativeLogin;
                  [presentedViewController presentViewController:devInfo animated:NO completion:nil];
              }],
              [[SFSDKDevAction alloc]initWith:@"Logout" handler:^{
-                 [[SFUserAccountManager  sharedInstance] logout];
+                 [[SFUserAccountManager  sharedInstance] logout:SFLogoutReasonUserInitiated];
              }],
              [[SFSDKDevAction alloc]initWith:@"Switch user" handler:^{
                  SFDefaultUserManagementViewController *umvc = [[SFDefaultUserManagementViewController alloc] initWithCompletionBlock:^(SFUserManagementAction action) {
@@ -617,7 +617,9 @@ SFNativeLoginManagerInternal *nativeLogin;
 
     // Set up snapshot security view, if it's configured.
     @try {
+        #if !TARGET_OS_VISION
         [self presentSnapshot:scene];
+        #endif
     }
     @catch (NSException *exception) {
         [SFSDKCoreLogger w:[self class] format:@"Exception thrown while setting up security snapshot view for scene %@: '%@'. Continuing background.", sceneId, [exception reason]];
