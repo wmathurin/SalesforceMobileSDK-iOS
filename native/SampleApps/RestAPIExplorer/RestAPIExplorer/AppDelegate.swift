@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         //Uncomment following block to enable IDP Login flow.
-        //SalesforceManager.shared.identityProviderURLScheme = "sampleidpapp"
+        SalesforceManager.shared.identityProviderURLScheme = "sampleidpapp"
     }
     
     // MARK: - App delegate lifecycle

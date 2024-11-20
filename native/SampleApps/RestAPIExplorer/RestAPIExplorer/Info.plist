@@ -22,10 +22,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.salesforce.mobilesdk.sample.restapiexplorer</string>
+			<string>spsfdc</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.salesforce.mobilesdk.sample.restapiexplorer</string>
+				<string>spsfdc</string>
 			</array>
 		</dict>
 	</array>
@@ -34,7 +34,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSFaceIDUsageDescription</key>
-	<string>"Use FaceID"</string>
+	<string>&quot;Use FaceID&quot;</string>
 	<key>SFDCOAuthLoginHost</key>
 	<string>mobilesdk.my.salesforce.com</string>
 	<key>UIApplicationSceneManifest</key>

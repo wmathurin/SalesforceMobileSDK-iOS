@@ -79,9 +79,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         // Uncomment following block to enable IDP Login flow
-//        if let urlContext = URLContexts.first {
-//            UserAccountManager.shared.handleIdentityProviderResponse(from: urlContext.url, with: [UserAccountManager.IDPSceneKey: scene.session.persistentIdentifier])
-//        }
+        if let urlContext = URLContexts.first {
+            UserAccountManager.shared.handleIdentityProviderResponse(from: urlContext.url, with: [UserAccountManager.IDPSceneKey: scene.session.persistentIdentifier])
+        }
     }
     
     // MARK: - Private methods

@@ -781,6 +781,7 @@
 				CODE_SIGN_ENTITLEMENTS = RestAPIExplorer/RestAPIExplorer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XD7TD9S6ZU;
 				INFOPLIST_FILE = RestAPIExplorer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -802,6 +803,7 @@
 				CODE_SIGN_ENTITLEMENTS = RestAPIExplorer/RestAPIExplorer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = XD7TD9S6ZU;
 				INFOPLIST_FILE = RestAPIExplorer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
