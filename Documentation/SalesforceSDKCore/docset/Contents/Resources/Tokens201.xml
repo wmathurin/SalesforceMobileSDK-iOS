@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Constants/SFAppType.html">
+	<File path="Constants/UIDeviceFamily.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/c/tdef/SFAppType</TokenIdentifier>
-			<Abstract type="html">Block typedef for creating a custom snapshot view controller.</Abstract>
-			<DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/UIDeviceFamily</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>UIDevice+SFHardware.h</DeclaredIn>
             
 			
 			<NodeRef refid="201"/>
@@ -14,41 +14,51 @@
 		
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/kSFAppTypeNative</TokenIdentifier>
+            <TokenIdentifier>//apple_ref/c/econst/UIDeviceFamilyiPhone</TokenIdentifier>
             <Abstract type="html"></Abstract>
-            <Declaration>kSFAppTypeNative</Declaration>
+            <Declaration>UIDeviceFamilyiPhone</Declaration>
             
-            <DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+            <DeclaredIn>UIDevice+SFHardware.h</DeclaredIn>
             
             <NodeRef refid="201"/>
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/kSFAppTypeHybrid</TokenIdentifier>
+            <TokenIdentifier>//apple_ref/c/econst/UIDeviceFamilyiPod</TokenIdentifier>
             <Abstract type="html"></Abstract>
-            <Declaration>kSFAppTypeHybrid</Declaration>
+            <Declaration>UIDeviceFamilyiPod</Declaration>
             
-            <DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+            <DeclaredIn>UIDevice+SFHardware.h</DeclaredIn>
             
             <NodeRef refid="201"/>
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/kSFAppTypeReactNative</TokenIdentifier>
+            <TokenIdentifier>//apple_ref/c/econst/UIDeviceFamilyiPad</TokenIdentifier>
             <Abstract type="html"></Abstract>
-            <Declaration>kSFAppTypeReactNative</Declaration>
+            <Declaration>UIDeviceFamilyiPad</Declaration>
             
-            <DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+            <DeclaredIn>UIDevice+SFHardware.h</DeclaredIn>
             
             <NodeRef refid="201"/>
         </Token>
         
         <Token>
-            <TokenIdentifier>//apple_ref/c/econst/kSFAppTypeNativeSwift</TokenIdentifier>
+            <TokenIdentifier>//apple_ref/c/econst/UIDeviceFamilyAppleTV</TokenIdentifier>
             <Abstract type="html"></Abstract>
-            <Declaration>kSFAppTypeNativeSwift</Declaration>
+            <Declaration>UIDeviceFamilyAppleTV</Declaration>
             
-            <DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+            <DeclaredIn>UIDevice+SFHardware.h</DeclaredIn>
+            
+            <NodeRef refid="201"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/UIDeviceFamilyUnknown</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>UIDeviceFamilyUnknown</Declaration>
+            
+            <DeclaredIn>UIDevice+SFHardware.h</DeclaredIn>
             
             <NodeRef refid="201"/>
         </Token>

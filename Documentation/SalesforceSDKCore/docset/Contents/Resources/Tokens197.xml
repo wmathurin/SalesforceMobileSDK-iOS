@@ -1,65 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SalesforceSDKManagerDelegate.html">
+	<File path="Constants/SFUserAccountDataChange.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SalesforceSDKManagerDelegate</TokenIdentifier>
-			<Abstract type="html">Delegate protocol for handling foregrounding and backgrounding in Mobile SDK apps.</Abstract>
-			<DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFUserAccountDataChange</TokenIdentifier>
+			<Abstract type="html">The various changes that can affect a user account</Abstract>
+			<DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
             
 			
 			<NodeRef refid="197"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerDelegate/sdkManagerWillResignActive</TokenIdentifier>
-			<Abstract type="html">Called after UIApplicationWillResignActiveNotification is received</Abstract>
-			<DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
-			
-			<Declaration>- (void)sdkManagerWillResignActive</Declaration>
-			
-			
-			<Anchor>//api/name/sdkManagerWillResignActive</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeUnknown</TokenIdentifier>
+            <Abstract type="html">Unknown change
+     </Abstract>
+            <Declaration>SFUserAccountDataChangeUnknown</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
             <NodeRef refid="197"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerDelegate/sdkManagerDidBecomeActive</TokenIdentifier>
-			<Abstract type="html">Called after UIApplicationDidBecomeActiveNotification is received.</Abstract>
-			<DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
-			
-			<Declaration>- (void)sdkManagerDidBecomeActive</Declaration>
-			
-			
-			<Anchor>//api/name/sdkManagerDidBecomeActive</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeCommunityId</TokenIdentifier>
+            <Abstract type="html">The community ID changed
+     </Abstract>
+            <Declaration>SFUserAccountDataChangeCommunityId</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
             <NodeRef refid="197"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerDelegate/sdkManagerWillEnterForeground</TokenIdentifier>
-			<Abstract type="html">Called after UIApplicationWillEnterForegroundNotification is received.</Abstract>
-			<DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
-			
-			<Declaration>- (void)sdkManagerWillEnterForeground</Declaration>
-			
-			
-			<Anchor>//api/name/sdkManagerWillEnterForeground</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeIdData</TokenIdentifier>
+            <Abstract type="html">The ID data changed
+     </Abstract>
+            <Declaration>SFUserAccountDataChangeIdData</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
             <NodeRef refid="197"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SalesforceSDKManagerDelegate/sdkManagerDidEnterBackground</TokenIdentifier>
-			<Abstract type="html">Called after UIApplicationDidEnterBackgroundNotification is received</Abstract>
-			<DeclaredIn>SalesforceSDKManager.h</DeclaredIn>
-			
-			<Declaration>- (void)sdkManagerDidEnterBackground</Declaration>
-			
-			
-			<Anchor>//api/name/sdkManagerDidEnterBackground</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeInstanceURL</TokenIdentifier>
+            <Abstract type="html">InstanceURL Changed
+    </Abstract>
+            <Declaration>SFUserAccountDataChangeInstanceURL</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
             <NodeRef refid="197"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeAccessToken</TokenIdentifier>
+            <Abstract type="html">AccessToken Changed
+    </Abstract>
+            <Declaration>SFUserAccountDataChangeAccessToken</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
+            <NodeRef refid="197"/>
+        </Token>
         
         
 	</File>

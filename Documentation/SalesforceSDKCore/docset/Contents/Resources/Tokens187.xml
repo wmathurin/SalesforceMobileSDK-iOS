@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKPasscodeVerifyDelegate.html">
+	<File path="Constants/SFSDKAppConfigErrorCode.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKPasscodeVerifyDelegate</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/c/tdef/SFSDKAppConfigErrorCode</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
+			<DeclaredIn>SFSDKAppConfig.h</DeclaredIn>
             
 			
 			<NodeRef refid="187"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKPasscodeVerifyDelegate/passcodeVerified</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>- (void)passcodeVerified</Declaration>
-			
-			
-			<Anchor>//api/name/passcodeVerified</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKAppConfigErrorCodeNoConsumerKey</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFSDKAppConfigErrorCodeNoConsumerKey</Declaration>
+            
+            <DeclaredIn>SFSDKAppConfig.h</DeclaredIn>
+            
             <NodeRef refid="187"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKPasscodeVerifyDelegate/passcodeFailed</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>- (void)passcodeFailed</Declaration>
-			
-			
-			<Anchor>//api/name/passcodeFailed</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKAppConfigErrorCodeNoRedirectURI</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFSDKAppConfigErrorCodeNoRedirectURI</Declaration>
+            
+            <DeclaredIn>SFSDKAppConfig.h</DeclaredIn>
+            
             <NodeRef refid="187"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFSDKAppConfigErrorCodeNoOAuthScopes</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFSDKAppConfigErrorCodeNoOAuthScopes</Declaration>
+            
+            <DeclaredIn>SFSDKAppConfig.h</DeclaredIn>
+            
+            <NodeRef refid="187"/>
+        </Token>
         
         
 	</File>

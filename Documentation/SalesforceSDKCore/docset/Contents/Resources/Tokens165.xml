@@ -1,57 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFIdentityCoordinatorDelegate.html">
+	<File path="Protocols/SFSDKLoginHostDelegate.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFIdentityCoordinatorDelegate</TokenIdentifier>
-			<Abstract type="html">Protocol for being a delegate to the SFIdentityCoordinator process.  Delegates may receive
-notifications about the success or failure of the identity request process.</Abstract>
-			<DeclaredIn>SFIdentityCoordinator.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/SFSDKLoginHostDelegate</TokenIdentifier>
+			<Abstract type="html">Use the SFSDKLoginHostDelegate to be notified of the actions taken by the user on the login host list view controller.</Abstract>
+			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
             
 			
-	<RelatedTokens>
-		<TokenIdentifier>//apple_ref/occ/cl/SFIdentityCoordinator</TokenIdentifier>
-		
-	</RelatedTokens>
-	
 			<NodeRef refid="165"/>
 		</Token>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFIdentityCoordinatorDelegate/identityCoordinatorRetrievedData:</TokenIdentifier>
-			<Abstract type="html">Called when the identity coordinator successfully receives identity data from the service.</Abstract>
-			<DeclaredIn>SFIdentityCoordinator.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewController:willPresentLoginHostViewController:</TokenIdentifier>
+			<Abstract type="html">Notifies the delegate that a new login host viewcontroller will be presented.</Abstract>
+			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
 			
-			<Declaration>- (void)identityCoordinatorRetrievedData:(SFIdentityCoordinator *)coordinator</Declaration>
+			<Declaration>- (void)hostListViewController:(SFSDKLoginHostListViewController *)hostListViewController willPresentLoginHostViewController:(UIViewController *)loginHostViewController</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>coordinator</Name>
-					<Abstract type="html">the SFIdentityCoordinator instance associated with the requested data.</Abstract>
+					<Name>hostListViewController</Name>
+					<Abstract type="html">The instance sending this message.</Abstract>
+				</Parameter><Parameter>
+					<Name>loginHostViewController</Name>
+					<Abstract type="html">The view controller that will be presented.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/identityCoordinatorRetrievedData:</Anchor>
+			<Anchor>//api/name/hostListViewController:willPresentLoginHostViewController:</Anchor>
             <NodeRef refid="165"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFIdentityCoordinatorDelegate/identityCoordinator:didFailWithError:</TokenIdentifier>
-			<Abstract type="html">Called if there was an error while retrieving the identity data from the service.</Abstract>
-			<DeclaredIn>SFIdentityCoordinator.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewControllerDidSelectLoginHost:</TokenIdentifier>
+			<Abstract type="html">Notifies the delegate that a login host has been selected by the user.
+This will be a good time to dismiss the host list view controller.</Abstract>
+			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
 			
-			<Declaration>- (void)identityCoordinator:(SFIdentityCoordinator *)coordinator didFailWithError:(NSError *)error</Declaration>
+			<Declaration>- (void)hostListViewControllerDidSelectLoginHost:(SFSDKLoginHostListViewController *)hostListViewController</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>coordinator</Name>
-					<Abstract type="html">The SFIdentityCoordinator instance associated with the request.</Abstract>
-				</Parameter><Parameter>
-					<Name>error</Name>
-					<Abstract type="html">The error that occurred during the request.</Abstract>
+					<Name>hostListViewController</Name>
+					<Abstract type="html">The instance sending this message.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/identityCoordinator:didFailWithError:</Anchor>
+			<Anchor>//api/name/hostListViewControllerDidSelectLoginHost:</Anchor>
+            <NodeRef refid="165"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewControllerDidAddLoginHost:</TokenIdentifier>
+			<Abstract type="html">Notifies the delegate that a login host has been added to the list of hosts.</Abstract>
+			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
+			
+			<Declaration>- (void)hostListViewControllerDidAddLoginHost:(SFSDKLoginHostListViewController *)hostListViewController</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>hostListViewController</Name>
+					<Abstract type="html">The instance sending this message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/hostListViewControllerDidAddLoginHost:</Anchor>
+            <NodeRef refid="165"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewControllerDidCancelLoginHost:</TokenIdentifier>
+			<Abstract type="html">Notifies the delegate that user cancels out from the login host picking flow</Abstract>
+			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
+			
+			<Declaration>- (void)hostListViewControllerDidCancelLoginHost:(SFSDKLoginHostListViewController *)hostListViewController</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>hostListViewController</Name>
+					<Abstract type="html">The instance sending this message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/hostListViewControllerDidCancelLoginHost:</Anchor>
+            <NodeRef refid="165"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewController:didChangeLoginHost:</TokenIdentifier>
+			<Abstract type="html">Notifies the delegate that the login host has been changed in some capacity (user-selected, host entry edited,
+custom login host added, previous current login host deleted, etc.).</Abstract>
+			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
+			
+			<Declaration>- (void)hostListViewController:(SFSDKLoginHostListViewController *)hostListViewController didChangeLoginHost:(SFSDKLoginHost *)newLoginHost</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>hostListViewController</Name>
+					<Abstract type="html">The instance sending this message.</Abstract>
+				</Parameter><Parameter>
+					<Name>newLoginHost</Name>
+					<Abstract type="html">The updated login host.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/hostListViewController:didChangeLoginHost:</Anchor>
             <NodeRef refid="165"/>
 		</Token>
 		

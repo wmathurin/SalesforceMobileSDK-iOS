@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKAuthViewHolder.html">
+	<File path="Classes/SFSDKIDPAuthCodeLoginRequestCommand.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAuthViewHolder</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKIDPAuthCodeLoginRequestCommand</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
             
 			
 			<NodeRef refid="73"/>
@@ -13,146 +13,146 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthViewHolder/setWkWebView:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKIDPAuthCodeLoginRequestCommand/setUserHint:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) WKWebView *wkWebView</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *userHint</Declaration>
 			
 			
-			<Anchor>//api/name/wkWebView</Anchor>
+			<Anchor>//api/name/userHint</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthViewHolder/wkWebView</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKIDPAuthCodeLoginRequestCommand/userHint</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) WKWebView *wkWebView</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *userHint</Declaration>
 			
 			
-			<Anchor>//api/name/wkWebView</Anchor>
+			<Anchor>//api/name/userHint</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthViewHolder/wkWebView</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKIDPAuthCodeLoginRequestCommand/userHint</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) WKWebView *wkWebView</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *userHint</Declaration>
 			
 			
-			<Anchor>//api/name/wkWebView</Anchor>
+			<Anchor>//api/name/userHint</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthViewHolder/setLoginController:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKIDPAuthCodeLoginRequestCommand/setKeychainGroup:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) SFLoginViewController *loginController</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *keychainGroup</Declaration>
 			
 			
-			<Anchor>//api/name/loginController</Anchor>
+			<Anchor>//api/name/keychainGroup</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthViewHolder/loginController</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKIDPAuthCodeLoginRequestCommand/keychainGroup</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) SFLoginViewController *loginController</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *keychainGroup</Declaration>
 			
 			
-			<Anchor>//api/name/loginController</Anchor>
+			<Anchor>//api/name/keychainGroup</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthViewHolder/loginController</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKIDPAuthCodeLoginRequestCommand/keychainGroup</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) SFLoginViewController *loginController</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *keychainGroup</Declaration>
 			
 			
-			<Anchor>//api/name/loginController</Anchor>
+			<Anchor>//api/name/keychainGroup</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthViewHolder/setSession:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKIDPAuthCodeLoginRequestCommand/setKeychainReference:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) SFAuthenticationSession *session</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *keychainReference</Declaration>
 			
 			
-			<Anchor>//api/name/session</Anchor>
+			<Anchor>//api/name/keychainReference</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthViewHolder/session</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKIDPAuthCodeLoginRequestCommand/keychainReference</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) SFAuthenticationSession *session</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *keychainReference</Declaration>
 			
 			
-			<Anchor>//api/name/session</Anchor>
+			<Anchor>//api/name/keychainReference</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthViewHolder/session</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKIDPAuthCodeLoginRequestCommand/keychainReference</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) SFAuthenticationSession *session</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *keychainReference</Declaration>
 			
 			
-			<Anchor>//api/name/session</Anchor>
+			<Anchor>//api/name/keychainReference</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthViewHolder/setIsAdvancedAuthFlow:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKIDPAuthCodeLoginRequestCommand/setAuthCode:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) BOOL isAdvancedAuthFlow</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
 			
 			
-			<Anchor>//api/name/isAdvancedAuthFlow</Anchor>
+			<Anchor>//api/name/authCode</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAuthViewHolder/isAdvancedAuthFlow</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKIDPAuthCodeLoginRequestCommand/authCode</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) BOOL isAdvancedAuthFlow</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
 			
 			
-			<Anchor>//api/name/isAdvancedAuthFlow</Anchor>
+			<Anchor>//api/name/authCode</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAuthViewHolder/isAdvancedAuthFlow</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKIDPAuthCodeLoginRequestCommand/authCode</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthViewHandler.h</DeclaredIn>
+			<DeclaredIn>SFSDKIDPAuthCodeLoginRequestCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) BOOL isAdvancedAuthFlow</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
 			
 			
-			<Anchor>//api/name/isAdvancedAuthFlow</Anchor>
+			<Anchor>//api/name/authCode</Anchor>
             <NodeRef refid="73"/>
 		</Token>
 		

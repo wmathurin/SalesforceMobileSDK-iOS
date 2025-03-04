@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKRootController.html">
+	<File path="Classes/SFSDKSPLoginResponseHandler.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKRootController</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKSPLoginResponseHandler</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKRootController.h</DeclaredIn>
+			<DeclaredIn>SFSDKSPLoginResponseHandler.h</DeclaredIn>
             
 			
 			<NodeRef refid="106"/>

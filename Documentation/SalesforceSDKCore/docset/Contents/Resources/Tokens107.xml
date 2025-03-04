@@ -157,6 +157,42 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSalesforceAnalyticsManager/setBatchingEnabled:</TokenIdentifier>
+			<Abstract type="html">Disables or enables batch processing of events.</Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readwrite, assign, getter=isBatchingEnabled) BOOL batchingEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/batchingEnabled</Anchor>
+            <NodeRef refid="107"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSalesforceAnalyticsManager/isBatchingEnabled</TokenIdentifier>
+			<Abstract type="html">Disables or enables batch processing of events.</Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readwrite, assign, getter=isBatchingEnabled) BOOL batchingEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/batchingEnabled</Anchor>
+            <NodeRef refid="107"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKSalesforceAnalyticsManager/batchingEnabled</TokenIdentifier>
+			<Abstract type="html">Disables or enables batch processing of events.</Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readwrite, assign, getter=isBatchingEnabled) BOOL batchingEnabled</Declaration>
+			
+			
+			<Anchor>//api/name/batchingEnabled</Anchor>
+            <NodeRef refid="107"/>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/clm/SFSDKSalesforceAnalyticsManager/sharedInstanceWithUser:</TokenIdentifier>
 			<Abstract type="html">Returns an instance of this class associated with the specified user account.</Abstract>
 			<DeclaredIn>SFSDKSalesforceAnalyticsManager.h</DeclaredIn>
@@ -334,6 +370,42 @@ This method should NOT be called from the main thread.</Abstract>
 			
 			
 			<Anchor>//api/name/remotes</Anchor>
+            <NodeRef refid="107"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSalesforceAnalyticsManager/setTask:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (atomic, readwrite) UIBackgroundTaskIdentifier task</Declaration>
+			
+			
+			<Anchor>//api/name/task</Anchor>
+            <NodeRef refid="107"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSalesforceAnalyticsManager/task</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (atomic, readwrite) UIBackgroundTaskIdentifier task</Declaration>
+			
+			
+			<Anchor>//api/name/task</Anchor>
+            <NodeRef refid="107"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKSalesforceAnalyticsManager/task</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (atomic, readwrite) UIBackgroundTaskIdentifier task</Declaration>
+			
+			
+			<Anchor>//api/name/task</Anchor>
             <NodeRef refid="107"/>
 		</Token>
 		
