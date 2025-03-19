@@ -142,6 +142,37 @@ public class NativeLoginManagerInternal: NSObject, NativeLoginManager {
             codeVerifier: codeVerifier)
     }
     
+    public func guestLogin(
+        uvid: String
+    ) async -> NativeLoginResult
+    {
+        if let it = mapInvalidUvidToResult(uvid) { return it }
+        
+        let authRequest = RestRequest(method: .POST, baseURL: loginUrl, path: kSFOAuthEndPointAuthorize, queryParams: nil)
+        let customHeaders: NSMutableDictionary = [kSFOAuthRequestTypeParamName: kSFOAuthRequestTypeGuest,
+                                                        kHttpHeaderContentType: kHttpPostContentType,
+                                                     kSFOAuthUvidHintParamName: "\(uvid)"]
+        
+        let codeVerifier = generateCodeVerifier()
+        guard let challenge = generateChallenge(codeVerifier: codeVerifier) else { return .unknownError }
+        let authRequestBody = generateAuthorizationRequestBody(
+            codeChallenge: challenge)
+        authRequest.customHeaders = customHeaders
+        authRequest.setCustomRequestBodyString(authRequestBody, contentType: kHttpPostContentType)
+        authRequest.requiresAuthentication = false
+        authRequest.endpoint = ""
+        
+        // First REST Call - Authorization
+        let authorizationResponse = await handleResponseForRequest {
+            try await RestClient.sharedGlobal.send(request: authRequest)
+        }
+        
+        // Second REST Call - Access token request with code verifier
+        return await submitAccessTokenRequest(
+            authorizationResponse: authorizationResponse,
+            codeVerifier: codeVerifier)
+    }
+    
     public func fallbackToWebAuthentication() {
         UserAccountManager.shared.shouldFallbackToWebAuthentication = true
         UserAccountManager.shared.switchToNewUserAccount { _ in
@@ -202,6 +233,18 @@ public class NativeLoginManagerInternal: NSObject, NativeLoginManager {
         let containsLetter = password.rangeOfCharacter(from: .letters) != nil
         
         return containsNumber && containsLetter && password.count >= minimumPasswordLength && password.utf8.count <= maximumPasswordLengthInBytes
+    }
+    
+    func isValidV4UUID(_ string: String) -> Bool {
+        // Regular expression for a valid UUID v4
+        let uuidV4Pattern = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+        let uuidV4Regex = try! NSRegularExpression(pattern: uuidV4Pattern, options: [])
+        
+        // Check if the string matches the UUID v4 pattern
+        let range = NSRange(location: 0, length: string.utf16.count)
+        let match = uuidV4Regex.firstMatch(in: string, options: [], range: range)
+        
+        return match != nil
     }
     
     private func urlSafeBase64Encode(data: Data) -> String {
@@ -1035,4 +1078,16 @@ public class NativeLoginManagerInternal: NSObject, NativeLoginManager {
         default:  return nil
         }
     }
+    
+    /// Validates this string is a valid uvid.
+    /// - Parameters:
+    ///   - string: The string to validate
+    /// - Returns: nil for valid uvid - The invalid uvid login result otherwise
+    func mapInvalidUvidToResult(_ string: String) -> NativeLoginResult? {
+        switch (!isValidV4UUID(string)) {
+        case true: return .invalidUvid
+        default:  return nil
+        }
+    }
+
 }

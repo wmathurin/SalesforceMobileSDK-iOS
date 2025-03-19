@@ -37,6 +37,9 @@ import Foundation
     /// Password does not meet the weakest Salesforce criteria
     case invalidPassword
     
+    /// UVID is not valid (should be v4 uuid)
+    case invalidUvid
+
     /// Username/password combination is incorrect
     case invalidCredentials
     
@@ -55,6 +58,13 @@ public protocol NativeLoginManager {
     ///   - password: User provided Salesforce password.
     /// - Returns: NativeLoginResult
     @objc func login(username: String, password: String) async -> NativeLoginResult
+    
+    /// Initiate a guest login with the provided UVID (unique visitor id)
+    ///
+    /// - Parameters:
+    ///   - uvid: Unique visitor id (v4 UUID).
+    /// - Returns: NativeLoginResult
+    @objc func guestLogin(uvid: String) async -> NativeLoginResult
     
     /// Initiates web based authenticatioin.
     @objc func fallbackToWebAuthentication()

@@ -94,9 +94,12 @@ static NSString * const kSFOAuthRequestTypeParamName            = @"Auth-Request
 static NSString * const kSFOAuthRequestTypeNamedUser            = @"Named-User";
 static NSString * const kSFOAuthRequestTypePasswordlessLogin    = @"passwordless-login";
 static NSString * const kSFOAuthRequestTypeUserRegistration     = @"user-registration";
+static NSString * const kSFOAuthRequestTypeGuest                = @"guest";
 
 static NSString * const kSFOAuthAuthorizationTypeParamName      = @"Authorization";
 static NSString * const kSFOAuthAuthorizationTypeBasic          = @"Basic";
+
+static NSString * const kSFOAuthUvidHintParamName               = @"Uvid-Hint";
 
 // OAuth Error Descriptions
 // see https://na1.salesforce.com/help/doc/en/remoteaccess_oauth_refresh_token_flow.htm
