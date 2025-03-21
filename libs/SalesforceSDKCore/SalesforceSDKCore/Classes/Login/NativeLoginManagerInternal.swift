@@ -143,7 +143,8 @@ public class NativeLoginManagerInternal: NSObject, NativeLoginManager {
     }
     
     public func guestLogin(
-        uvid: String
+        uvid: String,
+        scopes: [String]
     ) async -> NativeLoginResult
     {
         if let it = mapInvalidUvidToResult(uvid) { return it }
@@ -156,7 +157,7 @@ public class NativeLoginManagerInternal: NSObject, NativeLoginManager {
         let codeVerifier = generateCodeVerifier()
         guard let challenge = generateChallenge(codeVerifier: codeVerifier) else { return .unknownError }
         let authRequestBody = generateAuthorizationRequestBody(
-            codeChallenge: challenge)
+            codeChallenge: challenge, scopes: scopes)
         authRequest.customHeaders = customHeaders
         authRequest.setCustomRequestBodyString(authRequestBody, contentType: kHttpPostContentType)
         authRequest.requiresAuthentication = false
@@ -877,9 +878,16 @@ public class NativeLoginManagerInternal: NSObject, NativeLoginManager {
     /// - Parameters:
     ///   - codeChallenge: The authorization code challenge
     private func generateAuthorizationRequestBody(
-        codeChallenge: String
+        codeChallenge: String,
+        scopes: [String]? = nil
     ) -> String {
-        return "\(kSFOAuthResponseType)=\(kSFOAuthCodeCredentialsParamName)&\(kSFOAuthClientId)=\(clientId)&\(kSFOAuthRedirectUri)=\(redirectUri)&\(kSFOAuthCodeChallengeParamName)=\(codeChallenge)"
+        var body = "\(kSFOAuthResponseType)=\(kSFOAuthCodeCredentialsParamName)&\(kSFOAuthClientId)=\(clientId)&\(kSFOAuthRedirectUri)=\(redirectUri)&\(kSFOAuthCodeChallengeParamName)=\(codeChallenge)"
+        
+        if let scopes = scopes {
+            body += "&\(kSFOAuthScope)=\(scopes.joined(separator: ","))"
+        }
+        
+        return body
     }
     
     /// Submits an authorization request to the Salesforce Identity API and, on success, submits the access

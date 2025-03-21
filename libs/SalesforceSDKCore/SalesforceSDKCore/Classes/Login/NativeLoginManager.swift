@@ -63,8 +63,9 @@ public protocol NativeLoginManager {
     ///
     /// - Parameters:
     ///   - uvid: Unique visitor id (v4 UUID).
+    ///   - scopes: scope to request for that guest login.
     /// - Returns: NativeLoginResult
-    @objc func guestLogin(uvid: String) async -> NativeLoginResult
+    @objc func guestLogin(uvid: String, scopes: [String]) async -> NativeLoginResult
     
     /// Initiates web based authenticatioin.
     @objc func fallbackToWebAuthentication()
