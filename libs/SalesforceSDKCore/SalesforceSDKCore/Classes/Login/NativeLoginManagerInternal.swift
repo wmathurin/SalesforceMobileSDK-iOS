@@ -151,7 +151,7 @@ public class NativeLoginManagerInternal: NSObject, NativeLoginManager {
         let authRequest = RestRequest(method: .POST, baseURL: loginUrl, path: kSFOAuthEndPointAuthorize, queryParams: nil)
         let customHeaders: NSMutableDictionary = [kSFOAuthRequestTypeParamName: kSFOAuthRequestTypeGuest,
                                                         kHttpHeaderContentType: kHttpPostContentType,
-                                                     kSFOAuthUvidHintParamName: "\(uvid)"]
+                                                     kSFOAuthUvidHintParamName: "UVID \(uvid)"]
         
         let codeVerifier = generateCodeVerifier()
         guard let challenge = generateChallenge(codeVerifier: codeVerifier) else { return .unknownError }
