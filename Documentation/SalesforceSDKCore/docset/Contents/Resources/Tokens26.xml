@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFKeyStoreKey.html">
+	<File path="Classes/SFOAuthInfo.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFKeyStoreKey</TokenIdentifier>
-			<Abstract type="html">Data object representing the encryption key used for encrypting/decrypting the key store.</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthInfo</TokenIdentifier>
+			<Abstract type="html">Data class containing members denoting state information for an OAuth coordinator authentication
+cycle.</Abstract>
+			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
             
 			
 			<NodeRef refid="26"/>
@@ -13,141 +14,91 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFKeyStoreKey/createKey</TokenIdentifier>
-			<Abstract type="html">Create a new SFKeyStoreKey</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/setAuthType:</TokenIdentifier>
+			<Abstract type="html">The type of authentication being performed.</Abstract>
+			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
 			
-			<Declaration>+ (instancetype)createKey</Declaration>
+			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
 			
 			
-			<Anchor>//api/name/createKey</Anchor>
+			<Anchor>//api/name/authType</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFKeyStoreKey/initWithKey:</TokenIdentifier>
-			<Abstract type="html">Designated initializer.</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/authType</TokenIdentifier>
+			<Abstract type="html">The type of authentication being performed.</Abstract>
+			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)initWithKey:(SFEncryptionKey *)key</Declaration>
+			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
+			
+			
+			<Anchor>//api/name/authType</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthInfo/authType</TokenIdentifier>
+			<Abstract type="html">The type of authentication being performed.</Abstract>
+			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
+			
+			
+			<Anchor>//api/name/authType</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/setAuthTypeDescription:</TokenIdentifier>
+			<Abstract type="html">The string description of the auth type.</Abstract>
+			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			
+			
+			<Anchor>//api/name/authTypeDescription</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/authTypeDescription</TokenIdentifier>
+			<Abstract type="html">The string description of the auth type.</Abstract>
+			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			
+			
+			<Anchor>//api/name/authTypeDescription</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthInfo/authTypeDescription</TokenIdentifier>
+			<Abstract type="html">The string description of the auth type.</Abstract>
+			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			
+			
+			<Anchor>//api/name/authTypeDescription</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/initWithAuthType:</TokenIdentifier>
+			<Abstract type="html">Creates a new instance with the given auth type.</Abstract>
+			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			
+			<Declaration>- (id)initWithAuthType:(SFOAuthType)authType</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The encryption key for the key store.</Abstract>
+					<Name>authType</Name>
+					<Abstract type="html">The type of authentication being performed.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/initWithKey:</Anchor>
-            <NodeRef refid="26"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFKeyStoreKey/fromKeyChain:archiverKey:</TokenIdentifier>
-			<Abstract type="html">Read from key chain</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
-			
-			<Declaration>+ (nullable instancetype)fromKeyChain:(NSString *)keychainId archiverKey:(NSString *)archiverKey</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>keychainId</Name>
-					<Abstract type="html">Identifier in the key chain</Abstract>
-				</Parameter><Parameter>
-					<Name>archiverKey</Name>
-					<Abstract type="html">Key used in archiver</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/fromKeyChain:archiverKey:</Anchor>
-            <NodeRef refid="26"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFKeyStoreKey/toKeyChain:archiverKey:</TokenIdentifier>
-			<Abstract type="html">Save to key chain</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
-			
-			<Declaration>- (OSStatus)toKeyChain:(NSString *)keychainId archiverKey:(NSString *)archiverKey</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>keychainId</Name>
-					<Abstract type="html">Identifier in the key chain</Abstract>
-				</Parameter><Parameter>
-					<Name>archiverKey</Name>
-					<Abstract type="html">Key to use in archiver</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/toKeyChain:archiverKey:</Anchor>
-            <NodeRef refid="26"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFKeyStoreKey/encryptData:</TokenIdentifier>
-			<Abstract type="html">Encrypt given data</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
-			
-			<Declaration>- (NSData *)encryptData:(NSData *)dataToEncrypt</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>dataToEncrypt</Name>
-					<Abstract type="html">The data to encrypt</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/encryptData:</Anchor>
-            <NodeRef refid="26"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFKeyStoreKey/decryptData:</TokenIdentifier>
-			<Abstract type="html">Decrypt given data</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
-			
-			<Declaration>- (NSData *)decryptData:(NSData *)dataToDecrypt</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>dataToDecrypt</Name>
-					<Abstract type="html">The data to decrypt</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/decryptData:</Anchor>
-            <NodeRef refid="26"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFKeyStoreKey/setEncryptionKey:</TokenIdentifier>
-			<Abstract type="html">The encryption key for the key store.</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) SFEncryptionKey *encryptionKey</Declaration>
-			
-			
-			<Anchor>//api/name/encryptionKey</Anchor>
-            <NodeRef refid="26"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFKeyStoreKey/encryptionKey</TokenIdentifier>
-			<Abstract type="html">The encryption key for the key store.</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) SFEncryptionKey *encryptionKey</Declaration>
-			
-			
-			<Anchor>//api/name/encryptionKey</Anchor>
-            <NodeRef refid="26"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFKeyStoreKey/encryptionKey</TokenIdentifier>
-			<Abstract type="html">The encryption key for the key store.</Abstract>
-			<DeclaredIn>SFKeyStoreKey.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) SFEncryptionKey *encryptionKey</Declaration>
-			
-			
-			<Anchor>//api/name/encryptionKey</Anchor>
+			<Anchor>//api/name/initWithAuthType:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		

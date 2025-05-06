@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFDirectoryManager.html">
+	<File path="Classes/SFInstrumentation.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFDirectoryManager</TokenIdentifier>
-			<Abstract type="html">Global directory manager that returns scoped directory. The scoping is enforced
-by taking into account the organizationId, the userId and the communityId.</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFInstrumentation</TokenIdentifier>
+			<Abstract type="html">This class exposes API that allow to intercept
+method call and introspect the object being intercepted.
+It can be used to record timing &amp;amp; usage information for example.</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
             
 			
 			<NodeRef refid="17"/>
@@ -14,171 +15,273 @@ by taking into account the organizationId, the userId and the communityId.</Abst
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFDirectoryManager/sharedManager</TokenIdentifier>
-			<Abstract type="html">Returns the singleton of this manager</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/setEnabled:</TokenIdentifier>
+			<Abstract type="html">Enable or disable this instrumentation instance</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
 			
-			<Declaration>+ (instancetype)sharedManager</Declaration>
+			<Declaration>@property (nonatomic) BOOL enabled</Declaration>
 			
 			
-			<Anchor>//api/name/sharedManager</Anchor>
+			<Anchor>//api/name/enabled</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFDirectoryManager/ensureDirectoryExists:error:</TokenIdentifier>
-			<Abstract type="html">Ensures the specified directory exists on the disk.</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/enabled</TokenIdentifier>
+			<Abstract type="html">Enable or disable this instrumentation instance</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
 			
-			<Declaration>+ (BOOL)ensureDirectoryExists:(nullable NSString *)directory error:(NSError **)error</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>directory</Name>
-					<Abstract type="html">The directory to ensure exists.</Abstract>
-				</Parameter><Parameter>
-					<Name>error</Name>
-					<Abstract type="html">The error on output or nil if no error is desired</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">YES if the directory exists or has been successfully created, NO otherwise.</Abstract></ReturnValue>
-			<Anchor>//api/name/ensureDirectoryExists:error:</Anchor>
+			<Declaration>@property (nonatomic) BOOL enabled</Declaration>
+			
+			
+			<Anchor>//api/name/enabled</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFDirectoryManager/safeStringForDiskRepresentation:</TokenIdentifier>
-			<Abstract type="html">Ensure the specified string contains only characters that can be
-safely used to identify a path on the disk.</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFInstrumentation/enabled</TokenIdentifier>
+			<Abstract type="html">Enable or disable this instrumentation instance</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
 			
-			<Declaration>+ (NSString *)safeStringForDiskRepresentation:(NSString *)candidate</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>candidate</Name>
-					<Abstract type="html">The string to be checked for compatibility.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic) BOOL enabled</Declaration>
 			
-			<Anchor>//api/name/safeStringForDiskRepresentation:</Anchor>
+			
+			<Anchor>//api/name/enabled</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFDirectoryManager/directoryForOrg:user:community:type:components:</TokenIdentifier>
-			<Abstract type="html">Returns the path to the directory type for the specified org, user and community.</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFInstrumentation/instrumentationForClass:</TokenIdentifier>
+			<Abstract type="html">Returns an instrumentation instance for the specified class</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)directoryForOrg:(nullable NSString *)orgId user:(nullable NSString *)userId community:(nullable NSString *)communityId type:(NSSearchPathDirectory)type components:(nullable NSArray *)components</Declaration>
+			<Declaration>+ (instancetype)instrumentationForClass:(Class)clazz</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>orgId</Name>
-					<Abstract type="html">The organization ID. If nil, this method returns the global directory type requested (eg Library/Caches)</Abstract>
-				</Parameter><Parameter>
-					<Name>userId</Name>
-					<Abstract type="html">The user ID. If nil, this method returns the directory type requested, scoped at the org level (eg Library/Caches/&lt;orgId&gt;/)</Abstract>
-				</Parameter><Parameter>
-					<Name>communityId</Name>
-					<Abstract type="html">The community ID. If nil, this method returns the directory type requested, scoped at the user level (eg Library/Caches/&lt;orgId&gt;/&lt;userId&gt;)</Abstract>
-				</Parameter><Parameter>
-					<Name>type</Name>
-					<Abstract type="html">The type of directory to return (see NSSearchPathDirectory)</Abstract>
-				</Parameter><Parameter>
-					<Name>components</Name>
-					<Abstract type="html">The additional path components to be added at the end of the directory (eg [&apos;mybundle&apos;, &apos;common&apos;])</Abstract>
+					<Name>clazz</Name>
+					<Abstract type="html">The class to be instrumented</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract type="html">The path to the directory</Abstract></ReturnValue>
-			<Anchor>//api/name/directoryForOrg:user:community:type:components:</Anchor>
+			
+			<Anchor>//api/name/instrumentationForClass:</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFDirectoryManager/directoryForUser:scope:type:components:</TokenIdentifier>
-			<Abstract type="html">Returns the path to the directory type for the specified user and scope</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFInstrumentation/instrumentationForClassWithName:</TokenIdentifier>
+			<Abstract type="html">Returns an instrumentation instance for the class with the specified name.</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)directoryForUser:(SFUserAccount *)user scope:(SFUserAccountScope)scope type:(NSSearchPathDirectory)type components:(nullable NSArray *)components</Declaration>
+			<Declaration>+ (instancetype)instrumentationForClassWithName:(NSString *)className</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>user</Name>
-					<Abstract type="html">The user account to use. If nil, the path returned corresponds to the global path type</Abstract>
-				</Parameter><Parameter>
-					<Name>scope</Name>
-					<Abstract type="html">The scope to use</Abstract>
-				</Parameter><Parameter>
-					<Name>type</Name>
-					<Abstract type="html">The type of directory to return (see NSSearchPathDirectory)</Abstract>
-				</Parameter><Parameter>
-					<Name>components</Name>
-					<Abstract type="html">The additional path components to be added at the end of the directory (eg [&apos;mybundle&apos;, &apos;common&apos;])</Abstract>
+					<Name>className</Name>
+					<Abstract type="html">The name of the class to be instrumented.</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract type="html">The path to the directory</Abstract></ReturnValue>
-			<Anchor>//api/name/directoryForUser:scope:type:components:</Anchor>
+			
+			<Anchor>//api/name/instrumentationForClassWithName:</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFDirectoryManager/directoryForUser:type:components:</TokenIdentifier>
-			<Abstract type="html">Returns the path to the directory type for the specified user.</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/interceptorForSelector:isInstanceSelector:</TokenIdentifier>
+			<Abstract type="html">Returns the interceptor configured for the class with the given selector, or nil
+if an interceptor is not configured for the given selector.</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
 			
-			<Declaration>- (nullable NSString *)directoryForUser:(nullable SFUserAccount *)account type:(NSSearchPathDirectory)type components:(nullable NSArray *)components</Declaration>
+			<Declaration>- (nullable SFMethodInterceptor *)interceptorForSelector:(SEL)selector isInstanceSelector:(BOOL)isInstanceSelector</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>account</Name>
-					<Abstract type="html">The user account to use. If nil, the path returned corresponds to the global path type</Abstract>
+					<Name>selector</Name>
+					<Abstract type="html">The selector to check</Abstract>
 				</Parameter><Parameter>
-					<Name>type</Name>
-					<Abstract type="html">The type of directory to return (see NSSearchPathDirectory)</Abstract>
-				</Parameter><Parameter>
-					<Name>components</Name>
-					<Abstract type="html">The additional path components to be added at the end of the directory (eg [&apos;mybundle&apos;, &apos;common&apos;])</Abstract>
+					<Name>isInstanceSelector</Name>
+					<Abstract type="html">Whether or not the selector is an instance selector.</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract type="html">The path to the directory</Abstract></ReturnValue>
-			<Anchor>//api/name/directoryForUser:type:components:</Anchor>
+			<ReturnValue><Abstract type="html">The configured SFMethodInterceptor instance, or nil if an interceptor is
+not configured.</Abstract></ReturnValue>
+			<Anchor>//api/name/interceptorForSelector:isInstanceSelector:</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFDirectoryManager/directoryOfCurrentUserForType:components:</TokenIdentifier>
-			<Abstract type="html">Returns the path to the directory type for the current user and current community.</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/interceptInstanceMethod:beforeBlock:afterBlock:</TokenIdentifier>
+			<Abstract type="html">Use this method to intercept the instance method specified by selector</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
 			
-			<Declaration>- (NSString *)directoryOfCurrentUserForType:(NSSearchPathDirectory)type components:(NSArray *)components</Declaration>
+			<Declaration>- (void)interceptInstanceMethod:(SEL)selector beforeBlock:(nullable SFMethodInterceptorInvocationCallback)before afterBlock:(nullable SFMethodInterceptorInvocationAfterCallback)after</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>type</Name>
-					<Abstract type="html">The type of directory to return (see NSSearchPathDirectory)</Abstract>
+					<Name>selector</Name>
+					<Abstract type="html">The selector to intercept</Abstract>
 				</Parameter><Parameter>
-					<Name>components</Name>
-					<Abstract type="html">The additional path components to be added at the end of the directory (eg [&apos;mybundle&apos;, &apos;common&apos;])</Abstract>
+					<Name>before</Name>
+					<Abstract type="html">An optional block invoked before the selector is executed</Abstract>
+				</Parameter><Parameter>
+					<Name>after</Name>
+					<Abstract type="html">An optional block invoked after the selector is executed</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract type="html">The path to the directory</Abstract></ReturnValue>
-			<Anchor>//api/name/directoryOfCurrentUserForType:components:</Anchor>
+			
+			<Anchor>//api/name/interceptInstanceMethod:beforeBlock:afterBlock:</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFDirectoryManager/globalDirectoryOfType:components:</TokenIdentifier>
-			<Abstract type="html">Returns the path to the global directory of the specified type. For example, NSCachesDirectory will
-return &quot;Library/Caches/&lt;bundleIdentifier&gt;/&quot;</Abstract>
-			<DeclaredIn>SFDirectoryManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/interceptInstanceMethod:replaceWithInvocationBlock:</TokenIdentifier>
+			<Abstract type="html">Use this method to intercept the instance method specified by selector
+and provide a block that will be invoked instead of the method.
+Note: the block contains a single argument which is the NSInvocation of the message.</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
 			
-			<Declaration>- (NSString *)globalDirectoryOfType:(NSSearchPathDirectory)type components:(NSArray *)components</Declaration>
+			<Declaration>- (void)interceptInstanceMethod:(SEL)selector replaceWithInvocationBlock:(nullable SFMethodInterceptorInvocationCallback)replace</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>type</Name>
-					<Abstract type="html">The type of directory to return (see NSSearchPathDirectory)</Abstract>
+					<Name>selector</Name>
+					<Abstract type="html">The instance method to be intercepted</Abstract>
 				</Parameter><Parameter>
-					<Name>components</Name>
-					<Abstract type="html">The additional path components to be added at the end of the directory (eg [&apos;mybundle&apos;, &apos;common&apos;])</Abstract>
+					<Name>replace</Name>
+					<Abstract type="html">The block to be invoked</Abstract>
 				</Parameter>
 			</Parameters>
-			<ReturnValue><Abstract type="html">The path to the directory</Abstract></ReturnValue>
-			<Anchor>//api/name/globalDirectoryOfType:components:</Anchor>
+			
+			<Anchor>//api/name/interceptInstanceMethod:replaceWithInvocationBlock:</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/interceptClassMethod:beforeBlock:afterBlock:</TokenIdentifier>
+			<Abstract type="html">Use this method to intercept the class method specified by selector</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
+			
+			<Declaration>- (void)interceptClassMethod:(SEL)selector beforeBlock:(nullable SFMethodInterceptorInvocationCallback)before afterBlock:(nullable SFMethodInterceptorInvocationAfterCallback)after</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>selector</Name>
+					<Abstract type="html">The selector to intercept</Abstract>
+				</Parameter><Parameter>
+					<Name>before</Name>
+					<Abstract type="html">An optional block invoked before the selector is executed</Abstract>
+				</Parameter><Parameter>
+					<Name>after</Name>
+					<Abstract type="html">An optional block invoked after the selector is executed</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/interceptClassMethod:beforeBlock:afterBlock:</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/interceptClassMethod:replaceWithInvocationBlock:</TokenIdentifier>
+			<Abstract type="html">Use this method to intercept the class method specified by selector
+and provide a block that will be invoked instead of the method.
+Note: the block contains a single argument which is the NSInvocation of the message.</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
+			
+			<Declaration>- (void)interceptClassMethod:(SEL)selector replaceWithInvocationBlock:(SFMethodInterceptorInvocationCallback)replace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>selector</Name>
+					<Abstract type="html">The instance method to be intercepted</Abstract>
+				</Parameter><Parameter>
+					<Name>replace</Name>
+					<Abstract type="html">The block to be invoked</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/interceptClassMethod:replaceWithInvocationBlock:</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/instrumentForTiming:afterBlock:</TokenIdentifier>
+			<Abstract type="html">Instrument some selectors of a the target class for performance timing.</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
+			
+			<Declaration>- (void)instrumentForTiming:(SFInstrumentationSelectorFilter)selectorFilter afterBlock:(SFMethodInterceptorInvocationAfterCallback)after</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>selectorFilter</Name>
+					<Abstract type="html">A block invoked when to select selectors from the class to instrument</Abstract>
+				</Parameter><Parameter>
+					<Name>after</Name>
+					<Abstract type="html">An optional block invoked after any selector is executed</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/instrumentForTiming:afterBlock:</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/instrumentForTiming:inheritanceLevels:afterBlock:</TokenIdentifier>
+			<Abstract type="html">Instrument some selectors of the target class and its parent class(es)
+for performance timing.</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
+			
+			<Declaration>- (void)instrumentForTiming:(SFInstrumentationSelectorFilter)selectorFilter inheritanceLevels:(NSUInteger)numInheritanceLevels afterBlock:(SFMethodInterceptorInvocationAfterCallback)after</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>selectorFilter</Name>
+					<Abstract type="html">A block invoked when to select selectors from the class to instrument</Abstract>
+				</Parameter><Parameter>
+					<Name>numInheritanceLevels</Name>
+					<Abstract type="html">The number of inherited classes whose selectors will be made available.</Abstract>
+				</Parameter><Parameter>
+					<Name>after</Name>
+					<Abstract type="html">An optional block invoked after any selector is executed</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/instrumentForTiming:inheritanceLevels:afterBlock:</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/loadInstructions:completion:</TokenIdentifier>
+			<Abstract type="html">Loads the array of instructions execute them. The instructions usually
+comes from a JSON file.</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
+			
+			<Declaration>- (void)loadInstructions:(NSArray *)instructions completion:(dispatch_block_t)completion</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>instructions</Name>
+					<Abstract type="html">The array of instructions</Abstract>
+				</Parameter><Parameter>
+					<Name>completion</Name>
+					<Abstract type="html">Optional completion block</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/loadInstructions:completion:</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/startMeasure</TokenIdentifier>
+			<Abstract type="html">Start the timing measurement</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
+			
+			<Declaration>- (void)startMeasure</Declaration>
+			
+			
+			<Anchor>//api/name/startMeasure</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFInstrumentation/stopMeasure</TokenIdentifier>
+			<Abstract type="html">Stop the timing measurement</Abstract>
+			<DeclaredIn>SFInstrumentation.h</DeclaredIn>
+			
+			<Declaration>- (void)stopMeasure</Declaration>
+			
+			
+			<Anchor>//api/name/stopMeasure</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		

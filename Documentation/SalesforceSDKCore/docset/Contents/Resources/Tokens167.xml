@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFNetworkSessionManaging.html">
+	<File path="Protocols/SFSDKOAuthSessionManaging.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFNetworkSessionManaging</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intf/SFSDKOAuthSessionManaging</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFNetwork.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
             
 			
 			<NodeRef refid="167"/>
@@ -13,26 +13,14 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFNetworkSessionManaging/ephemeralSession:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKOAuthSessionManaging/createURLSessionWithIdentifier:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFNetwork.h</DeclaredIn>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>- (nonnull NSURLSession *)ephemeralSession:(nonnull NSURLSessionConfiguration *)sessionConfig</Declaration>
-			
-			
-			<Anchor>//api/name/ephemeralSession:</Anchor>
-            <NodeRef refid="167"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFNetworkSessionManaging/backgroundSession:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFNetwork.h</DeclaredIn>
-			
-			<Declaration>- (nonnull NSURLSession *)backgroundSession:(nonnull NSURLSessionConfiguration *)sessionConfig</Declaration>
+			<Declaration>- (NSURLSession *)createURLSessionWithIdentifier:(nonnull NSString *)identifier</Declaration>
 			
 			
-			<Anchor>//api/name/backgroundSession:</Anchor>
+			<Anchor>//api/name/createURLSessionWithIdentifier:</Anchor>
             <NodeRef refid="167"/>
 		</Token>
 		

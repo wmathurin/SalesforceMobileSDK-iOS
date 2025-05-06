@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFOAuthOrgAuthConfiguration.html">
+	<File path="Classes/SFSDKAnalyticsTransformPublisherPair.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthOrgAuthConfiguration</TokenIdentifier>
-			<Abstract type="html">Data class representing the org authentication configuration.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAnalyticsTransformPublisherPair</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
             
 			
 			<NodeRef refid="40"/>
@@ -13,163 +13,86 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setUseNativeBrowserForAuth:</TokenIdentifier>
-			<Abstract type="html">Whether to use the native browser for authentication.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAnalyticsTransformPublisherPair/setTransform:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
+			<Declaration>@property (nonnull, nonatomic, readonly, strong) id&lt;SFSDKTransform&gt; transform</Declaration>
 			
 			
-			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
+			<Anchor>//api/name/transform</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/useNativeBrowserForAuth</TokenIdentifier>
-			<Abstract type="html">Whether to use the native browser for authentication.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAnalyticsTransformPublisherPair/transform</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
+			<Declaration>@property (nonnull, nonatomic, readonly, strong) id&lt;SFSDKTransform&gt; transform</Declaration>
 			
 			
-			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
+			<Anchor>//api/name/transform</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/useNativeBrowserForAuth</TokenIdentifier>
-			<Abstract type="html">Whether to use the native browser for authentication.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAnalyticsTransformPublisherPair/transform</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) BOOL useNativeBrowserForAuth</Declaration>
+			<Declaration>@property (nonnull, nonatomic, readonly, strong) id&lt;SFSDKTransform&gt; transform</Declaration>
 			
 			
-			<Anchor>//api/name/useNativeBrowserForAuth</Anchor>
+			<Anchor>//api/name/transform</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setSsoUrls:</TokenIdentifier>
-			<Abstract type="html">List of configured SSO URLs.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAnalyticsTransformPublisherPair/setPublisher:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
+			<Declaration>@property (nonnull, nonatomic, readonly, strong) id&lt;SFSDKAnalyticsPublisher&gt; publisher</Declaration>
 			
 			
-			<Anchor>//api/name/ssoUrls</Anchor>
+			<Anchor>//api/name/publisher</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/ssoUrls</TokenIdentifier>
-			<Abstract type="html">List of configured SSO URLs.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAnalyticsTransformPublisherPair/publisher</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
+			<Declaration>@property (nonnull, nonatomic, readonly, strong) id&lt;SFSDKAnalyticsPublisher&gt; publisher</Declaration>
 			
 			
-			<Anchor>//api/name/ssoUrls</Anchor>
+			<Anchor>//api/name/publisher</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/ssoUrls</TokenIdentifier>
-			<Abstract type="html">List of configured SSO URLs.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAnalyticsTransformPublisherPair/publisher</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSArray&lt;NSString*&gt; *ssoUrls</Declaration>
+			<Declaration>@property (nonnull, nonatomic, readonly, strong) id&lt;SFSDKAnalyticsPublisher&gt; publisher</Declaration>
 			
 			
-			<Anchor>//api/name/ssoUrls</Anchor>
+			<Anchor>//api/name/publisher</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setLoginPageUrl:</TokenIdentifier>
-			<Abstract type="html">Configured login page URL.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAnalyticsTransformPublisherPair/initWithTransform:publisher:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSalesforceAnalyticsManager+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
-			
-			
-			<Anchor>//api/name/loginPageUrl</Anchor>
-            <NodeRef refid="40"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/loginPageUrl</TokenIdentifier>
-			<Abstract type="html">Configured login page URL.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
+			<Declaration>- (nonnull instancetype)initWithTransform:(nonnull id&lt;SFSDKTransform&gt;)transform publisher:(nonnull id&lt;SFSDKAnalyticsPublisher&gt;)publisher</Declaration>
 			
 			
-			<Anchor>//api/name/loginPageUrl</Anchor>
-            <NodeRef refid="40"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/loginPageUrl</TokenIdentifier>
-			<Abstract type="html">Configured login page URL.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSString *loginPageUrl</Declaration>
-			
-			
-			<Anchor>//api/name/loginPageUrl</Anchor>
-            <NodeRef refid="40"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/setAuthConfigDict:</TokenIdentifier>
-			<Abstract type="html">The raw dictionary data representing the org auth configuration.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
-			
-			
-			<Anchor>//api/name/authConfigDict</Anchor>
-            <NodeRef refid="40"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/authConfigDict</TokenIdentifier>
-			<Abstract type="html">The raw dictionary data representing the org auth configuration.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
-			
-			
-			<Anchor>//api/name/authConfigDict</Anchor>
-            <NodeRef refid="40"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthOrgAuthConfiguration/authConfigDict</TokenIdentifier>
-			<Abstract type="html">The raw dictionary data representing the org auth configuration.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) NSDictionary *authConfigDict</Declaration>
-			
-			
-			<Anchor>//api/name/authConfigDict</Anchor>
-            <NodeRef refid="40"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthOrgAuthConfiguration/initWithConfigDict:</TokenIdentifier>
-			<Abstract type="html">Designated initializer.</Abstract>
-			<DeclaredIn>SFOAuthOrgAuthConfiguration.h</DeclaredIn>
-			
-			<Declaration>- (nonnull id)initWithConfigDict:(nullable NSDictionary *)authConfigDict</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>authConfigDict</Name>
-					<Abstract type="html">The NSDictionary containing the org auth configuration.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/initWithConfigDict:</Anchor>
+			<Anchor>//api/name/initWithTransform:publisher:</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		

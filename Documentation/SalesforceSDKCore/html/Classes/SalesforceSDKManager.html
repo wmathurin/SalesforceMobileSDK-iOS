@@ -58,23 +58,29 @@
 		
 		<option value="//api/name/)">)</option>
 		
-		<option value="//api/name/appDisplayName">appDisplayName</option>
+		<option value="//api/name/URLCacheType">URLCacheType</option>
 		
 		<option value="//api/name/appType">appType</option>
 		
-		<option value="//api/name/delegates">delegates</option>
+		<option value="//api/name/blockSalesforceIntegrationUser">blockSalesforceIntegrationUser</option>
 		
-		<option value="//api/name/hasVerifiedPasscodeAtStartup">hasVerifiedPasscodeAtStartup</option>
-		
-		<option value="//api/name/inManagerForegroundProcess">inManagerForegroundProcess</option>
+		<option value="//api/name/customDomainInferencePattern">customDomainInferencePattern</option>
 		
 		<option value="//api/name/isDevSupportEnabled">isDevSupportEnabled</option>
 		
-		<option value="//api/name/launchActions">launchActions</option>
+		<option value="//api/name/isLoginWebviewInspectable">isLoginWebviewInspectable</option>
 		
-		<option value="//api/name/passcodeDisplayed">passcodeDisplayed</option>
+		<option value="//api/name/nativeLoginViewControllers">nativeLoginViewControllers</option>
 		
 		<option value="//api/name/sdkManagerFlow">sdkManagerFlow</option>
+		
+		<option value="//api/name/snapshotViewControllers">snapshotViewControllers</option>
+		
+		<option value="//api/name/useEphemeralSessionForAdvancedAuth">useEphemeralSessionForAdvancedAuth</option>
+		
+		<option value="//api/name/useHybridAuthentication">useHybridAuthentication</option>
+		
+		<option value="//api/name/useWebServerAuthentication">useWebServerAuthentication</option>
 		
 	</optgroup>
 	
@@ -86,8 +92,6 @@
 		
 		<option value="//api/name/initializeSDKWithClass:">+ initializeSDKWithClass:</option>
 		
-		<option value="//api/name/launchActionsStringRepresentation:">+ launchActionsStringRepresentation:</option>
-		
 		<option value="//api/name/setInstanceClass:">+ setInstanceClass:</option>
 		
 	</optgroup>
@@ -96,13 +100,13 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/addDelegate:">- addDelegate:</option>
+		<option value="//api/name/biometricAuthenticationManager">- biometricAuthenticationManager</option>
 		
-		<option value="//api/name/authValidatedToPostAuth:">- authValidatedToPostAuth:</option>
+		<option value="//api/name/devInfoTitleString">- devInfoTitleString</option>
 		
 		<option value="//api/name/deviceId">- deviceId</option>
 		
-		<option value="//api/name/dismissSnapshot">- dismissSnapshot</option>
+		<option value="//api/name/dismissSnapshot:completion:">- dismissSnapshot:completion:</option>
 		
 		<option value="//api/name/getAppTypeAsString">- getAppTypeAsString</option>
 		
@@ -110,17 +114,19 @@
 		
 		<option value="//api/name/getDevSupportInfos">- getDevSupportInfos</option>
 		
-		<option value="//api/name/isSnapshotPresented">- isSnapshotPresented</option>
+		<option value="//api/name/isSnapshotPresented:">- isSnapshotPresented:</option>
 		
-		<option value="//api/name/launch">- launch</option>
+		<option value="//api/name/nativeLoginManager">- nativeLoginManager</option>
 		
-		<option value="//api/name/passcodeValidatedToAuthValidation">- passcodeValidatedToAuthValidation</option>
+		<option value="//api/name/presentSnapshot:">- presentSnapshot:</option>
 		
-		<option value="//api/name/presentSnapshot">- presentSnapshot</option>
-		
-		<option value="//api/name/removeDelegate:">- removeDelegate:</option>
+		<option value="//api/name/screenLockManager">- screenLockManager</option>
 		
 		<option value="//api/name/showDevSupportDialog:">- showDevSupportDialog:</option>
+		
+		<option value="//api/name/useNativeLoginWithConsumerKey:callbackUrl:communityUrl:nativeLoginViewController:scene:">- useNativeLoginWithConsumerKey:callbackUrl:communityUrl:nativeLoginViewController:scene:</option>
+		
+		<option value="//api/name/useNativeLoginWithConsumerKey:callbackUrl:communityUrl:reCaptchaSiteKeyId:googleCloudProjectId:isReCaptchaEnterprise:nativeLoginViewController:scene:">- useNativeLoginWithConsumerKey:callbackUrl:communityUrl:reCaptchaSiteKeyId:googleCloudProjectId:isReCaptchaEnterprise:nativeLoginViewController:scene:</option>
 		
 	</optgroup>
 	
@@ -157,7 +163,7 @@
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
 						<p>This class will manage the basic infrastructure of the Mobile SDK elements of the app,
-including the orchestration of authentication, passcode displaying, and management of app
+including the orchestration of authentication, screen lock displaying, and management of app
 backgrounding and foregrounding state.</p>
 					</div>
 					
@@ -360,48 +366,6 @@ backgrounding and foregrounding state.</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/appDisplayName" title="appDisplayName"></a>
-	<h3 class="method-title"><code><a href="#//api/name/appDisplayName">&nbsp;&nbsp;appDisplayName</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Use this flag to setup a user friendly display name  for your current app. This value will be used by the identity
-provider app on the user selection view.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy) NSString *appDisplayName</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/isDevSupportEnabled" title="isDevSupportEnabled"></a>
 	<h3 class="method-title"><code><a href="#//api/name/isDevSupportEnabled">&nbsp;&nbsp;isDevSupportEnabled</a></code>
 </h3>
@@ -443,8 +407,8 @@ provider app on the user selection view.</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/launch" title="launch"></a>
-	<h3 class="method-title"><code><a href="#//api/name/launch">&ndash;&nbsp;launch</a></code>
+	<a name="//api/name/isLoginWebviewInspectable" title="isLoginWebviewInspectable"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isLoginWebviewInspectable">&nbsp;&nbsp;isLoginWebviewInspectable</a></code>
 </h3>
 
 	<div class="method-info">
@@ -454,24 +418,266 @@ provider app on the user selection view.</p>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Launches the SDK.  This will verify an existing passcode the first time it runs, and attempt to
-authenticate if the current user is not already authenticated.  @see postLaunchAction, launchErrorAction,
-postLogoutAction, and switchUserAction for callbacks that can be set for handling post launch
-actions.</p>
+				<p>Use this flag to indicate if the login webview should be inspectable</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (BOOL)launch</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL isLoginWebviewInspectable</code></div>
 
 		    
 			
 
 			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>YES if the launch successfully kicks off, NO if launch is already running.</p>
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
 			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/URLCacheType" title="URLCacheType"></a>
+	<h3 class="method-title"><code><a href="#//api/name/URLCacheType">&nbsp;&nbsp;URLCacheType</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The type of cache used for the shared URL cache, defaults to kSFURLCacheTypeEncrypted.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) SFURLCacheType URLCacheType</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/useEphemeralSessionForAdvancedAuth" title="useEphemeralSessionForAdvancedAuth"></a>
+	<h3 class="method-title"><code><a href="#//api/name/useEphemeralSessionForAdvancedAuth">&nbsp;&nbsp;useEphemeralSessionForAdvancedAuth</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Use this flag to indicate if advanced authentication should use an ephemeral web session. Defaults to YES.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL useEphemeralSessionForAdvancedAuth</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/useWebServerAuthentication" title="useWebServerAuthentication"></a>
+	<h3 class="method-title"><code><a href="#//api/name/useWebServerAuthentication">&nbsp;&nbsp;useWebServerAuthentication</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Whether or not the app should use web server oauth flow in web view. If false, user-agent will be used.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL useWebServerAuthentication</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/useHybridAuthentication" title="useHybridAuthentication"></a>
+	<h3 class="method-title"><code><a href="#//api/name/useHybridAuthentication">&nbsp;&nbsp;useHybridAuthentication</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Whether hybrid authentication flow should be used. Defaults to YES.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL useHybridAuthentication</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/customDomainInferencePattern" title="customDomainInferencePattern"></a>
+	<h3 class="method-title"><code><a href="#//api/name/customDomainInferencePattern">&nbsp;&nbsp;customDomainInferencePattern</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Detect use of &ldquo;Use Custom Domain&rdquo; input from login web view using the given regex.
+Example for a specific org:
+&ldquo;^https:\/\/mobilesdk\.my\.salesforce\.com/\?startURL=%2Fsetup%2Fsecur%2FRemoteAccessAuthorizationPage\.apexp&rdquo;
+For any my domain:
+&ldquo;^https:\/\/[a-zA-Z0-9]+\.my\.salesforce\.com/\?startURL=%2Fsetup%2Fsecur%2FRemoteAccessAuthorizationPage\.apexp&rdquo;</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, nullable) NSRegularExpression *customDomainInferencePattern</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/blockSalesforceIntegrationUser" title="blockSalesforceIntegrationUser"></a>
+	<h3 class="method-title"><code><a href="#//api/name/blockSalesforceIntegrationUser">&nbsp;&nbsp;blockSalesforceIntegrationUser</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sets authentication ability for Salesforce integration users.  When true, Salesforce integration users will be prohibited from initial authentication and receive an error message.  Defaults to NO.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL blockSalesforceIntegrationUser</code></div>
+
+		    
+			
+
 			
 
 			
@@ -599,170 +805,6 @@ actions.</p>
 			<div class="method-subsection return">
 				<h4 class="method-subtitle parameter-title">Return Value</h4>
 				<p>app type as a string</p>
-			</div>
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/addDelegate:" title="addDelegate:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/addDelegate:">&ndash;&nbsp;addDelegate:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Adds an SDK Manager delegate to the list of <a href="#//api/name/delegates">delegates</a>.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (void)addDelegate:(id&lt;SalesforceSDKManagerDelegate&gt;)<em>delegate</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>delegate</code></th>
-						<td><p>The delegate to add.</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/removeDelegate:" title="removeDelegate:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/removeDelegate:">&ndash;&nbsp;removeDelegate:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Removes an SDK Manager delegate from the list of <a href="#//api/name/delegates">delegates</a>.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (void)removeDelegate:(id&lt;SalesforceSDKManagerDelegate&gt;)<em>delegate</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>delegate</code></th>
-						<td><p>The delegate to remove.</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/launchActionsStringRepresentation:" title="launchActionsStringRepresentation:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/launchActionsStringRepresentation:">+&nbsp;launchActionsStringRepresentation:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Bit-coded descriptor of actions taken during <a href="#//api/name/launch">launch</a>.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>+ (NSString *)launchActionsStringRepresentation:(SFSDKLaunchAction)<em>launchActions</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>launchActions</code></th>
-						<td><p>Bit-coded descriptor of actions taken during <a href="#//api/name/launch">launch</a>.</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>A log-friendly string of the <a href="#//api/name/launch">launch</a> actions that were taken, given in postLaunchAction.</p>
 			</div>
 			
 
@@ -940,6 +982,286 @@ actions.</p>
 			
 		</div>
 	</div>
+</div><div class="section-method">
+	<a name="//api/name/devInfoTitleString" title="devInfoTitleString"></a>
+	<h3 class="method-title"><code><a href="#//api/name/devInfoTitleString">&ndash;&nbsp;devInfoTitleString</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Returns the title string of the dev support menu.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nonnull NSString *)devInfoTitleString</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>Title string of the dev support menu.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/screenLockManager" title="screenLockManager"></a>
+	<h3 class="method-title"><code><a href="#//api/name/screenLockManager">&ndash;&nbsp;screenLockManager</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Returns The ScreenLockManager instance.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id&lt;SFScreenLockManager&gt;)screenLockManager</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The Screen Lock Manager.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/biometricAuthenticationManager" title="biometricAuthenticationManager"></a>
+	<h3 class="method-title"><code><a href="#//api/name/biometricAuthenticationManager">&ndash;&nbsp;biometricAuthenticationManager</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Returns The BiometricAuthenticationManager instance.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id&lt;SFBiometricAuthenticationManager&gt;)biometricAuthenticationManager</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The Biometric Authentication Manager.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/useNativeLoginWithConsumerKey:callbackUrl:communityUrl:nativeLoginViewController:scene:" title="useNativeLoginWithConsumerKey:callbackUrl:communityUrl:nativeLoginViewController:scene:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/useNativeLoginWithConsumerKey:callbackUrl:communityUrl:nativeLoginViewController:scene:">&ndash;&nbsp;useNativeLoginWithConsumerKey:callbackUrl:communityUrl:nativeLoginViewController:scene:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Creates the NativeLoginManager instance.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id&lt;SFNativeLoginManager&gt;)useNativeLoginWithConsumerKey:(nonnull NSString *)<em>consumerKey</em> callbackUrl:(nonnull NSString *)<em>callbackUrl</em> communityUrl:(nonnull NSString *)<em>communityUrl</em> nativeLoginViewController:(nonnull UIViewController *)<em>nativeLoginViewController</em> scene:(nullable UIScene *)<em>scene</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>consumerKey</code></th>
+						<td><p>The Connected App consumer key.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>callbackUrl</code></th>
+						<td><p>The Connected App redirect URI.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>communityUrl</code></th>
+						<td><p>The login url for native login</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>nativeLoginViewController</code></th>
+						<td><p>The view presented to the user and responsible for using the
+returned Native Login Manager to initiate either of the authorization code and credentials login flow or the
+headless, password-less login flow.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>scene</code></th>
+						<td><p>Optional UIScene to enable multi-window support.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The Native Login Manager.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/useNativeLoginWithConsumerKey:callbackUrl:communityUrl:reCaptchaSiteKeyId:googleCloudProjectId:isReCaptchaEnterprise:nativeLoginViewController:scene:" title="useNativeLoginWithConsumerKey:callbackUrl:communityUrl:reCaptchaSiteKeyId:googleCloudProjectId:isReCaptchaEnterprise:nativeLoginViewController:scene:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/useNativeLoginWithConsumerKey:callbackUrl:communityUrl:reCaptchaSiteKeyId:googleCloudProjectId:isReCaptchaEnterprise:nativeLoginViewController:scene:">&ndash;&nbsp;useNativeLoginWithConsumerKey:callbackUrl:communityUrl:reCaptchaSiteKeyId:googleCloudProjectId:isReCaptchaEnterprise:nativeLoginViewController:scene:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>- (id&lt;SFNativeLoginManager&gt;)useNativeLoginWithConsumerKey:(nonnull NSString *)<em>consumerKey</em> callbackUrl:(nonnull NSString *)<em>callbackUrl</em> communityUrl:(nonnull NSString *)<em>communityUrl</em> reCaptchaSiteKeyId:(nullable NSString *)<em>reCaptchaSiteKeyId</em> googleCloudProjectId:(nullable NSString *)<em>googleCloudProjectId</em> isReCaptchaEnterprise:(BOOL)<em>isReCaptchaEnterprise</em> nativeLoginViewController:(nonnull UIViewController *)<em>nativeLoginViewController</em> scene:(nullable UIScene *)<em>scene</em></code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/nativeLoginManager" title="nativeLoginManager"></a>
+	<h3 class="method-title"><code><a href="#//api/name/nativeLoginManager">&ndash;&nbsp;nativeLoginManager</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Returns The NativeLoginManager instance.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (id&lt;SFNativeLoginManager&gt;)nativeLoginManager</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The Native Login Manager.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SalesforceSDKManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
 </div>
 						</div>
 						
@@ -965,8 +1287,8 @@ actions.</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/hasVerifiedPasscodeAtStartup" title="hasVerifiedPasscodeAtStartup"></a>
-	<h3 class="method-title"><code><a href="#//api/name/hasVerifiedPasscodeAtStartup">&nbsp;&nbsp;hasVerifiedPasscodeAtStartup</a></code>
+	<a name="//api/name/snapshotViewControllers" title="snapshotViewControllers"></a>
+	<h3 class="method-title"><code><a href="#//api/name/snapshotViewControllers">&nbsp;&nbsp;snapshotViewControllers</a></code>
 </h3>
 
 	<div class="method-info">
@@ -975,14 +1297,14 @@ actions.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL hasVerifiedPasscodeAtStartup</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nonnull) SFSDKSafeMutableDictionary&lt;NSString*UIViewController*&gt; *snapshotViewControllers</code></div>
 
 		    
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/launchActions" title="launchActions"></a>
-	<h3 class="method-title"><code><a href="#//api/name/launchActions">&nbsp;&nbsp;launchActions</a></code>
+	<a name="//api/name/nativeLoginViewControllers" title="nativeLoginViewControllers"></a>
+	<h3 class="method-title"><code><a href="#//api/name/nativeLoginViewControllers">&nbsp;&nbsp;nativeLoginViewControllers</a></code>
 </h3>
 
 	<div class="method-info">
@@ -991,14 +1313,14 @@ actions.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) SFSDKLaunchAction launchActions</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) SFSDKSafeMutableDictionary&lt;NSString*UIViewController*&gt; *nativeLoginViewControllers</code></div>
 
 		    
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/delegates" title="delegates"></a>
-	<h3 class="method-title"><code><a href="#//api/name/delegates">&nbsp;&nbsp;delegates</a></code>
+	<a name="//api/name/presentSnapshot:" title="presentSnapshot:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/presentSnapshot:">&ndash;&nbsp;presentSnapshot:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1007,14 +1329,14 @@ actions.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nonnull) NSHashTable&lt;id&lt;SalesforceSDKManagerDelegate&gt; &gt; *delegates</code></div>
+			<div class="method-subsection method-declaration"><code>- (void)presentSnapshot:(nonnull UIScene *)<em>scene</em></code></div>
 
 		    
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/passcodeDisplayed" title="passcodeDisplayed"></a>
-	<h3 class="method-title"><code><a href="#//api/name/passcodeDisplayed">&nbsp;&nbsp;passcodeDisplayed</a></code>
+	<a name="//api/name/isSnapshotPresented:" title="isSnapshotPresented:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isSnapshotPresented:">&ndash;&nbsp;isSnapshotPresented:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1023,14 +1345,14 @@ actions.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isPasscodeDisplayed) BOOL passcodeDisplayed</code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)isSnapshotPresented:(nonnull UIScene *)<em>scene</em></code></div>
 
 		    
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/inManagerForegroundProcess" title="inManagerForegroundProcess"></a>
-	<h3 class="method-title"><code><a href="#//api/name/inManagerForegroundProcess">&nbsp;&nbsp;inManagerForegroundProcess</a></code>
+	<a name="//api/name/dismissSnapshot:completion:" title="dismissSnapshot:completion:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/dismissSnapshot:completion:">&ndash;&nbsp;dismissSnapshot:completion:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1039,87 +1361,7 @@ actions.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, getter=isInManagerForegroundProcess) BOOL inManagerForegroundProcess</code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/passcodeValidatedToAuthValidation" title="passcodeValidatedToAuthValidation"></a>
-	<h3 class="method-title"><code><a href="#//api/name/passcodeValidatedToAuthValidation">&ndash;&nbsp;passcodeValidatedToAuthValidation</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>- (void)passcodeValidatedToAuthValidation</code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/authValidatedToPostAuth:" title="authValidatedToPostAuth:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/authValidatedToPostAuth:">&ndash;&nbsp;authValidatedToPostAuth:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>- (void)authValidatedToPostAuth:(SFSDKLaunchAction)<em>launchAction</em></code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/presentSnapshot" title="presentSnapshot"></a>
-	<h3 class="method-title"><code><a href="#//api/name/presentSnapshot">&ndash;&nbsp;presentSnapshot</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>- (void)presentSnapshot</code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/isSnapshotPresented" title="isSnapshotPresented"></a>
-	<h3 class="method-title"><code><a href="#//api/name/isSnapshotPresented">&ndash;&nbsp;isSnapshotPresented</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>- (BOOL)isSnapshotPresented</code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/dismissSnapshot" title="dismissSnapshot"></a>
-	<h3 class="method-title"><code><a href="#//api/name/dismissSnapshot">&ndash;&nbsp;dismissSnapshot</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>- (void)dismissSnapshot</code></div>
+			<div class="method-subsection method-declaration"><code>- (void)dismissSnapshot:(nonnull UIScene *)<em>scene</em> completion:(void ( ^ __nullable ) ( void ))<em>completion</em></code></div>
 
 		    
 		</div>
@@ -1139,7 +1381,7 @@ actions.</p>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2019 Salesforce.com. All rights reserved. Updated: 2019-05-22</p>
+						<p class="copyright">Copyright &copy; 2025 Salesforce.com. All rights reserved. Updated: 2025-05-05</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

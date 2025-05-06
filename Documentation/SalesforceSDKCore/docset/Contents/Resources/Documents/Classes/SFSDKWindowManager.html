@@ -54,13 +54,7 @@
 	
 	<optgroup label="Properties">
 		
-		<option value="//api/name/authWindow">authWindow</option>
-		
-		<option value="//api/name/mainWindow">mainWindow</option>
-		
-		<option value="//api/name/passcodeWindow">passcodeWindow</option>
-		
-		<option value="//api/name/snapshotWindow">snapshotWindow</option>
+		<option value="//api/name/userInterfaceStyle">userInterfaceStyle</option>
 		
 	</optgroup>
 	
@@ -76,19 +70,37 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/activeWindow">- activeWindow</option>
+		<option value="//api/name/activeWindow:">- activeWindow:</option>
 		
 		<option value="//api/name/addDelegate:">- addDelegate:</option>
 		
+		<option value="//api/name/authWindow:">- authWindow:</option>
+		
 		<option value="//api/name/createNewNamedWindow:">- createNewNamedWindow:</option>
+		
+		<option value="//api/name/createNewNamedWindow:scene:">- createNewNamedWindow:scene:</option>
+		
+		<option value="//api/name/defaultScene">- defaultScene</option>
+		
+		<option value="//api/name/mainWindow:">- mainWindow:</option>
 		
 		<option value="//api/name/removeDelegate:">- removeDelegate:</option>
 		
 		<option value="//api/name/removeNamedWindow:">- removeNamedWindow:</option>
 		
+		<option value="//api/name/removeNamedWindow:scene:">- removeNamedWindow:scene:</option>
+		
+		<option value="//api/name/screenLockWindow">- screenLockWindow</option>
+		
 		<option value="//api/name/setMainUIWindow:">- setMainUIWindow:</option>
 		
+		<option value="//api/name/setMainUIWindow:scene:">- setMainUIWindow:scene:</option>
+		
+		<option value="//api/name/snapshotWindow:">- snapshotWindow:</option>
+		
 		<option value="//api/name/windowWithName:">- windowWithName:</option>
+		
+		<option value="//api/name/windowWithName:scene:">- windowWithName:scene:</option>
 		
 	</optgroup>
 	
@@ -128,12 +140,12 @@
 						
 
 						
-						
+						<h2 class="task-title">Other Methods</h2>
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/authWindow" title="authWindow"></a>
-	<h3 class="method-title"><code><a href="#//api/name/authWindow">&nbsp;&nbsp;authWindow</a></code>
+	<a name="//api/name/userInterfaceStyle" title="userInterfaceStyle"></a>
+	<h3 class="method-title"><code><a href="#//api/name/userInterfaceStyle">&nbsp;&nbsp;userInterfaceStyle</a></code>
 </h3>
 
 	<div class="method-info">
@@ -143,12 +155,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>SDK uses this window to present the login flow.</p>
+				<p>Sets overrideUserInterfaceStyle on managed windows. Default is UIUserInterfaceStyleUnspecified.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (readonly, nonatomic, strong) SFSDKWindowContainer *authWindow</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) UIUserInterfaceStyle userInterfaceStyle</code></div>
 
 		    
 			
@@ -173,8 +185,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/snapshotWindow" title="snapshotWindow"></a>
-	<h3 class="method-title"><code><a href="#//api/name/snapshotWindow">&nbsp;&nbsp;snapshotWindow</a></code>
+	<a name="//api/name/screenLockWindow" title="screenLockWindow"></a>
+	<h3 class="method-title"><code><a href="#//api/name/screenLockWindow">&ndash;&nbsp;screenLockWindow</a></code>
 </h3>
 
 	<div class="method-info">
@@ -184,12 +196,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>SDK uses this window to present the snapshot View.</p>
+				<p>SDK uses this window to present the screen lock view.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (readonly, nonatomic, strong) SFSDKWindowContainer *snapshotWindow</code></div>
+			<div class="method-subsection method-declaration"><code>- (nonnull SFSDKWindowContainer *)screenLockWindow</code></div>
 
 		    
 			
@@ -214,8 +226,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/passcodeWindow" title="passcodeWindow"></a>
-	<h3 class="method-title"><code><a href="#//api/name/passcodeWindow">&nbsp;&nbsp;passcodeWindow</a></code>
+	<a name="//api/name/authWindow:" title="authWindow:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/authWindow:">&ndash;&nbsp;authWindow:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -225,12 +237,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>SDK uses this window to present the passocde View.</p>
+				<p>SDK uses this window to present the login flow for the given scene. Defaults a connected scene if one isn&rsquo;t provided.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (readonly, nonatomic, strong) SFSDKWindowContainer *passcodeWindow</code></div>
+			<div class="method-subsection method-declaration"><code>- (nonnull SFSDKWindowContainer *)authWindow:(nullable UIScene *)<em>scene</em></code></div>
 
 		    
 			
@@ -255,8 +267,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/mainWindow" title="mainWindow"></a>
-	<h3 class="method-title"><code><a href="#//api/name/mainWindow">&nbsp;&nbsp;mainWindow</a></code>
+	<a name="//api/name/snapshotWindow:" title="snapshotWindow:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/snapshotWindow:">&ndash;&nbsp;snapshotWindow:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -266,12 +278,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Returns the <a href="../Classes/SFSDKWindowContainer.html">SFSDKWindowContainer</a> window representing the mainWindow that has been set</p>
+				<p>SDK uses this window to present the snapshot view for a given scene. Defaults to a connected scene if one isn&rsquo;t provided.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (readonly, nonatomic, strong) SFSDKWindowContainer *mainWindow</code></div>
+			<div class="method-subsection method-declaration"><code>- (nonnull SFSDKWindowContainer *)snapshotWindow:(nullable UIScene *)<em>scene</em></code></div>
 
 		    
 			
@@ -296,8 +308,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/activeWindow" title="activeWindow"></a>
-	<h3 class="method-title"><code><a href="#//api/name/activeWindow">&ndash;&nbsp;activeWindow</a></code>
+	<a name="//api/name/mainWindow:" title="mainWindow:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mainWindow:">&ndash;&nbsp;mainWindow:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -307,12 +319,53 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Returns the <a href="../Classes/SFSDKWindowContainer.html">SFSDKWindowContainer</a> window representing the active presented Window that has been set</p>
+				<p>Returns the <a href="../Classes/SFSDKWindowContainer.html">SFSDKWindowContainer</a> window representing the mainWindow that has been set for a given scene. Defaults to a connected scene if one isn&rsquo;t provided.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (SFSDKWindowContainer *_Nullable)activeWindow</code></div>
+			<div class="method-subsection method-declaration"><code>- (nonnull SFSDKWindowContainer *)mainWindow:(nullable UIScene *)<em>scene</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SFSDKWindowManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/activeWindow:" title="activeWindow:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/activeWindow:">&ndash;&nbsp;activeWindow:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Returns the <a href="../Classes/SFSDKWindowContainer.html">SFSDKWindowContainer</a> window representing the active presented window that has been set for a given scene. Defaults to a connected scene if one isn&rsquo;t provided.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable SFSDKWindowContainer *)activeWindow:(nullable UIScene *)<em>scene</em></code></div>
 
 		    
 			
@@ -378,6 +431,47 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/setMainUIWindow:scene:" title="setMainUIWindow:scene:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setMainUIWindow:scene:">&ndash;&nbsp;setMainUIWindow:scene:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Used to setup the main window for a given scene. Defaults to a connected scene if one isn&rsquo;t provided.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)setMainUIWindow:(nonnull UIWindow *)<em>window</em> scene:(nullable UIScene *)<em>scene</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SFSDKWindowManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/createNewNamedWindow:" title="createNewNamedWindow:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/createNewNamedWindow:">&ndash;&nbsp;createNewNamedWindow:</a></code>
 </h3>
@@ -389,12 +483,53 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Used to create a new Window keyed by a  specified name</p>
+				<p>Used to create a new Window keyed by a specified name</p>
 			</div>
 			
 		    
 
 			<div class="method-subsection method-declaration"><code>- (SFSDKWindowContainer *_Nullable)createNewNamedWindow:(NSString *_Nonnull)<em>windowName</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SFSDKWindowManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/createNewNamedWindow:scene:" title="createNewNamedWindow:scene:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/createNewNamedWindow:scene:">&ndash;&nbsp;createNewNamedWindow:scene:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Used to create a new window keyed by a specified name for a given scene. Defaults to a  connected scene if one isn&rsquo;t provided.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable SFSDKWindowContainer *)createNewNamedWindow:(nonnull NSString *)<em>windowName</em> scene:(nullable UIScene *)<em>scene</em></code></div>
 
 		    
 			
@@ -430,12 +565,53 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Used to remove a  Window by a  specified name</p>
+				<p>Used to remove a Window by a specified name</p>
 			</div>
 			
 		    
 
 			<div class="method-subsection method-declaration"><code>- (BOOL)removeNamedWindow:(NSString *_Nonnull)<em>windowName</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SFSDKWindowManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeNamedWindow:scene:" title="removeNamedWindow:scene:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeNamedWindow:scene:">&ndash;&nbsp;removeNamedWindow:scene:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Used to remove a window by a specified name for a given scene. Defaults to a connected scene if one isn&rsquo;t provided.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeNamedWindow:(nonnull NSString *)<em>windowName</em> scene:(nullable UIScene *)<em>scene</em></code></div>
 
 		    
 			
@@ -471,12 +647,53 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Used to retrieve a Window by a  specified name</p>
+				<p>Used to retrieve a Window by a specified name</p>
 			</div>
 			
 		    
 
 			<div class="method-subsection method-declaration"><code>- (SFSDKWindowContainer *_Nullable)windowWithName:(NSString *_Nonnull)<em>name</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SFSDKWindowManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/windowWithName:scene:" title="windowWithName:scene:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/windowWithName:scene:">&ndash;&nbsp;windowWithName:scene:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Used to retrieve a window by a specified name for a given scene. Defaults to a connected scene if one isn&rsquo;t provided.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable SFSDKWindowContainer *)windowWithName:(nonnull NSString *)<em>name</em> scene:(nullable UIScene *)<em>scene</em></code></div>
 
 		    
 			
@@ -601,6 +818,30 @@
 </div>
 						</div>
 						
+
+						<a title="Extension Methods" name="task_Extension Methods"></a>
+						<h2 class="task-title">Extension Methods</h2>
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/defaultScene" title="defaultScene"></a>
+	<h3 class="method-title"><code><a href="#//api/name/defaultScene">&ndash;&nbsp;defaultScene</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>- (UIScene *)defaultScene</code></div>
+
+		    
+		</div>
+	</div>
+</div>
+						</div>
+						
 					</div>
 					
 					
@@ -613,7 +854,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2019 Salesforce.com. All rights reserved. Updated: 2019-05-22</p>
+						<p class="copyright">Copyright &copy; 2025 Salesforce.com. All rights reserved. Updated: 2025-05-05</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
