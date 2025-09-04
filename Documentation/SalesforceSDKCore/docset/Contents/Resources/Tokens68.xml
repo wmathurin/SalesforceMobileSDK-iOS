@@ -1,82 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKAuthHelper.html">
+	<File path="Classes/SFSDKDevInfoViewController.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAuthHelper</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKDevInfoViewController</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthHelper.h</DeclaredIn>
+			<DeclaredIn>SFSDKDevInfoViewController.h</DeclaredIn>
             
 			
 			<NodeRef refid="68"/>
 		</Token>
 		
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAuthHelper/loginIfRequired:</TokenIdentifier>
-			<Abstract type="html">Do a login flow if user is not already logged in and app config&apos;s shouldAuthenticate is false</Abstract>
-			<DeclaredIn>SFSDKAuthHelper.h</DeclaredIn>
-			
-			<Declaration>+ (void)loginIfRequired:(void ( ^ ) ( void ))completionBlock</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>completionBlock</Name>
-					<Abstract type="html">Block is executed right away if user was already logged in (or app config&apos;s shouldAuthenticate is false)
-                        Block is executed following successfull login if a login was required</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/loginIfRequired:</Anchor>
-            <NodeRef refid="68"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAuthHelper/handleLogout:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthHelper.h</DeclaredIn>
-			
-			<Declaration>+ (void)handleLogout:(void ( ^ ) ( void ))completionBlock</Declaration>
-			
-			
-			<Anchor>//api/name/handleLogout:</Anchor>
-            <NodeRef refid="68"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAuthHelper/registerBlockForCurrentUserChangeNotifications:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthHelper.h</DeclaredIn>
-			
-			<Declaration>+ (void)registerBlockForCurrentUserChangeNotifications:(void ( ^ ) ( void ))completionBlock</Declaration>
-			
-			
-			<Anchor>//api/name/registerBlockForCurrentUserChangeNotifications:</Anchor>
-            <NodeRef refid="68"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAuthHelper/registerBlockForLogoutNotifications:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthHelper.h</DeclaredIn>
-			
-			<Declaration>+ (void)registerBlockForLogoutNotifications:(void ( ^ ) ( void ))completionBlock</Declaration>
-			
-			
-			<Anchor>//api/name/registerBlockForLogoutNotifications:</Anchor>
-            <NodeRef refid="68"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAuthHelper/registerBlockForSwitchUserNotifications:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKAuthHelper.h</DeclaredIn>
-			
-			<Declaration>+ (void)registerBlockForSwitchUserNotifications:(void ( ^ ) ( void ))completionBlock</Declaration>
-			
-			
-			<Anchor>//api/name/registerBlockForSwitchUserNotifications:</Anchor>
-            <NodeRef refid="68"/>
-		</Token>
 		
         
         

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFOAuthInfo.html">
+	<File path="Classes/SFSDKAlertView.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthInfo</TokenIdentifier>
-			<Abstract type="html">Data class containing members denoting state information for an OAuth coordinator authentication
-cycle.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAlertView</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
             
 			
 			<NodeRef refid="38"/>
@@ -14,91 +13,98 @@ cycle.</Abstract>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/setAuthType:</TokenIdentifier>
-			<Abstract type="html">The type of authentication being performed.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertView/setController:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
+			<Declaration>@property (nonatomic, readonly) UIAlertController *controller</Declaration>
 			
 			
-			<Anchor>//api/name/authType</Anchor>
+			<Anchor>//api/name/controller</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/authType</TokenIdentifier>
-			<Abstract type="html">The type of authentication being performed.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertView/controller</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
+			<Declaration>@property (nonatomic, readonly) UIAlertController *controller</Declaration>
 			
 			
-			<Anchor>//api/name/authType</Anchor>
+			<Anchor>//api/name/controller</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthInfo/authType</TokenIdentifier>
-			<Abstract type="html">The type of authentication being performed.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertView/controller</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, assign) SFOAuthType authType</Declaration>
+			<Declaration>@property (nonatomic, readonly) UIAlertController *controller</Declaration>
 			
 			
-			<Anchor>//api/name/authType</Anchor>
+			<Anchor>//api/name/controller</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/setAuthTypeDescription:</TokenIdentifier>
-			<Abstract type="html">The string description of the auth type.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertView/setWindow:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly, weak) SFSDKWindowContainer *window</Declaration>
 			
 			
-			<Anchor>//api/name/authTypeDescription</Anchor>
+			<Anchor>//api/name/window</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/authTypeDescription</TokenIdentifier>
-			<Abstract type="html">The string description of the auth type.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertView/window</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly, weak) SFSDKWindowContainer *window</Declaration>
 			
 			
-			<Anchor>//api/name/authTypeDescription</Anchor>
+			<Anchor>//api/name/window</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthInfo/authTypeDescription</TokenIdentifier>
-			<Abstract type="html">The string description of the auth type.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKAlertView/window</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSString *authTypeDescription</Declaration>
+			<Declaration>@property (nonatomic, readonly, weak) SFSDKWindowContainer *window</Declaration>
 			
 			
-			<Anchor>//api/name/authTypeDescription</Anchor>
+			<Anchor>//api/name/window</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthInfo/initWithAuthType:</TokenIdentifier>
-			<Abstract type="html">Creates a new instance with the given auth type.</Abstract>
-			<DeclaredIn>SFOAuthInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertView/presentViewController:completion:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
 			
-			<Declaration>- (id)initWithAuthType:(SFOAuthType)authType</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>authType</Name>
-					<Abstract type="html">The type of authentication being performed.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>- (void)presentViewController:(BOOL)animated completion:(void ( ^ __nullable ) ( void ))completion</Declaration>
 			
-			<Anchor>//api/name/initWithAuthType:</Anchor>
+			
+			<Anchor>//api/name/presentViewController:completion:</Anchor>
+            <NodeRef refid="38"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKAlertView/initWithMessage:window:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKAlertView.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithMessage:(SFSDKAlertMessage *)message window:(SFSDKWindowContainer *)window</Declaration>
+			
+			
+			<Anchor>//api/name/initWithMessage:window:</Anchor>
             <NodeRef refid="38"/>
 		</Token>
 		

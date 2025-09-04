@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFLoginViewController.html">
+	<File path="Classes/SFOAuthSessionRefresher.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFLoginViewController</TokenIdentifier>
-			<Abstract type="html">The Salesforce login screen view.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFOAuthSessionRefresher</TokenIdentifier>
+			<Abstract type="html">This class refreshes stale OAuth sessions, if possible.</Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher.h</DeclaredIn>
             
 			
 			<NodeRef refid="29"/>
@@ -13,308 +13,147 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setDelegate:</TokenIdentifier>
-			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthSessionRefresher/initWithCredentials:</TokenIdentifier>
+			<Abstract type="html">Initializes the object with the given credentials.</Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
-			
-			
-			<Anchor>//api/name/delegate</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
-			
-			
-			<Anchor>//api/name/delegate</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate representing the owner of this object.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak, nullable) id&lt;SFLoginViewControllerDelegate&gt; delegate</Declaration>
-			
-			
-			<Anchor>//api/name/delegate</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setOauthView:</TokenIdentifier>
-			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
-			
-			
-			<Anchor>//api/name/oauthView</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/oauthView</TokenIdentifier>
-			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
-			
-			
-			<Anchor>//api/name/oauthView</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/oauthView</TokenIdentifier>
-			<Abstract type="html">Outlet to the OAuth web view.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nullable) IBOutlet UIView *oauthView</Declaration>
-			
-			
-			<Anchor>//api/name/oauthView</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/set:</TokenIdentifier>
-			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
-			
-			
-			<Anchor>//api/name/)</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/)</TokenIdentifier>
-			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
-			
-			
-			<Anchor>//api/name/)</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/)</TokenIdentifier>
-			<Abstract type="html">Specify the font to use for navigation bar header text.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nullable) UIFont *NS_SWIFT_NAME ( navigationBarFont )</Declaration>
-			
-			
-			<Anchor>//api/name/)</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setConfig:</TokenIdentifier>
-			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
-a config object</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
-			
-			
-			<Anchor>//api/name/config</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/config</TokenIdentifier>
-			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
-a config object</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
-			
-			
-			<Anchor>//api/name/config</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/config</TokenIdentifier>
-			<Abstract type="html">Specify all display properties in a config. All the above properties are backed by
-a config object</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, nonnull) SFSDKLoginViewControllerConfig *config</Declaration>
-			
-			
-			<Anchor>//api/name/config</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/setNavBar:</TokenIdentifier>
-			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
-			
-			
-			<Anchor>//api/name/navBar</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/navBar</TokenIdentifier>
-			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
-			
-			
-			<Anchor>//api/name/navBar</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFLoginViewController/navBar</TokenIdentifier>
-			<Abstract type="html">Get the instance of nav bar. Use this property to get the instance of navBar</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly, nullable) UINavigationBar *navBar</Declaration>
-			
-			
-			<Anchor>//api/name/navBar</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/styleNavigationBar:</TokenIdentifier>
-			<Abstract type="html">Applies the view&apos;s style attributes to the given navigation bar.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (void)styleNavigationBar:(nullable UINavigationBar *)navigationBar</Declaration>
+			<Declaration>- (instancetype)initWithCredentials:(nullable SFOAuthCredentials *)credentials</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>navigationBar</Name>
-					<Abstract type="html">The navigation bar that the style is applied to.</Abstract>
+					<Name>credentials</Name>
+					<Abstract type="html">The OAuth credentials used to refresh the session.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/styleNavigationBar:</Anchor>
+			<Anchor>//api/name/initWithCredentials:</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/showHostListView</TokenIdentifier>
-			<Abstract type="html">Present the Host List View.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthSessionRefresher/refreshSessionWithCompletion:error:</TokenIdentifier>
+			<Abstract type="html">Refreshes the expired session, with the given completion and error handler blocks.</Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher.h</DeclaredIn>
 			
-			<Declaration>- (void)showHostListView</Declaration>
-			
-			
-			<Anchor>//api/name/showHostListView</Anchor>
-            <NodeRef refid="29"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/hideHostListView:</TokenIdentifier>
-			<Abstract type="html">Hide the Host List View.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
-			
-			<Declaration>- (void)hideHostListView:(BOOL)animated</Declaration>
+			<Declaration>- (void)refreshSessionWithCompletion:(void ( ^ ) ( SFOAuthCredentials *))completionBlock error:(void ( ^ ) ( NSError *))errorBlock</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>animated</Name>
-					<Abstract type="html">Indicates whether or not the hiding should be animated.</Abstract>
+					<Name>completionBlock</Name>
+					<Abstract type="html">Called once the session has been refreshed.</Abstract>
+				</Parameter><Parameter>
+					<Name>errorBlock</Name>
+					<Abstract type="html">Called if there was an error refreshing the session.</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/hideHostListView:</Anchor>
+			<Anchor>//api/name/refreshSessionWithCompletion:error:</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createBackButton</TokenIdentifier>
-			<Abstract type="html">Factory Method to create the back button.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthSessionRefresher/setCredentials:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
 			
-			<Declaration>- (nonnull UIBarButtonItem *)createBackButton</Declaration>
+			<Declaration>@property (nonatomic, strong) SFOAuthCredentials *credentials</Declaration>
 			
 			
-			<Anchor>//api/name/createBackButton</Anchor>
+			<Anchor>//api/name/credentials</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createSettingsButton</TokenIdentifier>
-			<Abstract type="html">Factory Method to create the settings button.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthSessionRefresher/credentials</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
 			
-			<Declaration>- (nonnull UIBarButtonItem *)createSettingsButton</Declaration>
+			<Declaration>@property (nonatomic, strong) SFOAuthCredentials *credentials</Declaration>
 			
 			
-			<Anchor>//api/name/createSettingsButton</Anchor>
+			<Anchor>//api/name/credentials</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/createTitleItem</TokenIdentifier>
-			<Abstract type="html">Factory Method to create the navigation title.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthSessionRefresher/credentials</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
 			
-			<Declaration>- (nonnull UIView *)createTitleItem</Declaration>
+			<Declaration>@property (nonatomic, strong) SFOAuthCredentials *credentials</Declaration>
 			
 			
-			<Anchor>//api/name/createTitleItem</Anchor>
+			<Anchor>//api/name/credentials</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/shouldShowBackButton</TokenIdentifier>
-			<Abstract type="html">Logic to show back button.</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthSessionRefresher/setCompletionBlock:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
 			
-			<Declaration>- (BOOL)shouldShowBackButton</Declaration>
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( SFOAuthCredentials *) completionBlock</Declaration>
 			
 			
-			<Anchor>//api/name/shouldShowBackButton</Anchor>
+			<Anchor>//api/name/completionBlock</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/handleBackButtonAction</TokenIdentifier>
-			<Abstract type="html">Back Button was pressed by user</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthSessionRefresher/completionBlock</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
 			
-			<Declaration>- (void)handleBackButtonAction</Declaration>
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( SFOAuthCredentials *) completionBlock</Declaration>
 			
 			
-			<Anchor>//api/name/handleBackButtonAction</Anchor>
+			<Anchor>//api/name/completionBlock</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFLoginViewController/handleLoginHostSelectedAction:</TokenIdentifier>
-			<Abstract type="html">User Selected a host from the host list</Abstract>
-			<DeclaredIn>SFLoginViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthSessionRefresher/completionBlock</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
 			
-			<Declaration>- (void)handleLoginHostSelectedAction:(nonnull SFSDKLoginHost *)host</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>host</Name>
-					<Abstract type="html">SFSDKLoginHost</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( SFOAuthCredentials *) completionBlock</Declaration>
 			
-			<Anchor>//api/name/handleLoginHostSelectedAction:</Anchor>
+			
+			<Anchor>//api/name/completionBlock</Anchor>
+            <NodeRef refid="29"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthSessionRefresher/setErrorBlock:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( NSError *) errorBlock</Declaration>
+			
+			
+			<Anchor>//api/name/errorBlock</Anchor>
+            <NodeRef refid="29"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFOAuthSessionRefresher/errorBlock</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( NSError *) errorBlock</Declaration>
+			
+			
+			<Anchor>//api/name/errorBlock</Anchor>
+            <NodeRef refid="29"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFOAuthSessionRefresher/errorBlock</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthSessionRefresher+Internal.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( NSError *) errorBlock</Declaration>
+			
+			
+			<Anchor>//api/name/errorBlock</Anchor>
             <NodeRef refid="29"/>
 		</Token>
 		

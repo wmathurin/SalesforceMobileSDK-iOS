@@ -1,110 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKLoginHostDelegate.html">
+	<File path="Constants/SFLogoutReason.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKLoginHostDelegate</TokenIdentifier>
-			<Abstract type="html">Use the SFSDKLoginHostDelegate to be notified of the actions taken by the user on the login host list view controller.</Abstract>
-			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFLogoutReason</TokenIdentifier>
+			<Abstract type="html">@enum SFOAuthErrorDomain related error codes
+Constants used by SFOAuthCoordinator to indicate errors in the SFOAuth domain</Abstract>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
             
 			
 			<NodeRef refid="179"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewController:willPresentLoginHostViewController:</TokenIdentifier>
-			<Abstract type="html">Notifies the delegate that a new login host viewcontroller will be presented.</Abstract>
-			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
-			
-			<Declaration>- (void)hostListViewController:(SFSDKLoginHostListViewController *)hostListViewController willPresentLoginHostViewController:(UIViewController *)loginHostViewController</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>hostListViewController</Name>
-					<Abstract type="html">The instance sending this message.</Abstract>
-				</Parameter><Parameter>
-					<Name>loginHostViewController</Name>
-					<Abstract type="html">The view controller that will be presented.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/hostListViewController:willPresentLoginHostViewController:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonCorruptState</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonCorruptState</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
             <NodeRef refid="179"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewControllerDidSelectLoginHost:</TokenIdentifier>
-			<Abstract type="html">Notifies the delegate that a login host has been selected by the user.
-This will be a good time to dismiss the host list view controller.</Abstract>
-			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
-			
-			<Declaration>- (void)hostListViewControllerDidSelectLoginHost:(SFSDKLoginHostListViewController *)hostListViewController</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>hostListViewController</Name>
-					<Abstract type="html">The instance sending this message.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/hostListViewControllerDidSelectLoginHost:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonCorruptStateAppConfigurationSettings</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonCorruptStateAppConfigurationSettings</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
             <NodeRef refid="179"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewControllerDidAddLoginHost:</TokenIdentifier>
-			<Abstract type="html">Notifies the delegate that a login host has been added to the list of hosts.</Abstract>
-			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
-			
-			<Declaration>- (void)hostListViewControllerDidAddLoginHost:(SFSDKLoginHostListViewController *)hostListViewController</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>hostListViewController</Name>
-					<Abstract type="html">The instance sending this message.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/hostListViewControllerDidAddLoginHost:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonCorruptStateAppProviderErrorInvalidUser</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonCorruptStateAppProviderErrorInvalidUser</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
             <NodeRef refid="179"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewControllerDidCancelLoginHost:</TokenIdentifier>
-			<Abstract type="html">Notifies the delegate that user cancels out from the login host picking flow</Abstract>
-			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
-			
-			<Declaration>- (void)hostListViewControllerDidCancelLoginHost:(SFSDKLoginHostListViewController *)hostListViewController</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>hostListViewController</Name>
-					<Abstract type="html">The instance sending this message.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/hostListViewControllerDidCancelLoginHost:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonCorruptStateAppInvalidRestClient</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonCorruptStateAppInvalidRestClient</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
             <NodeRef refid="179"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginHostDelegate/hostListViewController:didChangeLoginHost:</TokenIdentifier>
-			<Abstract type="html">Notifies the delegate that the login host has been changed in some capacity (user-selected, host entry edited,
-custom login host added, previous current login host deleted, etc.).</Abstract>
-			<DeclaredIn>SFSDKLoginHostDelegate.h</DeclaredIn>
-			
-			<Declaration>- (void)hostListViewController:(SFSDKLoginHostListViewController *)hostListViewController didChangeLoginHost:(SFSDKLoginHost *)newLoginHost</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>hostListViewController</Name>
-					<Abstract type="html">The instance sending this message.</Abstract>
-				</Parameter><Parameter>
-					<Name>newLoginHost</Name>
-					<Abstract type="html">The updated login host.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/hostListViewController:didChangeLoginHost:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonCorruptStateAppOther</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonCorruptStateAppOther</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
             <NodeRef refid="179"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonCorruptStateMSDK</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonCorruptStateMSDK</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonTokenExpired</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonTokenExpired</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonSSDKPolicy</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonSSDKPolicy</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonTimeout</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonTimeout</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonUnexpected</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonUnexpected</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonUnexpectedResponse</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonUnexpectedResponse</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonUnknown</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonUnknown</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonUserInitiated</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonUserInitiated</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFLogoutReasonRefreshTokenRotated</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFLogoutReasonRefreshTokenRotated</Declaration>
+            
+            <DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
+            
+            <NodeRef refid="179"/>
+        </Token>
         
         
 	</File>

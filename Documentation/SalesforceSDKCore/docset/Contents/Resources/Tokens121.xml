@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKViewUtils.html">
+	<File path="Classes/SFSDKViewController.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKViewUtils</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKViewController</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKViewUtils.h</DeclaredIn>
+			<DeclaredIn>SFSDKViewController.h</DeclaredIn>
             
 			
 			<NodeRef refid="121"/>
@@ -13,14 +13,14 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKViewUtils/styleNavigationBar:config:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKViewController/refreshAllViews:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKViewUtils.h</DeclaredIn>
+			<DeclaredIn>SFSDKViewController.h</DeclaredIn>
 			
-			<Declaration>+ (void)styleNavigationBar:(UINavigationBar *)navigationBar config:(SFSDKLoginViewControllerConfig *)config</Declaration>
+			<Declaration>+ (void)refreshAllViews:(UIView *)currentView</Declaration>
 			
 			
-			<Anchor>//api/name/styleNavigationBar:config:</Anchor>
+			<Anchor>//api/name/refreshAllViews:</Anchor>
             <NodeRef refid="121"/>
 		</Token>
 		

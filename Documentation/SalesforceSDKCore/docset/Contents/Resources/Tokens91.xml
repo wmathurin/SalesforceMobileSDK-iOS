@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKLoginHostListViewController.html">
+	<File path="Classes/SFSDKOAuth2.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKLoginHostListViewController</TokenIdentifier>
-			<Abstract type="html">View controller that displays a list of hosts that can be used for login.
-The user can either add a new host or select an existing host to reload the login web page.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKOAuth2</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
             
 			
 			<NodeRef refid="91"/>
@@ -14,119 +13,86 @@ The user can either add a new host or select an existing host to reload the logi
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostListViewController/setDelegate:</TokenIdentifier>
-			<Abstract type="html">The object that acts as the delegate of the host list view controller.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuth2/requestForRevokeRefreshToken:reason:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKOAuth2.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKLoginHostDelegate&gt; delegate</Declaration>
+			<Declaration>+ (NSMutableURLRequest *)requestForRevokeRefreshToken:(SFOAuthCredentials *)credentials reason:(SFLogoutReason)reason</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/requestForRevokeRefreshToken:reason:</Anchor>
             <NodeRef refid="91"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostListViewController/delegate</TokenIdentifier>
-			<Abstract type="html">The object that acts as the delegate of the host list view controller.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuth2/parseQueryString:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKOAuth2+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKLoginHostDelegate&gt; delegate</Declaration>
+			<Declaration>+ (NSDictionary *)parseQueryString:(NSString *)query</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/parseQueryString:</Anchor>
             <NodeRef refid="91"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKLoginHostListViewController/delegate</TokenIdentifier>
-			<Abstract type="html">The object that acts as the delegate of the host list view controller.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuth2/parseQueryString:decodeParams:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKOAuth2+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKLoginHostDelegate&gt; delegate</Declaration>
+			<Declaration>+ (NSDictionary *)parseQueryString:(NSString *)query decodeParams:(BOOL)decodeParams</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/parseQueryString:decodeParams:</Anchor>
             <NodeRef refid="91"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostListViewController/setHidesCancelButton:</TokenIdentifier>
-			<Abstract type="html">If you have used a navigation controller to present this view controller,
-a cancel button is automatically added to the left bar button item.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuth2/errorWithType:description:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKOAuth2+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) BOOL hidesCancelButton</Declaration>
+			<Declaration>+ (NSError *)errorWithType:(NSString *)type description:(NSString *)description</Declaration>
 			
 			
-			<Anchor>//api/name/hidesCancelButton</Anchor>
+			<Anchor>//api/name/errorWithType:description:</Anchor>
             <NodeRef refid="91"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostListViewController/hidesCancelButton</TokenIdentifier>
-			<Abstract type="html">If you have used a navigation controller to present this view controller,
-a cancel button is automatically added to the left bar button item.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuth2/errorWithType:description:underlyingError:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKOAuth2+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) BOOL hidesCancelButton</Declaration>
+			<Declaration>+ (NSError *)errorWithType:(NSString *)type description:(NSString *)description underlyingError:(NSError *_Nullable)underlyingError</Declaration>
 			
 			
-			<Anchor>//api/name/hidesCancelButton</Anchor>
+			<Anchor>//api/name/errorWithType:description:underlyingError:</Anchor>
             <NodeRef refid="91"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKLoginHostListViewController/hidesCancelButton</TokenIdentifier>
-			<Abstract type="html">If you have used a navigation controller to present this view controller,
-a cancel button is automatically added to the left bar button item.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/SFSDKOAuth2/timestampStringToDate:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKOAuth2+Internal.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) BOOL hidesCancelButton</Declaration>
+			<Declaration>+ (NSDate *)timestampStringToDate:(NSString *)timestamp</Declaration>
 			
 			
-			<Anchor>//api/name/hidesCancelButton</Anchor>
+			<Anchor>//api/name/timestampStringToDate:</Anchor>
             <NodeRef refid="91"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostListViewController/addLoginHost:</TokenIdentifier>
-			<Abstract type="html">Adds a new login host.
-This method updates the underlying storage and refreshes the list of login hosts.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKOAuth2/handleTokenEndpointResponse:request:data:urlResponse:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKOAuth2+Internal.h</DeclaredIn>
 			
-	<RelatedTokens>
-		<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostListViewController/showAddLoginHost</TokenIdentifier>
-		
-	</RelatedTokens>
-	
-			<Declaration>- (void)addLoginHost:(SFSDKLoginHost *)host</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>host</Name>
-					<Abstract type="html">The login host to be added.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/addLoginHost:</Anchor>
-            <NodeRef refid="91"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostListViewController/showAddLoginHost</TokenIdentifier>
-			<Abstract type="html">Use this method to display a view for adding a new login host.
-If you have used a navigation controller to present this view controller,
-an add button is automatically added to the right bar button item.</Abstract>
-			<DeclaredIn>SFSDKLoginHostListViewController.h</DeclaredIn>
-			
-	<RelatedTokens>
-		<TokenIdentifier>//apple_ref/occ/instm/SFSDKLoginHostListViewController/addLoginHost:</TokenIdentifier>
-		
-	</RelatedTokens>
-	
-			<Declaration>- (void)showAddLoginHost</Declaration>
+			<Declaration>- (void)handleTokenEndpointResponse:(void ( ^ ) ( SFSDKOAuthTokenEndpointResponse *))completionBlock request:(SFSDKOAuthTokenEndpointRequest *)endpointReq data:(NSData *)data urlResponse:(NSURLResponse *)response</Declaration>
 			
 			
-			<Anchor>//api/name/showAddLoginHost</Anchor>
+			<Anchor>//api/name/handleTokenEndpointResponse:request:data:urlResponse:</Anchor>
             <NodeRef refid="91"/>
 		</Token>
 		

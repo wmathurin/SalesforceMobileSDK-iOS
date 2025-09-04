@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKLoginFlowSelectionViewDelegate.html">
+	<File path="Constants/SFEntityIdLength.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKLoginFlowSelectionViewDelegate</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/c/tdef/SFEntityIdLength</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKLoginFlowSelectionView.h</DeclaredIn>
+			<DeclaredIn>NSString+SFAdditions.h</DeclaredIn>
             
 			
 			<NodeRef refid="178"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginFlowSelectionViewDelegate/loginFlowSelectionIDPSelected:options:</TokenIdentifier>
-			<Abstract type="html">Used to notify the SDK of user selection on the login flow selection view</Abstract>
-			<DeclaredIn>SFSDKLoginFlowSelectionView.h</DeclaredIn>
-			
-			<Declaration>- (void)loginFlowSelectionIDPSelected:(UIViewController *)controller options:(NSDictionary *)appOptions</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>controller</Name>
-					<Abstract type="html">instance invoking this delegate</Abstract>
-				</Parameter><Parameter>
-					<Name>appOptions</Name>
-					<Abstract type="html">addl. name value pairs sent from the sdk for the SFSDKLoginFlowSelectionView</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/loginFlowSelectionIDPSelected:options:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFEntityIdLength15</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFEntityIdLength15</Declaration>
+            
+            <DeclaredIn>NSString+SFAdditions.h</DeclaredIn>
+            
             <NodeRef refid="178"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKLoginFlowSelectionViewDelegate/loginFlowSelectionLocalLoginSelected:options:</TokenIdentifier>
-			<Abstract type="html">Used to notify the SDK of user selection on the login flow selection view</Abstract>
-			<DeclaredIn>SFSDKLoginFlowSelectionView.h</DeclaredIn>
-			
-			<Declaration>- (void)loginFlowSelectionLocalLoginSelected:(UIViewController *)controller options:(NSDictionary *)appOptions</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>controller</Name>
-					<Abstract type="html">instance invoking this delegate</Abstract>
-				</Parameter><Parameter>
-					<Name>appOptions</Name>
-					<Abstract type="html">addl. name value pairs sent from the sdk for the SFSDKLoginFlowSelectionVie</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/loginFlowSelectionLocalLoginSelected:options:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFEntityIdLength18</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFEntityIdLength18</Declaration>
+            
+            <DeclaredIn>NSString+SFAdditions.h</DeclaredIn>
+            
             <NodeRef refid="178"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFEntityIdLengthMin</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFEntityIdLengthMin</Declaration>
+            
+            <DeclaredIn>NSString+SFAdditions.h</DeclaredIn>
+            
+            <NodeRef refid="178"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFEntityIdLengthMax</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFEntityIdLengthMax</Declaration>
+            
+            <DeclaredIn>NSString+SFAdditions.h</DeclaredIn>
+            
+            <NodeRef refid="178"/>
+        </Token>
         
         
 	</File>

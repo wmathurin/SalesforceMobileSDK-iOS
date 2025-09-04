@@ -60,9 +60,11 @@
 		
 		<option value="//api/name/additionalTokenRefreshParams">additionalTokenRefreshParams</option>
 		
-		<option value="//api/name/advancedAuthState">advancedAuthState</option>
-		
 		<option value="//api/name/approvalCode">approvalCode</option>
+		
+		<option value="//api/name/asWebAuthenticationSession">asWebAuthenticationSession</option>
+		
+		<option value="//api/name/authClient">authClient</option>
 		
 		<option value="//api/name/authInfo">authInfo</option>
 		
@@ -78,9 +80,13 @@
 		
 		<option value="//api/name/delegate">delegate</option>
 		
+		<option value="//api/name/domainUpdated">domainUpdated</option>
+		
+		<option value="//api/name/frontdoorBridgeLoginOverride">frontdoorBridgeLoginOverride</option>
+		
 		<option value="//api/name/initialRequestLoaded">initialRequestLoaded</option>
 		
-		<option value="//api/name/oauthCoordinatorFlow">oauthCoordinatorFlow</option>
+		<option value="//api/name/loginHint">loginHint</option>
 		
 		<option value="//api/name/origWebUserAgent">origWebUserAgent</option>
 		
@@ -96,6 +102,8 @@
 		
 		<option value="//api/name/useBrowserAuth">useBrowserAuth</option>
 		
+		<option value="//api/name/useNativeAuth">useNativeAuth</option>
+		
 		<option value="//api/name/userAgentForAuth">userAgentForAuth</option>
 		
 		<option value="//api/name/view">view</option>
@@ -103,18 +111,6 @@
 	</optgroup>
 	
 
-	
-	<optgroup label="Class Methods">
-		
-		<option value="//api/name/errorWithType:description:">+ errorWithType:description:</option>
-		
-		<option value="//api/name/errorWithType:description:underlyingError:">+ errorWithType:description:underlyingError:</option>
-		
-		<option value="//api/name/parseQueryString:">+ parseQueryString:</option>
-		
-		<option value="//api/name/timestampStringToDate:">+ timestampStringToDate:</option>
-		
-	</optgroup>
 	
 
 	
@@ -124,7 +120,9 @@
 		
 		<option value="//api/name/authenticateWithCredentials:">- authenticateWithCredentials:</option>
 		
-		<option value="//api/name/beginIDPFlow:">- beginIDPFlow:</option>
+		<option value="//api/name/beginIDPFlow:success:failure:">- beginIDPFlow:success:failure:</option>
+		
+		<option value="//api/name/beginWebViewFlow">- beginWebViewFlow</option>
 		
 		<option value="//api/name/generateApprovalUrlString">- generateApprovalUrlString</option>
 		
@@ -133,6 +131,8 @@
 		<option value="//api/name/handleIDPAuthenticationResponse:">- handleIDPAuthenticationResponse:</option>
 		
 		<option value="//api/name/handleUserAgentResponse:">- handleUserAgentResponse:</option>
+		
+		<option value="//api/name/initWithAuthSession:">- initWithAuthSession:</option>
 		
 		<option value="//api/name/initWithCredentials:">- initWithCredentials:</option>
 		
@@ -420,47 +420,6 @@ OAuth request, which implicitly sets the scope to include: &ldquo;id&rdquo;, &ld
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/advancedAuthState" title="advancedAuthState"></a>
-	<h3 class="method-title"><code><a href="#//api/name/advancedAuthState">&nbsp;&nbsp;advancedAuthState</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>The current state of any in-progress advanced authentication flow.</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) SFOAuthAdvancedAuthState advancedAuthState</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">SFOAuthCoordinator.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/view" title="view"></a>
 	<h3 class="method-title"><code><a href="#//api/name/view">&nbsp;&nbsp;view</a></code>
 </h3>
@@ -516,8 +475,8 @@ OAuth request, which implicitly sets the scope to include: &ldquo;id&rdquo;, &ld
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/authSession" title="authSession"></a>
-	<h3 class="method-title"><code><a href="#//api/name/authSession">&nbsp;&nbsp;authSession</a></code>
+	<a name="//api/name/asWebAuthenticationSession" title="asWebAuthenticationSession"></a>
+	<h3 class="method-title"><code><a href="#//api/name/asWebAuthenticationSession">&nbsp;&nbsp;asWebAuthenticationSession</a></code>
 </h3>
 
 	<div class="method-info">
@@ -532,7 +491,7 @@ OAuth request, which implicitly sets the scope to include: &ldquo;id&rdquo;, &ld
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly, null_unspecified) SFAuthenticationSession *authSession</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly, null_unspecified) ASWebAuthenticationSession *asWebAuthenticationSession</code></div>
 
 		    
 			
@@ -736,12 +695,69 @@ The brand login path used for the authorize endpoint e.g. /brand in
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Setup the coordinator to use Safari<a href="../Classes/ViewController.html">ViewController</a> for authentication.</p>
+				<p>Setup the coordinator to use ASWebAuthenticationSession for authentication.</p>
 			</div>
 			
 		    
 
 			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL useBrowserAuth</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">SFOAuthCoordinator.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/authClient" title="authClient"></a>
+	<h3 class="method-title"><code><a href="#//api/name/authClient">&nbsp;&nbsp;authClient</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) id&lt;SFSDKOAuthProtocol&gt; authClient</code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/useNativeAuth" title="useNativeAuth"></a>
+	<h3 class="method-title"><code><a href="#//api/name/useNativeAuth">&nbsp;&nbsp;useNativeAuth</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Setup the coordinator to use an app provided native UI for authentication.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL useNativeAuth</code></div>
 
 		    
 			
@@ -1174,8 +1190,8 @@ should handle, NO otherwise.</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/beginIDPFlow:" title="beginIDPFlow:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/beginIDPFlow:">&ndash;&nbsp;beginIDPFlow:</a></code>
+	<a name="//api/name/beginIDPFlow:success:failure:" title="beginIDPFlow:success:failure:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/beginIDPFlow:success:failure:">&ndash;&nbsp;beginIDPFlow:success:failure:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1184,7 +1200,7 @@ should handle, NO otherwise.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>- (void)beginIDPFlow:(SFOAuthCredentials *)<em>spAppCredentials</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)beginIDPFlow:(SFUserAccount *)<em>user</em> success:(void ( ^ ) ( void ))<em>successBlock</em> failure:(void ( ^ ) ( NSError *))<em>failureBlock</em></code></div>
 
 		    
 		</div>
@@ -1198,22 +1214,6 @@ should handle, NO otherwise.</p>
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/oauthCoordinatorFlow" title="oauthCoordinatorFlow"></a>
-	<h3 class="method-title"><code><a href="#//api/name/oauthCoordinatorFlow">&nbsp;&nbsp;oauthCoordinatorFlow</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, weak) id&lt;SFOAuthCoordinatorFlow&gt; oauthCoordinatorFlow</code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
 	<a name="//api/name/authenticating" title="authenticating"></a>
 	<h3 class="method-title"><code><a href="#//api/name/authenticating">&nbsp;&nbsp;authenticating</a></code>
 </h3>
@@ -1240,7 +1240,7 @@ should handle, NO otherwise.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readonly) NSURLSession *session</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readonly, nullable) NSURLSession *session</code></div>
 
 		    
 		</div>
@@ -1256,7 +1256,7 @@ should handle, NO otherwise.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSMutableData *responseData</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) NSMutableData *responseData</code></div>
 
 		    
 		</div>
@@ -1273,6 +1273,22 @@ should handle, NO otherwise.</p>
 			
 
 			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL initialRequestLoaded</code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/domainUpdated" title="domainUpdated"></a>
+	<h3 class="method-title"><code><a href="#//api/name/domainUpdated">&nbsp;&nbsp;domainUpdated</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) BOOL domainUpdated</code></div>
 
 		    
 		</div>
@@ -1304,7 +1320,7 @@ should handle, NO otherwise.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) NSString *codeVerifier</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) NSString *codeVerifier</code></div>
 
 		    
 		</div>
@@ -1320,7 +1336,7 @@ should handle, NO otherwise.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) SFOAuthInfo *authInfo</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nonnull) SFOAuthInfo *authInfo</code></div>
 
 		    
 		</div>
@@ -1352,7 +1368,71 @@ should handle, NO otherwise.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) SFOAuthCredentials *spAppCredentials</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) SFOAuthCredentials *spAppCredentials</code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/authSession" title="authSession"></a>
+	<h3 class="method-title"><code><a href="#//api/name/authSession">&nbsp;&nbsp;authSession</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, weak, nullable) SFSDKAuthSession *authSession</code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/frontdoorBridgeLoginOverride" title="frontdoorBridgeLoginOverride"></a>
+	<h3 class="method-title"><code><a href="#//api/name/frontdoorBridgeLoginOverride">&nbsp;&nbsp;frontdoorBridgeLoginOverride</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) SFSDKAuthCoordinatorFrontdoorBridgeLoginOverride *frontdoorBridgeLoginOverride</code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/loginHint" title="loginHint"></a>
+	<h3 class="method-title"><code><a href="#//api/name/loginHint">&nbsp;&nbsp;loginHint</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) NSString *loginHint</code></div>
+
+		    
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/initWithAuthSession:" title="initWithAuthSession:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithAuthSession:">&ndash;&nbsp;initWithAuthSession:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+
+			<div class="method-subsection method-declaration"><code>- (instancetype)initWithAuthSession:(SFSDKAuthSession *)<em>authSession</em></code></div>
 
 		    
 		</div>
@@ -1555,8 +1635,8 @@ should handle, NO otherwise.</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/parseQueryString:" title="parseQueryString:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/parseQueryString:">+&nbsp;parseQueryString:</a></code>
+	<a name="//api/name/beginWebViewFlow" title="beginWebViewFlow"></a>
+	<h3 class="method-title"><code><a href="#//api/name/beginWebViewFlow">&ndash;&nbsp;beginWebViewFlow</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1565,55 +1645,7 @@ should handle, NO otherwise.</p>
 		<div class="method-info-container">
 			
 
-			<div class="method-subsection method-declaration"><code>+ (NSDictionary *)parseQueryString:(NSString *)<em>query</em></code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/errorWithType:description:" title="errorWithType:description:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/errorWithType:description:">+&nbsp;errorWithType:description:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>+ (NSError *)errorWithType:(NSString *)<em>type</em> description:(NSString *)<em>description</em></code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/errorWithType:description:underlyingError:" title="errorWithType:description:underlyingError:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/errorWithType:description:underlyingError:">+&nbsp;errorWithType:description:underlyingError:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>+ (NSError *)errorWithType:(NSString *)<em>type</em> description:(NSString *)<em>description</em> underlyingError:(NSError *)<em>underlyingError</em></code></div>
-
-		    
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/timestampStringToDate:" title="timestampStringToDate:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/timestampStringToDate:">+&nbsp;timestampStringToDate:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-
-			<div class="method-subsection method-declaration"><code>+ (NSDate *)timestampStringToDate:(NSString *)<em>timestamp</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)beginWebViewFlow</code></div>
 
 		    
 		</div>
@@ -1633,7 +1665,7 @@ should handle, NO otherwise.</p>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2019 Salesforce.com. All rights reserved. Updated: 2019-05-22</p>
+						<p class="copyright">Copyright &copy; 2025 Salesforce.com. All rights reserved. Updated: 2025-09-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

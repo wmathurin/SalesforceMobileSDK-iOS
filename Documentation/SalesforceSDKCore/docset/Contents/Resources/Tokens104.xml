@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKPasscodeVerifyController.html">
+	<File path="Classes/SFSDKSPLoginResponseCommand.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKPasscodeVerifyController</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKSPLoginResponseCommand</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
             
 			
 			<NodeRef refid="104"/>
@@ -13,122 +13,110 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/setViewConfig:</TokenIdentifier>
-			<Abstract type="html">Setup passcode view related preferences.</Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) SFSDKAppLockViewConfig *viewConfig</Declaration>
-			
-			
-			<Anchor>//api/name/viewConfig</Anchor>
-            <NodeRef refid="104"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/viewConfig</TokenIdentifier>
-			<Abstract type="html">Setup passcode view related preferences.</Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) SFSDKAppLockViewConfig *viewConfig</Declaration>
-			
-			
-			<Anchor>//api/name/viewConfig</Anchor>
-            <NodeRef refid="104"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPasscodeVerifyController/viewConfig</TokenIdentifier>
-			<Abstract type="html">Setup passcode view related preferences.</Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) SFSDKAppLockViewConfig *viewConfig</Declaration>
-			
-			
-			<Anchor>//api/name/viewConfig</Anchor>
-            <NodeRef refid="104"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/setPasscodeLengthKnown:</TokenIdentifier>
-			<Abstract type="html">Wether the passcode length is known.</Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) BOOL passcodeLengthKnown</Declaration>
-			
-			
-			<Anchor>//api/name/passcodeLengthKnown</Anchor>
-            <NodeRef refid="104"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/passcodeLengthKnown</TokenIdentifier>
-			<Abstract type="html">Wether the passcode length is known.</Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) BOOL passcodeLengthKnown</Declaration>
-			
-			
-			<Anchor>//api/name/passcodeLengthKnown</Anchor>
-            <NodeRef refid="104"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPasscodeVerifyController/passcodeLengthKnown</TokenIdentifier>
-			<Abstract type="html">Wether the passcode length is known.</Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) BOOL passcodeLengthKnown</Declaration>
-			
-			
-			<Anchor>//api/name/passcodeLengthKnown</Anchor>
-            <NodeRef refid="104"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/setVerifyDelegate:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSPLoginResponseCommand/setState:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKPasscodeVerifyDelegate&gt; verifyDelegate</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
 			
 			
-			<Anchor>//api/name/verifyDelegate</Anchor>
+			<Anchor>//api/name/state</Anchor>
             <NodeRef refid="104"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/verifyDelegate</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSPLoginResponseCommand/state</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKPasscodeVerifyDelegate&gt; verifyDelegate</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
 			
 			
-			<Anchor>//api/name/verifyDelegate</Anchor>
+			<Anchor>//api/name/state</Anchor>
             <NodeRef refid="104"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/SFSDKPasscodeVerifyController/verifyDelegate</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKSPLoginResponseCommand/state</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;SFSDKPasscodeVerifyDelegate&gt; verifyDelegate</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *state</Declaration>
 			
 			
-			<Anchor>//api/name/verifyDelegate</Anchor>
+			<Anchor>//api/name/state</Anchor>
             <NodeRef refid="104"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKPasscodeVerifyController/initWithViewConfig:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSPLoginResponseCommand/setAuthCode:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKPasscodeVerifyController.h</DeclaredIn>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)initWithViewConfig:(SFSDKAppLockViewConfig *)config</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
 			
 			
-			<Anchor>//api/name/initWithViewConfig:</Anchor>
+			<Anchor>//api/name/authCode</Anchor>
+            <NodeRef refid="104"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSPLoginResponseCommand/authCode</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
+			
+			
+			<Anchor>//api/name/authCode</Anchor>
+            <NodeRef refid="104"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKSPLoginResponseCommand/authCode</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *authCode</Declaration>
+			
+			
+			<Anchor>//api/name/authCode</Anchor>
+            <NodeRef refid="104"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSPLoginResponseCommand/setDomain:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *domain</Declaration>
+			
+			
+			<Anchor>//api/name/domain</Anchor>
+            <NodeRef refid="104"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKSPLoginResponseCommand/domain</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *domain</Declaration>
+			
+			
+			<Anchor>//api/name/domain</Anchor>
+            <NodeRef refid="104"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKSPLoginResponseCommand/domain</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKSPLoginResponseCommand.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *domain</Declaration>
+			
+			
+			<Anchor>//api/name/domain</Anchor>
             <NodeRef refid="104"/>
 		</Token>
 		

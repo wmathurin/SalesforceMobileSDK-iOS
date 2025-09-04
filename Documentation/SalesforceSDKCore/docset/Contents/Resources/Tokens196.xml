@@ -1,77 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFUserAccountPersister.html">
+	<File path="Constants/SFUserAccountDataChange.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFUserAccountPersister</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFUserAccountManager.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFUserAccountDataChange</TokenIdentifier>
+			<Abstract type="html">The various changes that can affect a user account</Abstract>
+			<DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
             
 			
 			<NodeRef refid="196"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFUserAccountPersister/saveAccountForUser:error:</TokenIdentifier>
-			<Abstract type="html">Called when the Account manager requires to save the state of an account.</Abstract>
-			<DeclaredIn>SFUserAccountManager.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)saveAccountForUser:(SFUserAccount *)userAccount error:(NSError **)error</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>userAccount</Name>
-					<Abstract type="html">The instance of SFUserAccount making the call.</Abstract>
-				</Parameter><Parameter>
-					<Name>error</Name>
-					<Abstract type="html">On output, the error if the return value is NO</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">YES if the account was saved properly, NO in case of error</Abstract></ReturnValue>
-			<Anchor>//api/name/saveAccountForUser:error:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeUnknown</TokenIdentifier>
+            <Abstract type="html">Unknown change
+     </Abstract>
+            <Declaration>SFUserAccountDataChangeUnknown</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
             <NodeRef refid="196"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFUserAccountPersister/fetchAllAccounts:</TokenIdentifier>
-			<Abstract type="html">Fetches all the accounts.</Abstract>
-			<DeclaredIn>SFUserAccountManager.h</DeclaredIn>
-			
-			<Declaration>- (NSDictionary&lt;SFUserAccountIdentity*,SFUserAccount*&gt; *)fetchAllAccounts:(NSError **)error</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>error</Name>
-					<Abstract type="html">On output, the error if the return value is NO</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">NSDictionary with SFUserAccountIdentity as keys and SFUserAccount as values
-  </Abstract></ReturnValue>
-			<Anchor>//api/name/fetchAllAccounts:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeCommunityId</TokenIdentifier>
+            <Abstract type="html">The community ID changed
+     </Abstract>
+            <Declaration>SFUserAccountDataChangeCommunityId</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
             <NodeRef refid="196"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFUserAccountPersister/deleteAccountForUser:error:</TokenIdentifier>
-			<Abstract type="html">Allows you to remove the given user account.</Abstract>
-			<DeclaredIn>SFUserAccountManager.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)deleteAccountForUser:(SFUserAccount *)user error:(NSError **)error</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>user</Name>
-					<Abstract type="html">The user account to remove.</Abstract>
-				</Parameter><Parameter>
-					<Name>error</Name>
-					<Abstract type="html">Output error parameter, populated if there was an error deleting
-the account (likely from the filesystem operations).</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">YES if the deletion was successful, NO otherwise.  Note: If no persisted account matching
-the user parameter is found, no action will be taken, and deletion will be reported as successful.</Abstract></ReturnValue>
-			<Anchor>//api/name/deleteAccountForUser:error:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeIdData</TokenIdentifier>
+            <Abstract type="html">The ID data changed
+     </Abstract>
+            <Declaration>SFUserAccountDataChangeIdData</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
             <NodeRef refid="196"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeInstanceURL</TokenIdentifier>
+            <Abstract type="html">InstanceURL Changed
+    </Abstract>
+            <Declaration>SFUserAccountDataChangeInstanceURL</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
+            <NodeRef refid="196"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFUserAccountDataChangeAccessToken</TokenIdentifier>
+            <Abstract type="html">AccessToken Changed
+    </Abstract>
+            <Declaration>SFUserAccountDataChangeAccessToken</Declaration>
+            
+            <DeclaredIn>SFUserAccountConstants.h</DeclaredIn>
+            
+            <NodeRef refid="196"/>
+        </Token>
         
         
 	</File>

@@ -1,58 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/SFSDKOAuthClientSafariViewDelegate.html">
+	<File path="Constants/SFOAuthTokenEndpointFlow.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/SFSDKOAuthClientSafariViewDelegate</TokenIdentifier>
-			<Abstract type="html">Delegate that will be used to notify of all the OAuth Client Browser Events.</Abstract>
-			<DeclaredIn>SFSDKOAuthClient.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/SFOAuthTokenEndpointFlow</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
             
 			
 			<NodeRef refid="183"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKOAuthClientSafariViewDelegate/authClient:willBeginBrowserAuthentication:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClient.h</DeclaredIn>
-			
-			<Declaration>- (void)authClient:(SFSDKOAuthClient *)client willBeginBrowserAuthentication:(SFOAuthBrowserFlowCallbackBlock)callbackBlock</Declaration>
-			
-			
-			<Anchor>//api/name/authClient:willBeginBrowserAuthentication:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowNone</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowNone</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
             <NodeRef refid="183"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKOAuthClientSafariViewDelegate/authClient:didBeginAuthenticationWithSession:</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>SFSDKOAuthClient.h</DeclaredIn>
-			
-			<Declaration>- (void)authClient:(SFSDKOAuthClient *)client didBeginAuthenticationWithSession:(SFAuthenticationSession *)session</Declaration>
-			
-			
-			<Anchor>//api/name/authClient:didBeginAuthenticationWithSession:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowRefresh</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowRefresh</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
             <NodeRef refid="183"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/SFSDKOAuthClientSafariViewDelegate/authClientDidCancelBrowserFlow:</TokenIdentifier>
-			<Abstract type="html">Called when a browser flow authentication is cancelled.</Abstract>
-			<DeclaredIn>SFSDKOAuthClient.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)authClientDidCancelBrowserFlow:(SFSDKOAuthClient *)client</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>client</Name>
-					<Abstract type="html">The instance of SFSDKOAuthClient making the call.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/authClientDidCancelBrowserFlow:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/SFOAuthTokenEndpointFlowAdvancedBrowser</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>SFOAuthTokenEndpointFlowAdvancedBrowser</Declaration>
+            
+            <DeclaredIn>SFOAuthCoordinator+Internal.h</DeclaredIn>
+            
             <NodeRef refid="183"/>
-		</Token>
-		
+        </Token>
         
         
 	</File>

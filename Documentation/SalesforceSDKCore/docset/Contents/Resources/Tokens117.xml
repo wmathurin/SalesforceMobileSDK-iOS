@@ -25,14 +25,14 @@
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/SFSDKURLHandlerManager/processRequest:options:</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKURLHandlerManager/processRequest:options:completion:failure:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFSDKURLHandlerManager.h</DeclaredIn>
 			
-			<Declaration>- (BOOL)processRequest:(NSURL *)url options:(NSDictionary *)options</Declaration>
+			<Declaration>- (BOOL)processRequest:(NSURL *)url options:(NSDictionary *)options completion:(SFUserAccountManagerSuccessCallbackBlock)completionBlock failure:(SFUserAccountManagerFailureCallbackBlock)failureBlock</Declaration>
 			
 			
-			<Anchor>//api/name/processRequest:options:</Anchor>
+			<Anchor>//api/name/processRequest:options:completion:failure:</Anchor>
             <NodeRef refid="117"/>
 		</Token>
 		

@@ -169,6 +169,42 @@
 		</Token>
 		
 		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setApiInstanceUrl:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *apiInstanceUrl</Declaration>
+			
+			
+			<Anchor>//api/name/apiInstanceUrl</Anchor>
+            <NodeRef refid="112"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/apiInstanceUrl</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *apiInstanceUrl</Declaration>
+			
+			
+			<Anchor>//api/name/apiInstanceUrl</Anchor>
+            <NodeRef refid="112"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKTestCredentialsData/apiInstanceUrl</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *apiInstanceUrl</Declaration>
+			
+			
+			<Anchor>//api/name/apiInstanceUrl</Anchor>
+            <NodeRef refid="112"/>
+		</Token>
+		
+		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/SFSDKTestCredentialsData/setClientId:</TokenIdentifier>
 			<Abstract type="html"></Abstract>
 			<DeclaredIn>SFSDKTestCredentialsData.h</DeclaredIn>

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/SFSDKAppFeatureMarkers.html">
+	<File path="Classes/SFSDKCompositeRequest.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/SFSDKAppFeatureMarkers</TokenIdentifier>
-			<Abstract type="html">Class to register and unregister feature markers associated with SDK facilities being used in
-an app.</Abstract>
-			<DeclaredIn>SFSDKAppFeatureMarkers.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/SFSDKCompositeRequest</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
             
 			
 			<NodeRef refid="60"/>
@@ -14,48 +13,86 @@ an app.</Abstract>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAppFeatureMarkers/registerAppFeature:</TokenIdentifier>
-			<Abstract type="html">Register a particular app feature.</Abstract>
-			<DeclaredIn>SFSDKAppFeatureMarkers.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeRequest/setAllOrNone:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
 			
-			<Declaration>+ (void)registerAppFeature:(nonnull NSString *)appFeature</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>appFeature</Name>
-					<Abstract type="html">The string representation of the feature to register.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, readonly) BOOL allOrNone</Declaration>
 			
-			<Anchor>//api/name/registerAppFeature:</Anchor>
+			
+			<Anchor>//api/name/allOrNone</Anchor>
             <NodeRef refid="60"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAppFeatureMarkers/unregisterAppFeature:</TokenIdentifier>
-			<Abstract type="html">Unregister a particular app feature.</Abstract>
-			<DeclaredIn>SFSDKAppFeatureMarkers.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeRequest/allOrNone</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
 			
-			<Declaration>+ (void)unregisterAppFeature:(nonnull NSString *)appFeature</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>appFeature</Name>
-					<Abstract type="html">The string representation of the feature to unregister.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, readonly) BOOL allOrNone</Declaration>
 			
-			<Anchor>//api/name/unregisterAppFeature:</Anchor>
+			
+			<Anchor>//api/name/allOrNone</Anchor>
             <NodeRef refid="60"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/SFSDKAppFeatureMarkers/appFeatures</TokenIdentifier>
-			<Abstract type="html">The current set of registered features.</Abstract>
-			<DeclaredIn>SFSDKAppFeatureMarkers.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKCompositeRequest/allOrNone</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
 			
-			<Declaration>+ (nonnull NSSet&lt;NSString*&gt; *)appFeatures</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL allOrNone</Declaration>
 			
-			<ReturnValue><Abstract type="html">The current set of registered features.</Abstract></ReturnValue>
-			<Anchor>//api/name/appFeatures</Anchor>
+			
+			<Anchor>//api/name/allOrNone</Anchor>
+            <NodeRef refid="60"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeRequest/setAllSubRequests:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSArray&lt;SFSDKCompositeSubRequest*&gt; *allSubRequests</Declaration>
+			
+			
+			<Anchor>//api/name/allSubRequests</Anchor>
+            <NodeRef refid="60"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeRequest/allSubRequests</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSArray&lt;SFSDKCompositeSubRequest*&gt; *allSubRequests</Declaration>
+			
+			
+			<Anchor>//api/name/allSubRequests</Anchor>
+            <NodeRef refid="60"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/SFSDKCompositeRequest/allSubRequests</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) NSArray&lt;SFSDKCompositeSubRequest*&gt; *allSubRequests</Declaration>
+			
+			
+			<Anchor>//api/name/allSubRequests</Anchor>
+            <NodeRef refid="60"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SFSDKCompositeRequest/addRequest:referenceId:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SFSDKCompositeRequest+Internal.h</DeclaredIn>
+			
+			<Declaration>- (void)addRequest:(SFRestRequest *)request referenceId:(NSString *)identifier</Declaration>
+			
+			
+			<Anchor>//api/name/addRequest:referenceId:</Anchor>
             <NodeRef refid="60"/>
 		</Token>
 		
