@@ -573,6 +573,16 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     return [self defaultAuthRequestWithLoginHost:nil];
 }
 
+-(SFSDKAuthRequest *)migrateRefreshAuthRequest:(SFSDKAppConfig *)newAppConfig {
+    SFSDKAuthRequest *request = [[SFSDKAuthRequest alloc] init];
+    request.loginHost = self.loginHost;
+    request.additionalOAuthParameterKeys = self.additionalOAuthParameterKeys;
+    request.oauthClientId = newAppConfig.remoteAccessConsumerKey;
+    request.oauthCompletionUrl = newAppConfig.oauthRedirectURI;
+    request.scene = [[SFSDKWindowManager sharedManager] defaultScene];
+    return request;
+}
+
 -(SFSDKAuthRequest *)nativeLoginAuthRequest {
     SFNativeLoginManagerInternal *nativeLoginManager = (SFNativeLoginManagerInternal *)[[SalesforceSDKManager sharedManager] nativeLoginManager];
     SFSDKAuthRequest *request = [[SFSDKAuthRequest alloc] init];
@@ -613,9 +623,16 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [SFSDKWebViewStateManager removeSessionForcefullyWithCompletionHandler:^{
-            [authSession.oauthCoordinator authenticateWithCredentials:authSession.credentials];
+            // Get app config for the login host. If appConfigRuntimeSelectorBlock is set,
+            // it will be invoked to select the appropriate config. Otherwise, returns the default appConfig.
+            [[SalesforceSDKManager sharedManager] appConfigForLoginHost:request.loginHost callback:^(SFSDKAppConfig* appConfig) {
+                authSession.credentials.clientId = appConfig.remoteAccessConsumerKey;
+                authSession.credentials.redirectUri = appConfig.oauthRedirectURI;
+                authSession.credentials.scopes = [appConfig.oauthScopes allObjects];
+                [authSession.oauthCoordinator authenticateWithCredentials:authSession.credentials];
+            }];
         }];
-            
+        
     });
     return self.authSessions[sceneId].isAuthenticating;
 }
@@ -730,7 +747,7 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         [self setCurrentUserInternal:nil];
     }
 
-    [SFSDKWebViewStateManager removeSession];
+    [SFSDKWebViewStateManager resetSessionCookie];
     
     //restore these id's inorder to enable post logout cleanup of components
     // TODO: Revisit the userInfo data structure of kSFNotificationUserDidLogout in 7.0.
@@ -807,6 +824,45 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
         }];
     }
 }
+
+- (void)migrateRefreshToken:(SFUserAccount *)user
+               newAppConfig:(SFSDKAppConfig *)newAppConfig
+                    success:(SFUserAccountManagerSuccessCallbackBlock)completionBlock
+                    failure:(SFUserAccountManagerFailureCallbackBlock)failureBlock {
+    
+    // Store current user credentials to revoke them once migration completes
+    SFOAuthCredentials *preMigrationCredentials = self.currentUser.credentials;
+
+    // Creating a SFSDKAuthRequest and SFSDKAuthSession
+    SFSDKAuthRequest *request = [self migrateRefreshAuthRequest:newAppConfig];
+    SFSDKAuthSession *authSession = [[SFSDKAuthSession alloc] initWith:request credentials:nil];
+    authSession.isAuthenticating = YES;
+    authSession.authSuccessCallback = ^(SFOAuthInfo *authInfo, SFUserAccount *newUserAccount) {
+        if (preMigrationCredentials != nil && ![preMigrationCredentials.refreshToken isEqualToString:newUserAccount.credentials.refreshToken]) {
+            
+            id<SFSDKOAuthProtocol> authClient = self.authClient();
+            [authClient revokeRefreshToken:preMigrationCredentials reason:SFLogoutReasonRefreshTokenRotated];
+        }
+
+        if (completionBlock) {
+            completionBlock(authInfo, newUserAccount);
+        }
+    };
+    authSession.authFailureCallback = failureBlock;
+    authSession.oauthCoordinator.delegate = self;
+    authSession.identityCoordinator.delegate = self;
+    self.authSessions[authSession.sceneId] = authSession;
+    
+    // Kicking off the actual migration (will load front-door approval URL in web view)
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf dismissAuthViewControllerIfPresentForScene:authSession.oauthRequest.scene completion:^{
+            [authSession.oauthCoordinator migrateRefreshToken:user];
+        }];
+    });
+}
+
 
 #pragma mark - SFOAuthCoordinatorDelegate
 - (void)oauthCoordinatorWillBeginAuthentication:(SFOAuthCoordinator *)coordinator authInfo:(SFOAuthInfo *)info {
@@ -1044,6 +1100,27 @@ static NSString * const kSFGenericFailureAuthErrorHandler = @"GenericFailureErro
     [[NSNotificationCenter defaultCenter] postNotification:loginHostChangedNotification];
     NSString *sceneId = loginViewController.view.window.windowScene.session.persistentIdentifier;
     self.authSessions[sceneId].oauthRequest.loginHost = newLoginHost.host;
+    [self restartAuthenticationForViewController:loginViewController];
+}
+
+- (void)loginViewControllerDidClearCache:(SFLoginViewController *)loginViewController {
+    [SFSDKWebViewStateManager clearCacheWithCompletionHandler:^{
+        [self restartAuthenticationForViewController:loginViewController];
+    }];
+}
+
+- (void)loginViewControllerDidClearCookies:(SFLoginViewController *)loginViewController {
+    [SFSDKWebViewStateManager removeSessionForcefullyWithCompletionHandler:^{
+        [self restartAuthenticationForViewController:loginViewController];
+    }];
+}
+
+- (void)loginViewControllerDidReload:(SFLoginViewController *)loginViewController {
+    [self restartAuthenticationForViewController:loginViewController];
+}
+
+- (void)restartAuthenticationForViewController:(SFLoginViewController *)loginViewController {
+    NSString *sceneId = loginViewController.view.window.windowScene.session.persistentIdentifier;
     [self restartAuthentication:self.authSessions[sceneId]];
 }
 

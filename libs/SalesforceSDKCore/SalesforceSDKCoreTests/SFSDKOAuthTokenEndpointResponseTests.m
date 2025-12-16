@@ -1,5 +1,5 @@
 /*
- SFOAuthCredentialsTests.m
+ SFSDKOAuthTokenEndpointResponseTests.m
  SalesforceSDKCoreTests
  
  Copyright (c) 2025-present, salesforce.com, inc. All rights reserved.
@@ -26,41 +26,28 @@
  */
 
 #import <XCTest/XCTest.h>
-#import "SFOAuthCredentials.h"
+#import "SFSDKOAuth2.h"
 
-@interface SFOAuthCredentialsTests : XCTestCase
+@interface SFSDKOAuthTokenEndpointResponse ()
+
+- (instancetype)initWithDictionary:(NSDictionary *)nvPairs parseAdditionalFields:(NSArray<NSString *> *)additionalOAuthParameterKeys;
 
 @end
 
-@implementation SFOAuthCredentialsTests
+@interface SFSDKOAuthTokenEndpointResponseTests : XCTestCase
 
-- (void)testUpdateCredentialsNotEncryptedNotStored {
-    [self tryUpdateCredentials:FALSE storageType:SFOAuthCredentialsStorageTypeNone];
-}
+@end
 
-- (void)testUpdateCredentialsEncryptedNotStored {
-    [self tryUpdateCredentials:TRUE storageType:SFOAuthCredentialsStorageTypeNone];
-}
+@implementation SFSDKOAuthTokenEndpointResponseTests
 
-- (void)testUpdateCredentialsNotEncryptedStored {
-    [self tryUpdateCredentials:FALSE storageType:SFOAuthCredentialsStorageTypeKeychain];
-}
-
-- (void)testUpdateCredentialsEncryptedStored {
-    [self tryUpdateCredentials:TRUE storageType:SFOAuthCredentialsStorageTypeKeychain];
-}
-
-
-- (void)tryUpdateCredentials:(BOOL)encrypted storageType:(SFOAuthCredentialsStorageType)storageType {
-    // Creating SFOAuthCredentials
-    SFOAuthCredentials *creds = [[SFOAuthCredentials alloc] initWithIdentifier:@"test_auth_creds" clientId:@"test_client_id" encrypted:encrypted storageType:storageType];
-
-    // Prepare dictionary with credentials
+- (void)testInitWithDictionary {
+    // Prepeare dictionary simulating response from token end point
     NSMutableDictionary<NSString *, NSString *> *params = [NSMutableDictionary dictionary];
     [params setObject:@"test-auth-token" forKey:@"access_token"];
     [params setObject:@"test-refresh-token" forKey:@"refresh_token"];
     [params setObject:@"https://instance.salesforce.com" forKey:@"instance_url"];
     [params setObject:@"https://api.salesforce.com" forKey:@"api_instance_url"];
+    [params setObject:@"api refresh_token" forKey:@"scope"];
     [params setObject:@"https://id.salesforce.com" forKey:@"id"];
     [params setObject:@"test-community-id" forKey:@"sfdc_community_id"];
     [params setObject:@"https://community.salesforce.com" forKey:@"sfdc_community_url"];
@@ -78,30 +65,47 @@
     [params setObject:@"test-token-format" forKey:@"token_format"];
     [params setObject:@"test-beacon-child-consumer-key" forKey:@"beacon_child_consumer_key"];
     [params setObject:@"test-beacon-child-consumer-secret" forKey:@"beacon_child_consumer_secret"];
-    [creds updateCredentials:params];
+
+    // Additional fields
+    NSArray<NSString *>* additionalFields = @[ @"additional-1", @"additional-2" ];
+    for (NSString *field in additionalFields) {
+        NSString *value = [NSString stringWithFormat:@"test-%@", field];
+        [params setObject:value forKey:field];
+    }
     
-    // Check updated SFOAuthCredentials
-    XCTAssertEqualObjects(creds.accessToken, @"test-auth-token");
-    XCTAssertEqualObjects(creds.refreshToken, @"test-refresh-token");
-    XCTAssertEqualObjects(creds.instanceUrl.absoluteString, @"https://instance.salesforce.com");
-    XCTAssertEqualObjects(creds.apiInstanceUrl.absoluteString, @"https://api.salesforce.com");
-    XCTAssertEqualObjects(creds.identityUrl.absoluteString, @"https://id.salesforce.com");
-    XCTAssertEqualObjects(creds.communityId, @"test-community-id");
-    XCTAssertEqualObjects(creds.communityUrl.absoluteString, @"https://community.salesforce.com");
-    XCTAssertEqualObjects(creds.lightningDomain, @"test-lightning-domain");
-    XCTAssertEqualObjects(creds.lightningSid, @"test-lightning-sid");
-    XCTAssertEqualObjects(creds.vfDomain, @"test-vf-domain");
-    XCTAssertEqualObjects(creds.vfSid, @"test-vf-sid");
-    XCTAssertEqualObjects(creds.contentDomain, @"test-content-domain");
-    XCTAssertEqualObjects(creds.contentSid, @"test-content-sid");
-    XCTAssertEqualObjects(creds.csrfToken, @"test-csrf-token");
-    XCTAssertEqualObjects(creds.cookieClientSrc, @"test-cookie-client-src");
-    XCTAssertEqualObjects(creds.cookieSidClient, @"test-cookie-sid-client");
-    XCTAssertEqualObjects(creds.sidCookieName, @"test-sid-cookie-name");
-    XCTAssertEqualObjects(creds.parentSid, @"test-parent-sid");
-    XCTAssertEqualObjects(creds.tokenFormat, @"test-token-format");
-    XCTAssertEqualObjects(creds.beaconChildConsumerKey, @"test-beacon-child-consumer-key");
-    XCTAssertEqualObjects(creds.beaconChildConsumerSecret, @"test-beacon-child-consumer-secret");
+    // Create SFSDKOAuthTokenEndpointResponse with initWithDictionary
+    SFSDKOAuthTokenEndpointResponse* response = [[SFSDKOAuthTokenEndpointResponse alloc] initWithDictionary:params parseAdditionalFields:additionalFields];
+    
+    // Check regular fields
+    XCTAssertEqualObjects(response.accessToken, @"test-auth-token");
+    XCTAssertEqualObjects(response.refreshToken, @"test-refresh-token");
+    XCTAssertEqualObjects(response.instanceUrl.absoluteString, @"https://instance.salesforce.com");
+    XCTAssertEqualObjects(response.apiInstanceUrl.absoluteString, @"https://api.salesforce.com");
+    XCTAssertEqualObjects(response.scopes, (@[@"api", @"refresh_token"]));
+    XCTAssertEqualObjects(response.identityUrl.absoluteString, @"https://id.salesforce.com");
+    XCTAssertEqualObjects(response.communityId, @"test-community-id");
+    XCTAssertEqualObjects(response.communityUrl.absoluteString, @"https://community.salesforce.com");
+    XCTAssertEqualObjects(response.lightningDomain, @"test-lightning-domain");
+    XCTAssertEqualObjects(response.lightningSid, @"test-lightning-sid");
+    XCTAssertEqualObjects(response.vfDomain, @"test-vf-domain");
+    XCTAssertEqualObjects(response.vfSid, @"test-vf-sid");
+    XCTAssertEqualObjects(response.contentDomain, @"test-content-domain");
+    XCTAssertEqualObjects(response.contentSid, @"test-content-sid");
+    XCTAssertEqualObjects(response.csrfToken, @"test-csrf-token");
+    XCTAssertEqualObjects(response.cookieClientSrc, @"test-cookie-client-src");
+    XCTAssertEqualObjects(response.cookieSidClient, @"test-cookie-sid-client");
+    XCTAssertEqualObjects(response.sidCookieName, @"test-sid-cookie-name");
+    XCTAssertEqualObjects(response.parentSid, @"test-parent-sid");
+    XCTAssertEqualObjects(response.tokenFormat, @"test-token-format");
+    XCTAssertEqualObjects(response.beaconChildConsumerKey, @"test-beacon-child-consumer-key");
+    XCTAssertEqualObjects(response.beaconChildConsumerSecret, @"test-beacon-child-consumer-secret");
+
+    // Check additional fields
+    for (NSString *field in additionalFields) {
+        NSString *value = [NSString stringWithFormat:@"test-%@", field];
+        XCTAssertEqualObjects(response.additionalOAuthFields[field], value);
+    }
+
 }
 
 @end
