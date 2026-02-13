@@ -152,15 +152,6 @@
 			);
 			sourceTree = "<group>";
 		};
-		AUTH055 /* Shared Test */ = {
-			isa = PBXGroup;
-			children = (
-				AUTH053 /* ui_test_config.json */,
-			);
-			path = ../../../shared/test;
-			sourceTree = "<group>";
-			name = "Shared Test";
-		};
 		AUTH020 /* AuthFlowTester */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +211,15 @@
 				AUTH008 /* SessionDetailViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		AUTH055 /* Shared Test */ = {
+			isa = PBXGroup;
+			children = (
+				AUTH053 /* ui_test_config.json */,
+			);
+			name = "Shared Test";
+			path = ../../../shared/test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

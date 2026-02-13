@@ -16,11 +16,6 @@ on:
         default: macos-latest
         required: false
         type: string
-      test-retry-iterations:
-        description: "Max retries per test on failure (1 = no retry)."
-        default: 2
-        required: false
-        type: number
       test_suite:
         description: "Test class to run only (e.g. ECALoginTests). Empty = run all. Ignored when is_pr (PR runs single smoke test)."
         default: ""
@@ -31,11 +26,6 @@ on:
         default: ""
         required: false
         type: string
-      parallel-testing-worker-count:
-        description: "xcodebuild -parallel-testing-worker-count (0 = do not set; parallel testing uses xcodebuild default)."
-        default: 0
-        required: false
-        type: number
 
 jobs:
   test-ui:
@@ -92,27 +82,18 @@ jobs:
         id: xcodebuild
         run: |
           DESTINATION="${{ steps.resolve_destination.outputs.destination }}"
-          RETRY_ARGS=()
-          if [ "${{ inputs.test-retry-iterations }}" -gt 1 ]; then
-            RETRY_ARGS=(-retry-tests-on-failure -test-iterations "${{ inputs.test-retry-iterations }}")
-          fi
           ONLY_TESTING_ARGS=()
           if [ "$IS_PR" = "true" ]; then
             ONLY_TESTING_ARGS=(-only-testing 'AuthFlowTesterUITests/ECALoginTests/testECAAdvancedJwt_DefaultScopes')
           elif [ -n "${{ inputs.test_suite }}" ]; then
             ONLY_TESTING_ARGS=(-only-testing "AuthFlowTesterUITests/${{ inputs.test_suite }}")
           fi
-          PARALLEL_ARGS=()
-          if [ "${{ inputs.parallel-testing-worker-count }}" -gt 0 ]; then
-            PARALLEL_ARGS=(-parallel-testing-enabled YES -parallel-testing-worker-count "${{ inputs.parallel-testing-worker-count }}")
-          fi
           xcodebuild test \
             -workspace SalesforceMobileSDK.xcworkspace \
             -scheme AuthFlowTester \
+            -testPlan native/SampleApps/AuthFlowTester/AuthFlowTester.xctestplan \
             -destination "$DESTINATION" \
-            "${PARALLEL_ARGS[@]}" \
             "${ONLY_TESTING_ARGS[@]}" \
-            "${RETRY_ARGS[@]}" \
             -resultBundlePath test \
             -enableCodeCoverage YES \
             | xcbeautify
