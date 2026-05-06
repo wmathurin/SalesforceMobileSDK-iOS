@@ -30,6 +30,9 @@
 #import "SFSDKInstrumentationEventBuilder.h"
 #import "SFSDKAnalyticsManager+Internal.h"
 #import "SFSDKInstrumentationEvent+Internal.h"
+#ifdef SWIFT_PACKAGE
+#import "SFSDKAnalyticsLogger.h"
+#endif
 #import <SalesforceSDKCommon/SFSDKReachability.h>
 
 #if __has_include(<CoreTelephony/CTTelephonyNetworkInfo.h>)

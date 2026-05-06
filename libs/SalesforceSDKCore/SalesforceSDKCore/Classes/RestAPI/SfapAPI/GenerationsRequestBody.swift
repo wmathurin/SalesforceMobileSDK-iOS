@@ -28,6 +28,9 @@
  */
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 /**
  Models a `sfap_api` `generations` endpoint request.

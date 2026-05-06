@@ -27,6 +27,9 @@
 //
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCommon
+#endif
 
 @objc(SFSDKKeychainHelper)
 public class KeychainHelper: NSObject {

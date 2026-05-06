@@ -26,6 +26,9 @@
 //  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import SwiftUI
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 @objc(SFSDKNewLoginHostViewController)
 public class NewLoginHostViewController: NSObject {

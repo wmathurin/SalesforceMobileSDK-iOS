@@ -27,6 +27,10 @@
 import Foundation
 import CryptoKit
 import SalesforceSDKCommon
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+import SalesforceSDKCommonSwift
+#endif
 
 @objc(SFSDKEncryptor)
 public class Encryptor: NSObject {

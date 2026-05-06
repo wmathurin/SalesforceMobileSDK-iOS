@@ -32,6 +32,7 @@
 
 @class SFSDKSPConfig;
 @class SFLoginViewController;
+@class SFSDKNotificationType;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -390,7 +391,7 @@ NS_SWIFT_NAME(UserAccountManager)
  * The app can use this to return only the notification types it supports,
  * so that unsupported types are not registered with the system.
  */
-@property (nonatomic, copy, nullable) NSArray<NotificationType*>* (^filterSupportedNotificationTypes)(NSArray<NotificationType*>* notificationTypes);
+@property (nonatomic, copy, nullable) NSArray<SFSDKNotificationType*>* (^filterSupportedNotificationTypes)(NSArray<SFSDKNotificationType*>* notificationTypes) NS_SWIFT_NAME(filterSupportedNotificationTypes);
 
 /**
  Adds a delegate to this user account manager.

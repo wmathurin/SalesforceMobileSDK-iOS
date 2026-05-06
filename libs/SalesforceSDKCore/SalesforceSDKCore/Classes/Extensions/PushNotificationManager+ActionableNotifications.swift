@@ -26,6 +26,24 @@
 //  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+
+// notificationTypes and filterSupportedNotificationTypes use SFSDKNotificationType, which is
+// forward-declared in their ObjC headers. The Swift importer drops properties whose types are
+// incomplete at import time. These extensions restore visibility via KVC.
+extension UserAccount {
+    var notificationTypes: [NotificationType]? {
+        get { value(forKey: "notificationTypes") as? [NotificationType] }
+        set { setValue(newValue, forKey: "notificationTypes") }
+    }
+}
+extension UserAccountManager {
+    var filterSupportedNotificationTypes: (([NotificationType]) -> [NotificationType])? {
+        value(forKey: "filterSupportedNotificationTypes") as? ([NotificationType]) -> [NotificationType]
+    }
+}
+#endif
 
 @objc
 public extension PushNotificationManager {

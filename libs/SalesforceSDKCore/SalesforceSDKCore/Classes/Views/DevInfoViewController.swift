@@ -24,6 +24,9 @@
 
 import SwiftUI
 import UIKit
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 // MARK: - Data Model
 

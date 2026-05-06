@@ -1,0 +1,1 @@
+../../Classes/Views/SFSDKWindowManager.h

@@ -26,6 +26,9 @@
  */
 
 import SwiftUI
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 // MARK: - JSON Import Labels
 public struct AuthFlowTypesJSONKeys {

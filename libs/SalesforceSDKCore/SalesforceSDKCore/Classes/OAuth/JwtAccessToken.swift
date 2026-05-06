@@ -27,6 +27,9 @@
 
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 /// Struct representing a JWT Header
 public struct JwtHeader: Codable {

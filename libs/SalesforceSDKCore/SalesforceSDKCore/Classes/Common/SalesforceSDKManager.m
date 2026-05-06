@@ -38,6 +38,9 @@
 #import "SFDirectoryManager+Internal.h"
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 #import "SFSDKResourceUtils.h"
+#ifdef SWIFT_PACKAGE
+#import "TestSetupUtils.h"
+#endif
 #import "SFSDKMacDetectUtil.h"
 #import "SFSDKSalesforceSDKUpgradeManager.h"
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>

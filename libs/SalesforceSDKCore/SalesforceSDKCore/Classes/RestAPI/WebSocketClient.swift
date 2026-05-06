@@ -25,6 +25,9 @@
 //  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 actor TokenRefreshCoordinator {
     private var isRefreshing = false

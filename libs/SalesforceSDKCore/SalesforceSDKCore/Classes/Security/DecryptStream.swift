@@ -27,6 +27,9 @@
 
 import Foundation
 import CryptoKit
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 
 @objc(SFSDKDecryptStream)

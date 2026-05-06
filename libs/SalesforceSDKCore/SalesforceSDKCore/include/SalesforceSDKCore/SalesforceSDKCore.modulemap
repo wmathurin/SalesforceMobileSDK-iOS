@@ -1,0 +1,4 @@
+module SalesforceSDKCore.Swift {
+    header "SalesforceSDKCore-Swift.h"
+    requires objc
+}

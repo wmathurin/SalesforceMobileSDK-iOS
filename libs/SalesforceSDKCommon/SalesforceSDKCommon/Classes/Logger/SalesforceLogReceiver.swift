@@ -28,6 +28,9 @@
  */
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCommon
+#endif
 
 /**
  * Any object that can be registered with Salesforce logger and receive issued log entries.

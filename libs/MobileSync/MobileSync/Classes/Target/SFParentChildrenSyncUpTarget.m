@@ -24,7 +24,16 @@
 
 #import <SalesforceSDKCore/SFSDKSoqlBuilder.h>
 #import <SalesforceSDKCommon/SFJsonUtils.h>
+#ifdef SWIFT_PACKAGE
+#import <MobileSync/SFParentChildrenSyncUpTarget.h>
+#import <MobileSync/SFParentInfo.h>
+#import <MobileSync/SFChildrenInfo.h>
+#import <MobileSync/SFParentChildrenSyncHelper.h>
+#import <MobileSync/SFMobileSyncNetworkUtils.h>
+#import <MobileSync/SFMobileSyncConstants.h>
+#else
 #import "MobileSync.h"
+#endif
 #import "SFSyncTarget+Internal.h"
 #import "SFSyncUpTarget+Internal.h"
 #import "SFCompositeRequestHelper.h"

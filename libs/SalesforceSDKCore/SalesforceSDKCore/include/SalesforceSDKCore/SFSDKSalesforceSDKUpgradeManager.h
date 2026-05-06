@@ -1,0 +1,1 @@
+../../Classes/Common/SFSDKSalesforceSDKUpgradeManager.h

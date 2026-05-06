@@ -23,6 +23,9 @@
  */
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 /**
  * Utility class for parsing and formatting OAuth scopes.

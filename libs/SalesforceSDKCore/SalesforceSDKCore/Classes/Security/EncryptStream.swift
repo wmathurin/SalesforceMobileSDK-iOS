@@ -27,6 +27,9 @@
 
 import Foundation
 import CryptoKit
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 enum CryptStream {
     static let chunkSize = 512

@@ -1,0 +1,1 @@
+../../Classes/Util/SFDirectoryManager+Internal.h

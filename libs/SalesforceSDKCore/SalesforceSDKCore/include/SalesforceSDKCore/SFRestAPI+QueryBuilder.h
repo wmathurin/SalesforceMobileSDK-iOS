@@ -1,0 +1,1 @@
+../../Classes/RestAPI/SFRestAPI+QueryBuilder.h

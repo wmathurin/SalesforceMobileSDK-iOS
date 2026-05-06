@@ -26,6 +26,9 @@
 //  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import CryptoKit
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 /// Global Constants
 let maximumUsernameLength = 80
@@ -150,7 +153,9 @@ public class NativeLoginManagerInternal: NSObject, NativeLoginManager {
     }
     
     public func shouldShowBackButton() -> Bool {
-        if (SalesforceManager.shared.biometricAuthenticationManager().locked) {
+        // biometricAuthenticationManager() is dropped by Swift importer in SPM split-target builds.
+        let bioMgr = SalesforceManager.shared.perform(NSSelectorFromString("biometricAuthenticationManager"))?.takeUnretainedValue() as? BiometricAuthenticationManager
+        if (bioMgr?.locked == true) {
             return false
         }
         

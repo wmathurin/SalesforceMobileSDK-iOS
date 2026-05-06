@@ -1,0 +1,1 @@
+../../Classes/SalesforceSDKCoreSwiftDecls.h

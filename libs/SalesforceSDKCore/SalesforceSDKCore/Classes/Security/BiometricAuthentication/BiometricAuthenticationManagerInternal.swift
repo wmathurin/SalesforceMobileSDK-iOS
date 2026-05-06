@@ -27,6 +27,10 @@
 
 import Foundation
 import LocalAuthentication
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+import SalesforceSDKCommonSwift
+#endif
 
 /*
  * This class is internal to the Mobile SDK - don't instantiate in your application code

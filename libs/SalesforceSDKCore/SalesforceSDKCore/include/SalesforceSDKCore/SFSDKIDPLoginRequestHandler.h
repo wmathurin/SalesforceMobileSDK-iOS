@@ -1,0 +1,1 @@
+../../Classes/URLHandlers/SFSDKIDPLoginRequestHandler.h

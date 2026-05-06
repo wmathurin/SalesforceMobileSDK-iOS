@@ -29,6 +29,9 @@
 
 import Foundation
 import Combine
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 /// Errors that can be thrown while using RestClient
 public enum RestClientError: Error {

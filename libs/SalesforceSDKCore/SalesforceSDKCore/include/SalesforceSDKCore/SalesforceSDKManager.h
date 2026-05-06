@@ -1,0 +1,1 @@
+../../Classes/Common/SalesforceSDKManager.h

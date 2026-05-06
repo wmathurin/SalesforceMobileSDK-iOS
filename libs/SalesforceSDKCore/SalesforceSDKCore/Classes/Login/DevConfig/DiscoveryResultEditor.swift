@@ -26,6 +26,9 @@
  */
 
 import SwiftUI
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 /// JSON keys for importing a discovery result.
 public enum DiscoveryResultJSONKeys {

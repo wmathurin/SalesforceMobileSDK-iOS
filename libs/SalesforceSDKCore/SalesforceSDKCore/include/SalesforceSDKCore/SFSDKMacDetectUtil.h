@@ -1,0 +1,1 @@
+../../Classes/Util/SFSDKMacDetectUtil.h

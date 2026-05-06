@@ -1,0 +1,1 @@
+../../Classes/Config/SFSDKSyncsConfig.h

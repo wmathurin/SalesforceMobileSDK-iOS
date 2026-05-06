@@ -1,0 +1,1 @@
+../../Classes/IDP/Commands/SFSDKSPLoginResponseCommand.h

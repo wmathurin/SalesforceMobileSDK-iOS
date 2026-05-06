@@ -1,0 +1,1 @@
+../../Classes/URLHandlers/SFSDKAdvancedAuthURLHandler.h

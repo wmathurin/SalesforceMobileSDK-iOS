@@ -27,6 +27,9 @@
 
 import UIKit
 import SwiftUI
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 @objc(SFSDKKeyValueEncryptedFileStoreViewController)
 public class KeyValueEncryptedFileStoreViewController: NSObject {

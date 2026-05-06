@@ -28,6 +28,9 @@
  */
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 /**
  * Provides REST client methods for a variety of `sfap_api` endpoints.

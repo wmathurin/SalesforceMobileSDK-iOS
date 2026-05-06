@@ -23,6 +23,9 @@
  */
 
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 @objc(SFSDKAuthCoordinatorFrontdoorBridgeLoginOverride)
 public class AuthCoordinatorFrontdoorBridgeLoginOverride: NSObject {

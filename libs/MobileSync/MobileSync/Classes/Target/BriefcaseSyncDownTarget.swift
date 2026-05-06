@@ -28,6 +28,10 @@
 import Foundation
 import SalesforceSDKCore
 import Combine
+#if SWIFT_PACKAGE
+import SalesforceSDKCoreSwift
+import MobileSync
+#endif
 
 struct TypedId: Hashable {
     let id: String

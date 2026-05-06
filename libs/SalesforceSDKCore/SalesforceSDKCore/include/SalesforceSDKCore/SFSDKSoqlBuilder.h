@@ -1,0 +1,1 @@
+../../Classes/Util/SFSDKSoqlBuilder.h

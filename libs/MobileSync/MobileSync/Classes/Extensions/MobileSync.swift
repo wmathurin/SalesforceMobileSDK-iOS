@@ -29,6 +29,9 @@ import Foundation
 
 
 import Combine
+#if SWIFT_PACKAGE
+import MobileSync
+#endif
 
 /// Errors that can be thrown using MobileSync
 public enum MobileSyncError: Error {

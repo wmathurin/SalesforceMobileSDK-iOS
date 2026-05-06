@@ -1,0 +1,5 @@
+module SmartStore {
+    umbrella "."
+    export *
+    module * { export * }
+}

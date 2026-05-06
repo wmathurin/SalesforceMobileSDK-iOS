@@ -1,0 +1,1 @@
+../../Classes/IDP/SFUserAccountManager+URLHandlers.h

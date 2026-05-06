@@ -27,7 +27,11 @@
 
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
 #import <SalesforceSDKCommon/SFFileProtectionHelper.h>
+#ifndef SWIFT_PACKAGE
 #import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+#else
+@import SalesforceSDKCommonSwift;
+#endif
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 #import "SFSDKSalesforceSDKUpgradeManager.h"
 #import "SFDirectoryManager+Internal.h"

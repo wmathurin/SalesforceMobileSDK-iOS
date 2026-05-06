@@ -27,6 +27,9 @@
 
 import Foundation
 import Security
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 public extension SFSDKCryptoUtils {
     static let errorDomain = "com.salesforce.crypto"

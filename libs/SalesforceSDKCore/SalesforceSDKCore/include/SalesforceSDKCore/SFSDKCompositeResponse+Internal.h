@@ -1,0 +1,1 @@
+../../Classes/RestAPI/SFSDKCompositeResponse+Internal.h

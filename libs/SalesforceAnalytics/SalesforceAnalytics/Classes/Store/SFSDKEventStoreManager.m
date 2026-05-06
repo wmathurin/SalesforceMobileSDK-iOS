@@ -29,6 +29,9 @@
 
 #import "SFSDKEventStoreManager.h"
 #import "SFSDKInstrumentationEvent+Internal.h"
+#ifdef SWIFT_PACKAGE
+#import "SFSDKAnalyticsLogger.h"
+#endif
 
 @interface SFSDKEventStoreManager ()
 

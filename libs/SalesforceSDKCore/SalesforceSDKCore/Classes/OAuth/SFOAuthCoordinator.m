@@ -50,7 +50,11 @@
 #import "SFSDKAuthSession.h"
 #import "SFSDKAuthRequest.h"
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
+#ifndef SWIFT_PACKAGE
 #import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+#else
+@import SalesforceSDKCommonSwift;
+#endif
 #import <SalesforceSDKCommon/SFSDKDatasharingHelper.h>
 #import <LocalAuthentication/LocalAuthentication.h>
 @interface SFOAuthCoordinator()

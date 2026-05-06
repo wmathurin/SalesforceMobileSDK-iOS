@@ -27,6 +27,9 @@
 
 import SwiftUI
 import LocalAuthentication
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 struct ScreenLockUIView: View {
     @Environment(\.presentationMode) var presentationMode

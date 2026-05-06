@@ -26,6 +26,9 @@
 //  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
+#if SWIFT_PACKAGE
+import MobileSync
+#endif
 
 extension BatchSyncUpTarget {
     // Adapted from internal methods in BatchSyncUpTarget.m

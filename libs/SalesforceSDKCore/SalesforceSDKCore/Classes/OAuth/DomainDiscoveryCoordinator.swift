@@ -1,5 +1,8 @@
 import Foundation
 import WebKit
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 enum DomainDiscovery: String {
     /// The callback URL used for domain discovery.
@@ -72,7 +75,10 @@ public class DomainDiscoveryCoordinator: NSObject {
         // we build a callback URL to trigger the code that handles the domain discovery callback,
         // simulating the user picking a specific domain/username.
         let requestHost = action.request.url?.host?.lowercased()
-        if let simulated = SalesforceManager.shared.simulatedDomainDiscoveryResult,
+        // simulatedDomainDiscoveryResult is dropped by the Swift importer in SPM split-target builds
+        // because SFDomainDiscoveryResult is forward-declared in the ObjC module. Access via KVC.
+        let simulatedResult = SalesforceManager.shared.value(forKey: "simulatedDomainDiscoveryResult") as? DomainDiscoveryResult
+        if let simulated = simulatedResult,
            requestHost == "welcome.salesforce.com" {
             url = Self.buildSimulatedCallbackURL(loginHint: simulated.loginHint, myDomain: simulated.myDomain)
         } else {

@@ -31,7 +31,9 @@
 #import "SFSDKIDPConstants.h"
 #import "NSURL+SFAdditions.h"
 #import "SFUserAccountManager+URLHandlers.h"
+#ifndef SWIFT_PACKAGE
 #import "SalesforceSDKCore.h"
+#endif
 #import "SFSDKIDPLoginRequestCommand.h"
 
 @implementation SFSDKIDPLoginRequestHandler

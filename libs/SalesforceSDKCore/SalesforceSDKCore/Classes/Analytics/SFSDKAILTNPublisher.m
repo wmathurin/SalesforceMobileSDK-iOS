@@ -33,6 +33,9 @@
 #import "NSData+SFAdditions.h"
 #import "SFRestAPI+Blocks.h"
 #import "SalesforceSDKCore/SalesforceSDKCore-Swift.h"
+#ifdef SWIFT_PACKAGE
+#import <SalesforceAnalytics/SFSDKInstrumentationEvent.h>
+#endif
 
 static NSString* const kCode = @"code";
 static NSString* const kAiltn = @"ailtn";

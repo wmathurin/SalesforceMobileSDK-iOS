@@ -1,0 +1,5 @@
+module MobileSync {
+    umbrella "."
+    export *
+    module * { export * }
+}

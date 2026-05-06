@@ -30,6 +30,9 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 #import "SFSDKPushNotificationFieldsConstants.h"
 #import "SFSDKPushNotificationError.h"
 #import "SFSDKPushNotificationEncryptionConstants.h"
+#ifdef SWIFT_PACKAGE
+#import "SFSDKCoreLogger.h"
+#endif
 
 @implementation SFSDKPushNotificationDecryption
 

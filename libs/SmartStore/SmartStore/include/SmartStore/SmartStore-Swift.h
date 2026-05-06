@@ -1,0 +1,1 @@
+../../Classes/SmartStore-Swift.h

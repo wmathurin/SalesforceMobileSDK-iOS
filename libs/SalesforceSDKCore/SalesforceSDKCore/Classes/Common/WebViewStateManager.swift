@@ -22,6 +22,9 @@
 
 import Foundation
 import WebKit
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 public class SFSDKWebViewStateManager: NSObject {
     private static var managementDisabled = false

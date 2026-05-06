@@ -1,0 +1,1 @@
+../../Classes/Analytics/SFSDKSalesforceAnalyticsManager.h

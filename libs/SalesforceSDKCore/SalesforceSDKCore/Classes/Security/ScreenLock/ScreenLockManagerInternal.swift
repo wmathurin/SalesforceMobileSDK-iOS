@@ -27,6 +27,10 @@
 
 import Foundation
 import SwiftUI
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+import SalesforceSDKCommonSwift
+#endif
 
 // Callback block used to launch the app when the screen is unlocked.
 public typealias ScreenLockCallbackBlock = () -> Void

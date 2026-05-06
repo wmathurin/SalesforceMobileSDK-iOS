@@ -1,4 +1,7 @@
 import Foundation
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 @objc(SFSDKNotificationTypesResponse)
 @objcMembers

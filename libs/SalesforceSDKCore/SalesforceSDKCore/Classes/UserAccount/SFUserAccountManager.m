@@ -58,7 +58,11 @@
 #import "SFSDKSalesforceAnalyticsManager.h"
 #import "SFApplicationHelper.h"
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
+#ifndef SWIFT_PACKAGE
 #import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+#else
+@import SalesforceSDKCommonSwift;
+#endif
 #import "SFSDKSPLoginRequestCommand.h"
 #import "SFSDKSPLoginResponseCommand.h"
 #import "SFSDKCryptoUtils.h"

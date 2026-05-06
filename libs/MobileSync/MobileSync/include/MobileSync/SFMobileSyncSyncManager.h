@@ -1,0 +1,1 @@
+../../Classes/Manager/SFMobileSyncSyncManager.h

@@ -27,6 +27,9 @@
 
 import Foundation
 import Combine
+#if SWIFT_PACKAGE
+import SmartStore
+#endif
 
 struct Constants {
     static let PAGE_SIZE: UInt = 65536

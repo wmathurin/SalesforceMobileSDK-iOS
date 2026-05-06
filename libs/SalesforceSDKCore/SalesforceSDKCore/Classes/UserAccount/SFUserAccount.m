@@ -139,11 +139,11 @@ NSString * const kUserAccountPhotoEncryptionKeyLabel = @"com.salesforce.userAcco
 }
 
 
-- (NSArray<NotificationType *> *)notificationTypes {
+- (NSArray<SFSDKNotificationType *> *)notificationTypes {
     return _notificationTypes;
 }
 
-- (void)setNotificationTypes:(NSArray<NotificationType *> *)notificationTypes {
+- (void)setNotificationTypes:(NSArray<SFSDKNotificationType *> *)notificationTypes {
     _notificationTypes = [notificationTypes copy];
 }
 

@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class SFUserAccountIdentity;
 @class SFOAuthCredentials;
-@class NotificationType;
+@class SFSDKNotificationType;
 
 /**
  Enumeration of the potential login states of the user account.
@@ -75,7 +75,7 @@ NS_SWIFT_NAME(UserAccount)
 
 /** The notification types for this user
  */
-@property (nonatomic, strong, nullable) NSArray<NotificationType *> *notificationTypes;
+@property (nonatomic, strong, nullable) NSArray<SFSDKNotificationType *> *notificationTypes NS_SWIFT_NAME(notificationTypes);
 
 /** The identity data associated with this user
  */

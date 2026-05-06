@@ -1,0 +1,5 @@
+module SalesforceSDKCommon {
+    umbrella "."
+    export *
+    module * { export * }
+}

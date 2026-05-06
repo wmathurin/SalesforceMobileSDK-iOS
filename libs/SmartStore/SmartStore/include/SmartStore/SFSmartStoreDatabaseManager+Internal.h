@@ -1,0 +1,1 @@
+../../Classes/SFSmartStoreDatabaseManager+Internal.h

@@ -27,6 +27,9 @@
 
 import SwiftUI
 import UIKit
+#if SWIFT_PACKAGE
+import SalesforceSDKCore
+#endif
 
 public struct LoginOptionsView: View {
     @State internal var staticConsumerKey = ""
@@ -151,8 +154,10 @@ public struct LoginOptionsView: View {
             dynamicScopes = config.oauthScopes.sorted().joined(separator: " ")
         }
 
-        // Load discovery simulation defaults from simulatedDomainDiscoveryResult
-        if let simulated = SalesforceManager.shared.simulatedDomainDiscoveryResult {
+        // simulatedDomainDiscoveryResult is dropped by the Swift importer in SPM split-target builds
+        // because SFDomainDiscoveryResult is forward-declared in the ObjC module. Access via KVC.
+        let simulatedResult = SalesforceManager.shared.value(forKey: "simulatedDomainDiscoveryResult") as? DomainDiscoveryResult
+        if let simulated = simulatedResult {
             discoveryLoginHost = simulated.myDomain
             discoveryUserName = simulated.loginHint
         }
@@ -220,7 +225,8 @@ public struct LoginOptionsView: View {
     }
 
     internal func handleSimulatedDomainDiscovery(result: DomainDiscoveryResult?) {
-        SalesforceManager.shared.simulatedDomainDiscoveryResult = result
+        // simulatedDomainDiscoveryResult is dropped by the Swift importer in SPM split-target builds.
+        SalesforceManager.shared.setValue(result, forKey: "simulatedDomainDiscoveryResult")
     }
 }
 

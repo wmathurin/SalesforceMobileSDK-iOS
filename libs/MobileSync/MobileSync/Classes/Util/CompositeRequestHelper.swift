@@ -27,6 +27,9 @@
 
 import Foundation
 import SalesforceSDKCore
+#if SWIFT_PACKAGE
+import MobileSync
+#endif
 
 public typealias OnSendCompleteCallback =  ([String: RecordResponse]) -> ()
 public typealias OnFailCallback = (Error) -> ()
