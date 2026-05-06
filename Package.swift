@@ -55,6 +55,8 @@ let package = Package(
                 "SalesforceSDKCommon.h",
                 "Info.plist",
                 "include",
+                "Classes/module.modulemap",
+                "Classes/SalesforceSDKCommon-Swift.h",
                 // BEGIN_SWIFT_EXCLUDE SalesforceSDKCommon
                 "Classes/Keychain/GenericPasswordItemQuery.swift",
                 "Classes/Keychain/KeychainHelper.swift",
@@ -153,6 +155,8 @@ let package = Package(
                 "SalesforceSDKCore-Prefix.pch",
                 "Info.plist",
                 "include",
+                "Classes/SalesforceSDKCore-Swift.h",
+                "Classes/SalesforceSDKCoreSwiftDecls.h",
                 // BEGIN_SWIFT_EXCLUDE SalesforceSDKCore
                 "Classes/Common/WebViewStateManager.swift",
                 "Classes/Extensions/Network+WebSocket.swift",
@@ -324,6 +328,8 @@ let package = Package(
                 "SmartStore-Prefix.pch",
                 "Info.plist",
                 "include",
+                "Classes/module.modulemap",
+                "Classes/SmartStore-Swift.h",
                 // BEGIN_SWIFT_EXCLUDE SmartStore
                 "Classes/Extensions/SmartStore.swift",
                 // END_SWIFT_EXCLUDE SmartStore
@@ -367,6 +373,8 @@ let package = Package(
                 "MobileSync-Prefix.pch",
                 "Info.plist",
                 "include",
+                "Classes/module.modulemap",
+                "Classes/MobileSync-Swift.h",
                 // BEGIN_SWIFT_EXCLUDE MobileSync
                 "Classes/BatchSyncUpTarget.swift",
                 "Classes/CollectionSyncUpTarget.swift",
