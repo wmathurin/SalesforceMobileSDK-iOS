@@ -1,6 +1,8 @@
 // swift-tools-version: 6.0
 import PackageDescription
 
+let pkgRoot = Context.packageDirectory
+
 // Each mixed-language library is split into two SPM targets:
 //
 //   LibraryName       — ObjC-only target (.m + .h files from Classes/).
@@ -31,7 +33,8 @@ let package = Package(
     platforms: [
         .iOS(.v18),
         .visionOS(.v2),
-        .macCatalyst(.v13)
+        .macCatalyst(.v13),
+        .macOS(.v10_14),
     ],
     products: [
         .library(name: "SalesforceSDKCommon",  targets: ["SalesforceSDKCommonSwift"]),
@@ -237,7 +240,7 @@ let package = Package(
                 .headerSearchPath("Classes/UserAccount/ViewControllers"),
                 .headerSearchPath("Classes/Util"),
                 .headerSearchPath("Classes/Views"),
-                .unsafeFlags(["-include", "/Users/wmathurin/Workspaces/spm-from-src/SalesforceMobileSDK-Workspace/SalesforceMobileSDK-iOS/libs/SalesforceSDKCore/SalesforceSDKCore/SalesforceSDKCore-Prefix.pch"]),
+                .unsafeFlags(["-include", "\(pkgRoot)/libs/SalesforceSDKCore/SalesforceSDKCore/SalesforceSDKCore-Prefix.pch"]),
             ],
             linkerSettings: [
                 .linkedLibrary("z"),
@@ -342,7 +345,7 @@ let package = Package(
             cSettings: [
                 .headerSearchPath("Classes"),
                 .headerSearchPath("Classes/Extensions"),
-                .unsafeFlags(["-include", "/Users/wmathurin/Workspaces/spm-from-src/SalesforceMobileSDK-Workspace/SalesforceMobileSDK-iOS/libs/SmartStore/SmartStore/SmartStore-Prefix.pch"]),
+                .unsafeFlags(["-include", "\(pkgRoot)/libs/SmartStore/SmartStore/SmartStore-Prefix.pch"]),
             ]
         ),
 
@@ -398,7 +401,7 @@ let package = Package(
                 .headerSearchPath("Classes/Model"),
                 .headerSearchPath("Classes/Target"),
                 .headerSearchPath("Classes/Util"),
-                .unsafeFlags(["-include", "/Users/wmathurin/Workspaces/spm-from-src/SalesforceMobileSDK-Workspace/SalesforceMobileSDK-iOS/libs/MobileSync/MobileSync/MobileSync-Prefix.pch"]),
+                .unsafeFlags(["-include", "\(pkgRoot)/libs/MobileSync/MobileSync/MobileSync-Prefix.pch"]),
             ]
         ),
 

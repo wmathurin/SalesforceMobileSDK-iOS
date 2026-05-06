@@ -25,6 +25,9 @@
 
 #import <SalesforceSDKCommon/SFJsonUtils.h>
 #import "SFSDKResourceUtils.h"
+#ifdef SWIFT_PACKAGE
+@import SalesforceSDKCoreResources;
+#endif
 
 @implementation SFSDKResourceUtils
 
@@ -33,10 +36,18 @@
     // One instance.  This won't change during the lifetime of the app process.
     static NSBundle *sdkBundle = nil;
     if (sdkBundle == nil) {
+#ifdef SWIFT_PACKAGE
+        // Under SPM, resources are in SalesforceSDKCoreResourcesBundle.bundle;
+        // SalesforceSDKResources.bundle is nested inside it.
+        NSBundle *spmBundle = [SalesforceSDKCoreResourcesBundle bundle];
+        NSString *sdkBundlePath = [spmBundle pathForResource:@"SalesforceSDKResources" ofType:@"bundle"];
+        sdkBundle = [NSBundle bundleWithPath:sdkBundlePath];
+#else
         NSString *sdkBundlePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"SalesforceSDKResources" ofType:@"bundle"];
         sdkBundle = [NSBundle bundleWithPath:sdkBundlePath];
+#endif
     }
-    
+
     return sdkBundle;
 }
 

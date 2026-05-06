@@ -1,4 +1,9 @@
-// This file exists solely to give the SalesforceSDKCoreResources SPM target a Swift source
-// to compile. SPM requires at least one source file per target.
-// The actual content of this target is the resource bundle and asset catalog.
-enum SalesforceSDKCoreResources {}
+import Foundation
+
+/// Exposes the SPM resource bundle for SalesforceSDKCoreResources to ObjC callers.
+@objc public class SalesforceSDKCoreResourcesBundle: NSObject {
+    /// The bundle produced by SPM for the SalesforceSDKCoreResources target.
+    /// Under SPM this is `SalesforceMobileSDK_SalesforceSDKCoreResources.bundle`;
+    /// callers should look inside it for nested resource bundles.
+    @objc public static var bundle: Bundle { Bundle.module }
+}

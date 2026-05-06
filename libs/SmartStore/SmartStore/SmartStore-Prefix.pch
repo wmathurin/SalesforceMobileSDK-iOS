@@ -8,6 +8,8 @@
     #import <Foundation/Foundation.h>
     #import <SalesforceSDKCore/SalesforceSDKConstants.h>
     #import "SFSDKSmartStoreLogger.h"
+    #ifdef SWIFT_PACKAGE
     @import SalesforceSDKCoreSwift;
     @import SalesforceSDKCommonSwift;
+    #endif
 #endif
