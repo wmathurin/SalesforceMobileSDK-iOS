@@ -38,9 +38,7 @@
 #import "SFFormatUtils.h"
 #import "SFLoginViewController.h"
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
-#ifdef SWIFT_PACKAGE
 #import "SFSDKOAuthConstants.h"
-#endif
 
 NSString* const kSFRestDefaultAPIVersion = @"v66.0";
 NSString* const kSFRestIfUnmodifiedSince = @"If-Unmodified-Since";
