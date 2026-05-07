@@ -784,7 +784,11 @@ SWIFT_CLASS_NAMED("KeyValueEncryptedFileStoreViewController")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+#ifdef SWIFT_PACKAGE
 SWIFT_CLASS("_TtC22SalesforceSDKCoreSwift26LoginOptionsViewController")
+#else
+SWIFT_CLASS("_TtC17SalesforceSDKCore26LoginOptionsViewController")
+#endif
 @interface LoginOptionsViewController : NSObject
 + (UIViewController * _Nonnull)makeViewControllerOnConfigurationCompleted:(void (^ _Nonnull)(void))onConfigurationCompleted SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -1281,7 +1285,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSUInteger kPNEncryp
 @end
 
 @class WKProcessPool;
+#ifdef SWIFT_PACKAGE
 SWIFT_CLASS("_TtC22SalesforceSDKCoreSwift24SFSDKWebViewStateManager")
+#else
+SWIFT_CLASS("_TtC17SalesforceSDKCore24SFSDKWebViewStateManager")
+#endif
 @interface SFSDKWebViewStateManager : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL sessionCookieManagementDisabled;)
 + (BOOL)sessionCookieManagementDisabled SWIFT_WARN_UNUSED_RESULT;
@@ -2305,7 +2313,11 @@ SWIFT_CLASS_NAMED("KeyValueEncryptedFileStoreViewController")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+#ifdef SWIFT_PACKAGE
 SWIFT_CLASS("_TtC22SalesforceSDKCoreSwift26LoginOptionsViewController")
+#else
+SWIFT_CLASS("_TtC17SalesforceSDKCore26LoginOptionsViewController")
+#endif
 @interface LoginOptionsViewController : NSObject
 + (UIViewController * _Nonnull)makeViewControllerOnConfigurationCompleted:(void (^ _Nonnull)(void))onConfigurationCompleted SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -2802,7 +2814,11 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSUInteger kPNEncryp
 @end
 
 @class WKProcessPool;
+#ifdef SWIFT_PACKAGE
 SWIFT_CLASS("_TtC22SalesforceSDKCoreSwift24SFSDKWebViewStateManager")
+#else
+SWIFT_CLASS("_TtC17SalesforceSDKCore24SFSDKWebViewStateManager")
+#endif
 @interface SFSDKWebViewStateManager : NSObject
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL sessionCookieManagementDisabled;)
 + (BOOL)sessionCookieManagementDisabled SWIFT_WARN_UNUSED_RESULT;
