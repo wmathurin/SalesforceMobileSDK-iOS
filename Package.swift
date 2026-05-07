@@ -425,6 +425,7 @@ let package = Package(
             ],
             publicHeadersPath: "include",
             cSettings: [
+                .define("SWIFT_PACKAGE"),
                 .headerSearchPath("Classes"),
                 .headerSearchPath("Classes/Config"),
                 .headerSearchPath("Classes/Extensions"),
