@@ -30,7 +30,7 @@ import Foundation
 
 import Combine
 #if SWIFT_PACKAGE
-import MobileSync
+import MobileSyncObjC
 #endif
 
 /// Errors that can be thrown using MobileSync

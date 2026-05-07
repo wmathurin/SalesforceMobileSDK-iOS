@@ -28,7 +28,7 @@
 import Foundation
 import Combine
 #if SWIFT_PACKAGE
-import SmartStore
+import SmartStoreObjC
 #endif
 
 struct Constants {

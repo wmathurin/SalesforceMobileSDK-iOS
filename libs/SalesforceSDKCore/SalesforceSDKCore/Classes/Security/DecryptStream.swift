@@ -28,7 +28,7 @@
 import Foundation
 import CryptoKit
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 

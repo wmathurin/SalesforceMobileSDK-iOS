@@ -27,7 +27,7 @@
 
 import SwiftUI
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 /// Extension to provide convenience initializers for SwiftUI Colors with light/dark mode support

@@ -24,7 +24,7 @@
 
 import Foundation
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 @objc(SFSDKAuthCoordinatorFrontdoorBridgeLoginOverride)

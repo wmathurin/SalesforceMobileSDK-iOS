@@ -32,7 +32,7 @@
 #import "SalesforceSDKManager.h"
 #import "NSData+SFAdditions.h"
 #import "SFRestAPI+Blocks.h"
-#import "SalesforceSDKCore/SalesforceSDKCore-Swift.h"
+#import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 #ifdef SWIFT_PACKAGE
 #import <SalesforceAnalytics/SFSDKInstrumentationEvent.h>
 #endif

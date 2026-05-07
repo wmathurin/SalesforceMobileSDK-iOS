@@ -27,7 +27,7 @@
 
 import Foundation
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 @objc public enum NativeLoginResult: Int {

@@ -29,9 +29,9 @@
 #import "NSString+SFAdditions.h"
 #import <SalesforceSDKCommon/NSUserDefaults+SFAdditions.h>
 #ifndef SWIFT_PACKAGE
-#import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+@import SalesforceSDKCommon;
 #else
-@import SalesforceSDKCommonSwift;
+@import SalesforceSDKCommon;
 #endif
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 

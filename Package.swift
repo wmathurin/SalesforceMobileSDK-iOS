@@ -3,26 +3,20 @@ import PackageDescription
 
 let pkgRoot = Context.packageDirectory
 
-// Each mixed-language library is split into two SPM targets:
+// Each mixed-language library uses three SPM targets:
 //
-//   LibraryName       — ObjC-only target (.m + .h files from Classes/).
-//                       Swift files are listed in exclude:.
-//                       publicHeadersPath: "include" points at include/<LibraryName>/
-//                       which contains symlinks to every public .h in Classes/, plus
-//                       a hand-maintained stub "<LibraryName>-Swift.h" that forward-
-//                       declares the @objc Swift types ObjC code references.
-//                       The symlink layer means #import <Lib/Header.h> resolves at
-//                       ScanDependencies time (no VFS / framework needed).
+//   LibraryNameObjC   — ObjC-only target (.m + .h files from Classes/).
+//   LibraryNameSwift  — Swift-only target. Imports LibraryNameObjC and has access
+//                       to the hand-written ObjC bridge stub.
+//   LibraryName       — Thin wrapper Swift target. @_exported imports LibraryNameSwift
+//                       so consumers only need: import LibraryName
+//                       This is the target that the public product points at.
 //
-//   LibraryNameSwift  — Swift-only target.  sources: lists every .swift file and
-//                       depends on LibraryName so it can import the ObjC module.
+// The wrapper gives consumers the same import experience as the xcframeworks-based
+// SalesforceMobileSDK-iOS-SPM package, requiring no changes to app code.
 //
-// The public product entry points at LibraryNameSwift so consumers use a single
-// module name (unchanged from CocoaPods).
-//
-// SalesforceAnalytics is pure ObjC — no split needed.
-// SalesforceSDKCoreResources is a resource-only Swift stub target (resources live
-// outside any library path so they need their own target).
+// SalesforceAnalytics is pure ObjC — no wrapper needed.
+// SalesforceSDKCoreResources is a resource-only Swift stub target.
 //
 // Dependency chain:
 //   SalesforceSDKCommon → SalesforceAnalytics → SalesforceSDKCore → SmartStore → MobileSync
@@ -37,11 +31,11 @@ let package = Package(
         .macOS(.v10_14),
     ],
     products: [
-        .library(name: "SalesforceSDKCommon",  targets: ["SalesforceSDKCommonSwift"]),
+        .library(name: "SalesforceSDKCommon",  targets: ["SalesforceSDKCommon"]),
         .library(name: "SalesforceAnalytics",  targets: ["SalesforceAnalytics"]),
-        .library(name: "SalesforceSDKCore",    targets: ["SalesforceSDKCoreSwift"]),
-        .library(name: "SmartStore",           targets: ["SmartStoreSwift"]),
-        .library(name: "MobileSync",           targets: ["MobileSyncSwift"]),
+        .library(name: "SalesforceSDKCore",    targets: ["SalesforceSDKCore"]),
+        .library(name: "SmartStore",           targets: ["SmartStore"]),
+        .library(name: "MobileSync",           targets: ["MobileSync"]),
     ],
     dependencies: [
         .package(url: "https://github.com/sqlcipher/SQLCipher.swift.git", exact: "4.15.0"),
@@ -52,7 +46,7 @@ let package = Package(
         // MARK: - SalesforceSDKCommon (ObjC)
 
         .target(
-            name: "SalesforceSDKCommon",
+            name: "SalesforceSDKCommonObjC",
             path: "libs/SalesforceSDKCommon/SalesforceSDKCommon",
             exclude: [
                 "SalesforceSDKCommon.h",
@@ -60,6 +54,7 @@ let package = Package(
                 "include",
                 "Classes/module.modulemap",
                 "Classes/SalesforceSDKCommon-Swift.h",
+                "Classes/SPM",
                 // BEGIN_SWIFT_EXCLUDE SalesforceSDKCommon
                 "Classes/Keychain/GenericPasswordItemQuery.swift",
                 "Classes/Keychain/KeychainHelper.swift",
@@ -81,11 +76,11 @@ let package = Package(
             ]
         ),
 
-        // MARK: - SalesforceSDKCommon (Swift)
+        // MARK: - SalesforceSDKCommon (Swift layer)
 
         .target(
             name: "SalesforceSDKCommonSwift",
-            dependencies: ["SalesforceSDKCommon"],
+            dependencies: ["SalesforceSDKCommonObjC"],
             path: "libs/SalesforceSDKCommon/SalesforceSDKCommon",
             sources: [
                 // BEGIN_SWIFT_SOURCES SalesforceSDKCommon
@@ -102,11 +97,22 @@ let package = Package(
             ]
         ),
 
+        // MARK: - SalesforceSDKCommon (public wrapper)
+
+        .target(
+            name: "SalesforceSDKCommon",
+            dependencies: ["SalesforceSDKCommonSwift"],
+            path: "libs/SalesforceSDKCommon/SalesforceSDKCommon/Classes/SPM",
+            swiftSettings: [
+                .swiftLanguageMode(.v5),
+            ]
+        ),
+
         // MARK: - SalesforceAnalytics (pure ObjC)
 
         .target(
             name: "SalesforceAnalytics",
-            dependencies: ["SalesforceSDKCommonSwift"],
+            dependencies: ["SalesforceSDKCommon"],
             path: "libs/SalesforceAnalytics/SalesforceAnalytics",
             exclude: [
                 "SalesforceAnalytics.h",
@@ -150,7 +156,7 @@ let package = Package(
         // MARK: - SalesforceSDKCore (ObjC)
 
         .target(
-            name: "SalesforceSDKCore",
+            name: "SalesforceSDKCoreObjC",
             dependencies: ["SalesforceAnalytics", "SalesforceSDKCoreResources"],
             path: "libs/SalesforceSDKCore/SalesforceSDKCore",
             exclude: [
@@ -160,6 +166,7 @@ let package = Package(
                 "include",
                 "Classes/SalesforceSDKCore-Swift.h",
                 "Classes/SalesforceSDKCoreSwiftDecls.h",
+                "Classes/SPM",
                 // BEGIN_SWIFT_EXCLUDE SalesforceSDKCore
                 "Classes/Common/WebViewStateManager.swift",
                 "Classes/Extensions/Network+WebSocket.swift",
@@ -247,11 +254,11 @@ let package = Package(
             ]
         ),
 
-        // MARK: - SalesforceSDKCore (Swift)
+        // MARK: - SalesforceSDKCore (Swift layer)
 
         .target(
             name: "SalesforceSDKCoreSwift",
-            dependencies: ["SalesforceSDKCore"],
+            dependencies: ["SalesforceSDKCoreObjC"],
             path: "libs/SalesforceSDKCore/SalesforceSDKCore",
             sources: [
                 // BEGIN_SWIFT_SOURCES SalesforceSDKCore
@@ -316,12 +323,23 @@ let package = Package(
             ]
         ),
 
+        // MARK: - SalesforceSDKCore (public wrapper)
+
+        .target(
+            name: "SalesforceSDKCore",
+            dependencies: ["SalesforceSDKCoreSwift"],
+            path: "libs/SalesforceSDKCore/SalesforceSDKCore/Classes/SPM",
+            swiftSettings: [
+                .swiftLanguageMode(.v5),
+            ]
+        ),
+
         // MARK: - SmartStore (ObjC)
 
         .target(
-            name: "SmartStore",
+            name: "SmartStoreObjC",
             dependencies: [
-                "SalesforceSDKCoreSwift",
+                "SalesforceSDKCore",
                 .product(name: "SQLCipher", package: "SQLCipher.swift"),
                 .product(name: "FMDB",      package: "fmdb"),
             ],
@@ -333,6 +351,7 @@ let package = Package(
                 "include",
                 "Classes/module.modulemap",
                 "Classes/SmartStore-Swift.h",
+                "Classes/SPM",
                 // BEGIN_SWIFT_EXCLUDE SmartStore
                 "Classes/Extensions/SmartStore.swift",
                 // END_SWIFT_EXCLUDE SmartStore
@@ -349,11 +368,11 @@ let package = Package(
             ]
         ),
 
-        // MARK: - SmartStore (Swift)
+        // MARK: - SmartStore (Swift layer)
 
         .target(
             name: "SmartStoreSwift",
-            dependencies: ["SmartStore"],
+            dependencies: ["SmartStoreObjC"],
             path: "libs/SmartStore/SmartStore",
             sources: [
                 // BEGIN_SWIFT_SOURCES SmartStore
@@ -365,19 +384,31 @@ let package = Package(
             ]
         ),
 
+        // MARK: - SmartStore (public wrapper)
+
+        .target(
+            name: "SmartStore",
+            dependencies: ["SmartStoreSwift"],
+            path: "libs/SmartStore/SmartStore/Classes/SPM",
+            swiftSettings: [
+                .swiftLanguageMode(.v5),
+            ]
+        ),
+
         // MARK: - MobileSync (ObjC)
 
         .target(
-            name: "MobileSync",
-            dependencies: ["SmartStoreSwift"],
+            name: "MobileSyncObjC",
+            dependencies: ["SmartStore"],
             path: "libs/MobileSync/MobileSync",
             exclude: [
                 "MobileSync.h",
                 "MobileSync-Prefix.pch",
                 "Info.plist",
                 "include",
-                "Classes/module.modulemap",
+                "Classes/CocoaPods.modulemap",
                 "Classes/MobileSync-Swift.h",
+                "Classes/SPM",
                 // BEGIN_SWIFT_EXCLUDE MobileSync
                 "Classes/BatchSyncUpTarget.swift",
                 "Classes/CollectionSyncUpTarget.swift",
@@ -405,11 +436,11 @@ let package = Package(
             ]
         ),
 
-        // MARK: - MobileSync (Swift)
+        // MARK: - MobileSync (Swift layer)
 
         .target(
             name: "MobileSyncSwift",
-            dependencies: ["MobileSync"],
+            dependencies: ["MobileSyncObjC"],
             path: "libs/MobileSync/MobileSync",
             sources: [
                 // BEGIN_SWIFT_SOURCES MobileSync
@@ -422,6 +453,17 @@ let package = Package(
                 "Classes/Util/CompositeRequestHelper.swift",
                 // END_SWIFT_SOURCES MobileSync
             ],
+            swiftSettings: [
+                .swiftLanguageMode(.v5),
+            ]
+        ),
+
+        // MARK: - MobileSync (public wrapper)
+
+        .target(
+            name: "MobileSync",
+            dependencies: ["MobileSyncSwift"],
+            path: "libs/MobileSync/MobileSync/Classes/SPM",
             swiftSettings: [
                 .swiftLanguageMode(.v5),
             ]

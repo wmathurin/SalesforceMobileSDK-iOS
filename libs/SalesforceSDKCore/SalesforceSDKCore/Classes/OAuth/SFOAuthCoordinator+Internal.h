@@ -24,7 +24,7 @@
 
 #import "SFSDKAuthSession.h"
 #import "SalesforceSDKCore/SalesforceSDKCore.h"
-#import "SalesforceSDKCore/SalesforceSDKCore-Swift.h"
+#import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 
 typedef NS_ENUM(NSUInteger, SFOAuthTokenEndpointFlow) {
     SFOAuthTokenEndpointFlowNone = 0,

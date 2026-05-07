@@ -33,7 +33,7 @@
 #import "SFSoupIndex.h"
 #import "SFQuerySpec.h"
 #import "SFAlterSoupLongOperation.h"
-#import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
+@import SalesforceSDKCore;
 #import <SalesforceSDKCore/SFSDKCryptoUtils.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>
 #import <SalesforceSDKCore/SFDirectoryManager.h>
@@ -42,7 +42,7 @@
 #import <SalesforceSDKCore/SFSDKAppFeatureMarkers.h>
 #import <SalesforceSDKCore/SFSDKCryptoUtils.h>
 #import <SalesforceSDKCore/NSData+SFAdditions.h>
-#import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+@import SalesforceSDKCommon;
 #import <SalesforceSDKCommon/SFSDKDataSharingHelper.h>
 #import <SalesforceSDKCommon/SFJsonUtils.h>
 

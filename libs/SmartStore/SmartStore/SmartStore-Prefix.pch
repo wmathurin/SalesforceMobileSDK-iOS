@@ -9,7 +9,7 @@
     #import <SalesforceSDKCore/SalesforceSDKConstants.h>
     #import "SFSDKSmartStoreLogger.h"
     #ifdef SWIFT_PACKAGE
-    @import SalesforceSDKCoreSwift;
-    @import SalesforceSDKCommonSwift;
+    @import SalesforceSDKCore;
+    @import SalesforceSDKCommon;
     #endif
 #endif

@@ -28,7 +28,7 @@
 import SwiftUI
 import UIKit
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 public struct LoginOptionsView: View {

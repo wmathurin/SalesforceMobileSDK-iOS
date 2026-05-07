@@ -23,7 +23,7 @@
 import Foundation
 import WebKit
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 public class SFSDKWebViewStateManager: NSObject {

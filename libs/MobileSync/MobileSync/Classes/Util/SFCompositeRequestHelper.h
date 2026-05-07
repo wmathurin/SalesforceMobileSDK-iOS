@@ -22,10 +22,13 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef SWIFT_PACKAGE
+#import <MobileSync/SFSDKRecordTypes.h>
+#else
 #import <MobileSync/MobileSync-Swift.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
 typedef void (^SFSendCompositeRequestCompleteBlock)(NSDictionary<NSString*, SFSDKRecordResponse*> *refIdToResponses);
-
 NS_ASSUME_NONNULL_END
+
+#endif

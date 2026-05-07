@@ -28,7 +28,7 @@
 
 import Foundation
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 /// Struct representing a JWT Header

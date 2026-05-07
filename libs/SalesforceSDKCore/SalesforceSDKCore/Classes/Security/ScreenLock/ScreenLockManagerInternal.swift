@@ -28,8 +28,8 @@
 import Foundation
 import SwiftUI
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
-import SalesforceSDKCommonSwift
+import SalesforceSDKCoreObjC
+import SalesforceSDKCommon
 #endif
 
 // Callback block used to launch the app when the screen is unlocked.

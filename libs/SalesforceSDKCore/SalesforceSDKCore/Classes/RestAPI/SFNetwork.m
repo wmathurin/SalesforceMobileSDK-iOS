@@ -36,7 +36,7 @@ NSString * const kSFNetworkBackgroundInstanceIdentifier = @"com.salesforce.netwo
 static SFSDKSafeMutableDictionary *sharedInstances = nil;
 static SFSDKMetricsCollectedBlock _metricsCollectedAction = nil;
 
-@interface SFNetwork()<NSURLSessionDelegate, NSURLSessionTaskDelegate>
+@interface SFNetwork()<NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionWebSocketDelegate>
 
 @property (nonatomic, readwrite, strong) NSURLSession *activeSession;
 
@@ -183,6 +183,16 @@ static SFSDKMetricsCollectedBlock _metricsCollectedAction = nil;
     if (_metricsCollectedAction) {
         _metricsCollectedAction(session, task, metrics);
     }
+}
+
+#pragma mark - NSURLSessionWebSocketDelegate
+
+- (void)URLSession:(NSURLSession *)session webSocketTask:(NSURLSessionWebSocketTask *)webSocketTask didOpenWithProtocol:(NSString *)protocol {
+    [SFSDKCoreLogger i:[self class] format:@"WebSocket connected"];
+}
+
+- (void)URLSession:(NSURLSession *)session webSocketTask:(NSURLSessionWebSocketTask *)webSocketTask didCloseWithCode:(NSURLSessionWebSocketCloseCode)closeCode reason:(NSData *)reason {
+    [SFSDKCoreLogger i:[self class] format:@"WebSocket disconnected with code: %ld", (long)closeCode];
 }
 
 #pragma mark - Private

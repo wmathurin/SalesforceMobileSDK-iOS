@@ -28,8 +28,8 @@
 import Foundation
 import LocalAuthentication
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
-import SalesforceSDKCommonSwift
+import SalesforceSDKCoreObjC
+import SalesforceSDKCommon
 #endif
 
 /*

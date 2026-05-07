@@ -29,7 +29,7 @@
 
 import Foundation
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 /// An error derived from an `sfap_api` endpoint failure response.

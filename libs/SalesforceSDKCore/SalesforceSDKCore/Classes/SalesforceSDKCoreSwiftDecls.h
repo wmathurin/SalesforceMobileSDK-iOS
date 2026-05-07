@@ -12,7 +12,7 @@
  e.g. SFSDKNotificationType as the same type as Swift's `NotificationType`. This mirrors
  what SWIFT_CLASS_NAMED does in the real SalesforceSDKCore-Swift.h.
 */
-#if defined(__swift__) && defined(SWIFT_PACKAGE)
+#if defined(__swift__) && defined(SWIFT_PACKAGE) && !defined(SALESFORCESDKCORE_SWIFT_H)
 
 #import <Foundation/Foundation.h>
 

@@ -26,7 +26,7 @@
 
 import Foundation
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 protocol WebSocketNetworkProtocol {
@@ -43,17 +43,3 @@ extension Network: WebSocketNetworkProtocol {
     }
 }
 
-extension Network: URLSessionWebSocketDelegate {
-    public func urlSession(_ session: URLSession,
-                           webSocketTask: URLSessionWebSocketTask,
-                           didOpenWithProtocol protocol: String?) {
-        SFSDKCoreLogger.i(Self.self, message: "WebSocket connected")
-    }
-
-    public func urlSession(_ session: URLSession,
-                           webSocketTask: URLSessionWebSocketTask,
-                           didCloseWith closeCode: URLSessionWebSocketTask.CloseCode,
-                           reason: Data?) {
-        SFSDKCoreLogger.i(Self.self, message: "WebSocket disconnected with code: \(closeCode)")
-    }
-}

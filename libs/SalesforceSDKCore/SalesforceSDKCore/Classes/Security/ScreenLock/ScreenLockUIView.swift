@@ -28,7 +28,7 @@
 import SwiftUI
 import LocalAuthentication
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 struct ScreenLockUIView: View {

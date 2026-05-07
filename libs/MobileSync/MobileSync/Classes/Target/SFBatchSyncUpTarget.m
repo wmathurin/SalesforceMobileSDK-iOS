@@ -25,9 +25,7 @@
 
 #import <SalesforceSDKCommon/SFJsonUtils.h>
 #ifdef SWIFT_PACKAGE
-#import <MobileSync/SFBatchSyncUpTarget.h>
-#import <MobileSync/SFMobileSyncConstants.h>
-#import <MobileSync/SFMobileSyncNetworkUtils.h>
+#import <MobileSync/MobileSync.h>
 #else
 #import "MobileSync.h"
 #endif

@@ -28,7 +28,7 @@
 import Foundation
 import SalesforceSDKCore
 #if SWIFT_PACKAGE
-import MobileSync
+import MobileSyncObjC
 #endif
 
 public typealias SyncUpRecordsNewerThanServerBlock = ([AnyHashable: Any]) -> ()
@@ -104,7 +104,7 @@ public class CollectionSyncUpTarget: BatchSyncUpTarget {
     }
     
     func getRecordType(_ record:[AnyHashable: Any]) -> String? {
-        return SFJsonUtils.project(intoJson: record, path: MobileSync.kObjectTypeField) as? String
+        return SFJsonUtils.project(intoJson: record, path: kObjectTypeField) as? String
     }
     
     func fetchLastModifiedDates(_ syncManager:SyncManager,

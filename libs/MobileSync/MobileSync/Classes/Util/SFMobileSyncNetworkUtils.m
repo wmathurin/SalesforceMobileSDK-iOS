@@ -25,7 +25,7 @@
 #import "SFMobileSyncNetworkUtils.h"
 #import <SalesforceSDKCore/SFRestRequest.h>
 #import <SalesforceSDKCore/SFUserAccountManager.h>
-#import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
+@import SalesforceSDKCore;
 
 // For user agent.
 NSString * const kUserAgent = @"User-Agent";

@@ -27,7 +27,7 @@
 
 import SwiftUI
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 // MARK: - JSON Import Labels

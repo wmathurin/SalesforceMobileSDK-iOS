@@ -51,9 +51,9 @@
 #import "SFSDKAuthRequest.h"
 #import <SalesforceSDKCore/SalesforceSDKCore-Swift.h>
 #ifndef SWIFT_PACKAGE
-#import <SalesforceSDKCommon/SalesforceSDKCommon-Swift.h>
+@import SalesforceSDKCommon;
 #else
-@import SalesforceSDKCommonSwift;
+@import SalesforceSDKCommon;
 #endif
 #import <SalesforceSDKCommon/SFSDKDatasharingHelper.h>
 #import <LocalAuthentication/LocalAuthentication.h>

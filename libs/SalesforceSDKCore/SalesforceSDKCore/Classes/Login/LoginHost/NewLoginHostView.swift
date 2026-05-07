@@ -27,7 +27,7 @@
 
 import SwiftUI
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 @objc(SFSDKNewLoginHostViewController)

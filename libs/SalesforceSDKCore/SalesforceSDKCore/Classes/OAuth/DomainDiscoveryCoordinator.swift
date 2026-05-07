@@ -1,7 +1,7 @@
 import Foundation
 import WebKit
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 enum DomainDiscovery: String {

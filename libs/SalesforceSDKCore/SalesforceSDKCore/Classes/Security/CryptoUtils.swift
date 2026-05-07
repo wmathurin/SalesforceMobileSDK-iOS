@@ -28,7 +28,7 @@
 import Foundation
 import Security
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 public extension SFSDKCryptoUtils {

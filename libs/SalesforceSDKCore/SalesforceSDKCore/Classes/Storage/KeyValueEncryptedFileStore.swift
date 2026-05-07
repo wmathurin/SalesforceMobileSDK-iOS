@@ -29,7 +29,7 @@ import Foundation
 import SalesforceSDKCommon
 import CryptoKit
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 /// File-based key-value storage

@@ -27,7 +27,7 @@
 
 import Foundation
 #if SWIFT_PACKAGE
-import MobileSync
+import MobileSyncObjC
 #endif
 
 extension BatchSyncUpTarget {

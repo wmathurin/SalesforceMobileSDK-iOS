@@ -22,7 +22,11 @@
  WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifdef SWIFT_PACKAGE
+@class SFBriefcaseSyncDownTarget;
+#else
 #import <MobileSync/MobileSync-Swift.h>
+#endif
 #import <SmartStore/SFSmartStore.h>
 #import <SmartStore/SFSoupIndex.h>
 #import "SFSyncTarget+Internal.h"
@@ -81,7 +85,7 @@ NSString * const kSFSyncTargetQueryTypeBriefcase = @"briefcase";
             case SFSyncDownTargetQueryTypeLayout:
                 return [[SFLayoutSyncDownTarget alloc] initWithDict:dict];
             case SFSyncDownTargetQueryTypeBriefcase:
-                return [[SFBriefcaseSyncDownTarget alloc] initWithDict:dict];
+                return [[(Class)NSClassFromString(@"SFBriefcaseSyncDownTarget") alloc] initWithDict:dict];
             case SFSyncDownTargetQueryTypeCustom:
                 [SFSDKMobileSyncLogger e:[self class] format:@"%@ Custom class name not specified.", NSStringFromSelector(_cmd)];
                 return nil;

@@ -28,7 +28,7 @@
 
 import Foundation
 #if SWIFT_PACKAGE
-import SalesforceSDKCommon
+import SalesforceSDKCommonObjC
 #endif
 
 @objc(SFSDKKeychainHelper)

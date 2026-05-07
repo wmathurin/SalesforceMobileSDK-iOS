@@ -29,8 +29,8 @@ import Foundation
 import SalesforceSDKCore
 import Combine
 #if SWIFT_PACKAGE
-import SalesforceSDKCoreSwift
-import MobileSync
+import SalesforceSDKCore
+import MobileSyncObjC
 #endif
 
 struct TypedId: Hashable {

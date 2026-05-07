@@ -27,7 +27,7 @@
 
 import SwiftUI
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 #endif
 
 /// JSON keys for importing a discovery result.

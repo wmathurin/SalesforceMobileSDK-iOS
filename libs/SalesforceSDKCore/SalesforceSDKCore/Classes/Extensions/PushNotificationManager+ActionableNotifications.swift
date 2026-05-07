@@ -27,7 +27,7 @@
 
 import Foundation
 #if SWIFT_PACKAGE
-import SalesforceSDKCore
+import SalesforceSDKCoreObjC
 
 // notificationTypes and filterSupportedNotificationTypes use SFSDKNotificationType, which is
 // forward-declared in their ObjC headers. The Swift importer drops properties whose types are

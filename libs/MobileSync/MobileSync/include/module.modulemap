@@ -1,0 +1,5 @@
+module MobileSyncObjC {
+    umbrella header "MobileSync/MobileSync.h"
+    export *
+    module * { export * }
+}
