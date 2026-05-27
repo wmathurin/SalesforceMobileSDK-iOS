@@ -367,6 +367,7 @@ SWIFT_PROTOCOL_NAMED("BiometricAuthenticationManager")
 @property (nonatomic, readonly) BOOL enabled;
 /// If the device is currently locked.  Authenticated rest requests will fail if true.
 @property (nonatomic, readonly) BOOL locked;
+@property (nonatomic) BOOL automaticPresentation;
 /// Locks the device immediately.  Authenticated rest requests will fail until the user unlocks the app.
 - (void)lock;
 /// Enables or disables the use of biometric to skip username password authentication on the
@@ -398,6 +399,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SFBiometricA
 + (SFBiometricAuthenticationManagerInternal * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly) BOOL enabled;
 @property (nonatomic) BOOL locked;
+@property (nonatomic) BOOL automaticPresentation;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 /// Locks the screen if necessary
@@ -1896,6 +1898,7 @@ SWIFT_PROTOCOL_NAMED("BiometricAuthenticationManager")
 @property (nonatomic, readonly) BOOL enabled;
 /// If the device is currently locked.  Authenticated rest requests will fail if true.
 @property (nonatomic, readonly) BOOL locked;
+@property (nonatomic) BOOL automaticPresentation;
 /// Locks the device immediately.  Authenticated rest requests will fail until the user unlocks the app.
 - (void)lock;
 /// Enables or disables the use of biometric to skip username password authentication on the
@@ -1927,6 +1930,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) SFBiometricA
 + (SFBiometricAuthenticationManagerInternal * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
 @property (nonatomic, readonly) BOOL enabled;
 @property (nonatomic) BOOL locked;
+@property (nonatomic) BOOL automaticPresentation;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 /// Locks the screen if necessary

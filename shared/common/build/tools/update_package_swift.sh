@@ -27,10 +27,14 @@
 # Run as a post-build script from an Xcode project, or manually after adding/removing source files.
 #
 # Usage:
-#   update_package_swift.sh -l <LibraryName>
+#   update_package_swift.sh -l <LibraryName> [--check]
 #
 # Where <LibraryName> is one of: SalesforceSDKCommon, SalesforceAnalytics, SalesforceSDKCore,
 #                                 SmartStore, MobileSync
+#
+# Options:
+#   --check   Dry-run mode. Exits 0 if Package.swift is already in sync, exits 1 if it
+#             would be changed. Useful in CI to catch forgotten updates.
 #
 # The script:
 #   1. Scans the library's Classes/ directory for .swift files.
@@ -48,18 +52,33 @@
 set -e
 
 LIBRARY_NAME=""
+CHECK_MODE=0
 
 function usage() {
     local appName
     appName=$(basename "$0")
     echo "Usage:"
-    echo "  $appName -l <LibraryName>"
+    echo "  $appName -l <LibraryName> [--check]"
     echo ""
     echo "LibraryName must be one of: SalesforceSDKCommon, SalesforceAnalytics,"
     echo "  SalesforceSDKCore, SmartStore, MobileSync"
+    echo ""
+    echo "Options:"
+    echo "  --check   Dry-run mode. Exit 0 if in sync, exit 1 if update needed."
 }
 
 function parseOpts() {
+    # Extract --check before getopts (which doesn't handle long options)
+    local args=()
+    for arg in "$@"; do
+        if [ "$arg" = "--check" ]; then
+            CHECK_MODE=1
+        else
+            args+=("$arg")
+        fi
+    done
+    set -- "${args[@]}"
+
     while getopts :l: commandLineOpt; do
         case ${commandLineOpt} in
             l)
@@ -95,8 +114,8 @@ if [ ! -d "${LIB_CLASSES_DIR}" ]; then
     exit 4
 fi
 
-# Collect all .swift files relative to the Classes/ directory
-SWIFT_FILES=$(find "${LIB_CLASSES_DIR}" -name "*.swift" | \
+# Collect all .swift files relative to the Classes/ directory, excluding SPM/ wrappers
+SWIFT_FILES=$(find "${LIB_CLASSES_DIR}" -name "*.swift" -not -path "*/SPM/*" | \
     sed "s|${LIB_CLASSES_DIR}/||" | \
     sort)
 
@@ -113,10 +132,10 @@ done <<< "${SWIFT_FILES}"
 # Remove trailing comma+newline from last entry
 EXCLUDE_LINES=$(echo "${EXCLUDE_LINES}" | sed '$ s/,$//')
 
-# Build the sources list (paths relative to Classes/)
+# Build the sources list (paths prefixed with Classes/)
 SOURCE_LINES=""
 while IFS= read -r f; do
-    SOURCE_LINES="${SOURCE_LINES}                \"${f}\","$'\n'
+    SOURCE_LINES="${SOURCE_LINES}                \"Classes/${f}\","$'\n'
 done <<< "${SWIFT_FILES}"
 SOURCE_LINES=$(echo "${SOURCE_LINES}" | sed '$ s/,$//')
 
@@ -126,24 +145,66 @@ replace_section() {
     local end_sentinel="$2"
     local new_content="$3"
     local file="$4"
+    local output="$5"
+    local content_file
+    content_file=$(mktemp)
+    printf '%s' "${new_content}" > "${content_file}"
 
-    awk -v begin="${begin_sentinel}" -v end="${end_sentinel}" -v content="${new_content}" '
-        $0 ~ begin { print; in_section=1; printf "%s", content; next }
+    awk -v begin="${begin_sentinel}" -v end="${end_sentinel}" -v cfile="${content_file}" '
+        $0 ~ begin { print; in_section=1; while ((getline line < cfile) > 0) print line; close(cfile); next }
         $0 ~ end   { in_section=0 }
         !in_section { print }
-    ' "${file}" > "${file}.tmp" && mv "${file}.tmp" "${file}"
+    ' "${file}" > "${output}"
+    rm -f "${content_file}"
 }
 
-replace_section \
-    "// BEGIN_SWIFT_EXCLUDE ${LIBRARY_NAME}" \
-    "// END_SWIFT_EXCLUDE ${LIBRARY_NAME}" \
-    "${EXCLUDE_LINES}" \
-    "${PACKAGE_FILE}"
+SWIFT_FILE_COUNT=$(echo "${SWIFT_FILES}" | wc -l | tr -d ' ')
 
-replace_section \
-    "// BEGIN_SWIFT_SOURCES ${LIBRARY_NAME}" \
-    "// END_SWIFT_SOURCES ${LIBRARY_NAME}" \
-    "${SOURCE_LINES}" \
-    "${PACKAGE_FILE}"
+if [ ${CHECK_MODE} -eq 1 ]; then
+    # Dry-run: generate into a temp file and compare
+    TEMP_FILE=$(mktemp)
+    trap 'rm -f "${TEMP_FILE}" "${TEMP_FILE}.2"' EXIT
 
-echo "Package.swift updated for ${LIBRARY_NAME} ($(echo "${SWIFT_FILES}" | wc -l | tr -d ' ') Swift files)"
+    replace_section \
+        "// BEGIN_SWIFT_EXCLUDE ${LIBRARY_NAME}" \
+        "// END_SWIFT_EXCLUDE ${LIBRARY_NAME}" \
+        "${EXCLUDE_LINES}" \
+        "${PACKAGE_FILE}" \
+        "${TEMP_FILE}"
+
+    replace_section \
+        "// BEGIN_SWIFT_SOURCES ${LIBRARY_NAME}" \
+        "// END_SWIFT_SOURCES ${LIBRARY_NAME}" \
+        "${SOURCE_LINES}" \
+        "${TEMP_FILE}" \
+        "${TEMP_FILE}.2"
+
+    if diff -q "${PACKAGE_FILE}" "${TEMP_FILE}.2" > /dev/null 2>&1; then
+        echo "Package.swift is in sync for ${LIBRARY_NAME} (${SWIFT_FILE_COUNT} Swift files)"
+        exit 0
+    else
+        echo "Package.swift is OUT OF SYNC for ${LIBRARY_NAME}. Run without --check to fix."
+        diff "${PACKAGE_FILE}" "${TEMP_FILE}.2" || true
+        exit 1
+    fi
+else
+    replace_section \
+        "// BEGIN_SWIFT_EXCLUDE ${LIBRARY_NAME}" \
+        "// END_SWIFT_EXCLUDE ${LIBRARY_NAME}" \
+        "${EXCLUDE_LINES}" \
+        "${PACKAGE_FILE}" \
+        "${PACKAGE_FILE}.tmp"
+
+    mv "${PACKAGE_FILE}.tmp" "${PACKAGE_FILE}"
+
+    replace_section \
+        "// BEGIN_SWIFT_SOURCES ${LIBRARY_NAME}" \
+        "// END_SWIFT_SOURCES ${LIBRARY_NAME}" \
+        "${SOURCE_LINES}" \
+        "${PACKAGE_FILE}" \
+        "${PACKAGE_FILE}.tmp"
+
+    mv "${PACKAGE_FILE}.tmp" "${PACKAGE_FILE}"
+
+    echo "Package.swift updated for ${LIBRARY_NAME} (${SWIFT_FILE_COUNT} Swift files)"
+fi
