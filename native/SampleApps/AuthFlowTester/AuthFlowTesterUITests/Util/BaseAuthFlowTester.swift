@@ -27,6 +27,26 @@
 
 import XCTest
 
+// B-marker codes (why browser login was used)
+let kBrowserLoginServerAuthConfig = "B1"
+let kBrowserLoginForAdmin         = "B3"
+let kBrowserLoginForceFlag        = "B4"
+private let kAllBMarkers          = ["B1", "B2", "B3", "B4"]
+
+// L-marker codes (which login server type)
+let kLoginServerProduction        = "L1"
+let kLoginServerWelcomeDiscovery  = "L3"
+let kLoginServerMyDomain          = "L4"
+private let kAllLMarkers          = ["L1", "L2", "L3", "L4", "L5"]
+
+// A-marker codes (which auth type was used)
+let kAuthTypeWebServerNonHybrid   = "A1"
+let kAuthTypeWebServerHybrid      = "A2"
+let kAuthTypeUserAgentNonHybrid   = "A3"
+let kAuthTypeUserAgentHybrid      = "A4"
+let kAuthTypeNative               = "A5"
+private let kAllAMarkers          = ["A1", "A2", "A3", "A4", "A5"]
+
 class BaseAuthFlowTester: XCTestCase {
     // App object
     private var app: XCUIApplication!
@@ -34,7 +54,6 @@ class BaseAuthFlowTester: XCTestCase {
     // App Pages
     private var loginPage: LoginPageObject!
     private var mainPage: AuthFlowTesterMainPageObject!
-    private var logoutAtTearDown: Bool = true
 
     // Test configuration
     private let testConfig = UITestConfigUtils.shared
@@ -58,23 +77,30 @@ class BaseAuthFlowTester: XCTestCase {
     }
     
     override func tearDown() {
-        if (logoutAtTearDown) {
-            logout()
-        }
         super.tearDown()
     }
     
     // MARK: - Public API for Subclasses
     
-    /// Launches the application and ensures it starts in a logged-out state.
+    /// Launches the application and ensures it starts in a logged-out state on a known login server.
     ///
-    /// Initializes the app and page objects, launches the app, and logs out if a user is already logged in.
+    /// Initializes the app and page objects, launches the app, and logs out if a user is already
+    /// logged in. Then resets the login server to `login.salesforce.com`: the login host persists
+    /// across tests, so a prior test that selected a discovery or advanced-auth org would otherwise
+    /// strand the next test (its `login()` assumes the browser is showing on entry). Leaves the app
+    /// on the external browser surface (the default, advanced auth forced on) against the standard
+    /// server, which is exactly the state `login()` expects on entry.
     func launch() {
         app = XCUIApplication()
 
         // Set environment variable to indicate we're running UI tests
         // This is used to show/hide certain UI elements like DiscoveryResultEditor
         app.launchEnvironment["IS_UI_TESTING"] = "1"
+
+        // Instruct the app to reset all SDK auth state (users, login host, custom servers, flags)
+        // in-process at startup, before loginIfRequired fires. This replaces the UI-driven logout
+        // and host-reset that previously ran in tearDown and here in launch().
+        app.launchArguments = ["--resetSDKForUITesting"]
 
         loginPage = LoginPageObject(testApp: app)
         mainPage = AuthFlowTesterMainPageObject(testApp: app)
@@ -84,22 +110,6 @@ class BaseAuthFlowTester: XCTestCase {
         // On CI, system alerts (tracking permission, paste confirmation) can block
         // the UI if not dismissed before interacting with app elements.
         app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
-
-        // Start logged out
-        if (mainPage.isShowing()) {
-            logout()
-        }
-
-        // Close advanced authentication is showing
-        if (loginPage.isShowingAdvancedAuth()) {
-            loginPage.closeAdvancedAuth()
-        }
-
-        // Pre-warm the WKWebView process pool by waiting for the initial login page
-        // to fully load. On the first test in a class, the WebView process hasn't
-        // been created yet — this absorbs the cold-start cost so subsequent
-        // host-change navigations don't time out.
-        loginPage.waitForWebViewReady()
     }
 
     /// Performs login with the specified configuration.
@@ -116,8 +126,13 @@ class BaseAuthFlowTester: XCTestCase {
     ///   - dynamicScopeSelection: The scope selection for dynamic configuration. Defaults to `.empty`.
     ///   - useWebServerFlow: Whether to use web server OAuth flow. Defaults to `true`.
     ///   - useHybridFlow: Whether to use hybrid authentication flow. Defaults to `true`.
+    ///   - forceAdvancedAuthentication: Whether to use the external browser for login (advanced
+    ///     auth). Defaults to `true`, matching the SDK's own default. Pass `false` to exercise
+    ///     the legacy in-app WebView path.
     ///   - useWelcomeDiscovery: When true, configures simulated domain discovery. Defaults to `false`.
-    ///   - loginForAdmin: When true, uses the "Login for Admin" flow (browser-based auth via Settings menu). Defaults to `false`.
+    ///   - loginForAdmin: When true, uses the "Login for Admin" flow (browser-based auth via the
+    ///     in-app WebView's Settings menu). Requires advanced auth disabled so the WebView — and its
+    ///     "Login for Admin" gear entry — is shown. Defaults to `false`.
     func login(
         loginHost: KnownLoginHostConfig,
         user: KnownUserConfig,
@@ -127,8 +142,11 @@ class BaseAuthFlowTester: XCTestCase {
         dynamicScopeSelection: ScopeSelection = .empty,
         useWebServerFlow: Bool = true,
         useHybridFlow: Bool = true,
+        forceAdvancedAuthentication: Bool = true,
         useWelcomeDiscovery: Bool = false,
         loginForAdmin: Bool = false,
+        useDPoP: Bool = false,
+        useLoginPoolHost: Bool = false
     ) {
         let userConfig = getUser(loginHost: loginHost, user: user)
         let hostConfig = getLoginHost(loginHost: loginHost)
@@ -136,7 +154,18 @@ class BaseAuthFlowTester: XCTestCase {
         let dynamicAppConfig = dynamicAppConfigName == nil ? nil : getAppConfig(named: dynamicAppConfigName!)
         let staticScopes = testConfig.getScopesToRequest(for: staticAppConfig, staticScopeSelection)
         let dynamicScopes = dynamicAppConfig == nil ? "" : testConfig.getScopesToRequest(for: dynamicAppConfig!, dynamicScopeSelection)
-        
+
+        let advancedAuthEnabled = forceAdvancedAuthentication
+        // The surface used to enter credentials: the external browser under advanced auth (forced
+        // true, or a host that itself requires it), otherwise the in-app WebView. Login for Admin
+        // is special-cased below: it always finishes in the browser regardless of this value.
+        let usesBrowser = advancedAuthEnabled || loginHost == .advancedAuth
+
+        // A fresh login surface always starts under the process default (advanced auth on), so the
+        // external browser is showing. Cancel it to reach the host list, where login options and
+        // the login host are configured. (The flag re-defaults to on at every process launch.)
+        loginPage.returnToHostList(expectingBrowser: true)
+
         loginPage.configureLoginOptions(
             staticAppConfig: staticAppConfig,
             staticScopes: staticScopes,
@@ -144,42 +173,63 @@ class BaseAuthFlowTester: XCTestCase {
             dynamicScopes: dynamicScopes,
             useWebServerFlow: useWebServerFlow,
             useHybridFlow: useHybridFlow,
+            forceAdvancedAuthentication: forceAdvancedAuthentication ?? false,
             discoveryLoginHost: useWelcomeDiscovery ? hostConfig.urlNoProtocol : "",
             discoveryUsername: useWelcomeDiscovery ? userConfig.username : "",
+            useDPoP: useDPoP
         )
-        
-        // Configuring login host last
-        // When the configured login host requires advanced authentication
-        // the login settings button is no longer available on the screen
-        // When useWelcomeDiscovery is true, use welcome.salesforce.com/discovery as the login server
-        let loginHostToUse = useWelcomeDiscovery ? "welcome.salesforce.com/discovery" : hostConfig.urlNoProtocol
+
+        // Closing login options restarts authentication, so the login surface reappears — the
+        // browser when advanced auth is on, the in-app WebView when it was disabled. Return to the
+        // host list to select the login host. Configuring the host last matches how a real user
+        // arrives at the picker and keeps the login-options gear reachable until then.
+        // When useWelcomeDiscovery is true, use welcome.salesforce.com/discovery as the login server.
+        // When useLoginPoolHost is true, use the top-level loginPoolHost URL from ui_test_config.json
+        // so the auth code binding goes through the pool server while credentials come from loginHost.
+        loginPage.returnToHostList(expectingBrowser: advancedAuthEnabled)
+        let loginHostToUse: String
+        if useWelcomeDiscovery {
+            loginHostToUse = "welcome.salesforce.com/discovery"
+        } else if useLoginPoolHost {
+            do {
+                let poolHost = try UITestConfigUtils.shared.getLoginPoolHost()
+                loginHostToUse = poolHost
+                    .replacingOccurrences(of: "https://", with: "")
+                    .replacingOccurrences(of: "http://", with: "")
+            } catch {
+                XCTFail("useLoginPoolHost is true but getLoginPoolHost() failed: \(error)")
+                return
+            }
+        } else {
+            loginHostToUse = hostConfig.urlNoProtocol
+        }
         loginPage.configureLoginHost(host: loginHostToUse)
-        
+
         // Invalid app config
         if (dynamicAppConfigName == .invalid || (dynamicAppConfigName == nil && staticAppConfigName == .invalid)) {
             XCTAssertTrue(loginPage.isShowingInvalidClientIdError(), "Login page should show invalid client id error")
-            logoutAtTearDown = false
             return
         }
-        
-        // Login for Admin (browser-based auth via Settings menu)
+
+        // Login for Admin (browser-based auth via the in-app WebView's Settings menu)
         if (loginForAdmin) {
             loginPage.performLoginForAdmin(username: userConfig.username, password: userConfig.password)
         }
-        // Welcome login
+        // Welcome login: discovery always begins in the in-app WebView; once the My Domain is
+        // resolved the SDK switches to the browser when advanced auth is on, so the password step
+        // uses whichever surface `usesBrowser` indicates.
         else if (useWelcomeDiscovery) {
             XCTAssertTrue(loginPage.hasFilledUsernameField(username: userConfig.username), "Login page should have pre-filled username")
-            loginPage.performWelcomeLogin(password: userConfig.password, advancedAuth: loginHost == .advancedAuth)
+            loginPage.performWelcomeLogin(password: userConfig.password, advancedAuth: usesBrowser)
         }
         // Regular or advanced auth
         else {
-            loginPage.performLogin(username: userConfig.username, password: userConfig.password, advancedAuth: loginHost == .advancedAuth)
+            loginPage.performLogin(username: userConfig.username, password: userConfig.password, advancedAuth: usesBrowser)
         }
-        
+
         // Invalid scope
         if (dynamicScopeSelection == .invalid || (dynamicAppConfig == nil && staticScopeSelection == .invalid)) {
             XCTAssertTrue(loginPage.isShowingUnexpectedOauthError(), "Screen should show OAuth Error")
-            logoutAtTearDown = false
         }
     }
     
@@ -206,6 +256,8 @@ class BaseAuthFlowTester: XCTestCase {
     ///   - userScopeSelection: The scope selection the user was logged in with. Defaults to `.empty`.
     ///   - useWebServerFlow: Whether web server OAuth flow was used. Defaults to `true`.
     ///   - useHybridFlow: Whether hybrid authentication flow was used. Defaults to `true`.
+    ///   - isMultiUser: Whether multiple users are still logged in after the switch. Defaults to `false`.
+    ///   - wasMigrated: Whether the user underwent a token migration. Defaults to `false`.
     func switchToUserAndValidate(
         loginHost: KnownLoginHostConfig,
         user: KnownUserConfig,
@@ -214,11 +266,13 @@ class BaseAuthFlowTester: XCTestCase {
         userAppConfigName: KnownAppConfig,
         userScopeSelection: ScopeSelection = .empty,
         useWebServerFlow: Bool = true,
-        useHybridFlow: Bool = true
+        useHybridFlow: Bool = true,
+        isMultiUser: Bool = false,
+        wasMigrated: Bool = false
     ) {
         // Switch user
         mainPage.switchToUser(username: getUser(loginHost: loginHost, user: user).username)
-        
+
         // Validate
         validate(
             loginHost: loginHost,
@@ -228,10 +282,12 @@ class BaseAuthFlowTester: XCTestCase {
             userAppConfigName: userAppConfigName,
             userScopeSelection: userScopeSelection,
             useWebServerFlow: useWebServerFlow,
-            useHybridFlow: useHybridFlow
+            useHybridFlow: useHybridFlow,
+            isMultiUser: isMultiUser,
+            wasMigrated: wasMigrated
         )
     }
-    
+
     /// Switches to an already logged-in user and validates the user credentials.
     ///
     /// Use this method when multiple users are logged in and you want to switch between them.
@@ -250,22 +306,46 @@ class BaseAuthFlowTester: XCTestCase {
         userAppConfigName: KnownAppConfig,
         userScopeSelection: ScopeSelection = .empty,
         useWebServerFlow: Bool = true,
-        useHybridFlow: Bool = true
+        useHybridFlow: Bool = true,
+        forceAdvancedAuthentication: Bool = true,
+        loginForAdmin: Bool = false,
+        usesWelcomeDiscovery: Bool = false,
+        isMultiUser: Bool = false,
+        wasMigrated: Bool = false
     ) {
         // Switch user
         mainPage.switchToUser(username: getUser(loginHost: loginHost, user: user).username)
-        
-        // Validate
+
+        let expectAdvancedAuth = loginForAdmin || loginHost == .advancedAuth || forceAdvancedAuthentication
+
+        let expectedBMarker: String? = expectAdvancedAuth ? (
+            loginForAdmin ? kBrowserLoginForAdmin :
+            forceAdvancedAuthentication ? kBrowserLoginForceFlag :
+            kBrowserLoginServerAuthConfig
+        ) : nil
+        let expectedLMarker: String? = usesWelcomeDiscovery ? kLoginServerWelcomeDiscovery : kLoginServerMyDomain
+        let aMarker = aMarkerFor(useWebServerFlow: useWebServerFlow, useHybridFlow: useHybridFlow)
+
+        // Validate user and feature flags
+        let userAppConfig = getAppConfig(named: userAppConfigName)
         validateUser(
             loginHost: loginHost,
             user: user,
             userAppConfigName: userAppConfigName,
             userScopeSelection: userScopeSelection,
             useWebServerFlow: useWebServerFlow,
-            useHybridFlow: useHybridFlow
+            useHybridFlow: useHybridFlow,
+            expectAdvancedAuth: expectAdvancedAuth,
+            usesWelcomeDiscovery: usesWelcomeDiscovery,
+            isMultiUser: isMultiUser,
+            expectedBMarker: expectedBMarker,
+            expectedLMarker: expectedLMarker,
+            expectedAMarker: aMarker,
+            wasMigrated: wasMigrated,
+            isBeacon: userAppConfig.isBeacon
         )
     }
-    
+
     /// Launches the app and performs login.
     ///
     /// This is a convenience method that combines `launch()` and `login()` in one call.
@@ -289,6 +369,7 @@ class BaseAuthFlowTester: XCTestCase {
         dynamicScopeSelection: ScopeSelection = .empty,
         useWebServerFlow: Bool = true,
         useHybridFlow: Bool = true,
+        forceAdvancedAuthentication: Bool = true,
         loginForAdmin: Bool = false,
     ) {
         // Launch
@@ -304,6 +385,7 @@ class BaseAuthFlowTester: XCTestCase {
             dynamicScopeSelection: dynamicScopeSelection,
             useWebServerFlow: useWebServerFlow,
             useHybridFlow: useHybridFlow,
+            forceAdvancedAuthentication: forceAdvancedAuthentication,
             loginForAdmin: loginForAdmin,
         )
     }
@@ -332,8 +414,12 @@ class BaseAuthFlowTester: XCTestCase {
         dynamicScopeSelection: ScopeSelection = .empty,
         useWebServerFlow: Bool = true,
         useHybridFlow: Bool = true,
+        forceAdvancedAuthentication: Bool = true,
         useWelcomeDiscovery: Bool = false,
         loginForAdmin: Bool = false,
+        isMultiUser: Bool = false,
+        useDPoP: Bool = false,
+        useLoginPoolHost: Bool = false
     ) {
         let useStaticConfiguration = dynamicAppConfigName == nil
         let userAppConfigName = useStaticConfiguration ? staticAppConfigName : dynamicAppConfigName!
@@ -352,8 +438,11 @@ class BaseAuthFlowTester: XCTestCase {
             dynamicScopeSelection: dynamicScopeSelection,
             useWebServerFlow: useWebServerFlow,
             useHybridFlow: useHybridFlow,
+            forceAdvancedAuthentication: forceAdvancedAuthentication,
             useWelcomeDiscovery: useWelcomeDiscovery,
-            loginForAdmin: loginForAdmin
+            loginForAdmin: loginForAdmin,
+            useDPoP: useDPoP,
+            useLoginPoolHost: useLoginPoolHost
         )
 
         // Validate
@@ -367,10 +456,50 @@ class BaseAuthFlowTester: XCTestCase {
             userAppConfigName: userAppConfigName,
             userScopeSelection: userScopeSelection,
             useWebServerFlow: effectiveUseWebServerFlow,
-            useHybridFlow: useHybridFlow
+            useHybridFlow: useHybridFlow,
+            forceAdvancedAuthentication: forceAdvancedAuthentication,
+            isMultiUser: isMultiUser,
+            usesWelcomeDiscovery: useWelcomeDiscovery,
+            loginForAdmin: loginForAdmin,
+            useDPoP: useDPoP,
+            useLoginPoolHost: useLoginPoolHost
         )
     }
     
+    /// Logs in an additional user (multi-user scenario) WITHOUT performing credential validation.
+    ///
+    /// Use this method when you need to add a second user account but don't need full credential
+    /// validation (e.g., when using advanced auth where identity data may not be immediately available).
+    ///
+    /// - Parameters:
+    ///   - loginHost: The login host configuration to use.
+    ///   - user: The user to log in with.
+    ///   - staticAppConfigName: The static app configuration name.
+    ///   - useWebServerFlow: Whether to use web server OAuth flow. Defaults to `true`.
+    ///   - useHybridFlow: Whether to use hybrid authentication flow. Defaults to `true`.
+    func loginOtherUser(
+        loginHost: KnownLoginHostConfig,
+        user: KnownUserConfig,
+        staticAppConfigName: KnownAppConfig,
+        useWebServerFlow: Bool = true,
+        useHybridFlow: Bool = true,
+    ) {
+        // Switch to add new user
+        mainPage.performAddUser()
+
+        // Login
+        login(
+            loginHost: loginHost,
+            user: user,
+            staticAppConfigName: staticAppConfigName,
+            useWebServerFlow: useWebServerFlow,
+            useHybridFlow: useHybridFlow,
+        )
+
+        // Wait for main page to show (user is logged in)
+        assertMainPageLoaded()
+    }
+
     /// Logs in an additional user (multi-user scenario) and validates the credentials.
     ///
     /// Use this method after an initial user is already logged in to add another user account.
@@ -385,6 +514,7 @@ class BaseAuthFlowTester: XCTestCase {
     ///   - dynamicScopeSelection: The scope selection for dynamic configuration. Defaults to `.empty`.
     ///   - useWebServerFlow: Whether to use web server OAuth flow. Defaults to `true`.
     ///   - useHybridFlow: Whether to use hybrid authentication flow. Defaults to `true`.
+    ///   - isMultiUser: Whether multiple users are logged in after this login. Defaults to `true`.
     func loginOtherUserAndValidate(
         loginHost: KnownLoginHostConfig,
         user: KnownUserConfig,
@@ -394,14 +524,17 @@ class BaseAuthFlowTester: XCTestCase {
         dynamicScopeSelection: ScopeSelection = .empty,
         useWebServerFlow: Bool = true,
         useHybridFlow: Bool = true,
+        forceAdvancedAuthentication: Bool = true,
+        isMultiUser: Bool = true,
+        useDPoP: Bool = false
     ) {
         let useStaticConfiguration = dynamicAppConfigName == nil
         let userAppConfigName = useStaticConfiguration ? staticAppConfigName : dynamicAppConfigName!
         let userScopeSelection = useStaticConfiguration ? staticScopeSelection : dynamicScopeSelection
-        
+
         // Switch to add new user
         mainPage.performAddUser()
-        
+
         // Login
         login(
             loginHost: loginHost,
@@ -412,8 +545,10 @@ class BaseAuthFlowTester: XCTestCase {
             dynamicScopeSelection: dynamicScopeSelection,
             useWebServerFlow: useWebServerFlow,
             useHybridFlow: useHybridFlow,
+            forceAdvancedAuthentication: forceAdvancedAuthentication,
+            useDPoP: useDPoP
         )
-        
+
         // Validate
         validate(
             loginHost: loginHost,
@@ -423,10 +558,13 @@ class BaseAuthFlowTester: XCTestCase {
             userAppConfigName: userAppConfigName,
             userScopeSelection: userScopeSelection,
             useWebServerFlow: useWebServerFlow,
-            useHybridFlow: useHybridFlow
+            useHybridFlow: useHybridFlow,
+            forceAdvancedAuthentication: forceAdvancedAuthentication,
+            isMultiUser: isMultiUser,
+            useDPoP: useDPoP
         )
     }
-    
+
     /// Restarts the app and validates that the user session persists.
     ///
     /// Terminates and relaunches the app, then validates that the user is still logged in
@@ -439,37 +577,74 @@ class BaseAuthFlowTester: XCTestCase {
     ///   - userScopeSelection: The scope selection the user was logged in with. Defaults to `.empty`.
     ///   - useWebServerFlow: Whether web server OAuth flow was used. Defaults to `true`.
     ///   - useHybridFlow: Whether hybrid authentication flow was used. Defaults to `true`.
+    ///   - loginForAdmin: When true, Login for Admin was used (browser-based auth), which sets the BW flag. Defaults to `false`.
+    ///   - usesWelcomeDiscovery: When true, welcome discovery was used, which sets the WD flag. Defaults to `false`.
     func restartAndValidateUser(
         loginHost: KnownLoginHostConfig = .regularAuth,
         user: KnownUserConfig = .first,
         userAppConfigName: KnownAppConfig,
         userScopeSelection: ScopeSelection = .empty,
         useWebServerFlow: Bool = true,
-        useHybridFlow: Bool = true
+        useHybridFlow: Bool = true,
+        forceAdvancedAuthentication: Bool = true,
+        loginForAdmin: Bool = false,
+        usesWelcomeDiscovery: Bool = false,
+        isMultiUser: Bool = false,
+        isRtr: Bool = false,
+        wasMigrated: Bool = false
     ) {
-        // Restart
-        app.terminate()
-        app.launch()
+        // Restart without --resetSDKForUITesting so the session persists across the restart
+        restart()
 
         // Restore auth flow settings lost on restart
         mainPage.setAuthFlowTypes(useWebServerFlow: useWebServerFlow, useHybridFlow: useHybridFlow)
 
-        // Validate user
+        let expectAdvancedAuth = loginForAdmin || loginHost == .advancedAuth || forceAdvancedAuthentication
+
+        let expectedBMarker: String? = expectAdvancedAuth ? (
+            loginForAdmin ? kBrowserLoginForAdmin :
+            forceAdvancedAuthentication ? kBrowserLoginForceFlag :
+            kBrowserLoginServerAuthConfig
+        ) : nil
+
+        let expectedLMarker: String? = usesWelcomeDiscovery
+            ? kLoginServerWelcomeDiscovery
+            : kLoginServerMyDomain
+
+        let aMarker = aMarkerFor(useWebServerFlow: useWebServerFlow, useHybridFlow: useHybridFlow)
+
+        // Validate user and feature flags
         // Not checking static app config since it will depend on the bootconfig of the target app
+        let userAppConfig = getAppConfig(named: userAppConfigName)
         validateUser(
             loginHost: loginHost,
             user: user,
             userAppConfigName: userAppConfigName,
             userScopeSelection: userScopeSelection,
             useWebServerFlow: useWebServerFlow,
-            useHybridFlow: useHybridFlow
+            useHybridFlow: useHybridFlow,
+            expectAdvancedAuth: expectAdvancedAuth,
+            usesWelcomeDiscovery: usesWelcomeDiscovery,
+            isMultiUser: isMultiUser,
+            isRtr: isRtr,
+            expectedBMarker: expectedBMarker,
+            expectedLMarker: expectedLMarker,
+            expectedAMarker: aMarker,
+            wasMigrated: wasMigrated,
+            isBeacon: userAppConfig.isBeacon
         )
     }
-    
+
     /// Migrates the refresh token to a new app configuration and validates the result.
     ///
     /// Performs a refresh token migration from the current app configuration to a new one,
     /// then validates that the credentials are updated correctly and the refresh token has changed.
+    ///
+    /// The SDK preserves the BW feature marker through migration (migration is a silent token
+    /// exchange that does not change how the user originally authenticated), so
+    /// `forceAdvancedAuthentication` mirrors the value used at initial login. Tests that logged
+    /// in with `forceAdvancedAuthentication: false` (e.g. user-agent flow) should pass `false`
+    /// here as well.
     ///
     /// - Parameters:
     ///   - loginHost: The login host configuration to use.
@@ -479,6 +654,9 @@ class BaseAuthFlowTester: XCTestCase {
     ///   - migrationScopeSelection: The scope selection for the migration target. Defaults to `.empty`.
     ///   - migrationUseWebServerFlow: Whether to use web server OAuth flow for migration. Defaults to `true`.
     ///   - migrationUseHybridFlow: Whether to use hybrid authentication flow for migration. Defaults to `true`.
+    ///   - forceAdvancedAuthentication: Whether BW is expected in the post-migration UA. Defaults to `true`.
+    ///   - useDPoP: Whether DPoP was enabled for this session. Defaults to `false`.
+    ///   - isMultiUser: Whether multiple users are logged in. Defaults to `false`.
     func migrateAndValidate(
         loginHost: KnownLoginHostConfig,
         staticAppConfigName: KnownAppConfig,
@@ -487,15 +665,15 @@ class BaseAuthFlowTester: XCTestCase {
         migrationScopeSelection: ScopeSelection = .empty,
         migrationUseWebServerFlow: Bool = true,
         migrationUseHybridFlow: Bool = true,
+        forceAdvancedAuthentication: Bool = true,
+        useDPoP: Bool = false,
+        isMultiUser: Bool = false
     ) {
-        // Get original credentials before migration
         let originalUserCredentials = mainPage.getUserCredentials()
-        
-        // Get current user
         let user = getKnownUserConfig(loginHost: loginHost, byUsername: originalUserCredentials.username)
+        // Capture the A-marker before migration — migration preserves it unchanged (per spec).
+        let preMigrationAMarker = extractAMarkerFromUA(originalUserCredentials.userAgent)
 
-
-        // Migrate refresh token
         migrateRefreshToken(
             appConfigName: migrationAppConfigName,
             scopeSelection: migrationScopeSelection,
@@ -503,7 +681,6 @@ class BaseAuthFlowTester: XCTestCase {
             useHybridFlow: migrationUseHybridFlow
         )
 
-        // Validate after migration
         let migratedUserCredentials = validate(
             loginHost: loginHost,
             user: user,
@@ -512,7 +689,12 @@ class BaseAuthFlowTester: XCTestCase {
             userAppConfigName: migrationAppConfigName,
             userScopeSelection: migrationScopeSelection,
             useWebServerFlow: migrationUseWebServerFlow,
-            useHybridFlow: migrationUseHybridFlow
+            useHybridFlow: migrationUseHybridFlow,
+            forceAdvancedAuthentication: forceAdvancedAuthentication,
+            isMultiUser: isMultiUser,
+            useDPoP: useDPoP,
+            wasMigrated: true,
+            expectedAMarkerOverride: preMigrationAMarker
         )
 
         // Making sure the refresh token changed
@@ -522,13 +704,133 @@ class BaseAuthFlowTester: XCTestCase {
             "Refresh token should have been migrated"
         )
     }
-    
+
+    /// Upgrades the current session to DPoP in place (same connected app, via
+    /// `UserAccountManager.upgradeToDPoP`) and validates the result: DPoP-bound credentials,
+    /// an unchanged consumer key, and a working revoke/refresh cycle.
+    ///
+    /// Unlike `migrateAndValidate`, this does not change the connected app — it re-authenticates
+    /// against the same client id/redirect URI/scopes, so the consumer key is expected to stay
+    /// the same while the refresh token is rotated.
+    ///
+    /// - Parameter isJwt: Whether the connected app issues JWT-format access tokens (drives the
+    ///   "JT"/"OT" UA marker assertion). Defaults to `true` since the upgrade test uses `.ecaJwt`.
+    func upgradeToDPoPAndValidate(isJwt: Bool = true) {
+        let originalUserCredentials = getUserCredentials()
+
+        XCTAssert(mainPage.upgradeToDPoP(), "Failed to upgrade to DPoP")
+
+        let upgradedUserCredentials = getUserCredentials()
+
+        // The upgrade re-authenticates with the same connected app: consumer key is unchanged.
+        XCTAssertEqual(
+            originalUserCredentials.clientId,
+            upgradedUserCredentials.clientId,
+            "Consumer key should be unchanged after upgrading to DPoP"
+        )
+
+        assertDPoPCredentials(upgradedUserCredentials, context: "after upgrade")
+
+        // Making sure the refresh token changed
+        XCTAssertNotEqual(
+            originalUserCredentials.refreshToken,
+            upgradedUserCredentials.refreshToken,
+            "Refresh token should have been rotated by the DPoP upgrade"
+        )
+
+        // `upgradeToDPoP` delegates to the refresh-token migration path, so the "TM"
+        // (token-migration) UA feature flag is legitimately registered — the marker tracks the
+        // migration mechanism, not whether the connected app changed. Assert its presence.
+        assertRevokeAndRefreshWorks(isRtr: false, isDPoP: true, wasMigrated: true, isJwt: isJwt)
+    }
+
+    /// Launches the app and attempts a login expected to fail before any credentials are entered.
+    ///
+    /// Replays the same host-list / login-options / login-host prefix as `login()` (selecting the
+    /// login host is what triggers `/authorize`), then stops — it never calls `performLogin`.
+    /// Use this for enforced-server rejections that fire at `/authorize` before a login form ever
+    /// renders (e.g. a DPoP-enforced ECA rejecting an unbound login with `useDPoP: false`); calling
+    /// `performLogin` in that case would hang waiting on form fields that never appear.
+    ///
+    /// - Parameters:
+    ///   - loginHost: The login host configuration to use.
+    ///   - staticAppConfigName: The static app configuration name.
+    ///   - staticScopeSelection: The scope selection for static configuration. Defaults to `.empty`.
+    ///   - forceAdvancedAuthentication: Whether to use the external browser for login. Defaults to `true`.
+    ///   - useDPoP: Whether to enable the "Use DPoP" login option. Defaults to `false`.
+    func launchAndAttemptLoginExpectingFailure(
+        loginHost: KnownLoginHostConfig,
+        staticAppConfigName: KnownAppConfig,
+        staticScopeSelection: ScopeSelection = .empty,
+        forceAdvancedAuthentication: Bool = true,
+        useDPoP: Bool = false
+    ) {
+        launch()
+
+        let hostConfig = getLoginHost(loginHost: loginHost)
+        let staticAppConfig = getAppConfig(named: staticAppConfigName)
+        let staticScopes = testConfig.getScopesToRequest(for: staticAppConfig, staticScopeSelection)
+
+        let advancedAuthEnabled = forceAdvancedAuthentication
+
+        // A fresh login surface always starts under the process default (advanced auth on), so the
+        // external browser is showing. Cancel it to reach the host list, where login options and
+        // the login host are configured. (Mirrors login()'s own prefix.)
+        loginPage.returnToHostList(expectingBrowser: true)
+
+        loginPage.configureLoginOptions(
+            staticAppConfig: staticAppConfig,
+            staticScopes: staticScopes,
+            dynamicAppConfig: nil,
+            dynamicScopes: "",
+            useWebServerFlow: true,
+            useHybridFlow: true,
+            forceAdvancedAuthentication: forceAdvancedAuthentication,
+            discoveryLoginHost: "",
+            discoveryUsername: "",
+            useDPoP: useDPoP
+        )
+
+        loginPage.returnToHostList(expectingBrowser: advancedAuthEnabled)
+
+        // Selecting the login host triggers /authorize. For an enforced ECA with useDPoP: false,
+        // the server rejects before any login form renders, so there is nothing further to drive —
+        // assert on the outcome instead of attempting performLogin.
+        loginPage.configureLoginHost(host: hostConfig.urlNoProtocol)
+
+        // We assert on absence-of-main-page rather than on error text because there is no error
+        // surface to read here. This path uses advanced auth (ASWebAuthenticationSession), and the
+        // enforced ECA rejects the unbound /authorize with a short non-HTML body. The system browser
+        // can't render it and falls back to a QuickLook document preview (a generic file icon
+        // labeled "authorize" / "data - N bytes" / "Open in…") — there is no error= / error_description
+        // string on screen. This differs from the in-app WebView negative tests (invalid client id,
+        // invalid scope), which render an HTML error page whose text is assertable. The only elements
+        // available here are iOS's file-preview chrome, which is not a stable SDK/server contract, so
+        // "the app never reaches the authenticated view" is the strongest reliable signal.
+        assertMainPageNotLoaded()
+    }
+
     // MARK: - Protected Helpers for Subclasses
 
     /// Restarts the application.
     /// Use this for testing session persistence across app restarts.
+    /// A fresh XCUIApplication is created without --resetSDKForUITesting so the
+    /// existing user session is preserved across the restart.
     func restart() {
+        restart(withLaunchArguments: [])
+    }
+
+    /// Restarts the application with the given launch arguments.
+    ///
+    /// Session state persists (no `--resetSDKForUITesting`). Use for tests that need to relaunch
+    /// while injecting a test-only launch flag (e.g. `--disableDPoPAtStart`) recognized by the app.
+    func restart(withLaunchArguments launchArguments: [String]) {
         app.terminate()
+        app = XCUIApplication()
+        app.launchEnvironment["IS_UI_TESTING"] = "1"
+        app.launchArguments = launchArguments
+        loginPage = LoginPageObject(testApp: app)
+        mainPage = AuthFlowTesterMainPageObject(testApp: app)
         app.launch()
     }
 
@@ -548,6 +850,148 @@ class BaseAuthFlowTester: XCTestCase {
         return mainPage.getUserCredentials()
     }
 
+    /// Validates the user agent string from already-fetched credentials.
+    ///
+    /// - Parameters:
+    ///   - userCredentials: Credentials previously returned by `validateUser()`.
+    ///   - loginHost: The login host used for the current user.
+    ///   - expectAdvancedAuth: Whether advanced auth (browser-based) was used, which sets the BW flag. Defaults to `false`.
+    ///   - usesWelcomeDiscovery: Whether welcome domain discovery was used. Defaults to `false`.
+    ///   - isMultiUser: Whether multiple users are currently logged in. Defaults to `false`.
+    ///   - isRtr: Whether Refresh Token Rotation is enabled, which sets the RT flag. Defaults to `false`.
+    ///   - expectedBMarker: The single B-marker code expected in the UA (e.g. "B3", "B4"). Pass `nil` when no browser login occurred.
+    ///   - expectedLMarker: The single L-marker code expected in the UA (e.g. "L3", "L4"). Pass `nil` to assert no L-markers are present.
+    ///   - expectedAMarker: The single A-marker code expected in the UA (e.g. "A1", "A5"). Pass `nil` to assert no A-markers are present.
+    ///   - wasMigrated: Whether a refresh token migration occurred (TM flag). Defaults to `false`.
+    ///   - isJwt: Whether the session uses JWT token format (JT flag). Defaults to `false`, asserting OT instead.
+    ///   - isBeacon: Whether this is a beacon child app (BN flag). Defaults to `false`.
+    func validateUserAgent(userCredentials: UserCredentialsData, loginHost: KnownLoginHostConfig, expectAdvancedAuth: Bool = false, usesWelcomeDiscovery: Bool = false, isMultiUser: Bool = false, isRtr: Bool = false, expectDP: Bool = false, expectedBMarker: String? = nil, expectedLMarker: String? = nil, expectedAMarker: String? = nil, wasMigrated: Bool = false, isJwt: Bool = false, isBeacon: Bool = false) {
+        validateUserAgent(ua: userCredentials.userAgent, loginHost: loginHost, expectAdvancedAuth: expectAdvancedAuth, usesWelcomeDiscovery: usesWelcomeDiscovery, isMultiUser: isMultiUser, isRtr: isRtr, expectDP: expectDP, expectedBMarker: expectedBMarker, expectedLMarker: expectedLMarker, expectedAMarker: expectedAMarker, wasMigrated: wasMigrated, isJwt: isJwt, isBeacon: isBeacon)
+    }
+
+    /// Validates a pre-fetched user agent string. Called from validate() which already has the UA.
+    ///
+    /// - Parameters:
+    ///   - ua: A pre-fetched user agent string.
+    ///   - loginHost: The login host used for the current user.
+    ///   - expectAdvancedAuth: Whether advanced auth (browser-based) was used, which sets the BW flag. Defaults to `false`.
+    ///   - usesWelcomeDiscovery: Whether welcome domain discovery was used. Defaults to `false`.
+    ///   - isMultiUser: Whether multiple users are currently logged in. Defaults to `false`.
+    ///   - isRtr: Whether Refresh Token Rotation is enabled, which sets the RT flag. Defaults to `false`.
+    ///   - expectedBMarker: The single B-marker code expected in the UA (e.g. "B3", "B4"). Pass `nil` when no browser login occurred.
+    ///   - expectedLMarker: The single L-marker code expected in the UA (e.g. "L3", "L4"). Pass `nil` to skip the assertion.
+    ///   - expectedAMarker: The single A-marker code expected in the UA (e.g. "A1", "A5"). Pass `nil` to assert no A-markers are present.
+    ///   - wasMigrated: Whether a refresh token migration occurred (TM flag). Defaults to `false`.
+    ///   - isJwt: Whether the session uses JWT token format (JT flag). Defaults to `false`.
+    ///   - isBeacon: Whether this is a beacon child app (BN flag). Defaults to `false`.
+    private func validateUserAgent(ua: String, loginHost: KnownLoginHostConfig, expectAdvancedAuth: Bool = false, usesWelcomeDiscovery: Bool = false, isMultiUser: Bool = false, isRtr: Bool = false, expectDP: Bool = false, expectedBMarker: String? = nil, expectedLMarker: String? = nil, expectedAMarker: String? = nil, wasMigrated: Bool = false, isJwt: Bool = false, isBeacon: Bool = false) {
+        XCTAssertTrue(ua.contains("SalesforceMobileSDK/"), "User agent should contain 'SalesforceMobileSDK/' prefix; got: \(ua)")
+        XCTAssertTrue(ua.contains("ftr_"), "User agent should contain 'ftr_' feature flag segment; got: \(ua)")
+
+        // Extract the flag string after "ftr_" up to the next space
+        let flagSet: Set<String>
+        if let ftrRange = ua.range(of: "ftr_") {
+            let afterFtr = String(ua[ftrRange.upperBound...])
+            let flagString = afterFtr.components(separatedBy: " ").first ?? "" 
+            flagSet = Set(flagString.components(separatedBy: ".").filter { !$0.isEmpty })
+        } else {
+            flagSet = []
+        }
+
+        if expectAdvancedAuth {
+            XCTAssertTrue(flagSet.contains("BW"), "User agent should contain 'BW' flag for advanced auth; flags: \(flagSet), ua: \(ua)")
+        } else {
+            XCTAssertFalse(flagSet.contains("BW"), "User agent should NOT contain 'BW' flag for non-advanced auth; flags: \(flagSet), ua: \(ua)")
+        }
+
+        if usesWelcomeDiscovery {
+            XCTAssertTrue(flagSet.contains("WD"), "User agent should contain 'WD' flag when welcome discovery is used; flags: \(flagSet), ua: \(ua)")
+        } else {
+            XCTAssertFalse(flagSet.contains("WD"), "User agent should NOT contain 'WD' flag when welcome discovery is not used; flags: \(flagSet), ua: \(ua)")
+        }
+
+        if isMultiUser {
+            XCTAssertTrue(flagSet.contains("MU"), "User agent should contain 'MU' flag when multiple users are logged in; flags: \(flagSet), ua: \(ua)")
+        } else {
+            XCTAssertFalse(flagSet.contains("MU"), "User agent should NOT contain 'MU' flag when only one user is logged in; flags: \(flagSet), ua: \(ua)")
+        }
+
+        if isRtr {
+            XCTAssertTrue(flagSet.contains("RT"),
+                          "User agent should contain 'RT' flag after Refresh Token Rotation; flags: \(flagSet), ua: \(ua)")
+        } else {
+            XCTAssertFalse(flagSet.contains("RT"),
+                           "User agent should NOT contain 'RT' flag when Refresh Token Rotation has not occurred; flags: \(flagSet), ua: \(ua)")
+        }
+
+        if expectDP {
+            XCTAssertTrue(flagSet.contains("DP"),
+                          "User agent should contain 'DP' flag for DPoP-bound session; flags: \(flagSet), ua: \(ua)")
+        } else {
+            XCTAssertFalse(flagSet.contains("DP"),
+                           "User agent should NOT contain 'DP' flag when DPoP is not enabled; flags: \(flagSet), ua: \(ua)")
+        }
+
+        // B-markers
+        if let bMarker = expectedBMarker {
+            XCTAssertTrue(flagSet.contains(bMarker), "Expected B-marker '\(bMarker)' in UA; flags: \(flagSet), ua: \(ua)")
+            for other in kAllBMarkers where other != bMarker {
+                XCTAssertFalse(flagSet.contains(other), "Unexpected B-marker '\(other)' in UA; flags: \(flagSet), ua: \(ua)")
+            }
+        } else {
+            for marker in kAllBMarkers {
+                XCTAssertFalse(flagSet.contains(marker), "Unexpected B-marker '\(marker)' when no browser login expected; flags: \(flagSet), ua: \(ua)")
+            }
+        }
+
+        // L-markers
+        if let lMarker = expectedLMarker {
+            XCTAssertTrue(flagSet.contains(lMarker), "Expected L-marker '\(lMarker)' in UA; flags: \(flagSet), ua: \(ua)")
+            for other in kAllLMarkers where other != lMarker {
+                XCTAssertFalse(flagSet.contains(other), "Unexpected L-marker '\(other)' in UA; flags: \(flagSet), ua: \(ua)")
+            }
+        } else {
+            for marker in kAllLMarkers {
+                XCTAssertFalse(flagSet.contains(marker), "Unexpected L-marker '\(marker)' when no login server marker expected; flags: \(flagSet), ua: \(ua)")
+            }
+        }
+
+        // A-markers
+        if let aMarker = expectedAMarker {
+            XCTAssertTrue(flagSet.contains(aMarker), "Expected A-marker '\(aMarker)' in UA; flags: \(flagSet), ua: \(ua)")
+            for other in kAllAMarkers where other != aMarker {
+                XCTAssertFalse(flagSet.contains(other), "Unexpected A-marker '\(other)' in UA; flags: \(flagSet), ua: \(ua)")
+            }
+        } else {
+            for marker in kAllAMarkers {
+                XCTAssertFalse(flagSet.contains(marker), "Unexpected A-marker '\(marker)' when no auth-type marker expected; flags: \(flagSet), ua: \(ua)")
+            }
+        }
+
+        // TM: token migration
+        if wasMigrated {
+            XCTAssertTrue(flagSet.contains("TM"), "User agent should contain 'TM' flag after token migration; flags: \(flagSet), ua: \(ua)")
+        } else {
+            XCTAssertFalse(flagSet.contains("TM"), "User agent should NOT contain 'TM' flag when no migration occurred; flags: \(flagSet), ua: \(ua)")
+        }
+
+        // JT/OT: token format
+        if isJwt {
+            XCTAssertTrue(flagSet.contains("JT"), "User agent should contain 'JT' flag for JWT token format; flags: \(flagSet), ua: \(ua)")
+            XCTAssertFalse(flagSet.contains("OT"), "User agent should NOT contain 'OT' flag when token format is JWT; flags: \(flagSet), ua: \(ua)")
+        } else {
+            XCTAssertFalse(flagSet.contains("JT"), "User agent should NOT contain 'JT' flag for non-JWT token format; flags: \(flagSet), ua: \(ua)")
+            XCTAssertTrue(flagSet.contains("OT"), "User agent should contain 'OT' flag for opaque token format; flags: \(flagSet), ua: \(ua)")
+        }
+
+        // BN: beacon child app
+        if isBeacon {
+            XCTAssertTrue(flagSet.contains("BN"), "User agent should contain 'BN' flag for beacon child app; flags: \(flagSet), ua: \(ua)")
+        } else {
+            XCTAssertFalse(flagSet.contains("BN"), "User agent should NOT contain 'BN' flag for non-beacon app; flags: \(flagSet), ua: \(ua)")
+        }
+    }
+
     /// Revokes the current user's access token.
     @discardableResult
     func revokeAccessToken() -> Bool {
@@ -560,6 +1004,124 @@ class BaseAuthFlowTester: XCTestCase {
         return mainPage.makeRestRequest()
     }
 
+    // MARK: - Force Advanced Auth Test Support
+    //
+    // Thin wrappers exposing the login-page / main-page primitives to `ForceAdvancedAuthTests`,
+    // which asserts the login *modality* (external browser vs. in-app WebView) and the forced-
+    // advanced-auth presentation chrome (back button / gear) rather than driving a full
+    // `login()`/validate cycle. `app`, `loginPage`, and `mainPage` are private, so these give the
+    // subclass just enough surface without widening the general API.
+
+    /// Returns to the login host list ("Change Server"). Pass `expectingBrowser: true` when the
+    /// external browser is showing (forced advanced auth — cancel it to reach the list) and
+    /// `false` when the in-app WebView is showing (reach the list via its Settings gear).
+    func returnToLoginHostList(expectingBrowser: Bool) {
+        loginPage.returnToHostList(expectingBrowser: expectingBrowser)
+    }
+
+    /// Selects (or adds) the given login host by its display string. Assumes the host list is
+    /// already showing. For the built-in standard server pass its display name, e.g. "Production"
+    /// (`login.salesforce.com`).
+    func configureLoginHost(_ host: String) {
+        loginPage.configureLoginHost(host: host)
+    }
+
+    /// Selects the login host for a known configuration (resolving its URL from `ui_test_config`).
+    /// Assumes the host list is already showing.
+    func configureLoginHost(_ loginHost: KnownLoginHostConfig) {
+        loginPage.configureLoginHost(host: getLoginHost(loginHost: loginHost).urlNoProtocol)
+    }
+
+    /// Imports the `forceAdvancedAuthentication` flag via the login screen's Settings gear →
+    /// Login Options → Auth Flow Types JSON import — the same hook `login()` uses. Assumes a
+    /// screen with the Settings gear is showing (the host list under forced advanced auth, or the
+    /// in-app WebView). Closing Login Options restarts authentication, so the login surface
+    /// reappears in the modality the flag now selects.
+    ///
+    /// - Parameter staticAppConfigName: When non-nil, imports the given app config so the WebView
+    ///   can load a real login page. Pass `nil` (the default) when testing against
+    ///   `login.salesforce.com` — the app's default `bootconfig.plist` consumer key is valid there
+    ///   and overriding it with a My-Domain-specific ECA config (e.g. `ecaOpaque`) would cause
+    ///   `invalid_client_id` on the standard server and prevent the login form from loading.
+    func setForceAdvancedAuthentication(
+        _ value: Bool,
+        staticAppConfigName: KnownAppConfig? = nil,
+        staticScopeSelection: ScopeSelection = .empty,
+        useWebServerFlow: Bool = true,
+        useHybridFlow: Bool = true
+    ) {
+        let staticAppConfig = staticAppConfigName.map { getAppConfig(named: $0) }
+        let staticScopes = staticAppConfig.map { testConfig.getScopesToRequest(for: $0, staticScopeSelection) } ?? ""
+        loginPage.configureLoginOptions(
+            staticAppConfig: staticAppConfig,
+            staticScopes: staticScopes,
+            dynamicAppConfig: nil,
+            dynamicScopes: "",
+            useWebServerFlow: useWebServerFlow,
+            useHybridFlow: useHybridFlow,
+            forceAdvancedAuthentication: value,
+            discoveryLoginHost: "",
+            discoveryUsername: ""
+        )
+    }
+
+    /// True when the external browser (`ASWebAuthenticationSession`) login surface is showing. Pass
+    /// `UITestTimeouts.short` for the negative "no external browser" assertion.
+    func isShowingBrowserLogin(timeout: TimeInterval = UITestTimeouts.long) -> Bool {
+        return loginPage.isShowingBrowserLogin(timeout: timeout)
+    }
+
+    /// True when the legacy in-app WebView login form is showing. Pass `UITestTimeouts.short` for
+    /// the negative "no in-app WebView" assertion.
+    func isShowingInAppLoginForm(timeout: TimeInterval = UITestTimeouts.network) -> Bool {
+        return loginPage.isShowingInAppLoginForm(timeout: timeout)
+    }
+
+    /// True when the in-app login view controller (`SFLoginViewController`) is showing, detected
+    /// by its "Log In" nav bar. Appears as soon as the view controller is presented — before the
+    /// WKWebView has loaded the login page — so it is faster and more reliable than
+    /// `isShowingInAppLoginForm()` for modality checks. Use when you need to confirm the SDK chose
+    /// the in-app WebView path rather than the external browser, without waiting for a real page load.
+    func isShowingLoginViewController(timeout: TimeInterval = UITestTimeouts.long) -> Bool {
+        return loginPage.isShowingLoginViewController(timeout: timeout)
+    }
+
+    /// True when the Settings gear is present on the current login nav bar (host list under forced
+    /// advanced auth, or the in-app WebView on the legacy path).
+    func isShowingLoginSettingsGear() -> Bool {
+        return loginPage.isShowingSettingsGear()
+    }
+
+    /// True when an accessible back control is present on the current login nav bar (see
+    /// `LoginPageObject.isShowingBackButton()`).
+    func isShowingLoginBackButton() -> Bool {
+        return loginPage.isShowingBackButton()
+    }
+
+    /// Taps the login nav-bar back control, stopping the in-flight authentication and returning to
+    /// the existing account list without completing login.
+    func tapLoginBackButton() {
+        loginPage.tapBackButton()
+    }
+
+    /// Opens Login Options from the Settings gear (gear → "Login Options").
+    func openLoginOptions() {
+        loginPage.openLoginOptions()
+    }
+
+    /// True when the Authentication Flow Types dev screen — the harness's own flag-driving surface —
+    /// is showing.
+    func isShowingAuthFlowTypesView() -> Bool {
+        return loginPage.isShowingAuthFlowTypesView()
+    }
+
+    /// Triggers the add-new-account flow from the main page (Switch User → New User), which starts
+    /// a fresh authentication for an additional user while preserving the current user. Under forced
+    /// advanced auth the external browser launches; on the legacy path the in-app WebView is shown.
+    func triggerAddUser() {
+        mainPage.performAddUser()
+    }
+
     /// Returns the user configuration for the specified login host and user.
     private func getUser(loginHost: KnownLoginHostConfig, user: KnownUserConfig) -> UserConfig {
         do {
@@ -570,7 +1132,7 @@ class BaseAuthFlowTester: XCTestCase {
         }
     }
 
-    /// Validates user credentials
+    /// Validates user credentials and feature flags.
     @discardableResult
     func validateUser(
         loginHost: KnownLoginHostConfig,
@@ -578,17 +1140,26 @@ class BaseAuthFlowTester: XCTestCase {
         userAppConfigName: KnownAppConfig,
         userScopeSelection: ScopeSelection,
         useWebServerFlow: Bool,
-        useHybridFlow: Bool
+        useHybridFlow: Bool,
+        expectAdvancedAuth: Bool = false,
+        usesWelcomeDiscovery: Bool = false,
+        isMultiUser: Bool = false,
+        isRtr: Bool = false,
+        expectedBMarker: String? = nil,
+        expectedLMarker: String? = nil,
+        expectedAMarker: String? = nil,
+        wasMigrated: Bool = false,
+        isBeacon: Bool = false
     ) -> UserCredentialsData {
 
         let userConfig = getUser(loginHost: loginHost, user: user)
         let userAppConfig = getAppConfig(named: userAppConfigName)
         let expectedGrantedScopes = testConfig.getExpectedScopesGranted(for: userAppConfig, userScopeSelection)
         let issuesJwt = userAppConfig.issuesJwt
-        
+
         // Check that app loads and shows the expected user credentials etc
         assertMainPageLoaded()
-        
+
         // Check the user credentials (consumer key should match the app config used)
         let userCredentials = checkUserCredentials(
             username: userConfig.username,
@@ -597,23 +1168,48 @@ class BaseAuthFlowTester: XCTestCase {
             grantedScopes: expectedGrantedScopes,
             issuesJwt: issuesJwt
         )
-        
+
         // Check JWT if applicable
         checkJwtDetailsIfApplicable(
             appConfig: userAppConfig,
             scopes: expectedGrantedScopes,
             beaconChildConsumerKey: userCredentials.beaconChildConsumerKey
         )
-        
+
         // Additional login-specific validations
         assertSIDs(userCredentialsData: userCredentials, useHybridFlow: useHybridFlow, useJwt: issuesJwt)
         assertURLs(userCredentialsData: userCredentials, useWebServerFlow: useWebServerFlow)
-        
+
+        // DPoP token binding: assert on any DPoP-app path (login, switch, restart, migration)
+        if userAppConfig.isDPoP {
+            assertDPoPCredentials(userCredentials)
+        }
+
+        // Validate feature flags using UA already present in the fetched credentials
+        validateUserAgent(ua: userCredentials.userAgent, loginHost: loginHost, expectAdvancedAuth: expectAdvancedAuth, usesWelcomeDiscovery: usesWelcomeDiscovery, isMultiUser: isMultiUser, isRtr: isRtr, expectDP: userAppConfig.isDPoP, expectedBMarker: expectedBMarker, expectedLMarker: expectedLMarker, expectedAMarker: expectedAMarker, wasMigrated: wasMigrated, isJwt: issuesJwt, isBeacon: isBeacon)
+
         return userCredentials
     }
     
     // MARK: - Private Helpers
-    
+
+    private func aMarkerFor(useWebServerFlow: Bool, useHybridFlow: Bool) -> String {
+        if useWebServerFlow {
+            return useHybridFlow ? kAuthTypeWebServerHybrid : kAuthTypeWebServerNonHybrid
+        } else {
+            return useHybridFlow ? kAuthTypeUserAgentHybrid : kAuthTypeUserAgentNonHybrid
+        }
+    }
+
+    /// Extracts the current A-marker from a UA string, returning nil if none is present.
+    private func extractAMarkerFromUA(_ ua: String) -> String? {
+        guard let ftrRange = ua.range(of: "ftr_") else { return nil }
+        let flags = String(ua[ftrRange.upperBound...])
+            .components(separatedBy: " ").first ?? ""
+        let flagSet = Set(flags.components(separatedBy: ".").filter { !$0.isEmpty })
+        return kAllAMarkers.first { flagSet.contains($0) }
+    }
+
     /// Validates user credentials, do a revoke refesh cycle and validate oauth configuration
     @discardableResult
     private func validate(
@@ -625,12 +1221,47 @@ class BaseAuthFlowTester: XCTestCase {
         userScopeSelection: ScopeSelection,
         useWebServerFlow: Bool,
         useHybridFlow: Bool,
+        forceAdvancedAuthentication: Bool = true,
+        isMultiUser: Bool = false,
+        usesWelcomeDiscovery: Bool = false,
+        loginForAdmin: Bool = false,
+        useDPoP: Bool = false,
+        wasMigrated: Bool = false,
+        useLoginPoolHost: Bool = false,
+        expectedAMarkerOverride: String? = nil
     ) -> UserCredentialsData {
-        
+
         let staticAppConfig = getAppConfig(named: staticAppConfigName)
-        
+
         // Check that app loads and shows the expected user credentials etc
         assertMainPageLoaded()
+
+        let expectAdvancedAuth = loginForAdmin || loginHost == .advancedAuth || forceAdvancedAuthentication
+
+        let expectedBMarker: String? = expectAdvancedAuth ? (
+            loginForAdmin ? kBrowserLoginForAdmin :
+            forceAdvancedAuthentication ? kBrowserLoginForceFlag :
+            kBrowserLoginServerAuthConfig
+        ) : nil
+
+        let expectedLMarker: String?
+        if usesWelcomeDiscovery {
+            expectedLMarker = kLoginServerWelcomeDiscovery
+        } else if useLoginPoolHost {
+            // Pool server (login.salesforce.com, login.*.salesforce.com) registers L1, not L4.
+            expectedLMarker = kLoginServerProduction
+        } else {
+            expectedLMarker = kLoginServerMyDomain
+        }
+
+        // For migrations, use the pre-migration A-marker (preserved per spec). For fresh logins,
+        // derive it from the flow parameters. Login for Admin always uses SFOAuthTypeAdvancedBrowser
+        // which issues a web-server (auth-code) grant regardless of the app's configured flow.
+        let effectiveWebServerFlow = loginForAdmin ? true : useWebServerFlow
+        let aMarker = expectedAMarkerOverride ?? aMarkerFor(useWebServerFlow: effectiveWebServerFlow, useHybridFlow: useHybridFlow)
+        let userAppConfig = getAppConfig(named: userAppConfigName)
+        // After migration the RTR flag is active immediately (the migration token exchange IS a rotation).
+        let isRtr = wasMigrated ? userAppConfig.isRtr : false
 
         let userCredentials = validateUser(
             loginHost: loginHost,
@@ -638,12 +1269,20 @@ class BaseAuthFlowTester: XCTestCase {
             userAppConfigName: userAppConfigName,
             userScopeSelection: userScopeSelection,
             useWebServerFlow: useWebServerFlow,
-            useHybridFlow: useHybridFlow
+            useHybridFlow: useHybridFlow,
+            expectAdvancedAuth: expectAdvancedAuth,
+            usesWelcomeDiscovery: usesWelcomeDiscovery,
+            isMultiUser: isMultiUser,
+            isRtr: isRtr,
+            expectedBMarker: expectedBMarker,
+            expectedLMarker: expectedLMarker,
+            expectedAMarker: aMarker,
+            wasMigrated: wasMigrated,
+            isBeacon: userAppConfig.isBeacon
         )
-        
+
         // Revoke and refresh cycle
-        let userAppConfig = getAppConfig(named: userAppConfigName)
-        assertRevokeAndRefreshWorks(previousCredentials: userCredentials, isRtr: userAppConfig.isRtr)
+        assertRevokeAndRefreshWorks(previousCredentials: userCredentials, isRtr: userAppConfig.isRtr, isDPoP: useDPoP, loginHost: loginHost, expectAdvancedAuth: expectAdvancedAuth, usesWelcomeDiscovery: usesWelcomeDiscovery, isMultiUser: isMultiUser, expectedBMarker: expectedBMarker, expectedLMarker: expectedLMarker, expectedAMarker: aMarker, wasMigrated: wasMigrated, isJwt: userAppConfig.issuesJwt, isBeacon: userAppConfig.isBeacon)
 
         // Check the oauth configuration
         _ = checkOauthConfiguration(
@@ -651,7 +1290,7 @@ class BaseAuthFlowTester: XCTestCase {
             staticCallbackUrl: staticAppConfig.redirectUri,
             staticScopes: testConfig.getScopesToRequest(for: staticAppConfig, staticScopeSelection)
         )
-                
+
         return userCredentials
     }
 
@@ -671,7 +1310,16 @@ class BaseAuthFlowTester: XCTestCase {
     func assertMainPageLoaded() {
         XCTAssert(mainPage.isShowing(), "AuthFlowTester is not loaded")
     }
-    
+
+    /// Asserts that the main page never loads, i.e. the app never reaches the post-login
+    /// credentials view. Use this after a login attempt expected to be rejected before any
+    /// authenticated user is added (e.g. an enforced-server `/authorize` rejection). Waits out
+    /// `mainPage.isShowing()`'s own network timeout to give a rejected login enough time to settle
+    /// back on the host picker before asserting absence.
+    func assertMainPageNotLoaded() {
+        XCTAssertFalse(mainPage.isShowing(), "AuthFlowTester should not have loaded")
+    }
+
     private func checkUserCredentials(username: String, userConsumerKey: String, userRedirectUri: String, grantedScopes: String, issuesJwt: Bool) -> UserCredentialsData {
         let userCredentials = mainPage.getUserCredentials()
         XCTAssertEqual(userCredentials.username, username, "Username in credentials should match expected username")
@@ -772,11 +1420,18 @@ class BaseAuthFlowTester: XCTestCase {
     }
     
     /// Captures current credentials then performs a revoke/refresh cycle and validates the result.
-    func assertRevokeAndRefreshWorks(isRtr: Bool) {
-        assertRevokeAndRefreshWorks(previousCredentials: getUserCredentials(), isRtr: isRtr)
+    ///
+    /// `expectAdvancedAuth` defaults to `true`, matching the `forceAdvancedAuthentication` default.
+    /// Pass `false` for tests that logged in with the in-app WebView or post-migration validations
+    /// where BW is not re-registered.
+    func assertRevokeAndRefreshWorks(isRtr: Bool, isDPoP: Bool = false, loginHost: KnownLoginHostConfig = .regularAuth, expectAdvancedAuth: Bool = true, isMultiUser: Bool = false, useWebServerFlow: Bool = true, useHybridFlow: Bool = true, wasMigrated: Bool = false, isJwt: Bool = false, isBeacon: Bool = false) {
+        let expectedBMarker: String? = expectAdvancedAuth ? kBrowserLoginForceFlag : nil
+        let expectedLMarker: String? = kLoginServerMyDomain
+        let aMarker = aMarkerFor(useWebServerFlow: useWebServerFlow, useHybridFlow: useHybridFlow)
+        assertRevokeAndRefreshWorks(previousCredentials: getUserCredentials(), isRtr: isRtr, isDPoP: isDPoP, loginHost: loginHost, expectAdvancedAuth: expectAdvancedAuth, isMultiUser: isMultiUser, expectedBMarker: expectedBMarker, expectedLMarker: expectedLMarker, expectedAMarker: aMarker, wasMigrated: wasMigrated, isJwt: isJwt, isBeacon: isBeacon)
     }
 
-    private func assertRevokeAndRefreshWorks(previousCredentials: UserCredentialsData, isRtr: Bool) {
+    private func assertRevokeAndRefreshWorks(previousCredentials: UserCredentialsData, isRtr: Bool, isDPoP: Bool = false, loginHost: KnownLoginHostConfig = .regularAuth, expectAdvancedAuth: Bool = true, usesWelcomeDiscovery: Bool = false, isMultiUser: Bool = false, expectedBMarker: String? = nil, expectedLMarker: String? = nil, expectedAMarker: String? = nil, wasMigrated: Bool = false, isJwt: Bool = false, isBeacon: Bool = false) {
         // Revoke access token
         XCTAssert(mainPage.revokeAccessToken(), "Failed to revoke access token")
 
@@ -806,6 +1461,38 @@ class BaseAuthFlowTester: XCTestCase {
                 "Refresh token should not have changed (non-RTR app)"
             )
         }
+
+        // Assert DPoP token type and nonce presence if DPoP is enabled
+        if isDPoP {
+            assertDPoPCredentials(credentialsAfterRefresh, context: "after refresh")
+        }
+
+        validateUserAgent(userCredentials: credentialsAfterRefresh,
+                          loginHost: loginHost,
+                          expectAdvancedAuth: expectAdvancedAuth,
+                          usesWelcomeDiscovery: usesWelcomeDiscovery,
+                          isMultiUser: isMultiUser,
+                          isRtr: isRtr,
+                          expectDP: isDPoP,
+                          expectedBMarker: expectedBMarker,
+                          expectedLMarker: expectedLMarker,
+                          expectedAMarker: expectedAMarker,
+                          wasMigrated: wasMigrated,
+                          isJwt: isJwt,
+                          isBeacon: isBeacon)
+    }
+
+    /// Asserts the DPoP token-type and nonce triad on a set of credentials.
+    ///
+    /// - Parameters:
+    ///   - credentials: Credentials fetched from the main page after a DPoP-bound event.
+    ///   - context: Optional context appended to failure messages (e.g. "after refresh",
+    ///     "after migration"). Kept short — surfaces which flow step failed at a glance.
+    private func assertDPoPCredentials(_ credentials: UserCredentialsData, context: String = "") {
+        let ctx = context.isEmpty ? "" : " (\(context))"
+        XCTAssertEqual(credentials.dpopTokenType, "DPoP", "Token type should be DPoP\(ctx)")
+        XCTAssertNotNil(credentials.dpopNonce, "DPoP nonce should be present\(ctx)")
+        XCTAssertFalse(credentials.dpopNonce?.isEmpty ?? true, "DPoP nonce should not be empty\(ctx)")
     }
     
     private func sortedScopes(_ value: String) -> String {

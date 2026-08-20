@@ -63,7 +63,7 @@ enum {
     kSFOAuthErrorJWTInvalidGrant,
     kSFOAuthErrorRequestCancelled,
     kSFOAuthErrorRefreshFailed, //generic error
-    kSFOAuthErrorInvalidURL
+    kSFOAuthErrorInvalidURL,
 };
 
 typedef NS_ENUM(NSInteger, SFLogoutReason) {
@@ -80,7 +80,8 @@ typedef NS_ENUM(NSInteger, SFLogoutReason) {
     SFLogoutReasonUnexpectedResponse,               // Unexpected response from server
     SFLogoutReasonUnknown,                          // Unknown
     SFLogoutReasonUserInitiated,                    // User initiated logout
-    SFLogoutReasonRefreshTokenRotated               // Refresh token rotated
+    SFLogoutReasonRefreshTokenRotated,              // Refresh token rotated
+    SFLogoutReasonAppAttestationFailed              // App attestation permanently blocked this client
 };
 
 NS_ASSUME_NONNULL_BEGIN
@@ -89,6 +90,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property  (nonatomic, readonly) NSString *tokenEndpointErrorCode;
 @property  (nonatomic, readonly) NSString *tokenEndpointErrorDescription;
 @property  (nonatomic, readonly) NSError *error;
+/// Typed enum representation of ``tokenEndpointErrorCode``.
+/// The enum is declared in Swift as `SFOAuthErrorCode`; use that type when calling
+/// from Swift. From Objective-C, the type is `NSInteger`.
+/// Use this property instead of string-comparing ``tokenEndpointErrorCode``.
+@property  (nonatomic, readonly) NSInteger errorCode;
 @end
 
 @interface SFSDKOAuthTokenEndpointRequest : NSObject
@@ -99,8 +105,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *codeVerifier;
 @property (nonatomic, assign) NSTimeInterval timeout;
 @property (nonatomic, strong) NSURL *serverURL;
+@property (nonatomic, copy, nullable) NSString *attestation;
 @property (nonatomic, strong, nullable) NSDictionary * additionalTokenRefreshParams;
 @property (nonatomic, strong, nullable) NSArray<NSString *> *additionalOAuthParameterKeys;
+/// `SFOAuthCredentials.identifier` for the in-flight account. Used by the DPoP layer to
+/// scope the per-account keypair and nonce cache. Optional; when nil, DPoP is skipped.
+@property (nonatomic, copy, nullable) NSString *credentialsIdentifier;
+/// Carried through unchanged from `SFOAuthCredentials.tokenType`. Used by the DPoP
+/// layer so a DPoP-bound credential is honored even when the process-wide `usesDPoP`
+/// switch has been flipped off. On the fresh-login (auth code exchange) path this is
+/// typically nil since the token endpoint has not yet issued a tokenType; DPoP gating
+/// on that path falls back to the persisted-key-material signal.
+@property (nonatomic, copy, nullable) NSString *tokenType;
 @end
 
 @interface SFSDKOAuthTokenEndpointResponse : NSObject
@@ -131,6 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) NSString *sidCookieName;
 @property (nonatomic, readonly, nullable) NSString *parentSid;
 @property (nonatomic, readonly, nullable) NSString *tokenFormat;
+@property (nonatomic, readonly, nullable) NSString *tokenType;
 @property (nonatomic, readonly, nullable) NSString *beaconChildConsumerKey;
 @property (nonatomic, readonly, nullable) NSString *beaconChildConsumerSecret;
 
