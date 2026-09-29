@@ -27,6 +27,7 @@
 
 import XCTest
 
+// [Test-only] Touch AuthFlowTester so the fork CI experiment runs the complete UI suite.
 /// Tests for login flows using External Client App (ECA) configurations with DPoP token binding.
 ///
 /// NB: Tests use users from ui_test_config.json across multiple scenarios
