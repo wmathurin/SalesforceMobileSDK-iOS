@@ -1,0 +1,32 @@
+name: Nightly Dispatcher (dev141)
+
+# Scheduled workflows only run from the default branch, so this dispatches the nightly
+# workflows on the dev141 branch. Delete this file when dev141 is merged back to dev.
+
+on:
+  schedule:
+    - cron: "0 8 * * 2-6"  # cron is UTC; see nightly workflows (shifted +3h)
+    - cron: "0 10 * * 2-6"  # cron is UTC; see nightly workflows (shifted +3h)
+  # This lets us trigger the workflow from a browser.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Dispatch nightly workflows on dev141
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ "${{ github.event.schedule }}" == "" ] || [ "${{ github.event.schedule }}" == "0 8 * * 2-6" ]; then
+            gh workflow run nightly.yaml --repo "$REPO" --ref dev141
+          fi
+          if [ "${{ github.event.schedule }}" == "" ] || [ "${{ github.event.schedule }}" == "0 10 * * 2-6" ]; then
+            gh workflow run ui-test-nightly.yaml --repo "$REPO" --ref dev141
+          fi
